@@ -1,0 +1,173 @@
+/* ============================================================
+   KINDRED DESIGN SYSTEM
+   Shared design tokens + base components.
+   Import this once, then build with the variables & .ds- classes.
+
+   Usage:  <link rel="stylesheet" href="design-system.css">
+   ============================================================ */
+
+/* ---------- FONTS (Outfit for display, Inter for body) ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  /* ---------------------------------------------------------
+     1. RAW PALETTE  —  the four brand colors + neutrals
+     Use these names only inside the semantic tokens below;
+     in real components, prefer the semantic tokens.
+     --------------------------------------------------------- */
+  --plum:      #6C4AB6;   /* primary brand */
+  --plum-deep: #4E2F90;   /* hover / pressed */
+  --teal:      #3FB8D4;   /* accent */
+  --coral:     #FF8A7A;   /* accent */
+  --sunny:     #FFC75F;   /* accent */
+
+  --lavender-white: #FBF8FF;  /* page background */
+  --lavender-tint:  #F3ECFB;  /* raised surface / muted panel */
+  --ink:            #2E2548;  /* primary text (deep plum-black) */
+  --ink-soft:       #5C5277;  /* secondary text */
+  --line:           #E7DEF5;  /* borders / dividers */
+  --white:          #FFFFFF;
+
+  /* System states (kept minimal, tuned to the palette) */
+  --success: #2E9E6B;
+  --warning: #B7791F;
+  --danger:  #D0453B;
+
+  /* ---------------------------------------------------------
+     2. SEMANTIC TOKENS  —  what to actually reference in code.
+     If the brand ever changes, you edit here, not everywhere.
+     --------------------------------------------------------- */
+  --color-bg:            var(--lavender-white);
+  --color-surface:       var(--white);
+  --color-surface-muted: var(--lavender-tint);
+  --color-text:          var(--ink);
+  --color-text-muted:    var(--ink-soft);
+  --color-border:        var(--line);
+
+  --color-primary:        var(--plum);
+  --color-primary-hover:  var(--plum-deep);
+  --color-on-primary:     var(--white);
+
+  --color-accent-teal:  var(--teal);
+  --color-accent-coral: var(--coral);
+  --color-accent-sunny: var(--sunny);
+
+  /* Soft tinted backgrounds (accents used as fills, dark text on top) */
+  --tint-plum:  #EDE7F8;
+  --tint-teal:  #DEF3F8;
+  --tint-coral: #FFE7E2;
+  --tint-sunny: #FFF3D9;
+
+  /* ---------------------------------------------------------
+     3. TYPOGRAPHY
+     --------------------------------------------------------- */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  --text-xs:   0.80rem;
+  --text-sm:   0.92rem;
+  --text-base: 1.05rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.6rem;
+  --text-2xl:  2.1rem;
+  --text-3xl:  2.9rem;   /* hero */
+
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+
+  /* ---------------------------------------------------------
+     4. SPACING  (8px base scale)
+     --------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ---------------------------------------------------------
+     5. RADII & SHADOWS  (rounded + soft = the friendly feel)
+     --------------------------------------------------------- */
+  --radius-sm:   12px;
+  --radius-md:   18px;
+  --radius-lg:   26px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 8px 22px -12px rgba(78,47,144,.35);
+  --shadow-md: 0 18px 40px -18px rgba(78,47,144,.40);
+
+  --transition: .2s ease;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--color-bg);
+  color:var(--color-text);
+  font-family:var(--font-body);
+  font-size:var(--text-base);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--weight-semi);line-height:1.15;letter-spacing:-.01em;margin:0}
+h1{font-size:var(--text-3xl)}
+h2{font-size:var(--text-2xl)}
+h3{font-size:var(--text-xl)}
+h4{font-size:var(--text-lg)}
+a{color:var(--color-primary)}
+p{margin:0 0 var(--space-4)}
+
+/* ============================================================
+   COMPONENTS  (prefixed .ds- so they never clash with page CSS)
+   ============================================================ */
+
+/* Buttons -------------------------------------------------- */
+.ds-btn{
+  display:inline-flex;align-items:center;gap:var(--space-2);cursor:pointer;border:none;
+  font-family:var(--font-display);font-weight:var(--weight-semi);font-size:var(--text-base);
+  padding:14px 26px;border-radius:var(--radius-pill);text-decoration:none;transition:var(--transition);
+}
+.ds-btn:hover{transform:translateY(-2px)}
+.ds-btn--primary{background:var(--color-primary);color:var(--color-on-primary);box-shadow:var(--shadow-sm)}
+.ds-btn--primary:hover{background:var(--color-primary-hover)}
+.ds-btn--teal{background:var(--color-accent-teal);color:var(--ink)}
+.ds-btn--ghost{background:var(--color-surface);color:var(--color-primary-hover);box-shadow:var(--shadow-sm)}
+
+/* Cards ---------------------------------------------------- */
+.ds-card{
+  background:var(--color-surface);border-radius:var(--radius-lg);
+  padding:var(--space-6);box-shadow:var(--shadow-md);
+}
+
+/* Pills / tags --------------------------------------------- */
+.ds-pill{
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);
+  font-weight:var(--weight-semi);font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 14px;border-radius:var(--radius-pill);
+}
+.ds-pill--plum{ background:var(--tint-plum); color:var(--plum-deep)}
+.ds-pill--teal{ background:var(--tint-teal); color:#1B7A90}
+.ds-pill--coral{background:var(--tint-coral);color:#C0453B}
+.ds-pill--sunny{background:var(--tint-sunny);color:#9A6B12}
+
+/* Inputs --------------------------------------------------- */
+.ds-input{
+  width:100%;font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);
+  padding:14px 18px;border:2px solid var(--color-border);border-radius:var(--radius-md);
+  background:var(--color-surface);transition:var(--transition);
+}
+.ds-input:focus{outline:none;border-color:var(--color-accent-teal)}
+
+/* Accessible focus ring for keyboard users ----------------- */
+:focus-visible{outline:3px solid var(--color-accent-teal);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}

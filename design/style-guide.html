@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kindred — Design System</title>
+<link rel="stylesheet" href="design-system.css">
+<style>
+  .page{max-width:960px;margin:0 auto;padding:56px 24px 80px}
+  header.sg{margin-bottom:48px}
+  header.sg h1{font-size:var(--text-3xl);margin-bottom:10px}
+  header.sg p{color:var(--color-text-muted);font-size:var(--text-lg);max-width:60ch}
+  section.sg{margin:0 0 56px}
+  section.sg > h2{margin-bottom:6px}
+  section.sg > .sub{color:var(--color-text-muted);margin-bottom:24px}
+  .divider{height:2px;background:var(--color-border);border:none;border-radius:2px;margin:0 0 40px}
+
+  /* swatches */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+  .sw{border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);background:var(--color-surface)}
+  .sw .chip{height:96px}
+  .sw .meta{padding:14px 16px}
+  .sw .name{font-family:var(--font-display);font-weight:600}
+  .sw .hex{font-size:var(--text-sm);color:var(--color-text-muted);font-variant-numeric:tabular-nums;text-transform:uppercase}
+  .sw .use{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:6px}
+
+  /* type scale */
+  .type-row{display:flex;align-items:baseline;gap:18px;padding:12px 0;border-bottom:1px solid var(--color-border)}
+  .type-row .lbl{font-family:var(--font-body);font-size:var(--text-xs);color:var(--color-text-muted);width:130px;flex:none}
+
+  .demo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .a11y{background:var(--tint-teal);border-radius:var(--radius-md);padding:18px 20px;color:#155f70;font-size:var(--text-sm)}
+  .a11y b{color:#0d4b58}
+  code{background:var(--lavender-tint);padding:2px 7px;border-radius:6px;font-size:.9em}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="sg">
+    <span class="ds-pill ds-pill--plum">Kindred Design System</span>
+    <h1 style="margin-top:14px">Playful, colorful, still trustworthy.</h1>
+    <p>The shared visual language for the Kindred patient site. Everything here is driven by <code>design-system.css</code> — change a token there and it updates everywhere.</p>
+  </header>
+
+  <!-- COLOR -->
+  <section class="sg">
+    <h2>Color</h2>
+    <p class="sub">Four brand colors on a pale lavender-white. Plum leads; teal, coral, and sunny are accents.</p>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:var(--plum)"></div><div class="meta"><div class="name">Plum</div><div class="hex">#6C4AB6</div><div class="use">Primary · buttons · links · text-safe</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--teal)"></div><div class="meta"><div class="name">Teal</div><div class="hex">#3FB8D4</div><div class="use">Accent · fills · focus rings</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--coral)"></div><div class="meta"><div class="name">Coral</div><div class="hex">#FF8A7A</div><div class="use">Accent · highlights</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--sunny)"></div><div class="meta"><div class="name">Sunny</div><div class="hex">#FFC75F</div><div class="use">Accent · underlines · joy</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--lavender-white);border-bottom:1px solid var(--line)"></div><div class="meta"><div class="name">Lavender-white</div><div class="hex">#FBF8FF</div><div class="use">Page background</div></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ink)"></div><div class="meta"><div class="name">Ink</div><div class="hex">#2E2548</div><div class="use">Primary text</div></div></div>
+    </div>
+    <div class="a11y" style="margin-top:20px">
+      <b>Accessibility note:</b> plum and ink both pass WCAG AA for text on the light background. Teal, coral, and sunny are bright — use them as fills, borders, or large shapes with <b>dark ink text on top</b>, not as small colored text on white.
+    </div>
+  </section>
+  <hr class="divider">
+
+  <!-- TYPE -->
+  <section class="sg">
+    <h2>Typography</h2>
+    <p class="sub">Outfit for headings (friendly, geometric), Inter for body (clean, credible).</p>
+    <div class="type-row"><span class="lbl">Display / 3xl</span><span style="font-family:var(--font-display);font-size:var(--text-3xl);font-weight:600">Kidney health, simplified</span></div>
+    <div class="type-row"><span class="lbl">Heading / xl</span><span style="font-family:var(--font-display);font-size:var(--text-xl);font-weight:600">Does it run in your family?</span></div>
+    <div class="type-row"><span class="lbl">Body / base</span><span style="font-family:var(--font-body);font-size:var(--text-base)">Answer a few simple questions to see what your next step might be.</span></div>
+    <div class="type-row"><span class="lbl">Small / sm</span><span style="font-family:var(--font-body);font-size:var(--text-sm);color:var(--color-text-muted)">Private · nothing is saved · about two minutes</span></div>
+  </section>
+  <hr class="divider">
+
+  <!-- BUTTONS -->
+  <section class="sg">
+    <h2>Buttons</h2>
+    <p class="sub">Pill-shaped, rounded, soft shadow. Plum is the main action.</p>
+    <div class="row">
+      <button class="ds-btn ds-btn--primary">Start the check</button>
+      <button class="ds-btn ds-btn--teal">Learn more</button>
+      <button class="ds-btn ds-btn--ghost">See how it works</button>
+    </div>
+  </section>
+  <hr class="divider">
+
+  <!-- PILLS -->
+  <section class="sg">
+    <h2>Tags &amp; labels</h2>
+    <p class="sub">Soft tinted pills — one per accent.</p>
+    <div class="row">
+      <span class="ds-pill ds-pill--plum">Free</span>
+      <span class="ds-pill ds-pill--teal">Private</span>
+      <span class="ds-pill ds-pill--coral">2 minutes</span>
+      <span class="ds-pill ds-pill--sunny">No blood draw</span>
+    </div>
+  </section>
+  <hr class="divider">
+
+  <!-- CARDS + INPUT -->
+  <section class="sg">
+    <h2>Cards &amp; inputs</h2>
+    <p class="sub">Surfaces sit on the lavender background with a soft plum shadow.</p>
+    <div class="demo-grid">
+      <div class="ds-card">
+        <span class="ds-pill ds-pill--teal" style="margin-bottom:12px">Step 01</span>
+        <h3 style="margin-bottom:6px">Answer a few questions</h3>
+        <p style="color:var(--color-text-muted);margin:0">Simple yes / no / not-sure. Nothing is stored.</p>
+      </div>
+      <div class="ds-card">
+        <h3 style="margin-bottom:12px">Stay in the loop</h3>
+        <input class="ds-input" placeholder="you@email.com" aria-label="Email">
+        <button class="ds-btn ds-btn--primary" style="margin-top:12px">Sign up</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
