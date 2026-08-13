@@ -1,0 +1,225 @@
+@import 'tailwindcss';
+
+/* Dark mode is class-based: a `dark` class on <html>, managed by ThemeToggle
+   and the pre-paint script in index.html (respects system preference). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  GARNET design tokens.
+  Approved palette:
+    primary  #00687b (teal)
+    secondary #9f4035 (garnet red)
+    tertiary #6b49b5 (plum)
+    neutral  #4a4d57
+  All colors are exposed as semantic CSS variables so light and dark mode
+  share the same utility classes.
+*/
+:root {
+  color-scheme: light;
+
+  --bg: #f6fafa;
+  --wash: #ecf4f5;
+  --wash-warm: #fff5f3;
+  --surface: #ffffff;
+  --surface-2: #f1f7f7;
+
+  --ink: #16323b;
+  --body-color: #3f4650;
+  --muted: #5b6472;
+  --line: #d8e4e6;
+
+  --brand: #00687b;
+  --brand-strong: #004b59;
+  --brand-soft: #e2eff1;
+  --on-brand: #ffffff;
+
+  --btn: #00687b;
+  --btn-hover: #005566;
+
+  --accent: #9f4035;
+  --accent-soft: #f7e9e7;
+  --plum: #6b49b5;
+  --plum-soft: #efeaf9;
+
+  --ring: #00687b;
+
+  --cta-from: #00687b;
+  --cta-to: #05404d;
+
+  --footer: #0f2b33;
+  --footer-ink: #e6f0f2;
+  --footer-muted: #a7bfc6;
+  --footer-line: rgba(230, 240, 242, 0.16);
+
+  --shadow-soft-val: 0 10px 30px -14px rgb(12 48 58 / 0.16), 0 2px 6px -3px rgb(12 48 58 / 0.08);
+  --shadow-lift-val: 0 18px 44px -18px rgb(12 48 58 / 0.24), 0 4px 12px -4px rgb(12 48 58 / 0.1);
+}
+
+/* Calm, blue-green dark theme: brand hues are lightened to keep AA contrast. */
+.dark {
+  color-scheme: dark;
+
+  --bg: #0d1a1e;
+  --wash: #10222a;
+  --wash-warm: #211d1c;
+  --surface: #15272e;
+  --surface-2: #1b323b;
+
+  --ink: #ecf3f4;
+  --body-color: #c5d1d5;
+  --muted: #9db0b6;
+  --line: #2b4650;
+
+  --brand: #5fb9cc;
+  --brand-strong: #8ed2e0;
+  --brand-soft: #123540;
+  --on-brand: #ffffff;
+
+  --btn: #0c7488;
+  --btn-hover: #0d8299;
+
+  --accent: #de9086;
+  --accent-soft: #3a2521;
+  --plum: #b39be6;
+  --plum-soft: #2b2444;
+
+  --ring: #7cc9db;
+
+  --cta-from: #0e6b80;
+  --cta-to: #0b3541;
+
+  --footer: #0a1518;
+  --footer-ink: #e2ecef;
+  --footer-muted: #9db2b9;
+  --footer-line: rgba(226, 236, 239, 0.12);
+
+  --shadow-soft-val: 0 10px 30px -14px rgb(0 0 0 / 0.5), 0 2px 6px -3px rgb(0 0 0 / 0.35);
+  --shadow-lift-val: 0 18px 44px -18px rgb(0 0 0 / 0.6), 0 4px 12px -4px rgb(0 0 0 / 0.4);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-wash: var(--wash);
+  --color-wash-warm: var(--wash-warm);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-body: var(--body-color);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-on-brand: var(--on-brand);
+  --color-btn: var(--btn);
+  --color-btn-hover: var(--btn-hover);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-plum: var(--plum);
+  --color-plum-soft: var(--plum-soft);
+  --color-ring: var(--ring);
+  --color-footer: var(--footer);
+  --color-footer-ink: var(--footer-ink);
+  --color-footer-muted: var(--footer-muted);
+  --color-footer-line: var(--footer-line);
+  --shadow-soft: var(--shadow-soft-val);
+  --shadow-lift: var(--shadow-lift-val);
+}
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    Arial, sans-serif;
+  --font-display: 'Lora Variable', ui-serif, Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+  html {
+    /* Keeps anchored sections clear of the sticky header. */
+    scroll-padding-top: 6.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-bg font-sans text-body antialiased;
+    /* Slightly larger base size for low-vision readability. */
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-size-adjust: 100%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* High-visibility focus ring for keyboard users. */
+  :where(a, button, input, select, textarea, summary):focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* On dark teal panels (CTA, footer) the teal ring would vanish. */
+  .on-dark :where(a, button):focus-visible {
+    outline-color: #bfe5ee;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--brand) 25%, transparent);
+  }
+}
+
+@layer components {
+  /* Soft radial washes behind the hero, tinted with brand colors. */
+  /* Teal glow above, warm garnet glow below: cool trust meets warm care. */
+  .hero-wash {
+    background:
+      radial-gradient(
+        56rem 30rem at 88% -12%,
+        color-mix(in srgb, var(--brand) 13%, transparent),
+        transparent 62%
+      ),
+      radial-gradient(
+        46rem 28rem at -12% 108%,
+        color-mix(in srgb, var(--accent) 9%, transparent),
+        transparent 60%
+      ),
+      var(--bg);
+  }
+
+  .cta-panel {
+    background: linear-gradient(140deg, var(--cta-from), var(--cta-to));
+  }
+
+  /* Overlay above the hero video: keeps the brand tints and enough page
+     color for text to stay readable in both themes. */
+  .hero-scrim {
+    background:
+      radial-gradient(
+        56rem 30rem at 88% -12%,
+        color-mix(in srgb, var(--brand) 13%, transparent),
+        transparent 62%
+      ),
+      radial-gradient(
+        46rem 28rem at -12% 108%,
+        color-mix(in srgb, var(--accent) 9%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(
+        115deg,
+        color-mix(in srgb, var(--bg) 96%, transparent) 0%,
+        color-mix(in srgb, var(--bg) 88%, transparent) 52%,
+        color-mix(in srgb, var(--bg) 68%, transparent) 100%
+      );
+  }
+}
