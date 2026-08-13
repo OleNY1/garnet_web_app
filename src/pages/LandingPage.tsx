@@ -312,7 +312,7 @@ export function LandingPage() {
         tone="wash"
         eyebrow="Common questions"
         title="Cost and privacy"
-        intro="Two things patients ask about most, explained in plain language."
+        intro="Two things patients ask about most."
       >
         <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
           <Card className="p-7 sm:p-9">
