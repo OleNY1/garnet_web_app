@@ -24,7 +24,11 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr] lg:gap-14">
           <div>
             <div className="flex items-center gap-3">
-              <img src="/garnet-mark.png" alt="" className="size-10 shrink-0 object-contain" />
+              <img
+                src={`${import.meta.env.BASE_URL}garnet-mark.png`}
+                alt=""
+                className="size-10 shrink-0 object-contain"
+              />
               <div className="leading-tight">
                 <p className="text-xl font-bold tracking-[0.18em] text-footer-ink">GARNET</p>
                 <p className="text-[0.95rem]">

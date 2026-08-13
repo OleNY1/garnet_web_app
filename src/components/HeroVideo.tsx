@@ -43,7 +43,7 @@ export function HeroVideo() {
         <video
           ref={videoRef}
           className="size-full object-cover"
-          src="/hero-background.mp4"
+          src={`${import.meta.env.BASE_URL}hero-background.mp4`}
           autoPlay
           muted
           loop
