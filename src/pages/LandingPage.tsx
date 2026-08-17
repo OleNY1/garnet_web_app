@@ -147,7 +147,7 @@ const STEPS = [
 ]
 
 const TRUST_POINTS = [
-  'Created as part of a Columbia medical research project',
+  'Supported by the National Kidney Foundation',
   'Developed with input from medical researchers and genetic counseling experts',
   'Designed for patients and families',
   'Educational only - not a diagnosis or medical advice',
@@ -161,9 +161,7 @@ export function LandingPage() {
         <HeroVideo />
         <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-24">
           <div>
-            <TrustBadge icon={Landmark}>
-              Created as part of a Columbia medical research project.
-            </TrustBadge>
+            <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation.</TrustBadge>
             <h1
               id="hero-heading"
               className="mt-6 font-display text-[2.3rem] leading-[1.12] font-semibold text-ink sm:text-5xl sm:leading-[1.08] lg:text-[3.35rem]"

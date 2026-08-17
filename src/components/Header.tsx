@@ -27,12 +27,7 @@ export function Header() {
             alt=""
             className="size-11 shrink-0 object-contain"
           />
-          <span className="flex flex-col leading-tight">
-            <span className="text-[1.25rem] font-bold tracking-[0.18em] text-brand">GARNET</span>
-            <span className="text-sm font-medium text-muted">
-              Columbia medical research project
-            </span>
-          </span>
+          <span className="text-[1.25rem] font-bold tracking-[0.18em] text-brand">GARNET</span>
         </a>
 
         <div className="flex items-center gap-2 sm:gap-3">
