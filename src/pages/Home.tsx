@@ -24,8 +24,8 @@ const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; toolti
   {
     icon: BookOpen,
     tint: 'brand',
-    label: 'Plain-language guides',
-    tooltip: 'Short reads in everyday words.',
+    label: 'Guides to genetic testing',
+    tooltip: 'Short reads on what testing involves.',
   },
   {
     icon: ListChecks,
@@ -93,7 +93,7 @@ function HeroFeature({
   return (
     <li
       ref={rootRef}
-      className="relative flex items-center gap-4"
+      className="relative flex scale-100 items-center gap-4 transition-transform duration-150 hover:scale-[1.03]"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => {
         if (document.activeElement !== buttonRef.current) setOpen(false)
@@ -230,7 +230,7 @@ export function Home() {
           {PATHS.map((path) => (
             <Card
               key={path.title}
-              className="flex flex-col p-6 transition-all duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift sm:p-7 lg:p-8"
+              className="flex scale-100 flex-col p-6 transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.02] hover:shadow-lift sm:p-7 lg:p-8"
             >
               <IconChip icon={path.icon} tint={path.tint} className="size-[3.25rem]" />
               <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">

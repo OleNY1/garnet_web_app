@@ -15,7 +15,7 @@ export function TrustBadge({
   return (
     <span
       className={cx(
-        'inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[0.95rem] font-medium text-ink shadow-soft',
+        'inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[0.95rem] font-medium text-ink shadow-soft transition-transform duration-150 hover:scale-105',
         className,
       )}
     >

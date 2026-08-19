@@ -42,7 +42,7 @@ export function JourneyPicker() {
         <Link
           key={path.title}
           to={path.to}
-          className="group flex flex-col rounded-2xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift sm:p-6"
+          className="group flex scale-100 flex-col rounded-2xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.02] hover:shadow-lift sm:p-6"
         >
           <IconChip icon={path.icon} tint={path.tint} />
           <p className="mt-4 text-[1.05rem] leading-snug font-semibold text-ink">{path.title}</p>

@@ -17,7 +17,7 @@ export function StatGrid({ tint, stats }: { tint: Tint; stats: Stat[] }) {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className={`rounded-2xl border border-line ${tints[tint].chip} p-5 text-center sm:p-6`}
+          className={`scale-100 rounded-2xl border border-line ${tints[tint].chip} p-5 text-center transition-transform duration-200 hover:scale-[1.04] sm:p-6`}
         >
           <p className={`font-display text-[2rem] leading-none font-bold sm:text-[2.3rem] ${tints[tint].icon}`}>
             {stat.value}

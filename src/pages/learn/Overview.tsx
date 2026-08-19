@@ -76,7 +76,10 @@ export function Overview() {
       >
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {BENEFITS.map((benefit) => (
-            <Card key={benefit.title} className="p-6 sm:p-7">
+            <Card
+              key={benefit.title}
+              className="scale-100 p-6 transition-transform duration-200 hover:scale-[1.03] sm:p-7"
+            >
               <IconChip icon={benefit.icon} tint={benefit.tint} />
               <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">
                 {benefit.title}
@@ -99,7 +102,7 @@ export function Overview() {
               <p className="text-lg leading-relaxed text-body">
                 GARNET is being created as part of a research project at Columbia University Irving
                 Medical Center. Medical researchers and genetic counseling experts help shape the
-                information you read here - in plain language, for patients and families.
+                information you read here for patients and families.
               </p>
               <div className="mt-8 flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 sm:p-5">
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-soft">

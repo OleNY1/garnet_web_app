@@ -18,7 +18,7 @@ export function Sources({ sources }: { sources: Source[] }) {
               href={source.url}
               target="_blank"
               rel="noreferrer"
-              className="text-brand underline underline-offset-2 hover:text-brand-strong"
+              className="inline-block scale-100 text-brand underline underline-offset-2 transition-transform duration-150 hover:scale-105 hover:text-brand-strong"
             >
               {source.url.replace('https://doi.org/', 'doi.org/')}
             </a>

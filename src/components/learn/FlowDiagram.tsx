@@ -15,7 +15,7 @@ export function FlowDiagram({ tint, steps }: { tint: Tint; steps: Step[] }) {
     <div className="flex flex-col items-stretch gap-0 sm:flex-row sm:items-start sm:gap-0">
       {steps.map((step, index) => (
         <div key={step.label} className="flex flex-1 flex-col items-center sm:flex-row">
-          <div className="flex w-full flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center">
+          <div className="flex w-full scale-100 flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center transition-transform duration-200 hover:scale-[1.03]">
             <span
               className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${tints[tint].chip}`}
             >

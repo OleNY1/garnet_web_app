@@ -16,7 +16,7 @@ const ABOUT_LINKS = [
 ]
 
 const footerLinkClasses =
-  'inline-block rounded-md py-1.5 text-[1.02rem] text-footer-muted underline-offset-4 transition-colors hover:text-footer-ink hover:underline'
+  'inline-block scale-100 rounded-md py-1.5 text-[1.02rem] text-footer-muted underline-offset-4 transition-all duration-150 hover:scale-105 hover:text-footer-ink hover:underline'
 
 export function Footer() {
   return (

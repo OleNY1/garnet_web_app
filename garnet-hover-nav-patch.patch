@@ -1,0 +1,559 @@
+From 47699425d522eb47928dccb216d4fbb16152dc2c Mon Sep 17 00:00:00 2001
+From: Quinby Janes <quinby@garnet-project.local>
+Date: Wed, 19 Aug 2026 22:52:55 +0000
+Subject: [PATCH] Remove condescending 'plain language' wording, add Learn
+ hover dropdown, add hover-grow to bubbles/blurbs/links
+
+---
+ src/components/Cite.tsx                   |   2 +-
+ src/components/Footer.tsx                 |   2 +-
+ src/components/Header.tsx                 | 122 ++++++++++++++++++++--
+ src/components/Sources.tsx                |   2 +-
+ src/components/TrustBadge.tsx             |   2 +-
+ src/components/learn/FlowDiagram.tsx      |   2 +-
+ src/components/learn/JourneyPicker.tsx    |   2 +-
+ src/components/learn/SimplicityBanner.tsx |   2 +-
+ src/components/learn/StatGrid.tsx         |   2 +-
+ src/lib/learnTopics.ts                    |  85 +++++++++++++++
+ src/pages/Home.tsx                        |   8 +-
+ src/pages/learn/LearnLayout.tsx           |  94 +----------------
+ src/pages/learn/Overview.tsx              |   7 +-
+ 13 files changed, 219 insertions(+), 113 deletions(-)
+ create mode 100644 src/lib/learnTopics.ts
+
+diff --git a/src/components/Cite.tsx b/src/components/Cite.tsx
+index f6aa9c6..3e11485 100644
+--- a/src/components/Cite.tsx
++++ b/src/components/Cite.tsx
+@@ -6,7 +6,7 @@ export function Cite({ n }: { n: number }) {
+   return (
+     <a
+       href={`#source-${n}`}
+-      className="ml-0.5 align-super text-[0.7em] font-semibold text-brand no-underline hover:underline"
++      className="ml-0.5 inline-block scale-100 align-super text-[0.7em] font-semibold text-brand no-underline transition-transform duration-150 hover:scale-125 hover:underline"
+     >
+       [{n}]
+     </a>
+diff --git a/src/components/Footer.tsx b/src/components/Footer.tsx
+index 76ee404..2522621 100644
+--- a/src/components/Footer.tsx
++++ b/src/components/Footer.tsx
+@@ -16,7 +16,7 @@ const ABOUT_LINKS = [
+ ]
+ 
+ const footerLinkClasses =
+-  'inline-block rounded-md py-1.5 text-[1.02rem] text-footer-muted underline-offset-4 transition-colors hover:text-footer-ink hover:underline'
++  'inline-block scale-100 rounded-md py-1.5 text-[1.02rem] text-footer-muted underline-offset-4 transition-all duration-150 hover:scale-105 hover:text-footer-ink hover:underline'
+ 
+ export function Footer() {
+   return (
+diff --git a/src/components/Header.tsx b/src/components/Header.tsx
+index f593103..0ada8d8 100644
+--- a/src/components/Header.tsx
++++ b/src/components/Header.tsx
+@@ -1,6 +1,7 @@
+-import { Menu, X } from 'lucide-react'
+-import { useState } from 'react'
++import { ChevronDown, Menu, X } from 'lucide-react'
++import { useEffect, useRef, useState } from 'react'
+ import { Link, NavLink } from 'react-router-dom'
++import { LEARN_TOPICS } from '../lib/learnTopics'
+ import { ThemeToggle } from './ThemeToggle'
+ 
+ const NAV_LINKS = [
+@@ -11,7 +12,7 @@ const NAV_LINKS = [
+ ]
+ 
+ const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+-  `rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium transition-colors hover:bg-brand-soft hover:text-ink ${
++  `inline-block rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium transition-all duration-150 hover:scale-105 hover:bg-brand-soft hover:text-ink ${
+     isActive ? 'bg-brand-soft text-ink' : 'text-body'
+   }`
+ 
+@@ -20,6 +21,82 @@ const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
+     isActive ? 'bg-brand-soft text-ink' : 'text-ink'
+   }`
+ 
++/**
++ * "Learn" nav item with a hover/focus dropdown listing every Learn
++ * subpage, so a visitor can jump straight to a topic instead of always
++ * landing on the Overview first. Opens on hover or keyboard focus, closes
++ * on Escape, blur, or an outside click — same interaction pattern as the
++ * hero feature tooltips on the homepage.
++ */
++function LearnNavItem() {
++  const [open, setOpen] = useState(false)
++  const rootRef = useRef<HTMLLIElement>(null)
++
++  useEffect(() => {
++    if (!open) return
++    const onPointerDown = (event: PointerEvent) => {
++      if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false)
++    }
++    const onKeyDown = (event: KeyboardEvent) => {
++      if (event.key === 'Escape') setOpen(false)
++    }
++    document.addEventListener('pointerdown', onPointerDown)
++    document.addEventListener('keydown', onKeyDown)
++    return () => {
++      document.removeEventListener('pointerdown', onPointerDown)
++      document.removeEventListener('keydown', onKeyDown)
++    }
++  }, [open])
++
++  return (
++    <li
++      ref={rootRef}
++      className="relative"
++      onMouseEnter={() => setOpen(true)}
++      onMouseLeave={() => setOpen(false)}
++    >
++      <NavLink
++        to="/learn"
++        end
++        className={navLinkClasses}
++        aria-expanded={open}
++        aria-haspopup="true"
++        onFocus={() => setOpen(true)}
++      >
++        <span className="inline-flex items-center gap-1">
++          Learn
++          <ChevronDown
++            aria-hidden="true"
++            className={`size-4 transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
++          />
++        </span>
++      </NavLink>
++
++      <div
++        role="menu"
++        aria-label="Learn topics"
++        className={`absolute top-full left-0 z-30 mt-1.5 w-72 origin-top-left rounded-2xl border border-line bg-surface p-2 shadow-lift transition-all duration-150 ${
++          open ? 'pointer-events-auto scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
++        }`}
++      >
++        {LEARN_TOPICS.map((topic) => (
++          <NavLink
++            key={topic.to}
++            to={topic.to}
++            end={topic.end}
++            role="menuitem"
++            onClick={() => setOpen(false)}
++            onFocus={() => setOpen(true)}
++            className="block scale-100 rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body transition-all duration-150 hover:scale-[1.03] hover:bg-brand-soft hover:text-ink"
++          >
++            {topic.label}
++          </NavLink>
++        ))}
++      </div>
++    </li>
++  )
++}
++
+ export function Header() {
+   const [menuOpen, setMenuOpen] = useState(false)
+ 
+@@ -41,13 +118,16 @@ export function Header() {
+         </Link>
+ 
+         <div className="flex items-center gap-2 sm:gap-3">
+-          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+-            {NAV_LINKS.map((link) => (
+-              <NavLink key={link.href} to={link.href} className={navLinkClasses}>
+-                {link.label}
+-              </NavLink>
++          <ul aria-label="Main" className="hidden items-center gap-1 lg:flex">
++            <LearnNavItem />
++            {NAV_LINKS.slice(1).map((link) => (
++              <li key={link.href}>
++                <NavLink to={link.href} className={navLinkClasses}>
++                  {link.label}
++                </NavLink>
++              </li>
+             ))}
+-          </nav>
++          </ul>
+           <ThemeToggle />
+           <button
+             type="button"
+@@ -73,7 +153,29 @@ export function Header() {
+           className="border-t border-line bg-bg px-4 pt-3 pb-5 lg:hidden"
+         >
+           <ul className="flex flex-col gap-1">
+-            {NAV_LINKS.map((link) => (
++            <li>
++              <NavLink to="/learn" end onClick={() => setMenuOpen(false)} className={mobileNavLinkClasses}>
++                Learn
++              </NavLink>
++              <ul className="ml-4 flex flex-col gap-0.5 border-l border-line pl-3">
++                {LEARN_TOPICS.slice(1).map((topic) => (
++                  <li key={topic.to}>
++                    <NavLink
++                      to={topic.to}
++                      onClick={() => setMenuOpen(false)}
++                      className={({ isActive }) =>
++                        `block rounded-lg px-3 py-2.5 text-[1.02rem] font-medium transition-colors hover:bg-brand-soft ${
++                          isActive ? 'bg-brand-soft text-ink' : 'text-muted'
++                        }`
++                      }
++                    >
++                      {topic.label}
++                    </NavLink>
++                  </li>
++                ))}
++              </ul>
++            </li>
++            {NAV_LINKS.slice(1).map((link) => (
+               <li key={link.href}>
+                 <NavLink to={link.href} onClick={() => setMenuOpen(false)} className={mobileNavLinkClasses}>
+                   {link.label}
+diff --git a/src/components/Sources.tsx b/src/components/Sources.tsx
+index ac8a668..c480610 100644
+--- a/src/components/Sources.tsx
++++ b/src/components/Sources.tsx
+@@ -18,7 +18,7 @@ export function Sources({ sources }: { sources: Source[] }) {
+               href={source.url}
+               target="_blank"
+               rel="noreferrer"
+-              className="text-brand underline underline-offset-2 hover:text-brand-strong"
++              className="inline-block scale-100 text-brand underline underline-offset-2 transition-transform duration-150 hover:scale-105 hover:text-brand-strong"
+             >
+               {source.url.replace('https://doi.org/', 'doi.org/')}
+             </a>
+diff --git a/src/components/TrustBadge.tsx b/src/components/TrustBadge.tsx
+index 4696dd7..08f438f 100644
+--- a/src/components/TrustBadge.tsx
++++ b/src/components/TrustBadge.tsx
+@@ -15,7 +15,7 @@ export function TrustBadge({
+   return (
+     <span
+       className={cx(
+-        'inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[0.95rem] font-medium text-ink shadow-soft',
++        'inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[0.95rem] font-medium text-ink shadow-soft transition-transform duration-150 hover:scale-105',
+         className,
+       )}
+     >
+diff --git a/src/components/learn/FlowDiagram.tsx b/src/components/learn/FlowDiagram.tsx
+index e49c891..1880d27 100644
+--- a/src/components/learn/FlowDiagram.tsx
++++ b/src/components/learn/FlowDiagram.tsx
+@@ -15,7 +15,7 @@ export function FlowDiagram({ tint, steps }: { tint: Tint; steps: Step[] }) {
+     <div className="flex flex-col items-stretch gap-0 sm:flex-row sm:items-start sm:gap-0">
+       {steps.map((step, index) => (
+         <div key={step.label} className="flex flex-1 flex-col items-center sm:flex-row">
+-          <div className="flex w-full flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center">
++          <div className="flex w-full scale-100 flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center transition-transform duration-200 hover:scale-[1.03]">
+             <span
+               className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${tints[tint].chip}`}
+             >
+diff --git a/src/components/learn/JourneyPicker.tsx b/src/components/learn/JourneyPicker.tsx
+index ec93eef..9e8e38d 100644
+--- a/src/components/learn/JourneyPicker.tsx
++++ b/src/components/learn/JourneyPicker.tsx
+@@ -42,7 +42,7 @@ export function JourneyPicker() {
+         <Link
+           key={path.title}
+           to={path.to}
+-          className="group flex flex-col rounded-2xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift sm:p-6"
++          className="group flex scale-100 flex-col rounded-2xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.02] hover:shadow-lift sm:p-6"
+         >
+           <IconChip icon={path.icon} tint={path.tint} />
+           <p className="mt-4 text-[1.05rem] leading-snug font-semibold text-ink">{path.title}</p>
+diff --git a/src/components/learn/SimplicityBanner.tsx b/src/components/learn/SimplicityBanner.tsx
+index 7cac6f8..66152ce 100644
+--- a/src/components/learn/SimplicityBanner.tsx
++++ b/src/components/learn/SimplicityBanner.tsx
+@@ -8,7 +8,7 @@ import { Sparkles } from 'lucide-react'
+  */
+ export function SimplicityBanner() {
+   return (
+-    <div className="flex items-center gap-4 rounded-2xl border border-accent/25 bg-accent-soft p-5 sm:p-6">
++    <div className="flex scale-100 items-center gap-4 rounded-2xl border border-accent/25 bg-accent-soft p-5 transition-transform duration-200 hover:scale-[1.015] sm:p-6">
+       <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-surface text-accent shadow-soft">
+         <Sparkles aria-hidden="true" className="size-5.5" />
+       </span>
+diff --git a/src/components/learn/StatGrid.tsx b/src/components/learn/StatGrid.tsx
+index 095573a..1062e93 100644
+--- a/src/components/learn/StatGrid.tsx
++++ b/src/components/learn/StatGrid.tsx
+@@ -17,7 +17,7 @@ export function StatGrid({ tint, stats }: { tint: Tint; stats: Stat[] }) {
+       {stats.map((stat) => (
+         <div
+           key={stat.label}
+-          className={`rounded-2xl border border-line ${tints[tint].chip} p-5 text-center sm:p-6`}
++          className={`scale-100 rounded-2xl border border-line ${tints[tint].chip} p-5 text-center transition-transform duration-200 hover:scale-[1.04] sm:p-6`}
+         >
+           <p className={`font-display text-[2rem] leading-none font-bold sm:text-[2.3rem] ${tints[tint].icon}`}>
+             {stat.value}
+diff --git a/src/lib/learnTopics.ts b/src/lib/learnTopics.ts
+new file mode 100644
+index 0000000..fdb6766
+--- /dev/null
++++ b/src/lib/learnTopics.ts
+@@ -0,0 +1,85 @@
++import { BookOpen, HandHeart, ShieldCheck, Stethoscope, TestTubes, Users } from 'lucide-react'
++import type { LucideIcon } from 'lucide-react'
++import type { Tint } from '../components/IconChip'
++
++export type LearnTopic = {
++  label: string
++  to: string
++  end: boolean
++  icon: LucideIcon
++  tint: Tint
++  eyebrow: string
++  title: string
++  intro: string
++}
++
++/**
++ * Single source of truth for every /learn/* subpage: used to build the
++ * header's hover dropdown, the in-page tab strip, and each page's
++ * topic-colored hero. Keeping one list means the nav and the Learn section
++ * itself can never drift out of sync.
++ */
++export const LEARN_TOPICS: LearnTopic[] = [
++  {
++    label: 'Overview',
++    to: '/learn',
++    end: true,
++    icon: BookOpen,
++    tint: 'brand',
++    eyebrow: 'Start here',
++    title: 'Why genetic testing may matter for you and your family',
++    intro: 'Guides to genetic testing for kidney disease, based on published research.',
++  },
++  {
++    label: 'Types of testing',
++    to: '/learn/testing-basics',
++    end: false,
++    icon: TestTubes,
++    tint: 'accent',
++    eyebrow: 'Types of testing',
++    title: 'A quick, simple test — not a scary procedure',
++    intro:
++      "Genetic testing usually starts with a cheek swab, not a complicated procedure. Here's what it looks like and what results can and can't tell you.",
++  },
++  {
++    label: 'How results help your care',
++    to: '/learn/how-it-helps',
++    end: false,
++    icon: Stethoscope,
++    tint: 'brand',
++    eyebrow: 'How results help',
++    title: 'How a result can guide your care',
++    intro: 'For many patients, a single result changes what happens next with their care team.',
++  },
++  {
++    label: 'Sharing with family',
++    to: '/learn/family-sharing',
++    end: false,
++    icon: Users,
++    tint: 'accent',
++    eyebrow: 'Sharing with family',
++    title: 'Sharing results with the people who share your DNA',
++    intro: 'A result about you is sometimes a result about your relatives, too.',
++  },
++  {
++    label: 'Kidney donors',
++    to: '/learn/kidney-donation',
++    end: false,
++    icon: HandHeart,
++    tint: 'plum',
++    eyebrow: 'Kidney donors',
++    title: "If you're considering donating a kidney",
++    intro: 'What genetic testing means for donor candidates, and why the order of testing matters.',
++  },
++  {
++    label: 'Your rights & choices',
++    to: '/learn/your-rights',
++    end: false,
++    icon: ShieldCheck,
++    tint: 'plum',
++    eyebrow: 'Your rights & choices',
++    title: 'Your rights, privacy, and choices',
++    intro:
++      "It's normal to wonder who can see a result and what happens to your DNA afterward. Here's what's protected — and where the gaps are.",
++  },
++]
+diff --git a/src/pages/Home.tsx b/src/pages/Home.tsx
+index d508eff..fe116e4 100644
+--- a/src/pages/Home.tsx
++++ b/src/pages/Home.tsx
+@@ -24,8 +24,8 @@ const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; toolti
+   {
+     icon: BookOpen,
+     tint: 'brand',
+-    label: 'Plain-language guides',
+-    tooltip: 'Short reads in everyday words.',
++    label: 'Guides to genetic testing',
++    tooltip: 'Short reads on what testing involves.',
+   },
+   {
+     icon: ListChecks,
+@@ -93,7 +93,7 @@ function HeroFeature({
+   return (
+     <li
+       ref={rootRef}
+-      className="relative flex items-center gap-4"
++      className="relative flex scale-100 items-center gap-4 transition-transform duration-150 hover:scale-[1.03]"
+       onMouseEnter={() => setOpen(true)}
+       onMouseLeave={() => {
+         if (document.activeElement !== buttonRef.current) setOpen(false)
+@@ -230,7 +230,7 @@ export function Home() {
+           {PATHS.map((path) => (
+             <Card
+               key={path.title}
+-              className="flex flex-col p-6 transition-all duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift sm:p-7 lg:p-8"
++              className="flex scale-100 flex-col p-6 transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.02] hover:shadow-lift sm:p-7 lg:p-8"
+             >
+               <IconChip icon={path.icon} tint={path.tint} className="size-[3.25rem]" />
+               <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">
+diff --git a/src/pages/learn/LearnLayout.tsx b/src/pages/learn/LearnLayout.tsx
+index 0d581f6..515c65f 100644
+--- a/src/pages/learn/LearnLayout.tsx
++++ b/src/pages/learn/LearnLayout.tsx
+@@ -1,94 +1,9 @@
+-import { BookOpen, HandHeart, ShieldCheck, Stethoscope, TestTubes, Users } from 'lucide-react'
+-import type { LucideIcon } from 'lucide-react'
+ import { NavLink, Outlet, useLocation } from 'react-router-dom'
+-import type { Tint } from '../../components/IconChip'
+ import { PageHero } from '../../components/PageHero'
+-
+-type LearnTab = {
+-  label: string
+-  to: string
+-  end: boolean
+-  icon: LucideIcon
+-  tint: Tint
+-  eyebrow: string
+-  title: string
+-  intro: string
+-}
+-
+-/**
+- * Each topic gets its own icon, tint, and hero copy — rendered dynamically
+- * below based on the active route. Content shifts color as you move
+- * between topics, while the tab nav underneath stays visually neutral so
+- * it always reads as the stable, clickable wayfinding element.
+- */
+-const TABS: LearnTab[] = [
+-  {
+-    label: 'Overview',
+-    to: '/learn',
+-    end: true,
+-    icon: BookOpen,
+-    tint: 'brand',
+-    eyebrow: 'Start here',
+-    title: 'Why genetic testing may matter for you and your family',
+-    intro:
+-      'Plain-language guides to genetic testing for kidney disease, based on published research.',
+-  },
+-  {
+-    label: 'Types of testing',
+-    to: '/learn/testing-basics',
+-    end: false,
+-    icon: TestTubes,
+-    tint: 'accent',
+-    eyebrow: 'Types of testing',
+-    title: 'A quick, simple test — not a scary procedure',
+-    intro:
+-      "Genetic testing usually starts with a cheek swab, not a complicated procedure. Here's what it looks like and what results can and can't tell you.",
+-  },
+-  {
+-    label: 'How results help your care',
+-    to: '/learn/how-it-helps',
+-    end: false,
+-    icon: Stethoscope,
+-    tint: 'brand',
+-    eyebrow: 'How results help',
+-    title: 'How a result can guide your care',
+-    intro: 'For many patients, a single result changes what happens next with their care team.',
+-  },
+-  {
+-    label: 'Sharing with family',
+-    to: '/learn/family-sharing',
+-    end: false,
+-    icon: Users,
+-    tint: 'accent',
+-    eyebrow: 'Sharing with family',
+-    title: 'Sharing results with the people who share your DNA',
+-    intro: 'A result about you is sometimes a result about your relatives, too.',
+-  },
+-  {
+-    label: 'Kidney donors',
+-    to: '/learn/kidney-donation',
+-    end: false,
+-    icon: HandHeart,
+-    tint: 'plum',
+-    eyebrow: 'Kidney donors',
+-    title: "If you're considering donating a kidney",
+-    intro: 'What genetic testing means for donor candidates, and why the order of testing matters.',
+-  },
+-  {
+-    label: 'Your rights & choices',
+-    to: '/learn/your-rights',
+-    end: false,
+-    icon: ShieldCheck,
+-    tint: 'plum',
+-    eyebrow: 'Your rights & choices',
+-    title: 'Your rights, privacy, and choices',
+-    intro:
+-      "It's normal to wonder who can see a result and what happens to your DNA afterward. Here's what's protected — and where the gaps are.",
+-  },
+-]
++import { LEARN_TOPICS } from '../../lib/learnTopics'
+ 
+ const tabClasses = ({ isActive }: { isActive: boolean }) =>
+-  `shrink-0 rounded-full px-4 py-2.5 text-[0.95rem] font-medium whitespace-nowrap transition-colors ${
++  `shrink-0 rounded-full px-4 py-2.5 text-[0.95rem] font-medium whitespace-nowrap transition-all duration-150 hover:scale-105 ${
+     isActive ? 'bg-brand text-on-brand' : 'bg-surface text-body hover:bg-brand-soft hover:text-ink'
+   }`
+ 
+@@ -100,7 +15,8 @@ const tabClasses = ({ isActive }: { isActive: boolean }) =>
+ export function LearnLayout() {
+   const { pathname } = useLocation()
+   const activeTab =
+-    TABS.find((tab) => (tab.end ? pathname === tab.to : pathname.startsWith(tab.to))) ?? TABS[0]
++    LEARN_TOPICS.find((tab) => (tab.end ? pathname === tab.to : pathname.startsWith(tab.to))) ??
++    LEARN_TOPICS[0]
+ 
+   return (
+     <>
+@@ -117,7 +33,7 @@ export function LearnLayout() {
+           aria-label="Learn topics"
+           className="mx-auto flex w-full max-w-6xl gap-2 overflow-x-auto px-5 py-4 sm:px-8"
+         >
+-          {TABS.map((tab) => (
++          {LEARN_TOPICS.map((tab) => (
+             <NavLink key={tab.to} to={tab.to} end={tab.end} className={tabClasses}>
+               {tab.label}
+             </NavLink>
+diff --git a/src/pages/learn/Overview.tsx b/src/pages/learn/Overview.tsx
+index 7b21950..4ac6f26 100644
+--- a/src/pages/learn/Overview.tsx
++++ b/src/pages/learn/Overview.tsx
+@@ -76,7 +76,10 @@ export function Overview() {
+       >
+         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+           {BENEFITS.map((benefit) => (
+-            <Card key={benefit.title} className="p-6 sm:p-7">
++            <Card
++              key={benefit.title}
++              className="scale-100 p-6 transition-transform duration-200 hover:scale-[1.03] sm:p-7"
++            >
+               <IconChip icon={benefit.icon} tint={benefit.tint} />
+               <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">
+                 {benefit.title}
+@@ -99,7 +102,7 @@ export function Overview() {
+               <p className="text-lg leading-relaxed text-body">
+                 GARNET is being created as part of a research project at Columbia University Irving
+                 Medical Center. Medical researchers and genetic counseling experts help shape the
+-                information you read here - in plain language, for patients and families.
++                information you read here for patients and families.
+               </p>
+               <div className="mt-8 flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 sm:p-5">
+                 <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-soft">
+-- 
+2.43.0
+

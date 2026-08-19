@@ -8,7 +8,7 @@ import { Sparkles } from 'lucide-react'
  */
 export function SimplicityBanner() {
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-accent/25 bg-accent-soft p-5 sm:p-6">
+    <div className="flex scale-100 items-center gap-4 rounded-2xl border border-accent/25 bg-accent-soft p-5 transition-transform duration-200 hover:scale-[1.015] sm:p-6">
       <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-surface text-accent shadow-soft">
         <Sparkles aria-hidden="true" className="size-5.5" />
       </span>
