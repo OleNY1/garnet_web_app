@@ -10,7 +10,6 @@ import {
   Signpost,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { useEffect, useId, useRef, useState } from 'react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { HeroVideo } from '../components/HeroVideo'
@@ -18,7 +17,6 @@ import type { Tint } from '../components/IconChip'
 import { IconChip } from '../components/IconChip'
 import { Section } from '../components/Section'
 import { TrustBadge } from '../components/TrustBadge'
-import { cx } from '../lib/cx'
 
 const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; tooltip: string }> = [
   {
@@ -48,9 +46,10 @@ const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; toolti
 ]
 
 /**
- * Hero card row whose description lives in a tooltip. The tooltip opens on
- * hover, keyboard focus, or tap; it closes on blur, Escape, or an outside
- * tap. Screen readers get the text through aria-describedby on the trigger.
+ * Hero card row. Previously the description lived in a hover/tap tooltip,
+ * but its absolute positioning overlapped the row below it. Now the
+ * description is always visible as a caption, and hovering the row just
+ * shifts its colors slightly — no popup, nothing to overlap.
  */
 function HeroFeature({
   icon,
@@ -63,72 +62,18 @@ function HeroFeature({
   label: string
   tooltip: string
 }) {
-  const tooltipId = useId()
-  const [open, setOpen] = useState(false)
-  const rootRef = useRef<HTMLLIElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
-  /* The info icon is glued to the last word so it always sits right after
-     the title text, even when the title wraps onto multiple lines. */
-  const words = label.split(' ')
-  const lastWord = words[words.length - 1]
-  const leadingWords = words.slice(0, -1).join(' ')
-
-  useEffect(() => {
-    if (!open) return
-    const onPointerDown = (event: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false)
-    }
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
-    }
-    document.addEventListener('pointerdown', onPointerDown)
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown)
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [open])
-
   return (
-    <li
-      ref={rootRef}
-      className="relative flex scale-100 items-center gap-4 transition-transform duration-150 hover:scale-[1.03]"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => {
-        if (document.activeElement !== buttonRef.current) setOpen(false)
-      }}
-      onClick={() => setOpen(true)}
-    >
-      <IconChip icon={icon} tint={tint} className="size-11 rounded-xl" />
+    <li className="group flex items-start gap-4 rounded-xl p-1.5 -m-1.5 transition-colors duration-150 hover:bg-wash">
+      <IconChip
+        icon={icon}
+        tint={tint}
+        className="size-11 shrink-0 rounded-xl transition-colors duration-150"
+      />
       <div>
-        <button
-          ref={buttonRef}
-          type="button"
-          aria-describedby={tooltipId}
-          onClick={() => setOpen(true)}
-          onFocus={() => setOpen(true)}
-          onBlur={() => setOpen(false)}
-          /* Vertical padding + negative margin: a 45px-tall tap target
-             without changing the visible row layout. */
-          className="-my-[0.6875rem] inline-block cursor-pointer rounded-md py-[0.6875rem] text-left text-[1.05rem] leading-snug font-semibold text-ink"
-        >
-          {leadingWords && `${leadingWords} `}
-          <span className="whitespace-nowrap">
-            {lastWord}
-            <Info aria-hidden="true" className="ml-1.5 inline size-4 align-[-0.15em] text-muted" />
-          </span>
-        </button>
-        <span
-          role="tooltip"
-          id={tooltipId}
-          className={cx(
-            'absolute top-full right-0 left-0 z-20 mt-1.5 rounded-xl bg-ink px-4 py-3 text-[0.95rem] leading-normal font-medium text-bg shadow-lift transition-opacity duration-150',
-            open ? 'opacity-100' : 'pointer-events-none opacity-0',
-          )}
-        >
-          {tooltip}
-        </span>
+        <p className="text-[1.05rem] leading-snug font-semibold text-ink transition-colors duration-150 group-hover:text-brand-strong">
+          {label}
+        </p>
+        <p className="mt-0.5 text-[0.92rem] leading-snug text-muted">{tooltip}</p>
       </div>
     </li>
   )
