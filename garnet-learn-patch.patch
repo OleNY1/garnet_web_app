@@ -1,0 +1,929 @@
+From 0e4343c2caef854d604b42b10fd6eb63962232f5 Mon Sep 17 00:00:00 2001
+From: Quinby Janes <quinby@garnet-project.local>
+Date: Wed, 19 Aug 2026 18:19:49 +0000
+Subject: [PATCH] Learn pages: per-topic color, purpose-built infographics,
+ flyer-study alignment
+
+---
+ src/components/Footer.tsx                 |   2 +-
+ src/components/learn/BarCompare.tsx       |  38 ++++++++
+ src/components/learn/CTARow.tsx           |  28 ++++++
+ src/components/learn/FlowDiagram.tsx      |  40 ++++++++
+ src/components/learn/JourneyPicker.tsx    |  54 +++++++++++
+ src/components/learn/ProtectionGrid.tsx   |  46 +++++++++
+ src/components/learn/SimplicityBanner.tsx |  20 ++++
+ src/components/learn/StatGrid.tsx         |  30 ++++++
+ src/pages/NextSteps.tsx                   |  38 ++++++--
+ src/pages/learn/FamilySharing.tsx         |  29 ++++--
+ src/pages/learn/HowItHelps.tsx            |  17 +++-
+ src/pages/learn/KidneyDonation.tsx        |  29 +++++-
+ src/pages/learn/LearnLayout.tsx           | 113 +++++++++++++++++++---
+ src/pages/learn/Overview.tsx              |  26 ++++-
+ src/pages/learn/TestingBasics.tsx         |  36 +++++--
+ src/pages/learn/YourRights.tsx            |  35 +++++--
+ 16 files changed, 520 insertions(+), 61 deletions(-)
+ create mode 100644 src/components/learn/BarCompare.tsx
+ create mode 100644 src/components/learn/CTARow.tsx
+ create mode 100644 src/components/learn/FlowDiagram.tsx
+ create mode 100644 src/components/learn/JourneyPicker.tsx
+ create mode 100644 src/components/learn/ProtectionGrid.tsx
+ create mode 100644 src/components/learn/SimplicityBanner.tsx
+ create mode 100644 src/components/learn/StatGrid.tsx
+
+diff --git a/src/components/Footer.tsx b/src/components/Footer.tsx
+index 1774408..76ee404 100644
+--- a/src/components/Footer.tsx
++++ b/src/components/Footer.tsx
+@@ -39,7 +39,7 @@ export function Footer() {
+             </div>
+             <p className="mt-5 max-w-md leading-relaxed">
+               A patient education website created as part of a research project at Columbia
+-              University Irving Medical Center.
++              University Irving Medical Center, supported by the National Kidney Foundation.
+             </p>
+             <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-footer-line px-4 py-2 text-[0.95rem] font-medium text-footer-ink">
+               <BadgeCheck aria-hidden="true" className="size-4.5 shrink-0 text-[#8fd0df]" />
+diff --git a/src/components/learn/BarCompare.tsx b/src/components/learn/BarCompare.tsx
+new file mode 100644
+index 0000000..e3b13bf
+--- /dev/null
++++ b/src/components/learn/BarCompare.tsx
+@@ -0,0 +1,38 @@
++import type { Tint } from '../IconChip'
++import { tints } from '../IconChip'
++
++type Row = {
++  label: string
++  percent: number
++  display: string
++}
++
++const fillClasses: Record<Tint, string> = {
++  brand: 'bg-brand',
++  accent: 'bg-accent',
++  plum: 'bg-plum',
++}
++
++/** Horizontal proportion bars, for visualizing cited percentages side by side. */
++export function BarCompare({ tint, rows }: { tint: Tint; rows: Row[] }) {
++  return (
++    <div className="flex flex-col gap-4">
++      {rows.map((row) => (
++        <div key={row.label}>
++          <div className="mb-1.5 flex items-baseline justify-between gap-3">
++            <span className="text-[0.98rem] font-medium text-ink">{row.label}</span>
++            <span className={`shrink-0 font-display text-[1.05rem] font-bold ${tints[tint].icon}`}>
++              {row.display}
++            </span>
++          </div>
++          <div className="h-2.5 w-full overflow-hidden rounded-full bg-wash">
++            <div
++              className={`h-full rounded-full ${fillClasses[tint]}`}
++              style={{ width: `${Math.min(100, Math.max(4, row.percent))}%` }}
++            />
++          </div>
++        </div>
++      ))}
++    </div>
++  )
++}
+diff --git a/src/components/learn/CTARow.tsx b/src/components/learn/CTARow.tsx
+new file mode 100644
+index 0000000..2f2a9d3
+--- /dev/null
++++ b/src/components/learn/CTARow.tsx
+@@ -0,0 +1,28 @@
++import { ArrowRight } from 'lucide-react'
++import { Button } from '../Button'
++import type { Tint } from '../IconChip'
++import { tints } from '../IconChip'
++
++/**
++ * Patients in the flyer study wanted a way to move from awareness to
++ * action on their own, without waiting on a doctor. Every Learn article
++ * ends with this so the next step is never more than one tap away.
++ */
++export function CTARow({ tint }: { tint: Tint }) {
++  return (
++    <div className={`mt-12 flex flex-col items-start gap-4 rounded-2xl ${tints[tint].chip} p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7`}>
++      <p className="text-[1.05rem] leading-snug font-semibold text-ink">
++        Ready to see if this applies to you?
++      </p>
++      <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
++        <Button href="/check" variant="secondary" size="md">
++          Check if testing may help
++          <ArrowRight aria-hidden="true" className="size-4.5" />
++        </Button>
++        <Button href="/next-steps" variant="quiet" size="md">
++          See next steps
++        </Button>
++      </div>
++    </div>
++  )
++}
+diff --git a/src/components/learn/FlowDiagram.tsx b/src/components/learn/FlowDiagram.tsx
+new file mode 100644
+index 0000000..e49c891
+--- /dev/null
++++ b/src/components/learn/FlowDiagram.tsx
+@@ -0,0 +1,40 @@
++import { ArrowDown, ArrowRight } from 'lucide-react'
++import type { LucideIcon } from 'lucide-react'
++import type { Tint } from '../IconChip'
++import { tints } from '../IconChip'
++
++type Step = {
++  icon: LucideIcon
++  label: string
++  caption: string
++}
++
++/** Connected step sequence — for processes with a real order (testing types, donor pathway). */
++export function FlowDiagram({ tint, steps }: { tint: Tint; steps: Step[] }) {
++  return (
++    <div className="flex flex-col items-stretch gap-0 sm:flex-row sm:items-start sm:gap-0">
++      {steps.map((step, index) => (
++        <div key={step.label} className="flex flex-1 flex-col items-center sm:flex-row">
++          <div className="flex w-full flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center">
++            <span
++              className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${tints[tint].chip}`}
++            >
++              <step.icon aria-hidden="true" className={`size-[55%] ${tints[tint].icon}`} />
++            </span>
++            <p className="mt-3 text-[1rem] leading-snug font-semibold text-ink">{step.label}</p>
++            <p className="mt-1.5 text-[0.9rem] leading-snug text-muted">{step.caption}</p>
++          </div>
++          {index < steps.length - 1 && (
++            <>
++              <ArrowDown aria-hidden="true" className="my-2 size-5 shrink-0 text-muted sm:hidden" />
++              <ArrowRight
++                aria-hidden="true"
++                className="mx-2 hidden size-5 shrink-0 self-center text-muted sm:block"
++              />
++            </>
++          )}
++        </div>
++      ))}
++    </div>
++  )
++}
+diff --git a/src/components/learn/JourneyPicker.tsx b/src/components/learn/JourneyPicker.tsx
+new file mode 100644
+index 0000000..ec93eef
+--- /dev/null
++++ b/src/components/learn/JourneyPicker.tsx
+@@ -0,0 +1,54 @@
++import { Compass, HandHeart, Stethoscope } from 'lucide-react'
++import type { LucideIcon } from 'lucide-react'
++import { Link } from 'react-router-dom'
++import type { Tint } from '../IconChip'
++import { IconChip } from '../IconChip'
++
++/**
++ * Patients in the flyer study said one version of the material can't serve
++ * everyone — someone newly diagnosed needs different information than
++ * someone further along. This doesn't build a full personalization system,
++ * but it does let a visitor self-sort into the Learn page most relevant to
++ * where they are, right from the Overview page.
++ */
++const PATHS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string; to: string }> = [
++  {
++    icon: Compass,
++    tint: 'brand',
++    title: 'Newly diagnosed',
++    text: 'Start with the basics: what testing looks at and what it can and can\u2019t tell you.',
++    to: '/learn/testing-basics',
++  },
++  {
++    icon: Stethoscope,
++    tint: 'accent',
++    title: 'Already managing kidney disease',
++    text: 'See how a result could change your care, and how it\u2019s helped others.',
++    to: '/learn/how-it-helps',
++  },
++  {
++    icon: HandHeart,
++    tint: 'plum',
++    title: 'Thinking about family or donation',
++    text: 'Learn how to share a result with relatives, or what it means for a living donor.',
++    to: '/learn/family-sharing',
++  },
++]
++
++export function JourneyPicker() {
++  return (
++    <div className="grid gap-4 sm:grid-cols-3">
++      {PATHS.map((path) => (
++        <Link
++          key={path.title}
++          to={path.to}
++          className="group flex flex-col rounded-2xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 motion-safe:hover:-translate-y-1 hover:shadow-lift sm:p-6"
++        >
++          <IconChip icon={path.icon} tint={path.tint} />
++          <p className="mt-4 text-[1.05rem] leading-snug font-semibold text-ink">{path.title}</p>
++          <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{path.text}</p>
++        </Link>
++      ))}
++    </div>
++  )
++}
+diff --git a/src/components/learn/ProtectionGrid.tsx b/src/components/learn/ProtectionGrid.tsx
+new file mode 100644
+index 0000000..a5ad5b8
+--- /dev/null
++++ b/src/components/learn/ProtectionGrid.tsx
+@@ -0,0 +1,46 @@
++import { CircleCheck, CircleX } from 'lucide-react'
++
++const PROTECTED = [
++  'Health insurers can\u2019t use it to deny coverage or raise your rates',
++  'Most employers can\u2019t use it in hiring, firing, or promotion decisions',
++]
++
++const NOT_COVERED = [
++  'Life insurance and disability insurance',
++  'Very small employers (under 15 people)',
++  'The U.S. military and VA benefits',
++]
++
++/** Side-by-side view of what GINA protects versus where its coverage stops. */
++export function ProtectionGrid() {
++  return (
++    <div className="grid gap-4 sm:grid-cols-2">
++      <div className="rounded-2xl border border-line bg-brand-soft p-5 sm:p-6">
++        <h4 className="text-[0.95rem] font-bold tracking-[0.08em] text-brand uppercase">
++          What GINA protects
++        </h4>
++        <ul className="mt-3 flex flex-col gap-2.5">
++          {PROTECTED.map((item) => (
++            <li key={item} className="flex items-start gap-2.5">
++              <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />
++              <span className="text-[0.98rem] leading-snug text-ink">{item}</span>
++            </li>
++          ))}
++        </ul>
++      </div>
++      <div className="rounded-2xl border border-line bg-accent-soft p-5 sm:p-6">
++        <h4 className="text-[0.95rem] font-bold tracking-[0.08em] text-accent uppercase">
++          Where its coverage stops
++        </h4>
++        <ul className="mt-3 flex flex-col gap-2.5">
++          {NOT_COVERED.map((item) => (
++            <li key={item} className="flex items-start gap-2.5">
++              <CircleX aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-accent" />
++              <span className="text-[0.98rem] leading-snug text-ink">{item}</span>
++            </li>
++          ))}
++        </ul>
++      </div>
++    </div>
++  )
++}
+diff --git a/src/components/learn/SimplicityBanner.tsx b/src/components/learn/SimplicityBanner.tsx
+new file mode 100644
+index 0000000..7cac6f8
+--- /dev/null
++++ b/src/components/learn/SimplicityBanner.tsx
+@@ -0,0 +1,20 @@
++import { Sparkles } from 'lucide-react'
++
++/**
++ * Patients in the flyer study said seeing testing shown as a quick cheek
++ * swab — instead of a blood draw or "medical procedure" — made it feel
++ * less intimidating. This banner leads with that framing wherever testing
++ * is first introduced.
++ */
++export function SimplicityBanner() {
++  return (
++    <div className="flex items-center gap-4 rounded-2xl border border-accent/25 bg-accent-soft p-5 sm:p-6">
++      <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-surface text-accent shadow-soft">
++        <Sparkles aria-hidden="true" className="size-5.5" />
++      </span>
++      <p className="text-[1.02rem] leading-snug font-medium text-ink">
++        For most people, testing means a quick cheek swab — not a blood draw or a procedure.
++      </p>
++    </div>
++  )
++}
+diff --git a/src/components/learn/StatGrid.tsx b/src/components/learn/StatGrid.tsx
+new file mode 100644
+index 0000000..095573a
+--- /dev/null
++++ b/src/components/learn/StatGrid.tsx
+@@ -0,0 +1,30 @@
++import type { Tint } from '../IconChip'
++import { tints } from '../IconChip'
++
++type Stat = {
++  value: string
++  label: string
++}
++
++/**
++ * Big-number stat cards. Used to visualize a figure already cited in the
++ * surrounding text (never a new, uncited claim) so a skimming reader gets
++ * the headline number before deciding whether to read the paragraph.
++ */
++export function StatGrid({ tint, stats }: { tint: Tint; stats: Stat[] }) {
++  return (
++    <div className="grid gap-4 sm:grid-cols-3">
++      {stats.map((stat) => (
++        <div
++          key={stat.label}
++          className={`rounded-2xl border border-line ${tints[tint].chip} p-5 text-center sm:p-6`}
++        >
++          <p className={`font-display text-[2rem] leading-none font-bold sm:text-[2.3rem] ${tints[tint].icon}`}>
++            {stat.value}
++          </p>
++          <p className="mt-2.5 text-[0.95rem] leading-snug font-medium text-ink">{stat.label}</p>
++        </div>
++      ))}
++    </div>
++  )
++}
+diff --git a/src/pages/NextSteps.tsx b/src/pages/NextSteps.tsx
+index 91aab30..da66c85 100644
+--- a/src/pages/NextSteps.tsx
++++ b/src/pages/NextSteps.tsx
+@@ -1,9 +1,10 @@
+-import { Signpost, TestTubes, ShieldCheck, Wallet } from 'lucide-react'
++import { Landmark, Signpost, Stethoscope, TestTubes, ShieldCheck, Wallet } from 'lucide-react'
+ import { Card } from '../components/Card'
+ import { IconChip } from '../components/IconChip'
+ import { PageHero } from '../components/PageHero'
+ import { Section } from '../components/Section'
+ import { StepCard } from '../components/StepCard'
++import { TrustBadge } from '../components/TrustBadge'
+ 
+ const STEPS = [
+   { title: 'Learn', text: 'Read simple information about genetic testing and counseling.' },
+@@ -30,6 +31,12 @@ export function NextSteps() {
+         intro="Learn how to talk with your doctor or a genetic counselor, ask about cost, and prepare for testing."
+       />
+ 
++      <Section id="trust-strip" className="!py-8">
++        <div className="flex flex-wrap items-center justify-center gap-3">
++          <TrustBadge icon={Landmark}>Columbia University Irving Medical Center research project</TrustBadge>
++        </div>
++      </Section>
++
+       <Section
+         id="how-it-works"
+         eyebrow="What to expect"
+@@ -68,26 +75,37 @@ export function NextSteps() {
+         id="cost-privacy"
+         tone="wash"
+         eyebrow="Common questions"
+-        title="Cost and privacy"
+-        intro="Two things patients ask about most."
++        title="Cost, referrals, and privacy"
++        intro="The practical questions patients ask about most."
+       >
+-        <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
+-          <Card className="p-7 sm:p-9">
++        <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
++          <Card className="p-7 sm:p-8">
++            <IconChip icon={Stethoscope} tint="plum" className="size-[3.25rem]" />
++            <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
++              Getting a referral
++            </h3>
++            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
++              Your nephrologist or primary care doctor can refer you to a genetic counselor or a
++              genetics clinic. Eligibility varies, so it's worth asking your doctor directly
++              whether testing could be relevant for you.
++            </p>
++          </Card>
++          <Card className="p-7 sm:p-8">
+             <IconChip icon={Wallet} tint="plum" className="size-[3.25rem]" />
+-            <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">
++            <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
+               Cost and insurance
+             </h3>
+-            <p className="mt-3 text-[1.05rem] leading-relaxed text-body">
++            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
+               Genetic testing may be covered by insurance, and financial assistance may be
+               available. Costs vary, so it is important to ask before testing.
+             </p>
+           </Card>
+-          <Card className="p-7 sm:p-9">
++          <Card className="p-7 sm:p-8">
+             <IconChip icon={ShieldCheck} tint="plum" className="size-[3.25rem]" />
+-            <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">
++            <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
+               Privacy and legal protections
+             </h3>
+-            <p className="mt-3 text-[1.05rem] leading-relaxed text-body">
++            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
+               Genetic information is personal. GARNET explains privacy, genetic discrimination, and
+               legal protections in simple language.
+             </p>
+diff --git a/src/pages/learn/FamilySharing.tsx b/src/pages/learn/FamilySharing.tsx
+index 1215615..eda4b85 100644
+--- a/src/pages/learn/FamilySharing.tsx
++++ b/src/pages/learn/FamilySharing.tsx
+@@ -1,30 +1,39 @@
+ import { Cite } from '../../components/Cite'
++import { BarCompare } from '../../components/learn/BarCompare'
++import { CTARow } from '../../components/learn/CTARow'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
++const SHARING_ROWS = [
++  { label: 'Told all close relatives within 6 months', percent: 34, display: '34%' },
++  { label: 'Close relatives who were never told at all', percent: 39, display: '39%' },
++  { label: 'Shared with all relatives — told by a genetics specialist', percent: 50, display: '~50%' },
++  { label: 'Shared with all relatives — told by a non-genetics doctor', percent: 10, display: '~10%' },
++]
++
+ export function FamilySharing() {
+   return (
+     <>
+-      <Section id="family-sharing" title="Sharing results with your family">
++      <Section id="family-sharing" title="How families actually share results">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+           <p>
+             A genetic result doesn't only affect you — close relatives share some of the same DNA,
+             so a finding can matter for them too. But research shows that sharing results within
+-            families is inconsistent. In a study of 279 people who received a kidney-related
+-            genetic result, only about a third (34%) had told all of their close relatives by six
+-            months later, and more than a third of close relatives overall (39%) were never told at
+-            all.
++            families is inconsistent.
+             <Cite n={1} />
+           </p>
++
++          <BarCompare tint="accent" rows={SHARING_ROWS} />
++
+           <p>
+             Sharing wasn't even across relatives. People were more likely to tell their siblings
+             and children than their parents.
+             <Cite n={1} />
+           </p>
+           <p>
+-            Who explains the result seems to matter. People who received their results from a
+-            genetics specialist were far more likely to share with all their relatives (about half
+-            did) than people who heard from a doctor without genetics training (about 1 in 10 did).
++            Who explains the result seems to matter: people who received their results from a
++            genetics specialist were far more likely to share with all their relatives than people
++            who heard from a doctor without genetics training.
+             <Cite n={1} />
+           </p>
+ 
+@@ -52,6 +61,10 @@ export function FamilySharing() {
+           </p>
+         </div>
+ 
++        <div className="mx-auto max-w-3xl">
++          <CTARow tint="accent" />
++        </div>
++
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/HowItHelps.tsx b/src/pages/learn/HowItHelps.tsx
+index 5866826..9124209 100644
+--- a/src/pages/learn/HowItHelps.tsx
++++ b/src/pages/learn/HowItHelps.tsx
+@@ -1,11 +1,19 @@
+ import { Cite } from '../../components/Cite'
++import { CTARow } from '../../components/learn/CTARow'
++import { StatGrid } from '../../components/learn/StatGrid'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
++const IMPACT_STATS = [
++  { value: '1 in 5', label: 'patients with CKD had a positive genetic finding' },
++  { value: '9 in 10', label: "had their doctor's care plan change because of it" },
++  { value: '86%', label: 'said testing was helpful, among those with a positive result' },
++]
++
+ export function HowItHelps() {
+   return (
+     <>
+-      <Section id="how-it-helps" tone="wash" title="How results can guide your care">
++      <Section id="how-it-helps" tone="wash" title="What the research shows">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+           <p>
+             In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
+@@ -14,6 +22,9 @@ export function HowItHelps() {
+             earlier one.
+             <Cite n={1} />
+           </p>
++
++          <StatGrid tint="brand" stats={IMPACT_STATS} />
++
+           <p>
+             The same study found that a positive result changed how doctors managed care for about
+             9 in 10 patients, including an actual change in treatment plan for roughly a third. A
+@@ -48,6 +59,10 @@ export function HowItHelps() {
+           </p>
+         </div>
+ 
++        <div className="mx-auto max-w-3xl">
++          <CTARow tint="brand" />
++        </div>
++
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/KidneyDonation.tsx b/src/pages/learn/KidneyDonation.tsx
+index d53dbd3..703d600 100644
+--- a/src/pages/learn/KidneyDonation.tsx
++++ b/src/pages/learn/KidneyDonation.tsx
+@@ -1,11 +1,20 @@
++import { HeartHandshake, Search, Stethoscope } from 'lucide-react'
+ import { Cite } from '../../components/Cite'
++import { CTARow } from '../../components/learn/CTARow'
++import { FlowDiagram } from '../../components/learn/FlowDiagram'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
++const DONATION_STEPS = [
++  { icon: Stethoscope, label: 'Affected relative tested first', caption: 'The person with kidney disease' },
++  { icon: Search, label: 'Exact cause identified', caption: 'A specific genetic finding, if there is one' },
++  { icon: HeartHandshake, label: 'Donor candidate tested for that finding', caption: 'Only for the specific variant found' },
++]
++
+ export function KidneyDonation() {
+   return (
+     <>
+-      <Section id="kidney-donation" tone="wash" title="If you're considering donating a kidney">
++      <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+           <p>
+             Living kidney donors already face a higher lifetime risk of kidney failure than similar
+@@ -28,10 +37,16 @@ export function KidneyDonation() {
+           <p>
+             The recommended approach is sequential: test the relative who already has kidney
+             disease first, to pin down the exact genetic cause, and only then test the healthy
+-            donor candidate for that specific finding. Testing a healthy candidate directly,
+-            without first confirming the cause in an affected relative, is generally discouraged —
+-            it's more likely to turn up confusing or misleading results in someone who was never at
+-            meaningful risk to begin with.
++            donor candidate for that specific finding.
++            <Cite n={1} />
++          </p>
++
++          <FlowDiagram tint="plum" steps={DONATION_STEPS} />
++
++          <p>
++            Testing a healthy candidate directly, without first confirming the cause in an
++            affected relative, is generally discouraged — it's more likely to turn up confusing or
++            misleading results in someone who was never at meaningful risk to begin with.
+             <Cite n={1} />
+           </p>
+           <p>
+@@ -54,6 +69,10 @@ export function KidneyDonation() {
+           </p>
+         </div>
+ 
++        <div className="mx-auto max-w-3xl">
++          <CTARow tint="plum" />
++        </div>
++
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/LearnLayout.tsx b/src/pages/learn/LearnLayout.tsx
+index 4f5efa1..0d581f6 100644
+--- a/src/pages/learn/LearnLayout.tsx
++++ b/src/pages/learn/LearnLayout.tsx
+@@ -1,14 +1,90 @@
+-import { BookOpen } from 'lucide-react'
+-import { NavLink, Outlet } from 'react-router-dom'
++import { BookOpen, HandHeart, ShieldCheck, Stethoscope, TestTubes, Users } from 'lucide-react'
++import type { LucideIcon } from 'lucide-react'
++import { NavLink, Outlet, useLocation } from 'react-router-dom'
++import type { Tint } from '../../components/IconChip'
+ import { PageHero } from '../../components/PageHero'
+ 
+-const TABS = [
+-  { label: 'Overview', to: '/learn', end: true },
+-  { label: 'Types of testing', to: '/learn/testing-basics' },
+-  { label: 'How results help your care', to: '/learn/how-it-helps' },
+-  { label: 'Sharing with family', to: '/learn/family-sharing' },
+-  { label: 'Kidney donors', to: '/learn/kidney-donation' },
+-  { label: 'Your rights & choices', to: '/learn/your-rights' },
++type LearnTab = {
++  label: string
++  to: string
++  end: boolean
++  icon: LucideIcon
++  tint: Tint
++  eyebrow: string
++  title: string
++  intro: string
++}
++
++/**
++ * Each topic gets its own icon, tint, and hero copy — rendered dynamically
++ * below based on the active route. Content shifts color as you move
++ * between topics, while the tab nav underneath stays visually neutral so
++ * it always reads as the stable, clickable wayfinding element.
++ */
++const TABS: LearnTab[] = [
++  {
++    label: 'Overview',
++    to: '/learn',
++    end: true,
++    icon: BookOpen,
++    tint: 'brand',
++    eyebrow: 'Start here',
++    title: 'Why genetic testing may matter for you and your family',
++    intro:
++      'Plain-language guides to genetic testing for kidney disease, based on published research.',
++  },
++  {
++    label: 'Types of testing',
++    to: '/learn/testing-basics',
++    end: false,
++    icon: TestTubes,
++    tint: 'accent',
++    eyebrow: 'Types of testing',
++    title: 'A quick, simple test — not a scary procedure',
++    intro:
++      "Genetic testing usually starts with a cheek swab, not a complicated procedure. Here's what it looks like and what results can and can't tell you.",
++  },
++  {
++    label: 'How results help your care',
++    to: '/learn/how-it-helps',
++    end: false,
++    icon: Stethoscope,
++    tint: 'brand',
++    eyebrow: 'How results help',
++    title: 'How a result can guide your care',
++    intro: 'For many patients, a single result changes what happens next with their care team.',
++  },
++  {
++    label: 'Sharing with family',
++    to: '/learn/family-sharing',
++    end: false,
++    icon: Users,
++    tint: 'accent',
++    eyebrow: 'Sharing with family',
++    title: 'Sharing results with the people who share your DNA',
++    intro: 'A result about you is sometimes a result about your relatives, too.',
++  },
++  {
++    label: 'Kidney donors',
++    to: '/learn/kidney-donation',
++    end: false,
++    icon: HandHeart,
++    tint: 'plum',
++    eyebrow: 'Kidney donors',
++    title: "If you're considering donating a kidney",
++    intro: 'What genetic testing means for donor candidates, and why the order of testing matters.',
++  },
++  {
++    label: 'Your rights & choices',
++    to: '/learn/your-rights',
++    end: false,
++    icon: ShieldCheck,
++    tint: 'plum',
++    eyebrow: 'Your rights & choices',
++    title: 'Your rights, privacy, and choices',
++    intro:
++      "It's normal to wonder who can see a result and what happens to your DNA afterward. Here's what's protected — and where the gaps are.",
++  },
+ ]
+ 
+ const tabClasses = ({ isActive }: { isActive: boolean }) =>
+@@ -17,18 +93,23 @@ const tabClasses = ({ isActive }: { isActive: boolean }) =>
+   }`
+ 
+ /**
+- * Shared shell for every /learn/* page: one PageHero banner and one row of
+- * topic tabs, rendered here so individual topic pages never repeat them.
++ * Shared shell for every /learn/* page: a topic-colored hero (content
++ * driven by the active route) and one row of topic tabs, rendered here so
++ * individual topic pages never repeat them.
+  */
+ export function LearnLayout() {
++  const { pathname } = useLocation()
++  const activeTab =
++    TABS.find((tab) => (tab.end ? pathname === tab.to : pathname.startsWith(tab.to))) ?? TABS[0]
++
+   return (
+     <>
+       <PageHero
+-        icon={BookOpen}
+-        tint="brand"
+-        eyebrow="Learn"
+-        title="Learn about genetic testing"
+-        intro="Plain-language guides to genetic testing for kidney disease, based on published research."
++        icon={activeTab.icon}
++        tint={activeTab.tint}
++        eyebrow={activeTab.eyebrow}
++        title={activeTab.title}
++        intro={activeTab.intro}
+       />
+ 
+       <div className="border-b border-line bg-surface">
+diff --git a/src/pages/learn/Overview.tsx b/src/pages/learn/Overview.tsx
+index 6871bf7..7b21950 100644
+--- a/src/pages/learn/Overview.tsx
++++ b/src/pages/learn/Overview.tsx
+@@ -1,9 +1,12 @@
+ import { BadgeCheck, Compass, HandHeart, Landmark, Search, Stethoscope, Users } from 'lucide-react'
+ import type { LucideIcon } from 'lucide-react'
+ import { Card } from '../../components/Card'
++import { CTARow } from '../../components/learn/CTARow'
++import { JourneyPicker } from '../../components/learn/JourneyPicker'
+ import type { Tint } from '../../components/IconChip'
+ import { IconChip } from '../../components/IconChip'
+ import { Section } from '../../components/Section'
++import { TrustBadge } from '../../components/TrustBadge'
+ 
+ const BENEFITS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string }> = [
+   {
+@@ -48,10 +51,27 @@ const TRUST_POINTS = [
+ export function Overview() {
+   return (
+     <>
++      <Section id="trust-strip" className="!py-10">
++        <div className="flex flex-wrap items-center justify-center gap-3">
++          <TrustBadge icon={Landmark}>Columbia University Irving Medical Center research project</TrustBadge>
++          <TrustBadge icon={BadgeCheck}>Supported by the National Kidney Foundation</TrustBadge>
++        </div>
++      </Section>
++
++      <Section
++        id="find-your-path"
++        tone="wash"
++        eyebrow="Where are you today?"
++        title="Start with what's relevant to you"
++        intro="Everyone's informational needs are different depending on where they are in their kidney disease journey. Pick what fits best."
++      >
++        <JourneyPicker />
++      </Section>
++
+       <Section
+         id="why-it-matters"
+         eyebrow="Why it matters"
+-        title="Why genetic testing may matter"
++        title="How it could help you"
+         intro="One question matters most: how could this help you or your family?"
+       >
+         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+@@ -105,6 +125,10 @@ export function Overview() {
+             </ul>
+           </div>
+         </Card>
++
++        <div className="mx-auto mt-10 max-w-3xl">
++          <CTARow tint="brand" />
++        </div>
+       </Section>
+     </>
+   )
+diff --git a/src/pages/learn/TestingBasics.tsx b/src/pages/learn/TestingBasics.tsx
+index 4c95b3d..341aa11 100644
+--- a/src/pages/learn/TestingBasics.tsx
++++ b/src/pages/learn/TestingBasics.tsx
+@@ -1,11 +1,22 @@
++import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
+ import { Cite } from '../../components/Cite'
++import { CTARow } from '../../components/learn/CTARow'
++import { FlowDiagram } from '../../components/learn/FlowDiagram'
++import { SimplicityBanner } from '../../components/learn/SimplicityBanner'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
++const TEST_TYPES = [
++  { icon: TestTube, label: 'Single-gene test', caption: 'One gene, already suspected' },
++  { icon: Layers, label: 'Gene panel', caption: 'A group of genes for one disease category' },
++  { icon: ScanSearch, label: 'Exome sequencing', caption: 'The protein-making parts of nearly all genes' },
++  { icon: Dna, label: 'Genome sequencing', caption: "Essentially all of a person's DNA" },
++]
++
+ export function TestingBasics() {
+   return (
+     <>
+-      <Section id="testing-basics" title="What genetic testing can and can't tell you">
++      <Section id="testing-basics" title="What the tests look for">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+           <p>
+             Genetic causes explain a meaningful share of kidney disease. Studies suggest a genetic
+@@ -13,17 +24,20 @@ export function TestingBasics() {
+             10 children.
+             <Cite n={1} />
+           </p>
++
++          <SimplicityBanner />
++
+           <p>
+-            Not every genetic test looks at the same amount of DNA. A single-gene test checks one
+-            gene already suspected from a family history or symptoms. A gene panel checks a larger
+-            group of genes linked to a category of kidney disease, such as cystic kidney disease.
+-            Exome sequencing reads the protein-making parts of nearly all genes, and genome
+-            sequencing reads essentially all of a person's DNA. Broader tests can find more, but
+-            they also take longer to process and can turn up findings unrelated to your kidneys.
++            Not every genetic test looks at the same amount of DNA. Broader tests can find more,
++            but they also take longer to process and can turn up findings unrelated to your
++            kidneys.
+             <Cite n={1} />
+           </p>
++
++          <FlowDiagram tint="accent" steps={TEST_TYPES} />
++
+           <p>
+-            Testing itself is simple: most labs need only a blood draw or a cheek swab.
++            Testing itself is simple: many labs only need a cheek swab, not a blood draw.
+             <Cite n={2} />
+           </p>
+ 
+@@ -36,7 +50,7 @@ export function TestingBasics() {
+             testing, but doctors are more likely to recommend it when someone has:
+             <Cite n={2} />
+           </p>
+-          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
++          <ul className="list-disc space-y-2 pl-6 marker:text-accent">
+             <li>Kidney disease that started young, progressed unusually fast, or was unusually severe</li>
+             <li>Other organs affected alongside the kidneys, not just as a result of kidney failure</li>
+             <li>A family history of kidney disease</li>
+@@ -66,6 +80,10 @@ export function TestingBasics() {
+           </p>
+         </div>
+ 
++        <div className="mx-auto max-w-3xl">
++          <CTARow tint="accent" />
++        </div>
++
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/YourRights.tsx b/src/pages/learn/YourRights.tsx
+index f74e182..bac943c 100644
+--- a/src/pages/learn/YourRights.tsx
++++ b/src/pages/learn/YourRights.tsx
+@@ -1,11 +1,13 @@
+ import { Cite } from '../../components/Cite'
++import { CTARow } from '../../components/learn/CTARow'
++import { ProtectionGrid } from '../../components/learn/ProtectionGrid'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
+ export function YourRights() {
+   return (
+     <>
+-      <Section id="your-rights" title="Your rights, privacy, and choices">
++      <Section id="your-rights" title="Making an informed, personal choice">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+           <p>
+             Whether to learn your genetic results — from a research study or from clinical testing
+@@ -14,6 +16,15 @@ export function YourRights() {
+             patients' autonomy.
+             <Cite n={1} />
+           </p>
++          <p>
++            A common worry is what happens to your DNA after testing — whether it's stored,
++            shared, or used without your knowledge. Before any research or clinical test, you
++            should be told in plain terms who will see your results, whether your sample is kept
++            or destroyed, and whether you can withdraw your consent later. Asking your genetic
++            counselor or study coordinator these questions directly is a normal, expected part of
++            the process — not an imposition.
++            <Cite n={1} />
++          </p>
+           <p>
+             Genetic counselors are best equipped to walk patients through what a result means, but
+             there currently aren't enough of them to meet demand, so other clinicians are often
+@@ -31,6 +42,16 @@ export function YourRights() {
+             <Cite n={1} />
+           </p>
+ 
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Legal protections</h3>
++          <p>
++            In the United States, a federal law called the Genetic Information Nondiscrimination
++            Act (GINA) stops health insurers and most employers from discriminating against you
++            based on genetic test results. It has real gaps, though:
++            <Cite n={2} />
++          </p>
++
++          <ProtectionGrid />
++
+           <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+             Family planning options
+           </h3>
+@@ -48,16 +69,10 @@ export function YourRights() {
+             being far more expensive over time.
+             <Cite n={1} />
+           </p>
++        </div>
+ 
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Legal protections</h3>
+-          <p>
+-            In the United States, a federal law called the Genetic Information Nondiscrimination
+-            Act stops health insurers and most employers from discriminating against you based on
+-            genetic test results. It has real gaps, though: it doesn't cover life insurance or
+-            disability insurance, and it doesn't apply to very small employers, the military, or VA
+-            benefits.
+-            <Cite n={2} />
+-          </p>
++        <div className="mx-auto max-w-3xl">
++          <CTARow tint="plum" />
+         </div>
+ 
+         <Sources
+-- 
+2.43.0
+

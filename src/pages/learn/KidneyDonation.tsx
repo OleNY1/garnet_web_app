@@ -1,11 +1,20 @@
+import { HeartHandshake, Search, Stethoscope } from 'lucide-react'
 import { Cite } from '../../components/Cite'
+import { CTARow } from '../../components/learn/CTARow'
+import { FlowDiagram } from '../../components/learn/FlowDiagram'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
+
+const DONATION_STEPS = [
+  { icon: Stethoscope, label: 'Affected relative tested first', caption: 'The person with kidney disease' },
+  { icon: Search, label: 'Exact cause identified', caption: 'A specific genetic finding, if there is one' },
+  { icon: HeartHandshake, label: 'Donor candidate tested for that finding', caption: 'Only for the specific variant found' },
+]
 
 export function KidneyDonation() {
   return (
     <>
-      <Section id="kidney-donation" tone="wash" title="If you're considering donating a kidney">
+      <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
             Living kidney donors already face a higher lifetime risk of kidney failure than similar
@@ -28,10 +37,16 @@ export function KidneyDonation() {
           <p>
             The recommended approach is sequential: test the relative who already has kidney
             disease first, to pin down the exact genetic cause, and only then test the healthy
-            donor candidate for that specific finding. Testing a healthy candidate directly,
-            without first confirming the cause in an affected relative, is generally discouraged —
-            it's more likely to turn up confusing or misleading results in someone who was never at
-            meaningful risk to begin with.
+            donor candidate for that specific finding.
+            <Cite n={1} />
+          </p>
+
+          <FlowDiagram tint="plum" steps={DONATION_STEPS} />
+
+          <p>
+            Testing a healthy candidate directly, without first confirming the cause in an
+            affected relative, is generally discouraged — it's more likely to turn up confusing or
+            misleading results in someone who was never at meaningful risk to begin with.
             <Cite n={1} />
           </p>
           <p>
@@ -52,6 +67,10 @@ export function KidneyDonation() {
             not a mandatory test or an automatic disqualifier.
             <Cite n={1} />
           </p>
+        </div>
+
+        <div className="mx-auto max-w-3xl">
+          <CTARow tint="plum" />
         </div>
 
         <Sources

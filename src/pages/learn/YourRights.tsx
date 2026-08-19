@@ -1,17 +1,28 @@
 import { Cite } from '../../components/Cite'
+import { CTARow } from '../../components/learn/CTARow'
+import { ProtectionGrid } from '../../components/learn/ProtectionGrid'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 
 export function YourRights() {
   return (
     <>
-      <Section id="your-rights" title="Your rights, privacy, and choices">
+      <Section id="your-rights" title="Making an informed, personal choice">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
             Whether to learn your genetic results — from a research study or from clinical testing
             — is a personal choice. Ethicists increasingly agree that being offered that choice,
             with real information about what a result could mean, is a basic part of respecting
             patients' autonomy.
+            <Cite n={1} />
+          </p>
+          <p>
+            A common worry is what happens to your DNA after testing — whether it's stored,
+            shared, or used without your knowledge. Before any research or clinical test, you
+            should be told in plain terms who will see your results, whether your sample is kept
+            or destroyed, and whether you can withdraw your consent later. Asking your genetic
+            counselor or study coordinator these questions directly is a normal, expected part of
+            the process — not an imposition.
             <Cite n={1} />
           </p>
           <p>
@@ -31,6 +42,16 @@ export function YourRights() {
             <Cite n={1} />
           </p>
 
+          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Legal protections</h3>
+          <p>
+            In the United States, a federal law called the Genetic Information Nondiscrimination
+            Act (GINA) stops health insurers and most employers from discriminating against you
+            based on genetic test results. It has real gaps, though:
+            <Cite n={2} />
+          </p>
+
+          <ProtectionGrid />
+
           <h3 className="mt-2 font-display text-xl font-semibold text-ink">
             Family planning options
           </h3>
@@ -48,16 +69,10 @@ export function YourRights() {
             being far more expensive over time.
             <Cite n={1} />
           </p>
+        </div>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Legal protections</h3>
-          <p>
-            In the United States, a federal law called the Genetic Information Nondiscrimination
-            Act stops health insurers and most employers from discriminating against you based on
-            genetic test results. It has real gaps, though: it doesn't cover life insurance or
-            disability insurance, and it doesn't apply to very small employers, the military, or VA
-            benefits.
-            <Cite n={2} />
-          </p>
+        <div className="mx-auto max-w-3xl">
+          <CTARow tint="plum" />
         </div>
 
         <Sources

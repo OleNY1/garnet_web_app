@@ -1,11 +1,22 @@
+import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
 import { Cite } from '../../components/Cite'
+import { CTARow } from '../../components/learn/CTARow'
+import { FlowDiagram } from '../../components/learn/FlowDiagram'
+import { SimplicityBanner } from '../../components/learn/SimplicityBanner'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
+
+const TEST_TYPES = [
+  { icon: TestTube, label: 'Single-gene test', caption: 'One gene, already suspected' },
+  { icon: Layers, label: 'Gene panel', caption: 'A group of genes for one disease category' },
+  { icon: ScanSearch, label: 'Exome sequencing', caption: 'The protein-making parts of nearly all genes' },
+  { icon: Dna, label: 'Genome sequencing', caption: "Essentially all of a person's DNA" },
+]
 
 export function TestingBasics() {
   return (
     <>
-      <Section id="testing-basics" title="What genetic testing can and can't tell you">
+      <Section id="testing-basics" title="What the tests look for">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
             Genetic causes explain a meaningful share of kidney disease. Studies suggest a genetic
@@ -13,17 +24,20 @@ export function TestingBasics() {
             10 children.
             <Cite n={1} />
           </p>
+
+          <SimplicityBanner />
+
           <p>
-            Not every genetic test looks at the same amount of DNA. A single-gene test checks one
-            gene already suspected from a family history or symptoms. A gene panel checks a larger
-            group of genes linked to a category of kidney disease, such as cystic kidney disease.
-            Exome sequencing reads the protein-making parts of nearly all genes, and genome
-            sequencing reads essentially all of a person's DNA. Broader tests can find more, but
-            they also take longer to process and can turn up findings unrelated to your kidneys.
+            Not every genetic test looks at the same amount of DNA. Broader tests can find more,
+            but they also take longer to process and can turn up findings unrelated to your
+            kidneys.
             <Cite n={1} />
           </p>
+
+          <FlowDiagram tint="accent" steps={TEST_TYPES} />
+
           <p>
-            Testing itself is simple: most labs need only a blood draw or a cheek swab.
+            Testing itself is simple: many labs only need a cheek swab, not a blood draw.
             <Cite n={2} />
           </p>
 
@@ -36,7 +50,7 @@ export function TestingBasics() {
             testing, but doctors are more likely to recommend it when someone has:
             <Cite n={2} />
           </p>
-          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
+          <ul className="list-disc space-y-2 pl-6 marker:text-accent">
             <li>Kidney disease that started young, progressed unusually fast, or was unusually severe</li>
             <li>Other organs affected alongside the kidneys, not just as a result of kidney failure</li>
             <li>A family history of kidney disease</li>
@@ -64,6 +78,10 @@ export function TestingBasics() {
             what each possible result would mean.
             <Cite n={2} />
           </p>
+        </div>
+
+        <div className="mx-auto max-w-3xl">
+          <CTARow tint="accent" />
         </div>
 
         <Sources

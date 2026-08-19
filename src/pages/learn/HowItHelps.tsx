@@ -1,11 +1,19 @@
 import { Cite } from '../../components/Cite'
+import { CTARow } from '../../components/learn/CTARow'
+import { StatGrid } from '../../components/learn/StatGrid'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
+
+const IMPACT_STATS = [
+  { value: '1 in 5', label: 'patients with CKD had a positive genetic finding' },
+  { value: '9 in 10', label: "had their doctor's care plan change because of it" },
+  { value: '86%', label: 'said testing was helpful, among those with a positive result' },
+]
 
 export function HowItHelps() {
   return (
     <>
-      <Section id="how-it-helps" tone="wash" title="How results can guide your care">
+      <Section id="how-it-helps" tone="wash" title="What the research shows">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
             In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
@@ -14,6 +22,9 @@ export function HowItHelps() {
             earlier one.
             <Cite n={1} />
           </p>
+
+          <StatGrid tint="brand" stats={IMPACT_STATS} />
+
           <p>
             The same study found that a positive result changed how doctors managed care for about
             9 in 10 patients, including an actual change in treatment plan for roughly a third. A
@@ -46,6 +57,10 @@ export function HowItHelps() {
             conversation with your doctor about what's next.
             <Cite n={1} />
           </p>
+        </div>
+
+        <div className="mx-auto max-w-3xl">
+          <CTARow tint="brand" />
         </div>
 
         <Sources

@@ -1,30 +1,39 @@
 import { Cite } from '../../components/Cite'
+import { BarCompare } from '../../components/learn/BarCompare'
+import { CTARow } from '../../components/learn/CTARow'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
+
+const SHARING_ROWS = [
+  { label: 'Told all close relatives within 6 months', percent: 34, display: '34%' },
+  { label: 'Close relatives who were never told at all', percent: 39, display: '39%' },
+  { label: 'Shared with all relatives — told by a genetics specialist', percent: 50, display: '~50%' },
+  { label: 'Shared with all relatives — told by a non-genetics doctor', percent: 10, display: '~10%' },
+]
 
 export function FamilySharing() {
   return (
     <>
-      <Section id="family-sharing" title="Sharing results with your family">
+      <Section id="family-sharing" title="How families actually share results">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
             A genetic result doesn't only affect you — close relatives share some of the same DNA,
             so a finding can matter for them too. But research shows that sharing results within
-            families is inconsistent. In a study of 279 people who received a kidney-related
-            genetic result, only about a third (34%) had told all of their close relatives by six
-            months later, and more than a third of close relatives overall (39%) were never told at
-            all.
+            families is inconsistent.
             <Cite n={1} />
           </p>
+
+          <BarCompare tint="accent" rows={SHARING_ROWS} />
+
           <p>
             Sharing wasn't even across relatives. People were more likely to tell their siblings
             and children than their parents.
             <Cite n={1} />
           </p>
           <p>
-            Who explains the result seems to matter. People who received their results from a
-            genetics specialist were far more likely to share with all their relatives (about half
-            did) than people who heard from a doctor without genetics training (about 1 in 10 did).
+            Who explains the result seems to matter: people who received their results from a
+            genetics specialist were far more likely to share with all their relatives than people
+            who heard from a doctor without genetics training.
             <Cite n={1} />
           </p>
 
@@ -50,6 +59,10 @@ export function FamilySharing() {
             might be at risk.
             <Cite n={2} />
           </p>
+        </div>
+
+        <div className="mx-auto max-w-3xl">
+          <CTARow tint="accent" />
         </div>
 
         <Sources

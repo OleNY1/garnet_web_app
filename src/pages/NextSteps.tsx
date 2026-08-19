@@ -1,9 +1,10 @@
-import { Signpost, TestTubes, ShieldCheck, Wallet } from 'lucide-react'
+import { Landmark, Signpost, Stethoscope, TestTubes, ShieldCheck, Wallet } from 'lucide-react'
 import { Card } from '../components/Card'
 import { IconChip } from '../components/IconChip'
 import { PageHero } from '../components/PageHero'
 import { Section } from '../components/Section'
 import { StepCard } from '../components/StepCard'
+import { TrustBadge } from '../components/TrustBadge'
 
 const STEPS = [
   { title: 'Learn', text: 'Read simple information about genetic testing and counseling.' },
@@ -29,6 +30,12 @@ export function NextSteps() {
         title="Understand next steps"
         intro="Learn how to talk with your doctor or a genetic counselor, ask about cost, and prepare for testing."
       />
+
+      <Section id="trust-strip" className="!py-8">
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <TrustBadge icon={Landmark}>Columbia University Irving Medical Center research project</TrustBadge>
+        </div>
+      </Section>
 
       <Section
         id="how-it-works"
@@ -68,26 +75,37 @@ export function NextSteps() {
         id="cost-privacy"
         tone="wash"
         eyebrow="Common questions"
-        title="Cost and privacy"
-        intro="Two things patients ask about most."
+        title="Cost, referrals, and privacy"
+        intro="The practical questions patients ask about most."
       >
-        <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
-          <Card className="p-7 sm:p-9">
+        <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
+          <Card className="p-7 sm:p-8">
+            <IconChip icon={Stethoscope} tint="plum" className="size-[3.25rem]" />
+            <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
+              Getting a referral
+            </h3>
+            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
+              Your nephrologist or primary care doctor can refer you to a genetic counselor or a
+              genetics clinic. Eligibility varies, so it's worth asking your doctor directly
+              whether testing could be relevant for you.
+            </p>
+          </Card>
+          <Card className="p-7 sm:p-8">
             <IconChip icon={Wallet} tint="plum" className="size-[3.25rem]" />
-            <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">
+            <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
               Cost and insurance
             </h3>
-            <p className="mt-3 text-[1.05rem] leading-relaxed text-body">
+            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
               Genetic testing may be covered by insurance, and financial assistance may be
               available. Costs vary, so it is important to ask before testing.
             </p>
           </Card>
-          <Card className="p-7 sm:p-9">
+          <Card className="p-7 sm:p-8">
             <IconChip icon={ShieldCheck} tint="plum" className="size-[3.25rem]" />
-            <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">
+            <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
               Privacy and legal protections
             </h3>
-            <p className="mt-3 text-[1.05rem] leading-relaxed text-body">
+            <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
               Genetic information is personal. GARNET explains privacy, genetic discrimination, and
               legal protections in simple language.
             </p>

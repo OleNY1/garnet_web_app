@@ -1,9 +1,12 @@
 import { BadgeCheck, Compass, HandHeart, Landmark, Search, Stethoscope, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Card } from '../../components/Card'
+import { CTARow } from '../../components/learn/CTARow'
+import { JourneyPicker } from '../../components/learn/JourneyPicker'
 import type { Tint } from '../../components/IconChip'
 import { IconChip } from '../../components/IconChip'
 import { Section } from '../../components/Section'
+import { TrustBadge } from '../../components/TrustBadge'
 
 const BENEFITS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string }> = [
   {
@@ -48,10 +51,27 @@ const TRUST_POINTS = [
 export function Overview() {
   return (
     <>
+      <Section id="trust-strip" className="!py-10">
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <TrustBadge icon={Landmark}>Columbia University Irving Medical Center research project</TrustBadge>
+          <TrustBadge icon={BadgeCheck}>Supported by the National Kidney Foundation</TrustBadge>
+        </div>
+      </Section>
+
+      <Section
+        id="find-your-path"
+        tone="wash"
+        eyebrow="Where are you today?"
+        title="Start with what's relevant to you"
+        intro="Everyone's informational needs are different depending on where they are in their kidney disease journey. Pick what fits best."
+      >
+        <JourneyPicker />
+      </Section>
+
       <Section
         id="why-it-matters"
         eyebrow="Why it matters"
-        title="Why genetic testing may matter"
+        title="How it could help you"
         intro="One question matters most: how could this help you or your family?"
       >
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
@@ -105,6 +125,10 @@ export function Overview() {
             </ul>
           </div>
         </Card>
+
+        <div className="mx-auto mt-10 max-w-3xl">
+          <CTARow tint="brand" />
+        </div>
       </Section>
     </>
   )
