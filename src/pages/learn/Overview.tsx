@@ -1,10 +1,9 @@
-import { BadgeCheck, BookOpen, Compass, HandHeart, Landmark, Search, Stethoscope, Users } from 'lucide-react'
+import { BadgeCheck, Compass, HandHeart, Landmark, Search, Stethoscope, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { Card } from '../components/Card'
-import type { Tint } from '../components/IconChip'
-import { IconChip } from '../components/IconChip'
-import { PageHero } from '../components/PageHero'
-import { Section } from '../components/Section'
+import { Card } from '../../components/Card'
+import type { Tint } from '../../components/IconChip'
+import { IconChip } from '../../components/IconChip'
+import { Section } from '../../components/Section'
 
 const BENEFITS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string }> = [
   {
@@ -46,17 +45,9 @@ const TRUST_POINTS = [
   'Educational only - not a diagnosis or medical advice',
 ]
 
-export function Learn() {
+export function Overview() {
   return (
     <>
-      <PageHero
-        icon={BookOpen}
-        tint="brand"
-        eyebrow="Learn"
-        title="Learn about genetic testing"
-        intro="Understand what genetic testing is, how it works, and what it can and cannot tell you."
-      />
-
       <Section
         id="why-it-matters"
         eyebrow="Why it matters"
