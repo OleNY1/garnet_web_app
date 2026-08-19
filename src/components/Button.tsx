@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { cx } from '../lib/cx'
 
 type Variant = 'primary' | 'secondary' | 'inverse' | 'quiet'
@@ -34,13 +35,26 @@ type ButtonAsButton = BaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { hr
 
 export type ButtonProps = ButtonAsLink | ButtonAsButton
 
-/** Renders an <a> when `href` is given, otherwise a <button>. */
+/**
+ * Renders a <button> when no `href` is given. When `href` is given: an
+ * internal route (starts with "/") uses React Router's <Link> for instant
+ * client-side navigation; anything else (an in-page "#anchor" or an
+ * external URL) renders a plain <a>.
+ */
 export function Button({ variant = 'primary', size = 'lg', className, children, ...rest }: ButtonProps) {
   const classes = cx(baseClasses, sizeClasses[size], variantClasses[variant], className)
 
   if (typeof rest.href === 'string') {
+    const { href, ...anchorRest } = rest as AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
+    if (href.startsWith('/')) {
+      return (
+        <Link to={href} className={classes} {...anchorRest}>
+          {children}
+        </Link>
+      )
+    }
     return (
-      <a className={classes} {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <a href={href} className={classes} {...anchorRest}>
         {children}
       </a>
     )

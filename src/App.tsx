@@ -1,6 +1,11 @@
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
-import { LandingPage } from './pages/LandingPage'
+import { ScrollToTop } from './components/ScrollToTop'
+import { Check } from './pages/Check'
+import { Home } from './pages/Home'
+import { Learn } from './pages/Learn'
+import { NextSteps } from './pages/NextSteps'
 
 export default function App() {
   return (
@@ -11,9 +16,18 @@ export default function App() {
       >
         Skip to main content
       </a>
+      <ScrollToTop />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
-        <LandingPage />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/check" element={<Check />} />
+          <Route path="/next-steps" element={<NextSteps />} />
+          {/* Placeholder routes (privacy, terms, contact) aren't built yet;
+              send visitors home instead of a dead page. */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
       <Footer />
     </div>

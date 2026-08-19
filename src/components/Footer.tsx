@@ -1,10 +1,11 @@
 import { BadgeCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const EXPLORE_LINKS = [
-  { label: 'Learn', href: '#learn' },
-  { label: 'Check if testing may help', href: '#check' },
-  { label: 'How to get tested', href: '#how-it-works' },
-  { label: 'FAQ', href: '#cost-privacy' },
+  { label: 'Learn', href: '/learn' },
+  { label: 'Check if testing may help', href: '/check' },
+  { label: 'How to get tested', href: '/next-steps' },
+  { label: 'FAQ', href: '/next-steps#cost-privacy' },
 ]
 
 /* Placeholder routes; replace when these pages are built. */
@@ -53,9 +54,9 @@ export function Footer() {
             <ul className="mt-4 space-y-1.5">
               {EXPLORE_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className={footerLinkClasses}>
+                  <Link to={link.href} className={footerLinkClasses}>
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

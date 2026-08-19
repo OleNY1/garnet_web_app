@@ -1,14 +1,24 @@
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { ThemeToggle } from './ThemeToggle'
 
-/* Anchors point at landing page sections until dedicated pages exist. */
 const NAV_LINKS = [
-  { label: 'Learn', href: '#learn' },
-  { label: 'Check if testing may help', href: '#check' },
-  { label: 'How to get tested', href: '#how-it-works' },
-  { label: 'FAQ', href: '#cost-privacy' },
+  { label: 'Learn', href: '/learn' },
+  { label: 'Check if testing may help', href: '/check' },
+  { label: 'How to get tested', href: '/next-steps' },
+  { label: 'FAQ', href: '/next-steps#cost-privacy' },
 ]
+
+const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+  `rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium transition-colors hover:bg-brand-soft hover:text-ink ${
+    isActive ? 'bg-brand-soft text-ink' : 'text-body'
+  }`
+
+const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
+  `block rounded-xl px-4 py-3.5 text-lg font-medium transition-colors hover:bg-brand-soft ${
+    isActive ? 'bg-brand-soft text-ink' : 'text-ink'
+  }`
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -21,25 +31,21 @@ export function Header() {
       }}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-3 sm:px-8">
-        <a href="#top" className="-m-1.5 flex items-center gap-3 rounded-2xl p-1.5">
+        <Link to="/" className="-m-1.5 flex items-center gap-3 rounded-2xl p-1.5">
           <img
             src={`${import.meta.env.BASE_URL}garnet-mark.png`}
             alt=""
             className="size-11 shrink-0 object-contain"
           />
           <span className="text-[1.25rem] font-bold tracking-[0.18em] text-brand">GARNET</span>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-2 sm:gap-3">
           <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
             {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium text-body transition-colors hover:bg-brand-soft hover:text-ink"
-              >
+              <NavLink key={link.href} to={link.href} className={navLinkClasses}>
                 {link.label}
-              </a>
+              </NavLink>
             ))}
           </nav>
           <ThemeToggle />
@@ -69,13 +75,9 @@ export function Header() {
           <ul className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="block rounded-xl px-4 py-3.5 text-lg font-medium text-ink transition-colors hover:bg-brand-soft"
-                >
+                <NavLink to={link.href} onClick={() => setMenuOpen(false)} className={mobileNavLinkClasses}>
                   {link.label}
-                </a>
+                </NavLink>
               </li>
             ))}
           </ul>

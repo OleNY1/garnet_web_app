@@ -13,6 +13,24 @@
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1a1e" />
     <title>GARNET | Learn about genetic testing for kidney disease</title>
     <script>
+      // Undo the redirect from 404.html: decode the real path back out of
+      // the query string before React Router mounts, so a direct link or
+      // refresh on e.g. /garnet_web_app/learn lands on the Learn page
+      // instead of the homepage.
+      ;(function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&')
+            })
+            .join('?')
+          window.history.replaceState(null, '', l.pathname.slice(0, -1) + decoded + l.hash)
+        }
+      })(window.location)
+    </script>
+    <script>
       // Apply the saved or system theme before first paint to avoid a color flash.
       ;(function () {
         try {

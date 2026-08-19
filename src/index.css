@@ -18,28 +18,28 @@
   color-scheme: light;
 
   --bg: #f6fafa;
-  --wash: #ecf4f5;
-  --wash-warm: #fff5f3;
+  --wash: #e2eef0;
+  --wash-warm: #ffece6;
   --surface: #ffffff;
-  --surface-2: #f1f7f7;
+  --surface-2: #e9f2f2;
 
   --ink: #16323b;
   --body-color: #3f4650;
   --muted: #5b6472;
-  --line: #d8e4e6;
+  --line: #c3d6d9;
 
   --brand: #00687b;
   --brand-strong: #004b59;
-  --brand-soft: #e2eff1;
+  --brand-soft: #cfe7ea;
   --on-brand: #ffffff;
 
   --btn: #00687b;
   --btn-hover: #005566;
 
   --accent: #9f4035;
-  --accent-soft: #f7e9e7;
+  --accent-soft: #f4d8d2;
   --plum: #6b49b5;
-  --plum-soft: #efeaf9;
+  --plum-soft: #e3d7f5;
 
   --ring: #00687b;
 
@@ -186,12 +186,12 @@
     background:
       radial-gradient(
         56rem 30rem at 88% -12%,
-        color-mix(in srgb, var(--brand) 13%, transparent),
+        color-mix(in srgb, var(--brand) 26%, transparent),
         transparent 62%
       ),
       radial-gradient(
         46rem 28rem at -12% 108%,
-        color-mix(in srgb, var(--accent) 9%, transparent),
+        color-mix(in srgb, var(--accent) 20%, transparent),
         transparent 60%
       ),
       var(--bg);
@@ -207,12 +207,12 @@
     background:
       radial-gradient(
         56rem 30rem at 88% -12%,
-        color-mix(in srgb, var(--brand) 13%, transparent),
+        color-mix(in srgb, var(--brand) 24%, transparent),
         transparent 62%
       ),
       radial-gradient(
         46rem 28rem at -12% 108%,
-        color-mix(in srgb, var(--accent) 9%, transparent),
+        color-mix(in srgb, var(--accent) 18%, transparent),
         transparent 60%
       ),
       linear-gradient(
