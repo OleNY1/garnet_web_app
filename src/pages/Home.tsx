@@ -7,7 +7,7 @@ import {
   ListChecks,
   MessagesSquare,
   ShieldCheck,
-  Signpost,
+  Stethoscope,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Button } from '../components/Button'
@@ -79,30 +79,34 @@ function HeroFeature({
   )
 }
 
-const PATHS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string; cta: string; href: string }> = [
+const DOCTOR_APP_URL = '/doctor/dashboard'
+
+const PATHS: Array<{
+  icon: LucideIcon
+  tint: Tint
+  eyebrow: string
+  title: string
+  text: string
+  cta: string
+  href: string
+}> = [
   {
-    icon: BookOpen,
+    icon: HeartHandshake,
     tint: 'brand',
-    title: 'Learn about genetic testing',
-    text: 'What it is, how it works, and what it can and cannot tell you.',
-    cta: 'Learn more',
+    eyebrow: 'For patients and families',
+    title: 'I am a patient',
+    text: 'Learn about genetic testing for kidney disease in plain language, including family sharing, privacy, and next steps.',
+    cta: 'Enter patient side',
     href: '/learn',
   },
   {
-    icon: ListChecks,
+    icon: Stethoscope,
     tint: 'accent',
-    title: 'Check if testing may help',
-    text: 'A few simple questions about your health and family history.',
-    cta: 'Start check',
-    href: '/check',
-  },
-  {
-    icon: Signpost,
-    tint: 'plum',
-    title: 'Understand next steps',
-    text: 'How to talk with your care team and prepare for testing.',
-    cta: 'See next steps',
-    href: '/next-steps',
+    eyebrow: 'For doctors and clinicians',
+    title: 'I am a doctor',
+    text: 'Access the clinician-facing side with nephrology education, workflow guidance, counseling resources, and practical tools.',
+    cta: 'Enter doctor side',
+    href: DOCTOR_APP_URL,
   },
 ]
 
@@ -164,21 +168,24 @@ export function Home() {
         </div>
       </section>
 
-      {/* ============ 2. Three main path cards ============ */}
+      {/* ============ 2. Role decision cards ============ */}
       <Section
         id="learn"
-        eyebrow="Start here"
+        eyebrow="Choose your path"
         title="Choose where to begin"
-        intro="Three simple paths, made for patients and families."
+        intro="Select the side of GARNET that matches how you will use the site."
       >
-        <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
+        <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
           {PATHS.map((path) => (
             <Card
               key={path.title}
-              className="flex scale-100 flex-col p-6 transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.02] hover:shadow-lift sm:p-7 lg:p-8"
+              className="flex scale-100 flex-col p-6 transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.015] hover:shadow-lift sm:p-8 lg:p-10"
             >
               <IconChip icon={path.icon} tint={path.tint} className="size-[3.25rem]" />
-              <h3 className="mt-5 font-display text-[1.4rem] leading-snug font-semibold text-ink">
+              <p className="mt-6 text-[0.9rem] font-bold tracking-[0.14em] uppercase text-brand">
+                {path.eyebrow}
+              </p>
+              <h3 className="mt-3 font-display text-[1.8rem] leading-snug font-semibold text-ink sm:text-[2.1rem]">
                 {path.title}
               </h3>
               <p className="mt-3 text-[1.02rem] leading-relaxed text-body">{path.text}</p>

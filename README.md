@@ -1,44 +1,60 @@
 # garnet_web_app
 
-Patient-facing web application prototype for the GARNET research project.
+Merged GARNET web application for the patient-facing and doctor-facing experiences.
 
-GARNET (Genetic indicators Assessment Referral Note and Education Tool) is an educational
-website that helps people with kidney disease learn about genetic testing. It does not
-provide diagnosis, medical advice, genetic counseling, or test results.
+GARNET (Genetic indicators Assessment Referral Note and Education Tool) helps people with kidney disease and clinicians navigate education, genetic testing resources, referral workflows, and practical nephrology tools. It does not provide diagnosis, medical advice, genetic counseling, or test results.
 
 ## Tech stack
 
 - React 19 + TypeScript + Vite
-- Tailwind CSS v4 (design tokens as CSS variables, class-based dark mode)
-- lucide-react icons, Inter + Lora fonts (self-hosted via Fontsource)
+- Tailwind CSS v4 with shared GARNET design tokens
+- lucide-react icons
+- Inter + Lora fonts via Fontsource
 
 ## Getting started
 
 ```bash
 npm install
-npm run dev      # start the dev server
-npm run build    # type-check and build for production
-npm run preview  # preview the production build
+npm run dev
+npm run build
+npm run preview
 ```
+
+## Entry flow
+
+The landing page at `/` is the shared entry point.
+
+- `I am a patient` opens the patient-facing branch at `/learn`.
+- `I am a doctor` opens the clinician-facing branch at `/doctor/dashboard`.
+
+The doctor-facing branch is fully internal to this same app, so deployment only needs one website and one GitHub repo.
+
+## Main routes
+
+- `/` - shared Garnet landing page
+- `/learn` - patient education
+- `/check` - patient testing readiness check
+- `/next-steps` - patient next steps
+- `/doctor/dashboard` - doctor dashboard
+- `/doctor/dashboard/educational` - clinician educational resources
+- `/doctor/dashboard/practical` - clinician practical resources
+- `/doctor/dashboard/resource/:resourceId` - clinician resource detail pages
 
 ## Project structure
 
-```
+```text
 src/
-  index.css              Design system: color tokens, dark mode, base styles
-  App.tsx                Page shell: skip link, header, main, footer
-  pages/
-    LandingPage.tsx      All landing page sections (hero, paths, benefits, ...)
-  components/
-    Header.tsx           Sticky nav with mobile menu and theme toggle
-    Footer.tsx           Affiliation, links, medical disclaimer
-    Button.tsx           Accessible button/link with variants
-    Card.tsx             Rounded surface card
-    Section.tsx          Page section with consistent width and headings
-    StepCard.tsx         Numbered step for "How it works"
-    TrustBadge.tsx       Credibility pill
-    ThemeToggle.tsx      Light/dark mode switch (respects system preference)
+  App.tsx                Shared route tree for patient and doctor branches
+  index.css              GARNET design tokens, dark mode, base styles
+  components/            Patient-facing shared components
+  pages/                 Patient-facing pages
+  doctor/                Doctor-facing pages, data, and components
+public/
+  medical-art/           Doctor decorative background illustrations
+  resources/             Doctor downloadable resource files
+  resource-graphics/     Doctor resource page graphics
+  posters/               Doctor poster assets
+  costs/                 Doctor cost/billing handouts
 ```
 
-Dark mode follows the visitor's system preference by default; the header toggle
-saves an explicit choice in `localStorage`.
+Dark mode follows the visitor's system preference by default; the header toggle saves an explicit choice in `localStorage`.
