@@ -9,6 +9,9 @@ type SectionProps = {
   tone?: 'default' | 'wash' | 'warm'
   align?: 'center' | 'left'
   className?: string
+  headerClassName?: string
+  titleClassName?: string
+  introClassName?: string
   children: ReactNode
 }
 
@@ -21,6 +24,9 @@ export function Section({
   tone = 'default',
   align = 'center',
   className,
+  headerClassName,
+  titleClassName,
+  introClassName,
   children,
 }: SectionProps) {
   const headingId = `${id}-heading`
@@ -38,7 +44,13 @@ export function Section({
     >
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
         {(eyebrow || title || intro) && (
-          <div className={cx('mb-10 max-w-3xl sm:mb-14', align === 'center' && 'mx-auto text-center')}>
+          <div
+            className={cx(
+              'mb-10 max-w-3xl sm:mb-14',
+              align === 'center' && 'mx-auto text-center',
+              headerClassName,
+            )}
+          >
             {eyebrow && (
               <p className="mb-3 text-[0.95rem] font-bold tracking-[0.14em] uppercase text-brand">
                 {eyebrow}
@@ -47,12 +59,19 @@ export function Section({
             {title && (
               <h2
                 id={headingId}
-                className="font-display text-[1.9rem] leading-tight font-semibold text-ink sm:text-[2.4rem]"
+                className={cx(
+                  'font-display text-[1.9rem] leading-tight font-semibold text-ink sm:text-[2.4rem]',
+                  titleClassName,
+                )}
               >
                 {title}
               </h2>
             )}
-            {intro && <p className="mt-4 text-lg leading-relaxed text-muted sm:text-xl">{intro}</p>}
+            {intro && (
+              <p className={cx('mt-4 text-lg leading-relaxed text-muted sm:text-xl', introClassName)}>
+                {intro}
+              </p>
+            )}
           </div>
         )}
         {children}

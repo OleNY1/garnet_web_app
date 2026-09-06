@@ -21,12 +21,12 @@ export type LearnTopic = {
  */
 export const LEARN_TOPICS: LearnTopic[] = [
   {
-    label: 'Overview',
+    label: 'Getting started',
     to: '/learn',
     end: true,
     icon: BookOpen,
     tint: 'brand',
-    eyebrow: 'Start here',
+    eyebrow: 'Getting started',
     title: 'Why genetic testing may matter for you and your family',
     intro: 'Guides to genetic testing for kidney disease, based on published research.',
   },

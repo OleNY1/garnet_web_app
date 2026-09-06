@@ -5,25 +5,23 @@ import type { Tint } from '../IconChip'
 import { IconChip } from '../IconChip'
 
 /**
- * Patients in the flyer study said one version of the material can't serve
- * everyone — someone newly diagnosed needs different information than
- * someone further along. This doesn't build a full personalization system,
- * but it does let a visitor self-sort into the Learn page most relevant to
- * where they are, right from the Overview page.
+ * The more useful split is whether a genetic cause has already been named,
+ * not how long someone has had kidney disease. Visitors self-sort into the
+ * Learn page most relevant to that starting point.
  */
 const PATHS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string; to: string }> = [
   {
     icon: Compass,
     tint: 'brand',
-    title: 'Newly diagnosed',
-    text: 'Start with the basics: what testing looks at and what it can and can\u2019t tell you.',
+    title: 'No genetic diagnosis yet',
+    text: 'Learn what testing looks for and what a result can tell you.',
     to: '/learn/testing-basics',
   },
   {
     icon: Stethoscope,
     tint: 'accent',
-    title: 'Already managing kidney disease',
-    text: 'See how a result could change your care, and how it\u2019s helped others.',
+    title: 'Already have a genetic diagnosis',
+    text: 'See how a result can guide care and family conversations.',
     to: '/learn/how-it-helps',
   },
   {

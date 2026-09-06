@@ -12,32 +12,32 @@ const BENEFITS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: strin
   {
     icon: Search,
     tint: 'brand',
-    title: 'Understand the cause',
-    text: 'Testing may help explain why kidney disease developed.',
+    title: 'Discover WHY',
+    text: 'A genetic test can show why the kidney disease started.',
   },
   {
     icon: Users,
     tint: 'accent',
     title: 'Help your family',
-    text: 'Results may help relatives understand whether they should ask about testing.',
+    text: 'A genetic diagnosis may delay dialysis or kidney transplant for family members.',
   },
   {
     icon: HandHeart,
     tint: 'plum',
     title: 'Support living donor decisions',
-    text: 'Testing may help guide conversations about family kidney donation.',
+    text: 'Identify family members who can safely donate their kidney.',
   },
   {
     icon: Stethoscope,
     tint: 'brand',
-    title: 'Guide care conversations',
-    text: 'A genetic diagnosis may help doctors choose better next steps in some cases.',
+    title: 'Guide care',
+    text: 'A genetic diagnosis may help doctors choose better treatments.',
   },
   {
     icon: Compass,
     tint: 'accent',
-    title: 'Find support or research options',
-    text: 'Some results may connect patients to support groups, specialists, or clinical trials.',
+    title: 'Find support or research opportunities',
+    text: 'Connect patients to support groups, specialists, or clinical trials.',
   },
 ]
 
@@ -59,20 +59,12 @@ export function Overview() {
       </Section>
 
       <Section
-        id="find-your-path"
-        tone="wash"
-        eyebrow="Where are you today?"
-        title="Start with what's relevant to you"
-        intro="Everyone's informational needs are different depending on where they are in their kidney disease journey. Pick what fits best."
-      >
-        <JourneyPicker />
-      </Section>
-
-      <Section
         id="why-it-matters"
+        className="!pt-8 sm:!pt-10"
+        headerClassName="max-w-6xl"
+        titleClassName="sm:whitespace-nowrap sm:text-[2.05rem] lg:text-[2.25rem]"
         eyebrow="Why it matters"
-        title="How it could help you"
-        intro="One question matters most: how could this help you or your family?"
+        title="How genetic testing could help you or your family?"
       >
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {BENEFITS.map((benefit) => (
@@ -88,6 +80,18 @@ export function Overview() {
             </Card>
           ))}
         </div>
+      </Section>
+
+      <Section
+        id="find-your-path"
+        tone="wash"
+        headerClassName="max-w-6xl"
+        introClassName="sm:whitespace-nowrap sm:text-lg"
+        eyebrow="Where are you today?"
+        title="Start with what's relevant to you"
+        intro="The information you need depends on whether a genetic cause has already been named. Pick what fits you."
+      >
+        <JourneyPicker />
       </Section>
 
       <Section
