@@ -10,6 +10,7 @@ import { KidneyDonation } from './pages/learn/KidneyDonation'
 import { LearnLayout } from './pages/learn/LearnLayout'
 import { Overview } from './pages/learn/Overview'
 import { TestingBasics } from './pages/learn/TestingBasics'
+import { TypesOfTests } from './pages/learn/TypesOfTests'
 import { YourRights } from './pages/learn/YourRights'
 import { NextSteps } from './pages/NextSteps'
 import DoctorAssessmentResult from './doctor/pages/AssessmentResult'
@@ -53,6 +54,7 @@ export default function App() {
             <Route path="family-sharing" element={<FamilySharing />} />
             <Route path="kidney-donation" element={<KidneyDonation />} />
             <Route path="your-rights" element={<YourRights />} />
+            <Route path="types-of-tests" element={<TypesOfTests />} />
           </Route>
           <Route path="/check" element={<Check />} />
           <Route path="/next-steps" element={<NextSteps />} />

@@ -1,4 +1,4 @@
-import { BookOpen, HandHeart, ShieldCheck, Stethoscope, TestTubes, Users } from 'lucide-react'
+import { BookOpen, HandHeart, Layers, ShieldCheck, Stethoscope, TestTubes, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { Tint } from '../components/IconChip'
 
@@ -31,15 +31,15 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'Guides to genetic testing for kidney disease, based on published research.',
   },
   {
-    label: 'Types of testing',
+    label: 'How testing works',
     to: '/learn/testing-basics',
     end: false,
     icon: TestTubes,
     tint: 'accent',
-    eyebrow: 'Types of testing',
-    title: 'A quick, simple test — not a scary procedure',
+    eyebrow: 'How testing works',
+    title: 'How a sample is collected, and what it looks for',
     intro:
-      "Genetic testing usually starts with a cheek swab, not a complicated procedure. Here's what it looks like and what results can and can't tell you.",
+      'Most tests start with a cheek swab. The lab then looks at genes that can be linked to kidney disease.',
   },
   {
     label: 'How results help your care',
@@ -81,5 +81,15 @@ export const LEARN_TOPICS: LearnTopic[] = [
     title: 'Your rights, privacy, and choices',
     intro:
       "It's normal to wonder who can see a result and what happens to your DNA afterward. Here's what's protected — and where the gaps are.",
+  },
+  {
+    label: 'Types of tests',
+    to: '/learn/types-of-tests',
+    end: false,
+    icon: Layers,
+    tint: 'accent',
+    eyebrow: 'Types of tests',
+    title: 'Different tests look at different amounts of DNA',
+    intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
   },
 ]

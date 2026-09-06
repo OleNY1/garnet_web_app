@@ -1,8 +1,10 @@
 import { BadgeCheck, Compass, HandHeart, Landmark, Search, Stethoscope, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Card } from '../../components/Card'
+import { Cite } from '../../components/Cite'
 import { CTARow } from '../../components/learn/CTARow'
 import { JourneyPicker } from '../../components/learn/JourneyPicker'
+import { Sources } from '../../components/Sources'
 import type { Tint } from '../../components/IconChip'
 import { IconChip } from '../../components/IconChip'
 import { Section } from '../../components/Section'
@@ -66,6 +68,14 @@ export function Overview() {
         eyebrow="Why it matters"
         title="How genetic testing could help you or your family?"
       >
+        <p className="mx-auto mb-10 max-w-6xl text-center text-xl leading-snug text-body sm:mb-12">
+          <span className="block">Genetic causes explain a meaningful share of kidney disease.</span>
+          <span className="mt-1 block tracking-tight min-[1100px]:whitespace-nowrap">
+            Studies suggest a genetic cause is behind kidney failure in roughly 10% to 15% of
+            adults, and in as many as 7 in 10 children.
+            <Cite n={1} />
+          </span>
+        </p>
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {BENEFITS.map((benefit) => (
             <Card
@@ -136,6 +146,17 @@ export function Overview() {
         <div className="mx-auto mt-10 max-w-3xl">
           <CTARow tint="brand" />
         </div>
+
+        <Sources
+          sources={[
+            {
+              n: 1,
+              citation:
+                'Groopman, E. & Milo Rasouly, H. Navigating genetic testing in nephrology: options and decision-making strategies. Kidney International Reports 10, 673-695 (2025).',
+              url: 'https://doi.org/10.1016/j.ekir.2024.12.020',
+            },
+          ]}
+        />
       </Section>
     </>
   )
