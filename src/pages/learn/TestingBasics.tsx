@@ -1,16 +1,8 @@
-import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
 import { Cite } from '../../components/Cite'
 import { CTARow } from '../../components/learn/CTARow'
-import { FlowDiagram } from '../../components/learn/FlowDiagram'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
-
-const TEST_TYPES = [
-  { icon: TestTube, label: 'Single-gene test', caption: 'One gene, already suspected' },
-  { icon: Layers, label: 'Gene panel', caption: 'A group of genes for one disease category' },
-  { icon: ScanSearch, label: 'Exome sequencing', caption: 'The protein-making parts of nearly all genes' },
-  { icon: Dna, label: 'Genome sequencing', caption: "Essentially all of a person's DNA" },
-]
+import { LearnLink } from '../../components/learn/LearnLink'
 
 export function TestingBasics() {
   return (
@@ -56,19 +48,15 @@ export function TestingBasics() {
             10 children.
             <Cite n={1} />
           </p>
-          <p>For most people, testing means a quick cheek swab — not a blood draw or a procedure.</p>
           <p>
-            Not every genetic test looks at the same amount of DNA. Broader tests can find more,
-            but they also take longer to process and can turn up findings unrelated to your
-            kidneys.
-            <Cite n={1} />
-          </p>
-
-          <FlowDiagram tint="accent" steps={TEST_TYPES} />
-
-          <p>
-            Testing itself is simple: many labs only need a cheek swab, not a blood draw.
+            For most people, testing means a quick cheek swab — not a blood draw or a procedure.
             <Cite n={2} />
+          </p>
+          <p>
+            Tests also differ in how much DNA they check, from a single gene your doctor already
+            suspects to nearly all of it. See <LearnLink to="/learn/types-of-tests">Types of tests</LearnLink> for
+            what each option involves, and how doctors weigh cost, turnaround time, and the chance
+            of an uncertain result when choosing between them.
           </p>
         </div>
 
