@@ -9,7 +9,8 @@ export function TestingBasics() {
       <Section id="testing-basics" title="How DNA is collected">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
-            Testing itself is simple: many labs only need a cheek swab or a saliva test, not a blood draw.
+            To get genetic testing, you need to provide a DNA sample. DNA is in all our cells, so
+            labs can use a blood, cheek swab, or saliva sample.
             <Cite n={1} />
           </p>
 
@@ -18,10 +19,23 @@ export function TestingBasics() {
             alt="How a DNA sample can be collected: a cheek swab, a collection kit, or a saliva sample."
             className="mx-auto w-full"
           />
+          <div className="mx-auto -mt-2 grid max-w-2xl grid-cols-3 gap-4 text-center text-[0.9rem] font-medium text-muted">
+            <span>Cheek swab</span>
+            <span>Collection kit</span>
+            <span>Saliva sample</span>
+          </div>
 
           <p>
-            After the sample is collected, it is sent to a lab. The lab looks at DNA for changes
-            in genes that can be linked to kidney disease.
+            The test needs to be ordered by a doctor or a genetic counselor. Ask all your
+            questions before getting tested, including how much it will cost, how the results
+            will help you, and what types of results you may receive.
+            <Cite n={1} />
+          </p>
+
+          <p>
+            You can collect the sample at the doctor's office or at home. If you collect your
+            saliva or cheek swab, you will send it to the lab in a pre-paid package.
+            <Cite n={1} />
           </p>
         </div>
 

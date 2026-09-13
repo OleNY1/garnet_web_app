@@ -49,6 +49,13 @@ export function DoctorHeader({ activeMode, backLabel, backTo, title = "Clinician
         </button>
 
         <div className="flex items-center gap-2 text-sm font-semibold text-[#16323b] sm:gap-3">
+          <Link
+            to="/"
+            className="hidden items-center gap-1.5 rounded-full border border-[#c3d6d9] bg-white px-3.5 py-2 text-[0.9rem] font-semibold text-[#16323b] transition-colors hover:bg-[#cfe7ea] sm:inline-flex"
+          >
+            <BadgeCheck className="h-4 w-4" />
+            For patients
+          </Link>
           <div className="hidden items-center gap-1 sm:flex">
             <button
               type="button"

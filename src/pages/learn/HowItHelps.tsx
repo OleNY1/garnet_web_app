@@ -41,15 +41,19 @@ export function HowItHelps() {
             <Cite n={2} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
-            What a result can lead to
-          </h3>
+          <h3 className="mt-2 font-display text-xl font-semibold text-ink">A genetic diagnosis can:</h3>
           <ul className="list-disc space-y-2 pl-6 marker:text-brand">
-            <li>Confirming or correcting a diagnosis that a biopsy or imaging couldn't fully explain</li>
-            <li>Starting, avoiding, or switching a treatment based on the exact cause found</li>
-            <li>Referral to a specialist for a related condition affecting another organ</li>
-            <li>Recommending that close relatives consider testing too</li>
-            <li>In some cases, avoiding an invasive test like a kidney biopsy altogether</li>
+            <li>Confirm or correct a diagnosis that a biopsy or imaging couldn't fully explain</li>
+            <li>Start, avoid, or switch a treatment based on the exact cause of your kidney disease</li>
+            <li>Help you avoid an invasive test, like a kidney biopsy, in some cases</li>
+            <li>Help you make decisions about family planning</li>
+            <li>Help guide decisions about living kidney donation</li>
+            <li>Lead to a referral to other specialists for related conditions caused by the same genetic change</li>
+            <li>
+              Help your family members get diagnosed — and start treatment — earlier than they
+              otherwise would have
+              <Cite n={1} />
+            </li>
           </ul>
           <p>
             A genetic result is one more piece of information for your care team, alongside your

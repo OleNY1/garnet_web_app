@@ -1,4 +1,4 @@
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ChevronDown, Menu, Stethoscope, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { LEARN_TOPICS } from '../lib/learnTopics'
@@ -128,6 +128,13 @@ export function Header() {
               </li>
             ))}
           </ul>
+          <Link
+            to="/doctor/dashboard"
+            className="hidden items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[0.9rem] font-semibold text-body transition-colors hover:bg-brand-soft hover:text-ink sm:inline-flex"
+          >
+            <Stethoscope aria-hidden="true" className="size-4" />
+            For doctors
+          </Link>
           <ThemeToggle />
           <button
             type="button"
@@ -182,6 +189,16 @@ export function Header() {
                 </NavLink>
               </li>
             ))}
+            <li className="mt-2 border-t border-line pt-3">
+              <Link
+                to="/doctor/dashboard"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 rounded-xl px-4 py-3.5 text-lg font-medium text-body transition-colors hover:bg-brand-soft"
+              >
+                <Stethoscope aria-hidden="true" className="size-5" />
+                For doctors
+              </Link>
+            </li>
           </ul>
         </nav>
       )}

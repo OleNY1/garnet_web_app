@@ -31,6 +31,16 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'Guides to genetic testing for kidney disease, based on published research.',
   },
   {
+    label: 'How genetic testing helps',
+    to: '/learn/how-it-helps',
+    end: false,
+    icon: Stethoscope,
+    tint: 'brand',
+    eyebrow: 'How results help',
+    title: 'How genetic testing can help you',
+    intro: 'For many patients, a single result changes what happens next with their care team.',
+  },
+  {
     label: 'How testing works',
     to: '/learn/testing-basics',
     end: false,
@@ -40,16 +50,6 @@ export const LEARN_TOPICS: LearnTopic[] = [
     title: 'How a sample is collected, and what it looks for',
     intro:
       'Most tests start with a cheek swab. The lab then looks at genes that can be linked to kidney disease.',
-  },
-  {
-    label: 'How results help your care',
-    to: '/learn/how-it-helps',
-    end: false,
-    icon: Stethoscope,
-    tint: 'brand',
-    eyebrow: 'How results help',
-    title: 'How a result can guide your care',
-    intro: 'For many patients, a single result changes what happens next with their care team.',
   },
   {
     label: 'Sharing with family',
