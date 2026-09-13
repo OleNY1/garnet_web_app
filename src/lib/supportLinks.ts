@@ -47,7 +47,7 @@ export const SUPPORT_GROUP_LINKS: ConditionLinkGroup[] = [
       {
         label: 'PKD International',
         text: 'Global membership network for people with PKD.',
-        href: 'https://pkdinternational.org/membership',
+        href: 'https://pkdinternational.org/',
       },
     ],
   },

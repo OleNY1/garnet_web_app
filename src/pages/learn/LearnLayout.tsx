@@ -1,4 +1,5 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { GettingStartedHero } from '../../components/learn/GettingStartedHero'
 import { PageHero } from '../../components/PageHero'
 import { LEARN_TOPICS } from '../../lib/learnTopics'
 
@@ -8,25 +9,36 @@ const tabClasses = ({ isActive }: { isActive: boolean }) =>
   }`
 
 /**
- * Shared shell for every /learn/* page: a topic-colored hero (content
- * driven by the active route) and one row of topic tabs, rendered here so
- * individual topic pages never repeat them.
+ * Shared shell for every /learn/* page: a banner (content driven by the
+ * active route) and one row of topic tabs, rendered here so individual
+ * topic pages never repeat them.
+ *
+ * The Getting Started tab is a special case: instead of the standard
+ * colored PageHero every other topic gets, it shows the full video hero
+ * banner (GettingStartedHero) in that same slot, directly above the tab
+ * strip — so it reads as the site's main entry banner while still living
+ * on the Getting Started tab.
  */
 export function LearnLayout() {
   const { pathname } = useLocation()
   const activeTab =
     LEARN_TOPICS.find((tab) => (tab.end ? pathname === tab.to : pathname.startsWith(tab.to))) ??
     LEARN_TOPICS[0]
+  const isGettingStarted = activeTab.end
 
   return (
     <>
-      <PageHero
-        icon={activeTab.icon}
-        tint={activeTab.tint}
-        eyebrow={activeTab.eyebrow}
-        title={activeTab.title}
-        intro={activeTab.intro}
-      />
+      {isGettingStarted ? (
+        <GettingStartedHero />
+      ) : (
+        <PageHero
+          icon={activeTab.icon}
+          tint={activeTab.tint}
+          eyebrow={activeTab.eyebrow}
+          title={activeTab.title}
+          intro={activeTab.intro}
+        />
+      )}
 
       <div className="border-b border-line bg-surface">
         <nav

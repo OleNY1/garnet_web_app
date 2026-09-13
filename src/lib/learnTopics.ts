@@ -1,4 +1,14 @@
-import { BookOpen, HandHeart, Layers, ShieldCheck, Stethoscope, TestTubes, Users } from 'lucide-react'
+import {
+  BookOpen,
+  FlaskConical,
+  HandHeart,
+  HeartHandshake,
+  Layers,
+  ShieldCheck,
+  Stethoscope,
+  TestTubes,
+  Users,
+} from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { Tint } from '../components/IconChip'
 
@@ -91,5 +101,25 @@ export const LEARN_TOPICS: LearnTopic[] = [
     eyebrow: 'Types of tests',
     title: 'Different tests look at different amounts of DNA',
     intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
+  },
+  {
+    label: 'Support groups',
+    to: '/learn/support-groups',
+    end: false,
+    icon: HeartHandshake,
+    tint: 'accent',
+    eyebrow: 'Beyond GARNET',
+    title: 'Find a support group',
+    intro: "Connect with other patients who understand what it's like to live with your condition.",
+  },
+  {
+    label: 'Research opportunities',
+    to: '/learn/research-opportunities',
+    end: false,
+    icon: FlaskConical,
+    tint: 'plum',
+    eyebrow: 'Beyond GARNET',
+    title: 'Explore research opportunities',
+    intro: 'See whether a relevant clinical trial or research study is currently open to join.',
   },
 ]

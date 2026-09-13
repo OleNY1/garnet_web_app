@@ -9,6 +9,8 @@ import { HowItHelps } from './pages/learn/HowItHelps'
 import { KidneyDonation } from './pages/learn/KidneyDonation'
 import { LearnLayout } from './pages/learn/LearnLayout'
 import { Overview } from './pages/learn/Overview'
+import { ResearchOpportunities } from './pages/learn/ResearchOpportunities'
+import { SupportGroups } from './pages/learn/SupportGroups'
 import { TestingBasics } from './pages/learn/TestingBasics'
 import { TypesOfTests } from './pages/learn/TypesOfTests'
 import { YourRights } from './pages/learn/YourRights'
@@ -55,6 +57,8 @@ export default function App() {
             <Route path="kidney-donation" element={<KidneyDonation />} />
             <Route path="your-rights" element={<YourRights />} />
             <Route path="types-of-tests" element={<TypesOfTests />} />
+            <Route path="support-groups" element={<SupportGroups />} />
+            <Route path="research-opportunities" element={<ResearchOpportunities />} />
           </Route>
           <Route path="/check" element={<Check />} />
           <Route path="/next-steps" element={<NextSteps />} />

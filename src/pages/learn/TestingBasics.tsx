@@ -1,7 +1,16 @@
+import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
 import { Cite } from '../../components/Cite'
 import { CTARow } from '../../components/learn/CTARow'
+import { FlowDiagram } from '../../components/learn/FlowDiagram'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
+
+const TEST_TYPES = [
+  { icon: TestTube, label: 'Single-gene test', caption: 'One gene, already suspected' },
+  { icon: Layers, label: 'Gene panel', caption: 'A group of genes for one disease category' },
+  { icon: ScanSearch, label: 'Exome sequencing', caption: 'The protein-making parts of nearly all genes' },
+  { icon: Dna, label: 'Genome sequencing', caption: "Essentially all of a person's DNA" },
+]
 
 export function TestingBasics() {
   return (
@@ -11,7 +20,7 @@ export function TestingBasics() {
           <p>
             To get genetic testing, you need to provide a DNA sample. DNA is in all our cells, so
             labs can use a blood, cheek swab, or saliva sample.
-            <Cite n={1} />
+            <Cite n={2} />
           </p>
 
           <img
@@ -29,13 +38,37 @@ export function TestingBasics() {
             The test needs to be ordered by a doctor or a genetic counselor. Ask all your
             questions before getting tested, including how much it will cost, how the results
             will help you, and what types of results you may receive.
-            <Cite n={1} />
+            <Cite n={2} />
           </p>
 
           <p>
             You can collect the sample at the doctor's office or at home. If you collect your
             saliva or cheek swab, you will send it to the lab in a pre-paid package.
+            <Cite n={2} />
+          </p>
+
+          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+            What the tests look for
+          </h3>
+          <p>
+            Genetic causes explain a meaningful share of kidney disease. Studies suggest a genetic
+            cause is behind kidney failure in roughly 10% to 15% of adults, and in as many as 7 in
+            10 children.
             <Cite n={1} />
+          </p>
+          <p>For most people, testing means a quick cheek swab — not a blood draw or a procedure.</p>
+          <p>
+            Not every genetic test looks at the same amount of DNA. Broader tests can find more,
+            but they also take longer to process and can turn up findings unrelated to your
+            kidneys.
+            <Cite n={1} />
+          </p>
+
+          <FlowDiagram tint="accent" steps={TEST_TYPES} />
+
+          <p>
+            Testing itself is simple: many labs only need a cheek swab, not a blood draw.
+            <Cite n={2} />
           </p>
         </div>
 
@@ -47,6 +80,12 @@ export function TestingBasics() {
           sources={[
             {
               n: 1,
+              citation:
+                'Groopman, E. & Milo Rasouly, H. Navigating genetic testing in nephrology: options and decision-making strategies. Kidney International Reports 10, 673-695 (2025).',
+              url: 'https://doi.org/10.1016/j.ekir.2024.12.020',
+            },
+            {
+              n: 2,
               citation:
                 'Bogyo, K., Vena, N. & Milo Rasouly, H. The art and science of genetic counseling in nephrology. Kidney360 6, 1230-1244 (2025).',
               url: 'https://doi.org/10.34067/KID.0000000825',
