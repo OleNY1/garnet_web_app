@@ -63,12 +63,12 @@ export function Home() {
           id="hero-heading"
           className="mt-3 max-w-3xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
         >
-          Welcome to GARNET
+          You've found GARNET.
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-body sm:text-xl">
-          Whether you're a patient or family member trying to understand a diagnosis, or a
-          physician looking for workflow and counseling support — welcome. GARNET has a side
-          built for you. Tell us which one describes you today, and we'll take you there.
+          GARNET helps patients and families make sense of a kidney diagnosis, and helps the
+          doctors who treat them do the same. Tell us which one you are, and we'll take you to
+          the right side.
         </p>
 
         <div className="mt-12 grid w-full gap-5 sm:gap-6 md:grid-cols-2">
