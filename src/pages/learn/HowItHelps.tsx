@@ -43,6 +43,13 @@ export function HowItHelps() {
           </figure>
 
           <p>
+            A genetic result is one more piece of information for your care team, alongside your
+            symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
+            conversation with your doctor about what's next.
+            <Cite n={1} />
+          </p>
+
+          <p>
             In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
             people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly
             half of those people, the result gave them a brand-new diagnosis or corrected an
@@ -66,13 +73,6 @@ export function HowItHelps() {
             A positive result also changed a doctor's estimate of a patient's long-term outlook for
             more than half of people who received one.
             <Cite n={2} />
-          </p>
-
-          <p>
-            A genetic result is one more piece of information for your care team, alongside your
-            symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
-            conversation with your doctor about what's next.
-            <Cite n={1} />
           </p>
         </div>
 
