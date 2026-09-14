@@ -35,8 +35,8 @@ const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; toolti
 ]
 
 /**
- * Hero card row. The description is always visible as a caption; hovering
- * the row just shifts its colors slightly.
+ * Hero card row. The description is always visible as a caption; the row
+ * does not change color on hover.
  */
 function HeroFeature({
   icon,
@@ -50,16 +50,10 @@ function HeroFeature({
   tooltip: string
 }) {
   return (
-    <li className="group flex items-start gap-4 rounded-xl p-1.5 -m-1.5 transition-colors duration-150 hover:bg-wash">
-      <IconChip
-        icon={icon}
-        tint={tint}
-        className="size-11 shrink-0 rounded-xl transition-colors duration-150"
-      />
+    <li className="flex items-start gap-4 rounded-xl p-1.5 -m-1.5">
+      <IconChip icon={icon} tint={tint} className="size-11 shrink-0 rounded-xl" />
       <div>
-        <p className="text-[1.05rem] leading-snug font-semibold text-ink transition-colors duration-150 group-hover:text-brand-strong">
-          {label}
-        </p>
+        <p className="text-[1.05rem] leading-snug font-semibold text-ink">{label}</p>
         <p className="mt-0.5 text-[0.92rem] leading-snug text-muted">{tooltip}</p>
       </div>
     </li>

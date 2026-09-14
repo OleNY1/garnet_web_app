@@ -47,7 +47,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     icon: Stethoscope,
     tint: 'brand',
     eyebrow: 'How results help',
-    title: 'How genetic testing can help you',
+    title: 'How genetic testing can help you?',
     intro: 'For many patients, a single result changes what happens next with their care team.',
   },
   {

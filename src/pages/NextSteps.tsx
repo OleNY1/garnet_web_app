@@ -113,12 +113,12 @@ export function NextSteps() {
           <Card className="p-7 sm:p-8">
             <IconChip icon={Stethoscope} tint="plum" className="size-[3.25rem]" />
             <h3 className="mt-5 font-display text-[1.3rem] leading-snug font-semibold text-ink">
-              Getting a referral
+              Referral to Genetic Counseling
             </h3>
             <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
-              Your nephrologist or primary care doctor can refer you to a genetic counselor or a
-              genetics clinic. Eligibility varies, so it's worth asking your doctor directly
-              whether testing could be relevant for you.
+              In some states and with some health insurance, you will need your nephrologist or
+              primary care doctor to refer you to a genetic counselor or a genetics clinic. In
+              others, you can simply schedule a meeting with a genetic counselor directly.
             </p>
           </Card>
           <Card className="p-7 sm:p-8">
@@ -127,8 +127,22 @@ export function NextSteps() {
               Cost and insurance
             </h3>
             <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
-              Genetic testing may be covered by insurance, and financial assistance may be
-              available. Costs vary, so it is important to ask before testing.
+              Health insurance often covers genetic testing, and many laboratories offer financial
+              assistance if not. Costs vary by test type and laboratory. Some tests could be free,
+              but others could cost several thousand dollars, so ask before testing. Genetic
+              counselors have experience managing insurance costs and can help you navigate the
+              system. Some genetic counselors work with insurance; others offer a maximum
+              out-of-pocket cost. The information should be provided before meeting with a genetic
+              counselor (
+              <a
+                href="https://findageneticcounselor.nsgc.org/?reload=timezone"
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand underline underline-offset-2 hover:text-brand-strong"
+              >
+                find a genetic counselor
+              </a>
+              ).
             </p>
           </Card>
           <Card className="p-7 sm:p-8">
@@ -137,8 +151,19 @@ export function NextSteps() {
               Privacy and legal protections
             </h3>
             <p className="mt-3 text-[1.02rem] leading-relaxed text-body">
-              Genetic information is personal. GARNET explains privacy, genetic discrimination, and
-              legal protections in simple language.
+              Genetic information is protected like any other clinical information, and your
+              doctor needs your agreement to share it with other doctors and family members. For
+              healthy individuals who have a genetic risk to develop disease, there is a law to
+              protect them from genetic discrimination called{' '}
+              <a
+                href="https://www.genome.gov/about-genomics/policy-issues/Genetic-Discrimination"
+                target="_blank"
+                rel="noreferrer"
+                className="text-brand underline underline-offset-2 hover:text-brand-strong"
+              >
+                GINA
+              </a>
+              .
             </p>
           </Card>
         </div>

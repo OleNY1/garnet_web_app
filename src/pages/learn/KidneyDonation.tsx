@@ -43,6 +43,19 @@ export function KidneyDonation() {
 
           <FlowDiagram tint="plum" steps={DONATION_STEPS} />
 
+          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
+            <img
+              src={`${import.meta.env.BASE_URL}learn-figures/testing-recommendations-at-risk.png`}
+              alt="Flowchart of recommendations for genetic testing in at-risk adults and children, including kidney donor candidates and relatives at risk for a familial kidney disease."
+              className="w-full rounded-xl border border-line"
+            />
+            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+              How specialists decide whether — and how — to test a donor candidate or an at-risk
+              relative.
+              <Cite n={2} />
+            </figcaption>
+          </figure>
+
           <p>
             Testing a healthy candidate directly, without first confirming the cause in an
             affected relative, is generally discouraged — it's more likely to turn up confusing or
@@ -80,6 +93,12 @@ export function KidneyDonation() {
               citation:
                 'Thomas, C.P. et al. Genetic evaluation of living kidney donor candidates: a review and recommendations for best practices. American Journal of Transplantation 23, 597-607 (2023).',
               url: 'https://doi.org/10.1016/j.ajt.2023.02.020',
+            },
+            {
+              n: 2,
+              citation:
+                'Franceschini, N. et al. Advancing Genetic Testing in Kidney Diseases: Report From a National Kidney Foundation Working Group. American Journal of Kidney Diseases 84, 751-766 (2024).',
+              url: 'https://doi.org/10.1053/j.ajkd.2024.05.010',
             },
           ]}
         />

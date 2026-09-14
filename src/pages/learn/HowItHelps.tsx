@@ -15,6 +15,33 @@ export function HowItHelps() {
     <>
       <Section id="how-it-helps" tone="wash" title="What the research shows">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+          <h3 className="mt-2 font-display text-xl font-semibold text-ink">A genetic diagnosis can:</h3>
+          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
+            <li>Confirm or correct your diagnosis</li>
+            <li>Start, avoid, or switch a treatment based on the exact cause of your kidney disease</li>
+            <li>Avoid an invasive test like a kidney biopsy</li>
+            <li>Help you make decisions about family planning</li>
+            <li>Help guide kidney donation</li>
+            <li>Lead to a referral to other specialists for other medical problems caused by this genetic disease</li>
+            <li>
+              Help your family members be diagnosed early and start treatment early, which can
+              delay the need of dialysis by up to 27 years
+              <Cite n={3} />
+            </li>
+          </ul>
+
+          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
+            <img
+              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
+              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
+              className="w-full rounded-xl border border-line"
+            />
+            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+              Examples of how a genetic diagnosis can guide care.
+              <Cite n={4} />
+            </figcaption>
+          </figure>
+
           <p>
             In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
             people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly
@@ -41,20 +68,6 @@ export function HowItHelps() {
             <Cite n={2} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">A genetic diagnosis can:</h3>
-          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
-            <li>Confirm or correct a diagnosis that a biopsy or imaging couldn't fully explain</li>
-            <li>Start, avoid, or switch a treatment based on the exact cause of your kidney disease</li>
-            <li>Help you avoid an invasive test, like a kidney biopsy, in some cases</li>
-            <li>Help you make decisions about family planning</li>
-            <li>Help guide decisions about living kidney donation</li>
-            <li>Lead to a referral to other specialists for related conditions caused by the same genetic change</li>
-            <li>
-              Help your family members get diagnosed — and start treatment — earlier than they
-              otherwise would have
-              <Cite n={1} />
-            </li>
-          </ul>
           <p>
             A genetic result is one more piece of information for your care team, alongside your
             symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
@@ -80,6 +93,18 @@ export function HowItHelps() {
               citation:
                 'Chebib, F.T. et al. Genetic testing in the management of adult CKD. Journal of the American Society of Nephrology 37, 777-789 (2026).',
               url: 'https://doi.org/10.1681/ASN.0000000913',
+            },
+            {
+              n: 3,
+              citation:
+                'Gross, O. et al. Early angiotensin-converting enzyme inhibition in Alport syndrome delays renal failure and improves life expectancy. Kidney International 81, 494-501 (2012).',
+              url: 'https://doi.org/10.1038/ki.2011.407',
+            },
+            {
+              n: 4,
+              citation:
+                'KDIGO Conference Participants. Genetics in chronic kidney disease: conclusions from a Kidney Disease: Improving Global Outcomes (KDIGO) Controversies Conference. Kidney International 101, 1126-1141 (2022).',
+              url: 'https://doi.org/10.1016/j.kint.2022.03.019',
             },
           ]}
         />
