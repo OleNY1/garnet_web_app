@@ -28,20 +28,45 @@ const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
  * "Learn" nav item with a hover/focus dropdown listing every Learn
  * subpage, so a visitor can jump straight to a topic instead of always
  * landing on the Overview first. Opens on hover or keyboard focus, closes
- * on Escape, blur, or an outside click — same interaction pattern as the
- * hero feature tooltips on the homepage.
+ * on Escape, an outside click, or 0.5 seconds after the mouse leaves.
  */
 function LearnNavItem() {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLLIElement>(null)
+  const closeTimerRef = useRef<number | null>(null)
+
+  const cancelClose = () => {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+  }
+
+  const openMenu = () => {
+    cancelClose()
+    setOpen(true)
+  }
+
+  const closeMenu = () => {
+    cancelClose()
+    setOpen(false)
+  }
+
+  const closeMenuSoon = () => {
+    cancelClose()
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpen(false)
+      closeTimerRef.current = null
+    }, 500)
+  }
 
   useEffect(() => {
     if (!open) return
     const onPointerDown = (event: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false)
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) closeMenu()
     }
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') closeMenu()
     }
     document.addEventListener('pointerdown', onPointerDown)
     document.addEventListener('keydown', onKeyDown)
@@ -51,12 +76,14 @@ function LearnNavItem() {
     }
   }, [open])
 
+  useEffect(() => () => cancelClose(), [])
+
   return (
     <li
       ref={rootRef}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={openMenu}
+      onMouseLeave={closeMenuSoon}
     >
       <NavLink
         to="/learn"
@@ -64,7 +91,7 @@ function LearnNavItem() {
         className={navLinkClasses}
         aria-expanded={open}
         aria-haspopup="true"
-        onFocus={() => setOpen(true)}
+        onFocus={openMenu}
       >
         <span className="inline-flex items-center gap-1">
           Learn
@@ -88,8 +115,8 @@ function LearnNavItem() {
             to={topic.to}
             end={topic.end}
             role="menuitem"
-            onClick={() => setOpen(false)}
-            onFocus={() => setOpen(true)}
+            onClick={closeMenu}
+            onFocus={openMenu}
             className="block scale-100 rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body transition-all duration-150 hover:scale-[1.03] hover:bg-brand-soft hover:text-ink"
           >
             {topic.label}
