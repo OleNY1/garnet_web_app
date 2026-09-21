@@ -1,6 +1,6 @@
 import { ChevronDown, Menu, Stethoscope, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { LEARN_TOPICS } from '../lib/learnTopics'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -97,6 +97,51 @@ function LearnNavItem() {
   )
 }
 
+function BrandMark() {
+  const { pathname } = useLocation()
+  const isWelcomePage = pathname === '/'
+
+  const mark = (
+    <img
+      src={`${import.meta.env.BASE_URL}garnet-mark.png`}
+      alt=""
+      className="size-11 shrink-0 object-contain"
+    />
+  )
+  const wordmark = (
+    <span className="text-[1.25rem] font-bold tracking-[0.18em] text-brand">GARNET</span>
+  )
+
+  /* On the welcome page the logo is not split into two destinations. */
+  if (isWelcomePage) {
+    return (
+      <div className="flex items-center gap-3 p-1.5">
+        {mark}
+        {wordmark}
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <Link
+        to="/"
+        aria-label="Go to the GARNET welcome page"
+        className="-m-1.5 rounded-2xl p-1.5"
+      >
+        {mark}
+      </Link>
+      <Link
+        to="/learn"
+        aria-label="Go to Getting started"
+        className="-m-1.5 rounded-2xl p-1.5"
+      >
+        {wordmark}
+      </Link>
+    </div>
+  )
+}
+
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -108,14 +153,7 @@ export function Header() {
       }}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-3 sm:px-8">
-        <Link to="/" className="-m-1.5 flex items-center gap-3 rounded-2xl p-1.5">
-          <img
-            src={`${import.meta.env.BASE_URL}garnet-mark.png`}
-            alt=""
-            className="size-11 shrink-0 object-contain"
-          />
-          <span className="text-[1.25rem] font-bold tracking-[0.18em] text-brand">GARNET</span>
-        </Link>
+        <BrandMark />
 
         <div className="flex items-center gap-2 sm:gap-3">
           <ul aria-label="Main" className="hidden items-center gap-1 lg:flex">
