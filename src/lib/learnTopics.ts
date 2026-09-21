@@ -25,9 +25,8 @@ export type LearnTopic = {
 
 /**
  * Single source of truth for every /learn/* subpage: used to build the
- * header's hover dropdown, the in-page tab strip, and each page's
- * topic-colored hero. Keeping one list means the nav and the Learn section
- * itself can never drift out of sync.
+ * header's hover dropdown, the Getting started topic cards, and each
+ * page's topic-colored hero.
  */
 export const LEARN_TOPICS: LearnTopic[] = [
   {
@@ -90,7 +89,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     eyebrow: 'Your rights & choices',
     title: 'Your rights, privacy, and choices',
     intro:
-      "It's normal to wonder who can see a result and what happens to your DNA afterward. Here's what's protected — and where the gaps are.",
+      "It's normal to wonder who can see a result and what happens to your DNA afterward.",
   },
   {
     label: 'Types of tests',

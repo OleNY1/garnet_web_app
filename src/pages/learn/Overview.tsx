@@ -1,4 +1,4 @@
-import { BadgeCheck, FlaskConical, HandHeart, Landmark, Search, Stethoscope, Users } from 'lucide-react'
+import { BadgeCheck, Landmark, Signpost } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Card } from '../../components/Card'
@@ -9,108 +9,64 @@ import { Sources } from '../../components/Sources'
 import type { Tint } from '../../components/IconChip'
 import { IconChip } from '../../components/IconChip'
 import { Section } from '../../components/Section'
-import { TrustBadge } from '../../components/TrustBadge'
+import { LEARN_TOPICS } from '../../lib/learnTopics'
 
-const BENEFITS: Array<{
+type TopicCardData = {
+  label: string
+  to: string
   icon: LucideIcon
   tint: Tint
-  title: string
-  text: string
-  href?: string
-}> = [
+  intro: string
+}
+
+const TOPIC_CARDS: TopicCardData[] = [
+  ...LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
+    label: topic.label,
+    to: topic.to,
+    icon: topic.icon,
+    tint: topic.tint,
+    intro: topic.intro,
+  })),
   {
-    icon: Search,
-    tint: 'brand',
-    title: 'Discover WHY',
-    text: 'A genetic test can show why the kidney disease started.',
-  },
-  {
-    icon: Users,
-    tint: 'accent',
-    title: 'Help your family',
-    text: 'A genetic diagnosis may delay dialysis or kidney transplant for family members.',
-  },
-  {
-    icon: HandHeart,
+    label: 'How to get tested',
+    to: '/next-steps',
+    icon: Signpost,
     tint: 'plum',
-    title: 'Support living donor decisions',
-    text: 'Identify family members who can safely donate their kidney.',
-  },
-  {
-    icon: Stethoscope,
-    tint: 'brand',
-    title: 'Guide care',
-    text: 'A genetic diagnosis may help doctors choose better treatments.',
-  },
-  {
-    icon: Users,
-    tint: 'accent',
-    title: 'Find a support group',
-    text: 'Connect with patient communities living with the same kidney condition.',
-    href: '/learn/support-groups',
-  },
-  {
-    icon: FlaskConical,
-    tint: 'plum',
-    title: 'Explore research opportunities',
-    text: 'See whether a relevant clinical trial or research study is open to join.',
-    href: '/learn/research-opportunities',
+    intro:
+      'Learn how to talk with your doctor or a genetic counselor, ask about cost, and prepare for testing.',
   },
 ]
 
 const TRUST_POINTS = [
   'Supported by the National Kidney Foundation',
+  'Columbia University Irving Medical Center research project',
   'Developed with input from medical researchers and genetic counseling experts',
   'Designed for patients and families',
   'Educational only - not a diagnosis or medical advice',
 ]
 
-function BenefitCard({ benefit }: { benefit: (typeof BENEFITS)[number] }) {
-  const content = (
-    <>
-      <IconChip icon={benefit.icon} tint={benefit.tint} />
-      <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">{benefit.title}</h3>
-      <p className="mt-2.5 text-[1.02rem] leading-relaxed text-body">{benefit.text}</p>
-    </>
-  )
-
-  if (benefit.href) {
-    return (
-      <Link
-        to={benefit.href}
-        className="scale-100 rounded-3xl border border-line bg-surface p-6 shadow-soft transition-transform duration-200 hover:scale-[1.03] hover:shadow-lift sm:p-7"
-      >
-        {content}
-      </Link>
-    )
-  }
-
+function TopicCard({ topic }: { topic: TopicCardData }) {
   return (
-    <Card className="scale-100 p-6 transition-transform duration-200 hover:scale-[1.03] sm:p-7">
-      {content}
-    </Card>
+    <Link
+      to={topic.to}
+      className="scale-100 rounded-3xl border border-line bg-surface p-6 shadow-soft transition-transform duration-200 hover:scale-[1.03] hover:shadow-lift sm:p-7"
+    >
+      <IconChip icon={topic.icon} tint={topic.tint} />
+      <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">{topic.label}</h3>
+      <p className="mt-2.5 text-[1.02rem] leading-relaxed text-body">{topic.intro}</p>
+    </Link>
   )
 }
 
 /**
- * The video hero banner used to live at the top of this page. It's now
- * rendered by LearnLayout (as GettingStartedHero) for the Getting Started
- * tab specifically, so it sits above the tab strip like every other
- * topic's PageHero. This page picks up right where that banner leaves off.
+ * The video hero banner is rendered by LearnLayout. This page picks up
+ * right where that banner leaves off.
  */
 export function Overview() {
   return (
     <>
-      <Section id="trust-strip" className="!py-10">
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <TrustBadge icon={Landmark}>Columbia University Irving Medical Center research project</TrustBadge>
-          <TrustBadge icon={BadgeCheck}>Supported by the National Kidney Foundation</TrustBadge>
-        </div>
-      </Section>
-
       <Section
         id="why-it-matters"
-        className="!pt-8 sm:!pt-10"
         headerClassName="max-w-6xl"
         titleClassName="sm:whitespace-nowrap sm:text-[2.05rem] lg:text-[2.25rem]"
         eyebrow="Why it matters"
@@ -125,8 +81,8 @@ export function Overview() {
           </span>
         </p>
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {BENEFITS.map((benefit) => (
-            <BenefitCard key={benefit.title} benefit={benefit} />
+          {TOPIC_CARDS.map((topic) => (
+            <TopicCard key={topic.to} topic={topic} />
           ))}
         </div>
       </Section>

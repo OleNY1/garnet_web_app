@@ -6,8 +6,6 @@ import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
   { label: 'Learn', href: '/learn' },
-  { label: 'Check if testing may help', href: '/check' },
-  { label: 'How to get tested', href: '/next-steps' },
   { label: 'FAQ', href: '/next-steps#cost-privacy' },
 ]
 

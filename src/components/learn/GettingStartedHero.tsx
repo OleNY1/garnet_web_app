@@ -73,7 +73,12 @@ export function GettingStartedHero() {
       <HeroVideo />
       <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-24">
         <div>
-          <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation.</TrustBadge>
+          <div className="flex flex-col items-start gap-2">
+            <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation</TrustBadge>
+            <TrustBadge icon={Landmark}>
+              Columbia University Irving Medical Center research project
+            </TrustBadge>
+          </div>
           <h1
             id="hero-heading"
             className="mt-6 font-display text-[2.3rem] leading-[1.12] font-semibold text-ink sm:text-5xl sm:leading-[1.08] lg:text-[3.35rem]"

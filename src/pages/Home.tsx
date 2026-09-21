@@ -55,7 +55,7 @@ export function Home() {
         className="absolute -bottom-24 -left-16 size-72 rounded-full bg-accent/20 blur-3xl"
       />
       <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-16 text-center sm:px-8 sm:py-24">
-        <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation.</TrustBadge>
+        <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation</TrustBadge>
         <p className="mt-6 text-[1.05rem] font-semibold tracking-[0.14em] text-brand uppercase">
           Hello, and welcome
         </p>
