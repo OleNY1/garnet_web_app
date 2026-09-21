@@ -34,7 +34,7 @@ export function PageHero({
 }) {
   return (
     <section className={`${washClasses[tint]} border-b border-line`}>
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-5 px-5 py-14 sm:px-8 sm:py-20">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-5 px-5 py-7 sm:px-8 sm:py-10">
         <IconChip icon={icon} tint={tint} className="size-14" />
         <div>
           <p

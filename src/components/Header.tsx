@@ -9,6 +9,11 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '/next-steps#cost-privacy' },
 ]
 
+const LEARN_MENU = [
+  ...LEARN_TOPICS.map((topic) => ({ label: topic.label, to: topic.to, end: topic.end })),
+  { label: 'How to get tested', to: '/next-steps', end: false },
+]
+
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
   `inline-block rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium transition-all duration-150 hover:scale-105 hover:bg-brand-soft hover:text-ink ${
     isActive ? 'bg-brand-soft text-ink' : 'text-body'
@@ -77,7 +82,7 @@ function LearnNavItem() {
           open ? 'pointer-events-auto scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
         }`}
       >
-        {LEARN_TOPICS.map((topic) => (
+        {LEARN_MENU.map((topic) => (
           <NavLink
             key={topic.to}
             to={topic.to}
@@ -201,7 +206,7 @@ export function Header() {
                 Learn
               </NavLink>
               <ul className="ml-4 flex flex-col gap-0.5 border-l border-line pl-3">
-                {LEARN_TOPICS.slice(1).map((topic) => (
+                {LEARN_MENU.slice(1).map((topic) => (
                   <li key={topic.to}>
                     <NavLink
                       to={topic.to}

@@ -15,33 +15,6 @@ export function HowItHelps() {
     <>
       <Section id="how-it-helps" tone="wash" title="What the research shows">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">A genetic diagnosis can:</h3>
-          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
-            <li>Confirm or correct your diagnosis</li>
-            <li>Start, avoid, or switch a treatment based on the exact cause of your kidney disease</li>
-            <li>Avoid an invasive test like a kidney biopsy</li>
-            <li>Help you make decisions about family planning</li>
-            <li>Help guide kidney donation</li>
-            <li>Lead to a referral to other specialists for other medical problems caused by this genetic disease</li>
-            <li>
-              Help your family members be diagnosed early and start treatment early, which can
-              delay the need of dialysis by up to 27 years
-              <Cite n={3} />
-            </li>
-          </ul>
-
-          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
-            <img
-              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
-              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
-              className="w-full rounded-xl border border-line"
-            />
-            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
-              Examples of how a genetic diagnosis can guide care.
-              <Cite n={4} />
-            </figcaption>
-          </figure>
-
           <p>
             A genetic result is one more piece of information for your care team, alongside your
             symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
@@ -74,6 +47,33 @@ export function HowItHelps() {
             more than half of people who received one.
             <Cite n={2} />
           </p>
+
+          <h3 className="mt-2 font-display text-xl font-semibold text-ink">A genetic diagnosis can:</h3>
+          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
+            <li>Confirm or correct your diagnosis</li>
+            <li>Start, avoid, or switch a treatment based on the exact cause of your kidney disease</li>
+            <li>Avoid an invasive test like a kidney biopsy</li>
+            <li>Help you make decisions about family planning</li>
+            <li>Help guide kidney donation</li>
+            <li>Lead to a referral to other specialists for other medical problems caused by this genetic disease</li>
+            <li>
+              Help your family members be diagnosed early and start treatment early, which can
+              delay the need of dialysis by up to 27 years
+              <Cite n={3} />
+            </li>
+          </ul>
+
+          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
+            <img
+              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
+              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
+              className="w-full rounded-xl border border-line"
+            />
+            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+              Examples of how a genetic diagnosis can guide care.
+              <Cite n={4} />
+            </figcaption>
+          </figure>
         </div>
 
         <div className="mx-auto max-w-3xl">
