@@ -8,12 +8,6 @@ import { TrustBadge } from '../components/TrustBadge'
 
 const DOCTOR_APP_URL = '/doctor/dashboard'
 
-/**
- * The gateway landing page greets both audiences and asks them to pick a
- * side up front, instead of assuming a patient. Each side then gets its
- * own tailored banner: /learn (Overview.tsx) owns the patient-facing hero,
- * and /doctor/dashboard owns the clinician-facing one.
- */
 const PATHS: Array<{
   icon: LucideIcon
   tint: Tint
@@ -61,14 +55,13 @@ export function Home() {
         </p>
         <h1
           id="hero-heading"
-          className="mt-3 max-w-3xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
+          className="mt-3 max-w-4xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
         >
-          You've found GARNET.
+          Could genetic testing help you, your family, or your patient understand kidney disease?
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-body sm:text-xl">
-          GARNET helps patients and families make sense of a kidney diagnosis, and helps the
-          doctors who treat them do the same. Tell us which one you are, and we'll take you to
-          the right side.
+          GARNET guides patients, families, and clinicians to the right kidney genetics resources.
+          Choose your path to continue.
         </p>
 
         <div className="mt-12 grid w-full gap-5 sm:gap-6 md:grid-cols-2">
@@ -78,7 +71,7 @@ export function Home() {
               className="flex scale-100 flex-col p-6 text-left transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.015] hover:shadow-lift sm:p-8"
             >
               <IconChip icon={path.icon} tint={path.tint} className="size-[3.25rem]" />
-              <p className="mt-6 text-[0.9rem] font-bold tracking-[0.14em] uppercase text-brand">
+              <p className="mt-6 text-[0.9rem] font-bold tracking-[0.14em] text-brand uppercase">
                 {path.eyebrow}
               </p>
               <h2 className="mt-3 font-display text-[1.7rem] leading-snug font-semibold text-ink sm:text-[1.9rem]">
