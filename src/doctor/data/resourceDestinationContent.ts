@@ -247,15 +247,6 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
         buttonLabel: "Watch story",
       },
       {
-        title: "The Kidney Collective Podcast | Ep. 4: I Wish Others Knew About Genetic Testing for Kidney Disease",
-        subtitle: "Patient perspective on genetic testing for kidney disease",
-        url: "https://www.youtube.com/watch?v=A_BqDASURHU",
-        thumbnailUrl: "https://i.ytimg.com/vi/A_BqDASURHU/hqdefault.jpg",
-        embedUrl: "https://www.youtube.com/embed/A_BqDASURHU",
-        sourceLabel: "YouTube",
-        buttonLabel: "Watch story",
-      },
-      {
         title: "Living with PKD: Steve Irby's Journey from Diagnosis to Transplant",
         subtitle: "Personal journey from diagnosis to transplant",
         url: "https://www.youtube.com/watch?v=SodEFKdHIlA",
@@ -392,6 +383,15 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
       "Curated videos focused specifically on genetic testing and kidney disease.",
     sections: [],
     videoLinks: [
+      {
+        title: "The Kidney Collective Podcast | Ep. 4: Genetic Testing for Kidney Disease with Mary-Beth Roberts",
+        subtitle: "Genetic counselor perspective on genetic testing and kidney disease",
+        url: "https://www.youtube.com/watch?v=A_BqDASURHU",
+        thumbnailUrl: "https://i.ytimg.com/vi/A_BqDASURHU/hqdefault.jpg",
+        embedUrl: "https://www.youtube.com/embed/A_BqDASURHU",
+        sourceLabel: "YouTube",
+        buttonLabel: "Watch video",
+      },
       {
         title: "PKD | A Genetics Primer for the Modern Nephrologist | Case Study",
         subtitle: "Bianca E Russell",
