@@ -93,7 +93,7 @@ export const educationalCards: ResourceCard[] = [
 export const practicalCards: ResourceCard[] = [
   {
     id: "identify-patient",
-    title: "Identify the Patient",
+    title: "Assess Risk for Genetic Condition",
     subtitle: "Clinical screening questionnaire",
     icon: ClipboardList,
     route: "/doctor/dashboard/resource/genetic-testing-risks",

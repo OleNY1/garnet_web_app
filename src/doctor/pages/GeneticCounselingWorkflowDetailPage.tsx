@@ -6,14 +6,14 @@ import { DoctorDecorativeArt, DoctorFooter, DoctorHeader, doctorSerifFont } from
 const workflowTopicMeta: Record<string, { title: string; summary: string }> = {
   "clinical-examination": {
     title: "Clinical Examination",
-    summary: "Clinical history, pedigree clues, extra-renal findings, and examination features that shape nephrogenetic testing strategy.",
+    summary: "Extra-renal findings and examination features that shape nephrogenetic testing strategy.",
   },
   "pedigree-analysis": {
-    title: "Pedigree Analysis",
-    summary: "Content placeholder for pedigree analysis and family history review.",
+    title: "Family History Collection",
+    summary: "Family structure, inheritance clues, and pedigree review that changes testing strategy.",
   },
   "how-to-choose-the-test": {
-    title: "How to Choose the Test",
+    title: "Choosing the right test",
     summary: "Framework for genetic test selection and follow-up pathways in individuals with kidney disease.",
   },
   "informed-consent": {
@@ -21,33 +21,16 @@ const workflowTopicMeta: Record<string, { title: string; summary: string }> = {
     summary: "Core talking points before testing, including purpose, benefits, limitations, privacy, and family implications.",
   },
   "results-disclosure-follow-up": {
-    title: "Results Disclosure and Follow Up",
+    title: "Results disclosure and follow-up",
     summary: "How positive, uncertain, and negative results shape counseling, cascade testing, and next-step planning.",
   },
   "letter-of-medical-necessity-template": {
-    title: "Letter of Medical Necessity Template",
+    title: "Letter of Medical Necessity",
     summary: "Physician-fillable statement to support insurance review for hereditary kidney disease genetic testing.",
   },
 };
 
-const clinicalExaminationLinks = [
-  {
-    label: "pedigree analysis tools",
-    href: "https://nephrogenix.wixsite.com/nephrogenetics/family-history-and-pedigree-analysis",
-  },
-  {
-    label: "inheritance patterns",
-    href: "https://nephrogenix.wixsite.com/nephrogenetics/inheritance-pattern",
-  },
-  {
-    label: "extrarenal manifestations",
-    href: "https://nephrogenix.wixsite.com/nephrogenetics/extrarenal-manifestations",
-  },
-  {
-    label: "Genetic Test explanation",
-    href: "https://nephrogenix.wixsite.com/nephrogenetics/post-test-counseling",
-  },
-];
+const drawPedUrl = "https://www.genecascade.org/ped-cgi/pedigree.cgi";
 
 const pedigreeFigureUrl =
   "https://static.wixstatic.com/media/056bd2_56ab2a3225214f07a3755ecbfcf7abcc~mv2.jpeg/v1/fill/w_600,h_529,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/sfaf253fig1.jpeg";
@@ -68,12 +51,12 @@ const informedConsentPanels = [
   {
     title: "Purpose of Genetic Testing",
     accentClassName: "from-[#6bb8f0] to-[#84cdfa]",
-    text: "Identify whether kidney disease is hereditary and whether results could change diagnosis, counseling, or treatment planning.",
+    text: "Discuss with your patient the goal of genetic testing in their case. It might be to clarify diagnosis, guide management, support family screening, support family planning or reproductive counseling, inform donor or transplant planning, or determine whether results could change treatment planning.",
   },
   {
     title: "What the Test Involves",
     accentClassName: "from-[#77bc67] to-[#97d98d]",
-    text: "A blood or saliva sample is used to analyze DNA. Testing may include single-gene analysis, a kidney gene panel, exome sequencing, or other targeted methods.",
+    text: "A blood or saliva sample is used to analyze DNA. Explain how the sample is collected, who orders the test, where results will be returned, and what type of result discussion the patient should expect.",
   },
   {
     title: "Benefits of Testing",
@@ -83,27 +66,27 @@ const informedConsentPanels = [
   {
     title: "Types of Genetic Tests",
     accentClassName: "from-[#8ccc72] to-[#b7e298]",
-    text: "Common approaches include targeted gene panels, DNA sequencing, CNV analysis, and broader exome or genome-based strategies when the phenotype is unclear.",
+    text: "Testing may include single-gene analysis, a kidney gene panel, exome sequencing, genome sequencing, CNV analysis, or other targeted methods depending on the phenotype and suspected diagnosis.",
   },
   {
     title: "Limitations",
     accentClassName: "from-[#f2b04c] to-[#ffd57a]",
-    text: "Not every result is clear. A negative test does not fully exclude a genetic cause, and variants of uncertain significance may require later reinterpretation.",
+    text: "Results often include variants of uncertain significance because there is a lot we still do not know, and it is difficult to know for certain whether genetic differences between us cause disease or only explain why we are not all identical. Unless the test is done for a variant known to cause disease in the family, not finding a genetic cause does not mean that there is none; it means that we have not found one.",
   },
   {
     title: "Risks & Considerations",
     accentClassName: "from-[#6db5e5] to-[#9fcef2]",
-    text: "Patients may have privacy concerns, emotional stress, uncertainty about results, and questions about what a finding means for future care or relatives.",
+    text: "Patients may have privacy concerns, emotional stress, uncertainty about results, and questions about what a finding means for future care or relatives. Share with the patient information about GINA.",
   },
   {
     title: "Impact on Family",
     accentClassName: "from-[#8ccb75] to-[#b8e39c]",
-    text: "A result can identify at-risk relatives and may prompt cascade testing, reproductive counseling, or earlier kidney surveillance in family members.",
+    text: "A result can identify at-risk relatives and may prompt cascade testing or earlier kidney surveillance in family members.",
   },
   {
     title: "What Happens Next?",
     accentClassName: "from-[#f0b250] to-[#ffd47e]",
-    text: "After testing, results are reviewed with the patient, follow-up plans are adjusted, and referral to a genetic counselor may be recommended.",
+    text: "After testing, results are reviewed with the patient, follow-up plans are adjusted, and referral to a genetic counselor may be recommended. Inform the patient when to expect the result and what to expect to happen: you will review and explain the results, adjust care if needed, and consider referral to other specialists or another genetic test.",
   },
 ];
 
@@ -147,57 +130,13 @@ function renderClinicalExaminationContent(onBack: () => void) {
       <div className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-start">
         <div>
           <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
-            Clinical History &amp; Examination Findings
+            Clinical examination
           </h3>
 
           <p className="mt-6 text-xl leading-10 text-black/80">
-            Obtain a detailed family history for kidney disease, asking about affected relatives, age of onset, dialysis or transplant history, and extrarenal features.
-          </p>
-
-          <p className="mt-10 text-xl leading-10 text-black/80">
-            Use{" "}
-            <a
-              href={clinicalExaminationLinks[0].href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#1b4fd1] underline underline-offset-4"
-            >
-              {clinicalExaminationLinks[0].label}
-            </a>{" "}
-            to visually map{" "}
-            <a
-              href={clinicalExaminationLinks[1].href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#1b4fd1] underline underline-offset-4"
-            >
-              {clinicalExaminationLinks[1].label}
-            </a>
-            . Include at least three generations if possible. Identify patterns suggestive of dominant, recessive, or X-linked inheritance to guide testing strategy.
-          </p>
-
-          <p className="mt-10 text-xl leading-10 text-black/80">
-            Look for{" "}
-            <a
-              href={clinicalExaminationLinks[2].href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#1b4fd1] underline underline-offset-4"
-            >
-              {clinicalExaminationLinks[2].label}
-            </a>{" "}
-            such as hearing loss, ocular findings, neurological symptoms, or electrolyte abnormalities.
-          </p>
-
-          <p className="mt-8">
-            <a
-              href={clinicalExaminationLinks[3].href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-2xl text-[#1b4fd1] underline underline-offset-4"
-            >
-              {clinicalExaminationLinks[3].label}
-            </a>
+            Look for extra-renal manifestations such as hearing loss, ocular findings, neurological symptoms,
+            electrolyte abnormalities, congenital anomalies, or other syndromic findings that may point toward an
+            inherited kidney condition.
           </p>
 
           <button
@@ -217,18 +156,7 @@ function renderClinicalExaminationContent(onBack: () => void) {
             </p>
           </div>
 
-          <div className="grid gap-4 p-4 lg:grid-cols-2">
-            <div className="rounded-[1.25rem] bg-white/90 p-3 shadow-sm">
-              <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64]">
-                Detailed Family History &amp; Pedigree Analysis
-              </p>
-              <img
-                src={pedigreeFigureUrl}
-                alt="Pedigree analysis figure for inherited kidney disease evaluation"
-                className="h-auto w-full rounded-xl object-cover"
-              />
-            </div>
-
+          <div className="p-4">
             <div className="rounded-[1.25rem] bg-white/90 p-3 shadow-sm">
               <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64]">
                 Extrarenal Manifestations: Look Beyond the Kidneys
@@ -239,6 +167,61 @@ function renderClinicalExaminationContent(onBack: () => void) {
                 className="h-auto w-full rounded-xl object-cover"
               />
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function renderFamilyHistoryCollectionContent(onBack: () => void) {
+  return (
+    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
+      <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-start">
+        <div>
+          <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
+            Family History Collection
+          </h3>
+
+          <p className="mt-6 text-xl leading-10 text-black/80">
+            Obtain a detailed family history for kidney disease, asking about affected relatives, age of onset,
+            dialysis or transplant history, and extrarenal features.
+          </p>
+
+          <p className="mt-8 text-xl leading-10 text-black/80">
+            Use pedigree analysis tools to visually map inheritance patterns. Include at least three generations if
+            possible. Identify patterns suggestive of dominant, recessive, or X-linked inheritance to guide testing
+            strategy.
+          </p>
+
+          <a
+            href={drawPedUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-8 inline-flex rounded-full bg-[#00687b] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-[#005667]"
+          >
+            Open DrawPed in a separate tab
+          </a>
+
+          <button
+            type="button"
+            onClick={onBack}
+            className="mt-8 block min-w-[180px] bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
+          >
+            Back
+          </button>
+        </div>
+
+        <div className="rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] p-4 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
+          <div className="rounded-[1.25rem] bg-white/90 p-3 shadow-sm">
+            <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64]">
+              Detailed Family History &amp; Pedigree Mapping
+            </p>
+            <img
+              src={pedigreeFigureUrl}
+              alt="Pedigree analysis figure for inherited kidney disease evaluation"
+              className="h-auto w-full rounded-xl object-cover"
+            />
           </div>
         </div>
       </div>
@@ -277,6 +260,30 @@ function renderInformedConsentContent(onBack: () => void) {
         ))}
       </div>
 
+      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-lg leading-8 text-black/75">
+        <p>
+          Genetic discrimination protections:{" "}
+          <a
+            href="/doctor/dashboard/resource/risks-not-offering"
+            className="text-[#1b4fd1] underline underline-offset-4"
+          >
+            GINA and privacy considerations
+          </a>
+          .
+        </p>
+        <p className="mt-3">
+          Ethics reference:{" "}
+          <a
+            href="https://code-medical-ethics.ama-assn.org/ethics-opinions/genetic-testing-counseling"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#1b4fd1] underline underline-offset-4"
+          >
+            AMA Code of Medical Ethics: Genetic Testing and Counseling
+          </a>
+        </p>
+      </div>
+
       <button
         type="button"
         onClick={onBack}
@@ -291,66 +298,47 @@ function renderInformedConsentContent(onBack: () => void) {
 function renderHowToChooseTheTestContent(onBack: () => void) {
   return (
     <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
-      <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-start">
-        <div>
-          <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
-            Framework for Genetic Test Selection
-          </h3>
+      <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
+        Choosing the right test
+      </h3>
 
-          <p className="mt-6 text-xl leading-10 text-black/80">
-            Framework for genetic test selection among individuals with kidney disease. The workflow illustrated here
-            is described in the{" "}
-            <a
-              href={howToChooseTestReference.href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#1b4fd1] underline underline-offset-4"
-            >
-              main text
-            </a>{" "}
-            in the section: &ldquo;Genetic test selection among individuals with kidney disease.&rdquo;
-          </p>
-
-          <p className="mt-8 text-xl leading-10 text-black/80">
-            ES, exome sequencing; GS, genome sequencing; MLPA, multiplex ligation probe-dependent amplification; NGS,
-            next-generation sequencing; CNV, copy number variant; VUS, variant of uncertain significance.
-          </p>
-
-          <div className="mt-10 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
-            <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
-            <p className="mt-3 text-xl leading-9 underline decoration-black/50 underline-offset-4">
-              <a href={howToChooseTestReference.href} target="_blank" rel="noreferrer">
-                {howToChooseTestReference.citation}
-              </a>
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={onBack}
-            className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-          >
-            Back
-          </button>
-        </div>
-
-        <div className="rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[linear-gradient(180deg,#fdfefe_0%,#f4fbff_100%)] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
-          <img
-            src={howToChooseTestFigureUrl}
-            alt="Framework for genetic test selection among individuals with kidney disease"
-            className="w-full rounded-[1.25rem] border border-[#d9e3f3] bg-white object-contain shadow-sm"
-          />
-
-          <a
-            href={howToChooseTestReference.href}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex text-lg text-[#1b4fd1] underline underline-offset-4"
-          >
-            Open article reference
-          </a>
-        </div>
+      <div className="mt-8 rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[linear-gradient(180deg,#fdfefe_0%,#f4fbff_100%)] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
+        <img
+          src={howToChooseTestFigureUrl}
+          alt="Framework for genetic test selection among individuals with kidney disease"
+          className="w-full rounded-[1.25rem] border border-[#d9e3f3] bg-white object-contain shadow-sm"
+        />
       </div>
+
+      <div className="mt-8 max-w-4xl text-xl leading-10 text-black/80">
+        <p>
+          Framework for genetic test selection among individuals with kidney disease. The workflow illustrated here is
+          described in the main text in the section: &ldquo;Genetic test selection among individuals with kidney
+          disease.&rdquo;
+        </p>
+
+        <p className="mt-6">
+          ES, exome sequencing; GS, genome sequencing; MLPA, multiplex ligation probe-dependent amplification; NGS,
+          next-generation sequencing; CNV, copy number variant; VUS, variant of uncertain significance.
+        </p>
+      </div>
+
+      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
+        <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
+        <p className="mt-3 text-xl leading-9 underline decoration-black/50 underline-offset-4">
+          <a href={howToChooseTestReference.href} target="_blank" rel="noreferrer">
+            {howToChooseTestReference.citation}
+          </a>
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={onBack}
+        className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
+      >
+        Back
+      </button>
     </div>
   );
 }
@@ -358,112 +346,37 @@ function renderHowToChooseTheTestContent(onBack: () => void) {
 function renderResultsDisclosureContent(onBack: () => void) {
   return (
     <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
-      <div className="grid gap-10 xl:grid-cols-[0.92fr_1.08fr] xl:items-start">
-        <div>
-          <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
-            Planning the Return of Genetic Test Results
-          </h3>
+      <div className="max-w-4xl">
+        <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
+          Results disclosure and follow-up
+        </h3>
 
-          <p className="mt-6 text-xl leading-10 text-black/80">
-            Genetic test results may be positive, negative, or uncertain. Positive results can include diagnostic
-            findings, incidental findings, or secondary findings and may lead to genetic counseling, cascade testing,
-            specialist referral, or discussion of relevant clinical trials.
+        <p className="mt-6 text-xl leading-10 text-black/80">
+          After testing, results are reviewed with the patient, follow-up plans are adjusted, and referral to a genetic
+          counselor may be recommended.
+        </p>
+
+        <p className="mt-8 text-xl leading-10 text-black/80">
+          Inform the patient when to expect the result and what to expect to happen. You will review the results,
+          explain them, maybe adjust care, refer to other specialists, or consider another genetic test.
+        </p>
+
+        <div className="mt-10 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
+          <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
+          <p className="mt-3 text-lg leading-9 underline decoration-black/50 underline-offset-4">
+            <a href={resultsDisclosureReference.href} target="_blank" rel="noreferrer">
+              {resultsDisclosureReference.citation}
+            </a>
           </p>
-
-          <p className="mt-8 text-xl leading-10 text-black/80">
-            When the result is negative or shows a candidate diagnostic variant, the next step depends on residual
-            clinical suspicion. If suspicion remains high, clinicians should review test sensitivity, consider
-            additional testing, and assess whether reclassification or functional follow-up is appropriate.
-          </p>
-
-          <p className="mt-8 text-xl leading-10 text-black/80">
-            If residual suspicion is low, further genetic testing may not be necessary. If a VUS is reported in a gene
-            that matches the clinical presentation, the potential for future reinterpretation should be discussed with
-            the patient and revisited over time.
-          </p>
-
-          <div className="mt-10 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
-            <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
-            <p className="mt-3 text-lg leading-9 underline decoration-black/50 underline-offset-4">
-              <a href={resultsDisclosureReference.href} target="_blank" rel="noreferrer">
-                {resultsDisclosureReference.citation}
-              </a>
-            </p>
-          </div>
-
-          <button
-            type="button"
-            onClick={onBack}
-            className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-          >
-            Back
-          </button>
         </div>
 
-        <div className="rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[linear-gradient(180deg,#fdfefe_0%,#f4fbff_100%)] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
-          <div className="rounded-[1.25rem] border border-[#d9e3f3] bg-white p-5 shadow-sm">
-            <div className="flex justify-center">
-              <div className="rounded-xl border border-black/10 bg-[#f7fbff] px-5 py-3 text-center text-lg text-[#173a64]">
-                Genetic test
-              </div>
-            </div>
-
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <div className="rounded-[1.25rem] border border-green-200 bg-green-50 p-4">
-                <p className="text-lg text-green-900">Positive result</p>
-                <div className="mt-3 grid gap-3">
-                  <div className="rounded-xl bg-[#9be168] px-4 py-3 text-center text-[#1d3f10]">Diagnostic finding</div>
-                  <div className="rounded-xl bg-[#a7ea79] px-4 py-3 text-center text-[#1d3f10]">Incidental or secondary finding</div>
-                  <div className="rounded-xl bg-[#bdf185] px-4 py-3 text-center text-[#1d3f10]">Risk factor</div>
-                </div>
-              </div>
-
-              <div className="rounded-[1.25rem] border border-red-200 bg-red-50 p-4">
-                <p className="text-lg text-red-900">Negative result</p>
-                <div className="mt-3 grid gap-3">
-                  <div className="rounded-xl bg-[#ff7a7a] px-4 py-3 text-center text-[#5b1111]">No reportable variant of interest</div>
-                  <div className="rounded-xl bg-[#ff9090] px-4 py-3 text-center text-[#5b1111]">Candidate diagnostic result (VUS)</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 rounded-xl bg-[#9b6200] px-4 py-3 text-center text-white">
-              A-priori suspicion of a genetic etiology for the kidney disease?
-            </div>
-
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <div className="space-y-4">
-                <div className="rounded-[1.25rem] border border-lime-200 bg-lime-100 p-4 text-black/80">
-                  <p className="text-lg text-[#365000]">Cascade testing and specialist referral when appropriate</p>
-                </div>
-                <div className="rounded-[1.25rem] border border-amber-200 bg-amber-100 p-4 text-center text-[#694200]">
-                  High residual suspicion
-                </div>
-                <div className="rounded-[1.25rem] border border-yellow-200 bg-yellow-100 p-4 text-center text-[#6a5a00]">
-                  Reassess test sensitivity and specificity
-                </div>
-                <div className="rounded-[1.25rem] border border-cyan-200 bg-cyan-100 p-4 text-center text-[#005b6f]">
-                  Consider additional genetic testing
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="rounded-[1.25rem] border border-orange-200 bg-orange-100 p-4 text-center text-[#744100]">
-                  Low residual suspicion
-                </div>
-                <div className="rounded-[1.25rem] border border-gray-200 bg-gray-100 p-4 text-center text-[#555]">
-                  No need for further testing
-                </div>
-                <div className="rounded-[1.25rem] border border-violet-200 bg-violet-100 p-4 text-center text-[#56348e]">
-                  Assess potential for variant reclassification
-                </div>
-                <div className="rounded-[1.25rem] border border-cyan-200 bg-cyan-100 p-4 text-center text-[#005b6f]">
-                  Revisit need for more testing if new evidence appears
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={onBack}
+          className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
+        >
+          Back
+        </button>
       </div>
     </div>
   );
@@ -671,7 +584,23 @@ export default function GeneticCounselingWorkflowDetailPage() {
     );
   }
 
-  if (normalizedTopicId === "how-to-choose-the-test" || topic?.title === "How to Choose the Test") {
+  if (normalizedTopicId === "pedigree-analysis" || topic?.title === "Family History Collection") {
+    return (
+      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+        {renderHeader()}
+        <main className="relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 hero-wash" />
+          <DoctorDecorativeArt activeMode={activeMode} />
+          <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
+            {renderFamilyHistoryCollectionContent(() => navigate(workflowRoute))}
+          </div>
+        </main>
+        <DoctorFooter />
+      </div>
+    );
+  }
+
+  if (normalizedTopicId === "how-to-choose-the-test" || topic?.title === "Choosing the right test") {
     return (
       <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
@@ -705,7 +634,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
 
   if (
     normalizedTopicId === "results-disclosure-follow-up" ||
-    topic?.title === "Results Disclosure and Follow Up"
+    topic?.title === "Results disclosure and follow-up"
   ) {
     return (
       <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -724,7 +653,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
 
   if (
     normalizedTopicId === "letter-of-medical-necessity-template" ||
-    topic?.title === "Letter of Medical Necessity Template"
+    topic?.title === "Letter of Medical Necessity"
   ) {
     return (
       <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>

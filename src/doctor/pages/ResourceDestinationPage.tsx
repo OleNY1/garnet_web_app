@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
-import GaugeComponent from "react-gauge-component";
 import {
   Activity,
   ClipboardCheck,
@@ -63,7 +62,8 @@ type WorkflowStepCard = {
 const quizPrompts: QuizPrompt[] = [
   {
     id: "family-kidney-problems",
-    prompt: "Does the patient have any family members with kidney disease or other kidney problems?",
+    prompt:
+      "Does the patient have a family history of kidney disease? Remind your patient that family members include 3 generations: parents, children, siblings, grandparents, and grandchildren. Also, provide examples of symptoms of kidney disease, like blood or protein in the urine, kidney insufficiency, kidney cysts, dialysis, and kidney transplant.",
     kind: "yesno",
   },
   {
@@ -83,13 +83,13 @@ const quizPrompts: QuizPrompt[] = [
   },
   {
     id: "personal-kidney-diagnosis",
-    prompt: "Has the patient been diagnosed with any of the following?",
+    prompt: "Select all that apply",
     kind: "yesno",
   },
   {
     id: "age-first-diagnosis",
     prompt:
-      "How old was the patient when a doctor or other medical professional first diagnosed them with kidney disease?",
+      "At what age did the patient first develop symptoms of kidney disease?",
     kind: "number",
   },
   {
@@ -196,14 +196,14 @@ const orderTestingWorkflowSteps: WorkflowStepCard[] = [
   },
   {
     id: "pedigree-analysis",
-    title: "Pedigree Analysis",
+    title: "Family History Collection",
     description: "Family structure, inheritance clues, and how pedigree review changes testing strategy.",
     icon: GitBranch,
-    href: "https://www.genecascade.org/ped-cgi/pedigree.cgi",
+    route: "/doctor/dashboard/resource/genetic-counseling-workflow/pedigree-analysis",
   },
   {
     id: "how-to-choose-the-test",
-    title: "How to Choose the Test",
+    title: "Choosing the right test",
     description:
       "Selecting the right genetic test based on phenotype, suspected diagnosis, and workflow fit.",
     icon: Microscope,
@@ -218,20 +218,20 @@ const orderTestingWorkflowSteps: WorkflowStepCard[] = [
     route: "/doctor/dashboard/resource/genetic-counseling-workflow/informed-consent",
   },
   {
-    id: "results-disclosure-follow-up",
-    title: "Results Disclosure and Follow Up",
-    description:
-      "Returning results, interpreting impact, counseling next steps, and follow-up planning.",
-    icon: ClipboardCheck,
-    route: "/doctor/dashboard/resource/genetic-counseling-workflow/results-disclosure-follow-up",
-  },
-  {
     id: "letter-of-medical-necessity-template",
-    title: "Letter of Medical Necessity Template",
+    title: "Letter of Medical Necessity",
     description:
       "Direct-order toolkit with clinician-facing language and a draft letter preview for coverage support.",
     icon: FileText,
     route: "/doctor/dashboard/resource/letter-of-medical-necessity-template",
+  },
+  {
+    id: "results-disclosure-follow-up",
+    title: "Results disclosure and follow-up",
+    description:
+      "Returning results, interpreting impact, counseling next steps, and follow-up planning.",
+    icon: ClipboardCheck,
+    route: "/doctor/dashboard/resource/genetic-counseling-workflow/results-disclosure-follow-up",
   },
 ];
 
@@ -469,21 +469,32 @@ const getQuizBenchmark = (scorePercent: number): QuizBenchmark => {
 };
 
 const manifestationOptions = [
-  "Hearing differences",
-  "Vision differences",
+  "Deafness or difficulty hearing, even if using hearing aid(s) before the age of 60y old",
+  "Blindness or difficulty seeing, even if wearing glasses",
   "Liver or pancreatic cysts",
   "Cardiac structural differences",
   "Developmental or neurologic differences",
+  "Missing or extra fingers or toes at birth",
+  "Cleft palate or cleft lip",
+  "Other birth defects",
+  "None of those",
+  "I am not sure",
 ];
 
-const nkfWorkingGroupPaperUrl = "https://pubmed.ncbi.nlm.nih.gov/39033956/";
-
 const diagnosisOptions = [
-  "FSGS or glomerular disease",
+  "FSGS without obvious secondary causes",
   "Cystic kidney disease",
   "Tubulointerstitial kidney disease",
   "Congenital anomalies of kidney/urinary tract",
-  "Unknown-cause CKD",
+  "CKD/ESKD of unknown etiology",
+  "Chronic TIN with crystals",
+  "Biopsy suggestive of collagen IV nephropathy",
+  "TMA or idiopathic MPGN",
+  "Lipidoses",
+  "Other kidney biopsy findings suggestive of a genetic cause",
+  "Atypical clinical disease",
+  "Other kidney presentation suggestive of a genetic cause",
+  "None of the above",
 ];
 
 const getReferralDiagnosisTemplate = (
@@ -506,7 +517,7 @@ const getReferralDiagnosisTemplate = (
   }
 
   switch (primaryDiagnosis) {
-    case "FSGS or glomerular disease":
+    case "FSGS without obvious secondary causes":
       return {
         diagnosisLabel: "hereditary glomerular disease",
         requestParagraph:
@@ -546,7 +557,7 @@ const getReferralDiagnosisTemplate = (
         valueParagraph:
           "A molecular diagnosis may help guide prognosis, additional evaluation for associated features, family counseling, and future reproductive or transplant-related planning.",
       };
-    case "Unknown-cause CKD":
+    case "CKD/ESKD of unknown etiology":
       return {
         diagnosisLabel: "chronic kidney disease of unknown etiology",
         requestParagraph:
@@ -576,28 +587,6 @@ type ReferralTemplateFormState = {
 };
 
 type RiskQuizAnswers = Record<string, string>;
-type ReferralLikelihoodAnalysis = {
-  level: "High" | "Moderate" | "Lower";
-  score: number;
-  maxScore: number;
-  summary: string;
-  recommendation: string;
-  reasons: string[];
-};
-
-const diagnosisReasonByType: Record<string, string> = {
-  "FSGS or glomerular disease":
-    "The NKF Working Group recommends kidney-specific panel testing for FSGS and steroid-resistant nephrotic syndrome and supports testing when glomerular disease is suspected to have a genetic basis after clinical evaluation.",
-  "Cystic kidney disease":
-    "The NKF Working Group supports genetic testing for suspected cystic kidney disease, especially when the presentation is atypical or does not clearly meet classic clinical criteria.",
-  "Tubulointerstitial kidney disease":
-    "The NKF Working Group supports genetic testing for suspected tubulointerstitial kidney disorders after clinical evaluation and recommends kidney-specific panel testing for tubulopathies.",
-  "Congenital anomalies of kidney/urinary tract":
-    "The NKF Working Group includes structural abnormalities such as CAKUT among the kidney phenotypes for which genetic testing is indicated when a genetic etiology is suspected.",
-  "Unknown-cause CKD":
-    "The NKF Working Group strongly recommends considering kidney-specific panel testing in CKD of unknown etiology after a full standard clinical evaluation.",
-};
-
 const createInitialReferralTemplateFormState = (): ReferralTemplateFormState => ({
   age: "",
   gender: "",
@@ -608,117 +597,15 @@ const valueOrNotProvided = (value?: string) => (value && value.trim() ? value.tr
 
 const listOrNone = (values: string[]) => (values.length > 0 ? values.join(", ") : "None selected");
 
-const toPositiveNumber = (value?: string) => {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
-};
-
-const buildReferralLikelihoodAnalysis = (
-  answers: RiskQuizAnswers,
-  diagnoses: string[],
-  manifestations: string[],
-): ReferralLikelihoodAnalysis => {
-  let score = 0;
-  const reasons: string[] = [];
-
-  if (answers["family-kidney-problems"] === "Yes") {
-    score += 2;
-    reasons.push(
-      "The NKF Working Group identifies first-degree family history suggestive of dominant, X-linked, or recessive kidney disease as an indication to consider genetic testing.",
-    );
-  }
-
-  if (answers["family-dialysis-transplant"] === "Yes") {
-    score += 1;
-    reasons.push(
-      "A family history that includes dialysis, transplant, or advanced kidney disease strengthens concern for a clinically important inherited kidney disorder.",
-    );
-  }
-
-  const familyOnsetAge = toPositiveNumber(answers["family-first-signs-age"]);
-  if (familyOnsetAge !== null && familyOnsetAge <= 40) {
-    score += 1;
-    reasons.push(
-      "Earlier onset of kidney disease in affected relatives is a red flag that increases suspicion for a monogenic kidney condition.",
-    );
-  }
-
-  if (answers["personal-kidney-diagnosis"] === "Yes") {
-    score += 1;
-  }
-
-  if (diagnoses.length > 0) {
-    score += 2;
-    diagnoses.forEach((diagnosis) => {
-      const reason = diagnosisReasonByType[diagnosis];
-      if (reason) {
-        reasons.push(reason);
-      }
-    });
-  }
-
-  const firstDiagnosisAge = toPositiveNumber(answers["age-first-diagnosis"]);
-  if (firstDiagnosisAge !== null && firstDiagnosisAge <= 40) {
-    score += 2;
-    reasons.push(
-      "Earlier age at first diagnosis is a strong referral indicator because the NKF report highlights early-onset CKD as a setting where inherited disease should be strongly considered.",
-    );
-  }
-
-  if (answers["extra-renal-manifestations"] === "Yes") {
-    score += 1;
-  }
-
-  if (manifestations.length > 0) {
-    score += 2;
-    reasons.push(
-      `Extra-renal features were identified (${manifestations.join(", ")}), and the NKF report notes that these findings can support diagnosis, management, and recognition of syndromic or inherited kidney disease.`,
-    );
-  }
-
-  if (reasons.length === 0) {
-    reasons.push("The current responses do not show strong inherited-disease signals yet.");
-  }
-
-  if (score >= 7) {
-    return {
-      level: "High",
-      score,
-      maxScore: 11,
-      summary: "This patient profile shows multiple features that support genetic testing or nephrogenetics referral.",
-      recommendation: "Proceed with genetic testing discussion and referral workflow.",
-      reasons,
-    };
-  }
-
-  if (score >= 4) {
-    return {
-      level: "Moderate",
-      score,
-      maxScore: 11,
-      summary: "There are several referral indicators, but the case would benefit from confirming a few clinical details.",
-      recommendation: "Consider referral and review missing family history, onset timing, and extra-renal features before ordering.",
-      reasons,
-    };
-  }
-
-  return {
-    level: "Lower",
-    score,
-    maxScore: 11,
-    summary: "The current answers show fewer classic inherited-kidney red flags.",
-    recommendation: "Reassess if new family history, early onset features, or extra-renal findings emerge.",
-    reasons,
-  };
-};
-
 const buildClinicalSummaryFromRiskQuiz = (
   answers: RiskQuizAnswers,
   personalKidneyCondition: string,
+  diagnoses: string[],
   manifestations: string[],
 ): string =>
   [
     `Primary kidney diagnosis: ${valueOrNotProvided(personalKidneyCondition)}.`,
+    `Selected kidney diagnosis findings: ${listOrNone(diagnoses)}.`,
     `Family history of kidney disease: ${valueOrNotProvided(answers["family-kidney-problems"])}. Age at first family signs: ${valueOrNotProvided(answers["family-first-signs-age"])}.`,
     `Family dialysis or transplant history: ${valueOrNotProvided(answers["family-dialysis-transplant"])}. Family kidney failure age: ${valueOrNotProvided(answers["family-kidney-failure-age"])}.`,
     `Personal kidney diagnosis response: ${valueOrNotProvided(answers["personal-kidney-diagnosis"])}. Age at first diagnosis: ${valueOrNotProvided(answers["age-first-diagnosis"])}.`,
@@ -787,17 +674,6 @@ export default function ResourceDestinationPage() {
     setAnswers((prev) => ({ ...prev, [id]: value }));
   };
 
-  const toggleMulti = (
-    option: string,
-    setValues: (updater: (prev: string[]) => string[]) => void,
-  ) => {
-    setValues((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option],
-    );
-  };
-
   const isQuizPage = detail.id === "quizzes";
   const isReferralTemplatesPage = detail.id === "referral-templates";
   const isReferralIndicationPage = detail.id === "genetic-testing-risks";
@@ -862,7 +738,7 @@ export default function ResourceDestinationPage() {
   const applyRiskQuizToReferralForm = () => {
     setReferralTemplateForm((prev) => ({
       ...prev,
-      clinicalSummary: buildClinicalSummaryFromRiskQuiz(answers, personalKidneyCondition, manifestations),
+      clinicalSummary: buildClinicalSummaryFromRiskQuiz(answers, personalKidneyCondition, diagnoses, manifestations),
     }));
     setIsReferralQuizComplete(true);
   };
@@ -870,7 +746,7 @@ export default function ResourceDestinationPage() {
   const resetReferralFormKeepingQuizData = () => {
     setReferralTemplateForm({
       ...createInitialReferralTemplateFormState(),
-      clinicalSummary: buildClinicalSummaryFromRiskQuiz(answers, personalKidneyCondition, manifestations),
+      clinicalSummary: buildClinicalSummaryFromRiskQuiz(answers, personalKidneyCondition, diagnoses, manifestations),
     });
   };
 
@@ -880,10 +756,6 @@ export default function ResourceDestinationPage() {
     setReferralTemplateForm(createInitialReferralTemplateFormState());
   };
 
-  const referralIndicationAnalysis = buildReferralLikelihoodAnalysis(answers, diagnoses, manifestations);
-  const referralLikelihoodPercent = Math.round(
-    (referralIndicationAnalysis.score / referralIndicationAnalysis.maxScore) * 100,
-  );
   const showDetailHero =
     !isReferralIndicationPage &&
     detail.id !== "order-testing-directly" &&
@@ -892,7 +764,8 @@ export default function ResourceDestinationPage() {
     detail.id !== "risks-not-offering" &&
     detail.id !== "peer-reviewed-papers" &&
     detail.id !== "renal-patient-organizations" &&
-    detail.id !== "common-genetic-kidney-diseases";
+    detail.id !== "common-genetic-kidney-diseases" &&
+    detail.id !== "letter-of-medical-necessity-template";
 
   const setReferralField = (field: keyof ReferralTemplateFormState, value: string) => {
     setReferralTemplateForm((prev) => ({ ...prev, [field]: value }));
@@ -1142,8 +1015,38 @@ Referring clinician
     triggerBlobDownload(blob, `${getReferralFileBaseName()}.doc`);
   };
 
-  const diagnosisOptionsEnabled = answers["personal-kidney-diagnosis"] === "Yes";
-  const manifestationOptionsEnabled = answers["extra-renal-manifestations"] === "Yes";
+  const hasFamilyHistory = answers["family-kidney-problems"] === "Yes";
+  const familyHistoryPrompts = quizPrompts.filter((q) => q.id.startsWith("family-"));
+  const primaryFamilyHistoryPrompt = familyHistoryPrompts[0];
+  const followUpFamilyHistoryPrompts = familyHistoryPrompts.slice(1);
+
+  const toggleDiagnosisOption = (option: string) => {
+    setAnswer("personal-kidney-diagnosis", "Completed");
+    setDiagnoses((prev) => {
+      if (option === "None of the above") {
+        return prev.includes(option) ? [] : [option];
+      }
+
+      const withoutNone = prev.filter((item) => item !== "None of the above");
+      return withoutNone.includes(option)
+        ? withoutNone.filter((item) => item !== option)
+        : [...withoutNone, option];
+    });
+  };
+
+  const toggleManifestationOption = (option: string) => {
+    setAnswer("extra-renal-manifestations", "Completed");
+    setManifestations((prev) => {
+      if (option === "None of those" || option === "I am not sure") {
+        return prev.includes(option) ? [] : [option];
+      }
+
+      const withoutExclusive = prev.filter((item) => item !== "None of those" && item !== "I am not sure");
+      return withoutExclusive.includes(option)
+        ? withoutExclusive.filter((item) => item !== option)
+        : [...withoutExclusive, option];
+    });
+  };
 
   const renderRiskQuiz = (
     showContinueButton: boolean,
@@ -1153,32 +1056,9 @@ Referring clinician
     <div className="space-y-6">
       <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
         <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-          Personal Kidney Diagnosis
+          Patient's kidney diagnosis
         </h3>
-        <p className="mt-2 text-black/75">
-          Has the patient been diagnosed with any of the following? (List of clinical diagnoses for which experts have
-          recommended genetic testing.)
-        </p>
-        <div className="mt-4 flex gap-2">
-          {["Yes", "No"].map((choice) => (
-            <button
-              key={choice}
-              onClick={() => {
-                setAnswer("personal-kidney-diagnosis", choice);
-                if (choice === "No") {
-                  setDiagnoses([]);
-                }
-              }}
-              className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
-                answers["personal-kidney-diagnosis"] === choice
-                  ? "border-cyan-700 bg-cyan-700 text-white"
-                  : "border-black/20 bg-white text-black hover:text-cyan-700"
-              }`}
-            >
-              {choice}
-            </button>
-          ))}
-        </div>
+        <p className="mt-2 text-black/75">Select all that apply.</p>
         {useDiagnosisOptions ? (
           <div className="mt-4 grid gap-2 md:grid-cols-2">
             {diagnosisOptions.map((option) => {
@@ -1186,12 +1066,9 @@ Referring clinician
               return (
                 <button
                   key={option}
-                  disabled={!diagnosisOptionsEnabled}
-                  onClick={() => toggleMulti(option, setDiagnoses)}
+                  onClick={() => toggleDiagnosisOption(option)}
                   className={`rounded-xl border px-3 py-2 text-left transition-colors ${
-                    !diagnosisOptionsEnabled
-                      ? "cursor-not-allowed border-black/10 bg-slate-100 text-black/35"
-                      : selected
+                    selected
                       ? "border-cyan-700 bg-cyan-700 text-white"
                       : "border-black/15 bg-cyan-50 text-black hover:text-cyan-700"
                   }`}
@@ -1214,57 +1091,13 @@ Referring clinician
 
       <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
         <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-          Family History
-        </h3>
-        <div className="mt-4 space-y-4">
-          {quizPrompts
-            .filter((q) => q.id.startsWith("family-"))
-            .map((question) => (
-              <div key={question.id} className="rounded-2xl bg-cyan-50 px-4 py-3">
-                <p className="text-black">{question.prompt}</p>
-                {question.kind === "yesno" ? (
-                  <div className="mt-3 flex gap-2">
-                    {["Yes", "No"].map((choice) => (
-                      <button
-                        key={choice}
-                        onClick={() => setAnswer(question.id, choice)}
-                        className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
-                          answers[question.id] === choice
-                            ? "border-cyan-700 bg-cyan-700 text-white"
-                            : "border-black/20 bg-white text-black hover:text-cyan-700"
-                        }`}
-                      >
-                        {choice}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <input
-                    type="number"
-                    min="0"
-                    placeholder="Enter age"
-                    value={answers[question.id] ?? ""}
-                    onChange={(e) => setAnswer(question.id, e.target.value)}
-                    className="mt-3 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
-                  />
-                )}
-              </div>
-            ))}
-        </div>
-      </section>
-
-      <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-        <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
           Age at First Diagnosis of Kidney Disease
         </h3>
-        <p className="mt-2 text-black/75">
-          How old was the patient when a doctor or other medical professional first diagnosed them with kidney
-          disease?
-        </p>
+        <p className="mt-2 text-black/75">At what age did the patient first develop symptoms of kidney disease?</p>
         <input
           type="number"
           min="0"
-          placeholder="Enter age at first diagnosis"
+          placeholder="Enter age at first symptoms"
           value={answers["age-first-diagnosis"] ?? ""}
           onChange={(e) => setAnswer("age-first-diagnosis", e.target.value)}
           className="mt-4 w-full rounded-xl border border-black/15 bg-cyan-50 px-3 py-2 text-black outline-none focus:border-cyan-600"
@@ -1279,38 +1112,15 @@ Referring clinician
           Does the patient have any of the following? (List of manifestations commonly associated with hereditary forms
           of kidney disease.)
         </p>
-        <div className="mt-4 flex gap-2">
-          {["Yes", "No"].map((choice) => (
-            <button
-              key={choice}
-              onClick={() => {
-                setAnswer("extra-renal-manifestations", choice);
-                if (choice === "No") {
-                  setManifestations([]);
-                }
-              }}
-              className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
-                answers["extra-renal-manifestations"] === choice
-                  ? "border-cyan-700 bg-cyan-700 text-white"
-                  : "border-black/20 bg-white text-black hover:text-cyan-700"
-              }`}
-            >
-              {choice}
-            </button>
-          ))}
-        </div>
         <div className="mt-4 grid gap-2 md:grid-cols-2">
           {manifestationOptions.map((option) => {
             const selected = manifestations.includes(option);
             return (
               <button
                 key={option}
-                disabled={!manifestationOptionsEnabled}
-                onClick={() => toggleMulti(option, setManifestations)}
+                onClick={() => toggleManifestationOption(option)}
                 className={`rounded-xl border px-3 py-2 text-left transition-colors ${
-                  !manifestationOptionsEnabled
-                    ? "cursor-not-allowed border-black/10 bg-slate-100 text-black/35"
-                    : selected
+                  selected
                     ? "border-cyan-700 bg-cyan-700 text-white"
                     : "border-black/15 bg-cyan-50 text-black hover:text-cyan-700"
                 }`}
@@ -1319,6 +1129,73 @@ Referring clinician
               </button>
             );
           })}
+        </div>
+      </section>
+
+      <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
+        <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+          Patient's Family History
+        </h3>
+        <div className="mt-4 space-y-4">
+          {primaryFamilyHistoryPrompt ? (
+            <div className="rounded-2xl bg-cyan-50 px-4 py-3">
+              <p className="text-black">{primaryFamilyHistoryPrompt.prompt}</p>
+              <div className="mt-3 flex gap-2">
+                {["Yes", "No", "I am not sure"].map((choice) => (
+                  <button
+                    key={choice}
+                    onClick={() => {
+                      setAnswer(primaryFamilyHistoryPrompt.id, choice);
+                      if (choice !== "Yes") {
+                        followUpFamilyHistoryPrompts.forEach((question) => setAnswer(question.id, ""));
+                      }
+                    }}
+                    className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+                      answers[primaryFamilyHistoryPrompt.id] === choice
+                        ? "border-cyan-700 bg-cyan-700 text-white"
+                        : "border-black/20 bg-white text-black hover:text-cyan-700"
+                    }`}
+                  >
+                    {choice}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {hasFamilyHistory
+            ? followUpFamilyHistoryPrompts.map((question) => (
+                <div key={question.id} className="rounded-2xl bg-cyan-50 px-4 py-3">
+                  <p className="text-black">{question.prompt}</p>
+                  {question.kind === "yesno" ? (
+                    <div className="mt-3 flex gap-2">
+                      {["Yes", "No", "I am not sure"].map((choice) => (
+                        <button
+                          key={choice}
+                          onClick={() => setAnswer(question.id, choice)}
+                          className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+                            answers[question.id] === choice
+                              ? "border-cyan-700 bg-cyan-700 text-white"
+                              : "border-black/20 bg-white text-black hover:text-cyan-700"
+                          }`}
+                        >
+                          {choice}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="Enter age"
+                      value={answers[question.id] ?? ""}
+                      onChange={(e) => setAnswer(question.id, e.target.value)}
+                      className="mt-3 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
+                    />
+                  )}
+                </div>
+              ))
+            : null}
         </div>
       </section>
 
@@ -1337,99 +1214,20 @@ Referring clinician
         isReferralIndicationSubmitted ? (
           <div ref={referralAnalysisRef} className="space-y-5">
             <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-              <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Referral Analysis</p>
-                  <h3 className="mt-2 text-2xl md:text-3xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                    Level of recommendation to genetic testing
-                  </h3>
-                  <p className="mt-2 max-w-3xl text-black/75">{referralIndicationAnalysis.summary}</p>
-                </div>
-                <div className="rounded-[26px] border border-black/10 bg-white px-5 py-5 text-center shadow-[0_14px_28px_rgba(0,0,0,0.06)]">
-                  <p className="text-[0.7rem] uppercase tracking-[0.4em] text-cyan-700">Likelihood Gauge</p>
-
-                  <div className="mx-auto mt-2 w-[220px]">
-                    <GaugeComponent
-                      type="semicircle"
-                      value={referralLikelihoodPercent}
-                      minValue={0}
-                      maxValue={100}
-                      marginInPercent={{ top: 0.06, bottom: 0.02, left: 0.08, right: 0.08 }}
-                      arc={{
-                        width: 0.24,
-                        padding: 0.015,
-                        cornerRadius: 3,
-                        subArcs: [
-                          { limit: 16, color: "#1dbb1d" },
-                          { limit: 32, color: "#98d81a" },
-                          { limit: 48, color: "#ffe21a" },
-                          { limit: 64, color: "#ffc01f" },
-                          { limit: 82, color: "#ff8e22" },
-                          { limit: 100, color: "#f1412d" },
-                        ],
-                      }}
-                      pointer={{
-                        type: "needle",
-                        color: "#111111",
-                        baseColor: "#111111",
-                        length: 0.72,
-                        width: 8,
-                        animate: true,
-                        animationDuration: 900,
-                        elastic: false,
-                      }}
-                      labels={{
-                        valueLabel: { hide: true },
-                        tickLabels: {
-                          hideMinMax: true,
-                          ticks: [],
-                        },
-                      }}
-                    />
-                  </div>
-
-                  <p className="mt-1 text-[0.72rem] uppercase tracking-[0.34em] text-black/45">Likelihood</p>
-                  <p className="mt-2 text-sm text-black/55">
-                    Score {referralIndicationAnalysis.score}/{referralIndicationAnalysis.maxScore}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr,0.8fr]">
-                <div className="rounded-[24px] border border-black/10 bg-white p-4">
-                  <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
-                    Why this result was assigned
-                  </h4>
-                  <ul className="mt-4 space-y-3 text-black/75">
-                    {referralIndicationAnalysis.reasons.map((reason) => (
-                      <li key={reason} className="rounded-2xl bg-cyan-50 px-4 py-3">
-                        {reason}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href={nkfWorkingGroupPaperUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-4 inline-flex rounded-full border border-black/15 bg-white px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
-                  >
-                    Open NKF Working Group paper
-                  </a>
-                </div>
-
-                <div className="rounded-[24px] border border-black/10 bg-white p-4">
-                  <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
-                    Suggested next step
-                  </h4>
-                  <p className="mt-4 text-black/75">{referralIndicationAnalysis.recommendation}</p>
-                  <button
-                    onClick={() => setIsReferralIndicationSubmitted(false)}
-                    className="mt-5 rounded-full border border-black/15 bg-white px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
-                  >
-                    Edit questionnaire
-                  </button>
-                </div>
-              </div>
+              <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Referral Analysis</p>
+              <h3 className="mt-2 text-2xl md:text-3xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                Clinical review needed
+              </h3>
+              <p className="mt-3 max-w-3xl text-black/75">
+                The questionnaire is ready for structured intake. The scoring and age-weighting rules have been paused
+                until the referral-analysis logic is reviewed and approved.
+              </p>
+              <button
+                onClick={() => setIsReferralIndicationSubmitted(false)}
+                className="mt-5 rounded-full border border-black/15 bg-white px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+              >
+                Edit questionnaire
+              </button>
             </section>
           </div>
         ) : (
@@ -1438,7 +1236,7 @@ Referring clinician
               onClick={() => setIsReferralIndicationSubmitted(true)}
               className="rounded-full bg-cyan-700 px-5 py-2 text-sm text-white transition-colors hover:bg-cyan-800"
             >
-              Show Likelihood Gauge
+              Mark questionnaire ready for review
             </button>
           </div>
         )
@@ -1827,11 +1625,16 @@ Referring clinician
                         }}
                         className={`${cardClasses} cursor-pointer`}
                       >
-                        <div className="inline-flex h-[96px] w-[96px] items-center justify-center self-start rounded-[28px] bg-[#eef4ff] text-[#193568]">
-                          <Icon
-                            className="h-10 w-10 transition-colors group-hover:text-cyan-700 md:h-12 md:w-12"
-                            strokeWidth={1.6}
-                          />
+                        <div className="flex items-start justify-between self-start">
+                          <div className="inline-flex h-[96px] w-[96px] items-center justify-center rounded-[28px] bg-[#eef4ff] text-[#193568]">
+                            <Icon
+                              className="h-10 w-10 transition-colors group-hover:text-cyan-700 md:h-12 md:w-12"
+                              strokeWidth={1.6}
+                            />
+                          </div>
+                          <span className="ml-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-700/20 bg-cyan-50 text-sm font-semibold text-cyan-800">
+                            {index + 1}
+                          </span>
                         </div>
                         <h3
                           className="max-w-[16ch] self-start text-2xl leading-tight text-black transition-colors group-hover:text-cyan-700 md:text-3xl"
@@ -1862,11 +1665,12 @@ Referring clinician
                     <div>
                       <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Workflow Support</p>
                       <h3 className="mt-3 text-2xl md:text-4xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                        Letter of Medical Necessity Template
+                        Letter of Medical Necessity
                       </h3>
                       <p className="mt-3 text-base leading-relaxed text-black/75">
-                        Preserve the direct-order workflow details while drafting payer-facing justification language for
-                        kidney genetic testing using de-identified clinical information only.
+                        You can fill in this form, and it will generate a draft of a letter of medical necessity for
+                        your patient's insurance. Please do not enter HIPAA information before downloading the file to
+                        your computer.
                       </p>
                     </div>
 
@@ -1923,16 +1727,6 @@ Referring clinician
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4">
-                      <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
-                        What this preserves
-                      </h4>
-                      <ul className="mt-4 space-y-3 text-black/75">
-                        <li className="rounded-2xl bg-white px-4 py-3">Cost and coverage guidance from the billing resource page.</li>
-                        <li className="rounded-2xl bg-white px-4 py-3">Clinician-facing ordering language adapted from the referral template workflow.</li>
-                        <li className="rounded-2xl bg-white px-4 py-3">Download options for quick documentation handoff.</li>
-                      </ul>
-                    </div>
                   </div>
 
                   <div className="space-y-5">
@@ -1941,8 +1735,7 @@ Referring clinician
                         Draft letter preview
                       </h4>
                       <p className="mt-2 text-sm text-black/65">
-                        This preview keeps the existing direct-order content, but frames it as the workflow's letter of
-                        medical necessity template.
+                        Review the generated text, then download the Word document to finish it locally.
                       </p>
                       <pre className="mt-4 overflow-x-auto rounded-2xl bg-cyan-50 p-4 text-sm leading-6 text-black whitespace-pre-wrap">
                         {buildReferralTemplateLetter()}
@@ -1950,12 +1743,6 @@ Referring clinician
                     </div>
 
                     <div className="flex flex-wrap gap-3">
-                      <button
-                        onClick={downloadReferralTemplatePdf}
-                        className="rounded-full bg-cyan-700 px-5 py-2 text-sm text-white transition-colors hover:bg-cyan-800"
-                      >
-                        Download PDF
-                      </button>
                       <button
                         onClick={downloadReferralTemplateWordDoc}
                         className="rounded-full bg-cyan-600 px-5 py-2 text-sm text-white transition-colors hover:bg-cyan-700"
@@ -2978,7 +2765,25 @@ Referring clinician
               </div>
             </div>
           ) : isReferralIndicationPage ? (
-            renderRiskQuiz(false, true, true)
+            <div className="mx-auto max-w-[1180px] space-y-6">
+              <motion.article
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.26 }}
+                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+              >
+                <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Practical Tools</p>
+                <h2 className="mt-2 text-3xl text-black md:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
+                  Assess Risk for Genetic Condition
+                </h2>
+                <p className="mt-3 max-w-3xl text-base leading-relaxed text-black/75 md:text-lg">
+                  Use this structured intake form to capture kidney diagnosis, age at symptoms, extra-renal
+                  manifestations, and family history before deciding whether genetic testing or referral should be
+                  discussed.
+                </p>
+              </motion.article>
+              {renderRiskQuiz(false, true, true)}
+            </div>
           ) : (isCaseStudiesPage || isGeneticTestingCounselingVideosPage) && detail.videoLinks?.length ? (
             <div className="mx-auto max-w-[1320px] space-y-6" style={{ fontFamily: "Georgia, serif" }}>
               <motion.article

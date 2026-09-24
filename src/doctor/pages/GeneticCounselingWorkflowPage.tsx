@@ -29,14 +29,13 @@ const workflowOptions: WorkflowOption[] = [
   },
   {
     id: "pedigree-analysis",
-    title: "Pedigree Analysis",
+    title: "Family History Collection",
     description: "Family structure, inheritance clues, and how pedigree review changes testing strategy.",
     icon: GitBranch,
-    href: "https://www.genecascade.org/ped-cgi/pedigree.cgi",
   },
   {
     id: "how-to-choose-the-test",
-    title: "How to Choose the Test",
+    title: "Choosing the right test",
     description: "Selecting the right genetic test based on phenotype, suspected diagnosis, and workflow fit.",
     icon: Microscope,
   },
@@ -47,17 +46,17 @@ const workflowOptions: WorkflowOption[] = [
     icon: ShieldCheck,
   },
   {
-    id: "results-disclosure-follow-up",
-    title: "Results Disclosure and Follow Up",
-    description: "Returning results, interpreting impact, counseling next steps, and follow-up planning.",
-    icon: ClipboardCheck,
-  },
-  {
     id: "letter-of-medical-necessity-template",
-    title: "Letter of Medical Necessity Template",
+    title: "Letter of Medical Necessity",
     description: "Direct-order toolkit with clinician-facing language and a draft letter preview for coverage support.",
     icon: FileText,
     route: "/doctor/dashboard/resource/order-testing-directly",
+  },
+  {
+    id: "results-disclosure-follow-up",
+    title: "Results disclosure and follow-up",
+    description: "Returning results, interpreting impact, counseling next steps, and follow-up planning.",
+    icon: ClipboardCheck,
   },
 ];
 
@@ -179,11 +178,16 @@ export default function GeneticCounselingWorkflowPage() {
 
               const cardContent = (
                 <>
-                  <div className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-[#cfe7ea] text-[#00687b]">
-                    <Icon
-                      className="h-12 w-12"
-                      strokeWidth={1.55}
-                    />
+                  <div className="mb-6 flex w-full items-start justify-between">
+                    <div className="inline-flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-[#cfe7ea] text-[#00687b]">
+                      <Icon
+                        className="h-12 w-12"
+                        strokeWidth={1.55}
+                      />
+                    </div>
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#9fbfc5] bg-[#eef7f8] text-sm font-semibold text-[#00687b]">
+                      {index + 1}
+                    </span>
                   </div>
                   <h2
                     className="max-w-[16ch] text-[1.45rem] font-bold leading-tight text-[#16323b] transition-colors group-hover:text-[#00687b] md:text-[1.7rem]"

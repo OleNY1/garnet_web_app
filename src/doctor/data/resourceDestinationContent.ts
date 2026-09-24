@@ -196,13 +196,13 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   },
   "genetic-testing-risks": {
     id: "genetic-testing-risks",
-    mode: "educational",
-    title: "Referral indication page",
+    mode: "practical",
+    title: "Assess Risk for Genetic Condition",
     context:
-      "Structured intake questions to identify patients who may warrant nephrogenetics referral or testing.",
+      "Structured intake questions to identify patients who may warrant discussion of genetic testing or nephrogenetics referral.",
     sections: [
       {
-        title: "Referral Indication Questionnaire",
+        title: "Assess Risk for Genetic Condition",
         subtitle: "Use the structured screening items below to capture history, diagnosis, onset, and extra-renal features.",
       },
     ],
@@ -522,9 +522,9 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   "letter-of-medical-necessity-template": {
     id: "letter-of-medical-necessity-template",
     mode: "practical",
-    title: "Letter of Medical Necessity Template",
+    title: "Letter of Medical Necessity",
     context:
-      "Clinician-facing direct-order toolkit with reusable documentation fields and a draft letter preview for coverage support.",
+      "",
     sections: [
       {
         title: "Letter and documentation toolkit",
