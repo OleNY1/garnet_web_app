@@ -6,11 +6,16 @@ import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
   { label: 'Learn', href: '/learn' },
+  { label: 'Check if testing may help', href: '/check' },
   { label: 'FAQ', href: '/next-steps#cost-privacy' },
 ]
 
 const LEARN_MENU = [
-  ...LEARN_TOPICS.map((topic) => ({ label: topic.label, to: topic.to, end: topic.end })),
+  ...LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
+    label: topic.label,
+    to: topic.to,
+    end: topic.end,
+  })),
   { label: 'How to get tested', to: '/next-steps', end: false },
 ]
 
@@ -189,7 +194,7 @@ export function Header() {
           <ul aria-label="Main" className="hidden items-center gap-1 lg:flex">
             <LearnNavItem />
             {NAV_LINKS.slice(1).map((link) => (
-              <li key={link.href}>
+              <li key={link.href} className={link.href === '/check' ? 'pl-[5px]' : undefined}>
                 <NavLink to={link.href} className={navLinkClasses}>
                   {link.label}
                 </NavLink>
@@ -233,7 +238,7 @@ export function Header() {
                 Learn
               </NavLink>
               <ul className="ml-4 flex flex-col gap-0.5 border-l border-line pl-3">
-                {LEARN_MENU.slice(1).map((topic) => (
+                {LEARN_MENU.map((topic) => (
                   <li key={topic.to}>
                     <NavLink
                       to={topic.to}
