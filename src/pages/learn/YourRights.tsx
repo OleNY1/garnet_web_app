@@ -10,19 +10,17 @@ export function YourRights() {
       <Section id="your-rights" title="Making an informed, personal choice">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
-            Whether to learn your genetic results — from a research study or from clinical testing
-            — is a personal choice. Ethicists increasingly agree that being offered that choice,
-            with real information about what a result could mean, is a basic part of respecting
-            patients' autonomy.
+            Whether to learn your genetic results is a personal choice. Ethicists increasingly
+            agree that being offered that choice, with real information about what a result could
+            mean, is a basic part of respecting patients' autonomy.
             <Cite n={1} />
           </p>
           <p>
             A common worry is what happens to your DNA after testing — whether it's stored,
-            shared, or used without your knowledge. Before any research or clinical test, you
-            should be told in plain terms who will see your results, whether your sample is kept
-            or destroyed, and whether you can withdraw your consent later. Asking your genetic
-            counselor or study coordinator these questions directly is a normal, expected part of
-            the process — not an imposition.
+            shared, or used without your knowledge. Before any genetic test, you should be told in
+            plain terms who will see your results, whether your sample is kept or destroyed, and
+            whether you can withdraw your consent later. Asking your doctor or a genetic counselor
+            these questions directly is a normal, expected part of the process — not an imposition.
             <Cite n={1} />
           </p>
           <p>
@@ -33,12 +31,11 @@ export function YourRights() {
             <Cite n={1} />
           </p>
           <p>
-            Research also shows that people from communities that have historically been
-            underserved or mistreated by the medical system are sometimes less interested in
-            getting research results back — often tied to distrust or to limited access to
-            follow-up care rather than a lack of interest in the information itself. That context
-            matters, and no one should assume how a person feels about testing based on their
-            background.
+            People from communities that have historically been underserved or mistreated by the
+            medical system are sometimes less interested in getting genetic results — often tied to
+            distrust or to limited access to follow-up care rather than a lack of interest in the
+            information itself. That context matters, and no one should assume how a person feels
+            about testing based on their background.
             <Cite n={1} />
           </p>
 

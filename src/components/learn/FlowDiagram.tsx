@@ -9,8 +9,37 @@ type Step = {
   caption: string
 }
 
-/** Connected step sequence — for processes with a real order (testing types, donor pathway). */
-export function FlowDiagram({ tint, steps }: { tint: Tint; steps: Step[] }) {
+/** Connected step sequence — for processes with a real order (donor pathway).
+ *  Pass `connected={false}` for equal boxes with no arrows (test types). */
+export function FlowDiagram({
+  tint,
+  steps,
+  connected = true,
+}: {
+  tint: Tint
+  steps: Step[]
+  connected?: boolean
+}) {
+  if (!connected) {
+    return (
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {steps.map((step) => (
+          <div
+            key={step.label}
+            className="flex h-full min-h-[11.5rem] scale-100 flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center transition-transform duration-200 hover:scale-[1.03]"
+          >
+            <span
+              className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${tints[tint].chip}`}
+            >
+              <step.icon aria-hidden="true" className={`size-[55%] ${tints[tint].icon}`} />
+            </span>
+            <p className="mt-3 text-[1rem] leading-snug font-semibold text-ink">{step.label}</p>
+            <p className="mt-1.5 text-[0.9rem] leading-snug text-muted">{step.caption}</p>
+          </div>
+        ))}
+      </div>
+    )
+  }
   return (
     <div className="flex flex-col items-stretch gap-0 sm:flex-row sm:items-start sm:gap-0">
       {steps.map((step, index) => (

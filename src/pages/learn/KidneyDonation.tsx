@@ -17,24 +17,6 @@ export function KidneyDonation() {
       <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
           <p>
-            Living kidney donors already face a higher lifetime risk of kidney failure than similar
-            people who don't donate — roughly five to ten times higher. That's part of why
-            transplant centers evaluate donor candidates carefully, and why genetic disease in the
-            family is one thing they screen for.
-            <Cite n={1} />
-          </p>
-          <p>
-            Genetic testing isn't recommended for every donor candidate. Specialists generally
-            suggest it only when there's a family history of a known or suspected genetic kidney
-            disease in a close relative — for example, a parent or sibling with a diagnosed or
-            strongly suspected inherited kidney condition.
-            <Cite n={1} />
-          </p>
-
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
-            Test the affected relative first
-          </h3>
-          <p>
             The recommended approach is sequential: test the relative who already has kidney
             disease first, to pin down the exact genetic cause, and only then test the healthy
             donor candidate for that specific finding.

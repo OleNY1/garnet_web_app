@@ -24,7 +24,7 @@ export function TypesOfTests() {
             <Cite n={1} />
           </p>
 
-          <FlowDiagram tint="accent" steps={TEST_TYPES} />
+          <FlowDiagram tint="accent" steps={TEST_TYPES} connected={false} />
 
           <h3 className="mt-2 font-display text-xl font-semibold text-ink">
             Why the choice matters
@@ -39,14 +39,13 @@ export function TypesOfTests() {
           </p>
 
           <h3 className="mt-2 font-display text-xl font-semibold text-ink">
-            Tests can also be grouped by what they're for
+            Tests can also be grouped by disease
           </h3>
           <p>
-            The categories above describe how much DNA a test checks. Genetic tests are also
-            sometimes grouped by the question they're trying to answer: a diagnostic test looks
-            for the cause of symptoms someone already has, a predictive (or presymptomatic) test
-            checks a healthy relative's risk before any symptoms appear, and a carrier test tells
-            someone without symptoms whether they could pass a condition on to a future child.
+            Genetic tests are also sometimes grouped by disease. Some kidney diseases have a
+            limited number of genes that can cause them, so the test can focus on those genes
+            only. Other kidney diseases can be caused by many different genes, and a large panel
+            is more effective.
             <Cite n={3} />
           </p>
 
@@ -54,12 +53,22 @@ export function TypesOfTests() {
             When a result comes back "uncertain"
           </h3>
           <p>
-            Sometimes a test finds a change in a gene that hasn't yet been classified as clearly
-            harmful or clearly harmless — called a variant of uncertain significance, or VUS. By
-            current guidelines, a VUS on its own shouldn't be used to make medical decisions. As
-            more people are tested and more research is done, these results are sometimes
-            reclassified later — most often turning out to be harmless, though occasionally they're
-            upgraded to a clear diagnosis.
+            Sometimes a test finds a change in a gene that geneticists do not know whether to
+            classify as clearly harmful or clearly harmless. In those cases, they classify the
+            genetic change as a variant of uncertain significance, or VUS. By current guidelines,
+            a VUS on its own shouldn't be used to make medical decisions. As more people are
+            tested and more research is done, these results are sometimes reclassified later —
+            most often turning out to be harmless, though occasionally they're upgraded to a
+            clear diagnosis.{' '}
+            <a
+              href="https://www.genomeconnect.org/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-brand underline underline-offset-2 hover:text-brand-strong"
+            >
+              GenomeConnect
+            </a>{' '}
+            is an NIH tool that notifies people if their variant is reclassified.
             <Cite n={1} />
             <Cite n={2} />
           </p>
