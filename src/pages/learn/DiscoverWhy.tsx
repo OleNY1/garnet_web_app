@@ -1,5 +1,4 @@
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
 import { LearnLink } from '../../components/learn/LearnLink'
 import { StatGrid } from '../../components/learn/StatGrid'
 import { Section } from '../../components/Section'
@@ -15,8 +14,7 @@ const IMPACT_STATS = [
 /**
  * First half of the former "How genetic testing helps" page: why a genetic
  * cause matters and what finding it can tell you. The treatment half lives
- * on Guide care. This is the only Learn page that ends with the
- * Genetic Risk Check prompt.
+ * on Guide care.
  */
 export function DiscoverWhy() {
   return (
@@ -98,10 +96,6 @@ export function DiscoverWhy() {
               genetic disease
             </li>
           </ul>
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="brand" />
         </div>
 
         <Sources sources={numbered('groopman2019', 'dahl2023', 'franceschini2024', 'chebib2026')} />

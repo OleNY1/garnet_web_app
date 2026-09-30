@@ -80,7 +80,8 @@ export function GettingStartedHero() {
             Could genetic testing help you or your family know the cause of your kidney disease?
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-body sm:text-xl">
-            Consider genetic testing to explain a kidney disease.
+            GARNET helps patients and families consider genetic testing to explain a kidney
+            disease.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <Button href="#why-it-matters">Start learning</Button>
