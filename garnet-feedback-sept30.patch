@@ -1,0 +1,1559 @@
+From 528b220345b4b07bbe8a734e385e300fca6211c3 Mon Sep 17 00:00:00 2001
+From: Quinby Janes <qcj2000@columbia.edu>
+Date: Wed, 30 Sep 2026 11:14:00 -0400
+Subject: [PATCH] Apply Dr. Rasouly's September content feedback
+
+- Remove all "Supported by the National Kidney Foundation" claims (badges,
+  trust list, footer, page description); keep NKF citations and links.
+- Rename "Check if testing may help" to "Genetic Risk Check" in the nav,
+  footer, /check page and prompt; keep the end-of-page prompt only on
+  Discover why.
+- Homepage: drop "Hello, and welcome"; headline now asks about knowing
+  the cause of kidney disease.
+- Getting started: new headline and intro, remove the hero check button,
+  restructure "What you'll find" to Learn / Genetic Risk Check / How to get
+  tested, remove "Where are you today?", cite prevalence to Groopman 2019,
+  Dahl 2023 and Franceschini 2024.
+- Split How genetic testing helps into Discover why and Guide care (Fabry,
+  PH1/lumasiran, CoQ10 examples); old URL redirects to Discover why.
+- New Help your family page (early diagnosis with 27-year figure cited to
+  Gross, Ortiz and Fernandez-Fernandez; family planning moved from Your
+  rights; living donors) and new Genetic counselors page.
+- Rename Kidney donors to Support living donor decisions; rewrite Sharing
+  with family; add CPMG, CureGN, NephCure, AKF and NKF trial links; update
+  the DNA scope line and add a MedlinePlus DNA link.
+- Nav, card and page titles now match for every Learn topic.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0175aRCbwbvCDiP9xhejQHa7
+---
+ index.html                                  |   2 +-
+ src/App.tsx                                 |  12 ++-
+ src/components/Footer.tsx                   |   4 +-
+ src/components/Header.tsx                   |   2 +-
+ src/components/learn/CTARow.tsx             |  12 +--
+ src/components/learn/GettingStartedHero.tsx |  32 ++----
+ src/components/learn/JourneyPicker.tsx      |  52 ---------
+ src/lib/citations.ts                        |  76 +++++++++++++
+ src/lib/learnTopics.ts                      |  94 +++++++++++-----
+ src/lib/supportLinks.ts                     |  25 +++++
+ src/pages/Check.tsx                         |   2 +-
+ src/pages/Home.tsx                          |  12 +--
+ src/pages/learn/DiscoverWhy.tsx             | 111 +++++++++++++++++++
+ src/pages/learn/FamilySharing.tsx           |  78 ++++++--------
+ src/pages/learn/GeneticCounselors.tsx       | 106 ++++++++++++++++++
+ src/pages/learn/GuideCare.tsx               |  81 ++++++++++++++
+ src/pages/learn/HelpYourFamily.tsx          |  75 +++++++++++++
+ src/pages/learn/HowItHelps.tsx              | 114 --------------------
+ src/pages/learn/KidneyDonation.tsx          |  11 +-
+ src/pages/learn/Overview.tsx                |  36 ++-----
+ src/pages/learn/ResearchOpportunities.tsx   |   5 -
+ src/pages/learn/SignsTestingMayHelp.tsx     |   5 -
+ src/pages/learn/SupportGroups.tsx           |   5 -
+ src/pages/learn/TestingBasics.tsx           |  26 +++--
+ src/pages/learn/TypesOfTests.tsx            |   5 -
+ src/pages/learn/YourRights.tsx              |  23 +---
+ 26 files changed, 640 insertions(+), 366 deletions(-)
+ delete mode 100644 src/components/learn/JourneyPicker.tsx
+ create mode 100644 src/lib/citations.ts
+ create mode 100644 src/pages/learn/DiscoverWhy.tsx
+ create mode 100644 src/pages/learn/GeneticCounselors.tsx
+ create mode 100644 src/pages/learn/GuideCare.tsx
+ create mode 100644 src/pages/learn/HelpYourFamily.tsx
+ delete mode 100644 src/pages/learn/HowItHelps.tsx
+
+diff --git a/index.html b/index.html
+index 3440d3f..6cd666b 100644
+--- a/index.html
++++ b/index.html
+@@ -6,7 +6,7 @@
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta
+       name="description"
+-      content="GARNET is a patient education website supported by the National Kidney Foundation. Learn how genetic testing may help you or your family understand kidney disease."
++      content="GARNET is a patient education website from a Columbia University Irving Medical Center research project. Learn how genetic testing may help you or your family know the cause of kidney disease."
+     />
+     <meta name="color-scheme" content="light dark" />
+     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6fafa" />
+diff --git a/src/App.tsx b/src/App.tsx
+index 73f5f2f..0e6e3a1 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -5,7 +5,10 @@ import { ScrollToTop } from './components/ScrollToTop'
+ import { Check } from './pages/Check'
+ import { Home } from './pages/Home'
+ import { FamilySharing } from './pages/learn/FamilySharing'
+-import { HowItHelps } from './pages/learn/HowItHelps'
++import { DiscoverWhy } from './pages/learn/DiscoverWhy'
++import { GeneticCounselors } from './pages/learn/GeneticCounselors'
++import { GuideCare } from './pages/learn/GuideCare'
++import { HelpYourFamily } from './pages/learn/HelpYourFamily'
+ import { KidneyDonation } from './pages/learn/KidneyDonation'
+ import { LearnLayout } from './pages/learn/LearnLayout'
+ import { Overview } from './pages/learn/Overview'
+@@ -54,7 +57,12 @@ export default function App() {
+             <Route index element={<Overview />} />
+             <Route path="testing-basics" element={<TestingBasics />} />
+             <Route path="signs-testing-may-help" element={<SignsTestingMayHelp />} />
+-            <Route path="how-it-helps" element={<HowItHelps />} />
++            <Route path="discover-why" element={<DiscoverWhy />} />
++            <Route path="guide-care" element={<GuideCare />} />
++            <Route path="help-your-family" element={<HelpYourFamily />} />
++            <Route path="genetic-counselors" element={<GeneticCounselors />} />
++            {/* Old address for the page that was split into Discover why and Guide care. */}
++            <Route path="how-it-helps" element={<Navigate to="/learn/discover-why" replace />} />
+             <Route path="family-sharing" element={<FamilySharing />} />
+             <Route path="kidney-donation" element={<KidneyDonation />} />
+             <Route path="your-rights" element={<YourRights />} />
+diff --git a/src/components/Footer.tsx b/src/components/Footer.tsx
+index 2522621..01984bf 100644
+--- a/src/components/Footer.tsx
++++ b/src/components/Footer.tsx
+@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
+ 
+ const EXPLORE_LINKS = [
+   { label: 'Learn', href: '/learn' },
+-  { label: 'Check if testing may help', href: '/check' },
++  { label: 'Genetic Risk Check', href: '/check' },
+   { label: 'How to get tested', href: '/next-steps' },
+   { label: 'FAQ', href: '/next-steps#cost-privacy' },
+ ]
+@@ -39,7 +39,7 @@ export function Footer() {
+             </div>
+             <p className="mt-5 max-w-md leading-relaxed">
+               A patient education website created as part of a research project at Columbia
+-              University Irving Medical Center, supported by the National Kidney Foundation.
++              University Irving Medical Center.
+             </p>
+             <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-footer-line px-4 py-2 text-[0.95rem] font-medium text-footer-ink">
+               <BadgeCheck aria-hidden="true" className="size-4.5 shrink-0 text-[#8fd0df]" />
+diff --git a/src/components/Header.tsx b/src/components/Header.tsx
+index 492fabf..eac9926 100644
+--- a/src/components/Header.tsx
++++ b/src/components/Header.tsx
+@@ -6,7 +6,7 @@ import { ThemeToggle } from './ThemeToggle'
+ 
+ const NAV_LINKS = [
+   { label: 'Learn', href: '/learn' },
+-  { label: 'Check if testing may help', href: '/check' },
++  { label: 'Genetic Risk Check', href: '/check' },
+   { label: 'FAQ', href: '/next-steps#cost-privacy' },
+ ]
+ 
+diff --git a/src/components/learn/CTARow.tsx b/src/components/learn/CTARow.tsx
+index bdf77ce..d431f27 100644
+--- a/src/components/learn/CTARow.tsx
++++ b/src/components/learn/CTARow.tsx
+@@ -4,9 +4,9 @@ import type { Tint } from '../IconChip'
+ import { tints } from '../IconChip'
+ 
+ /**
+- * Patients in the flyer study wanted a way to move from awareness to
+- * action on their own, without waiting on a doctor. Every Learn article
+- * ends with this so the next step is never more than one tap away.
++ * Next-step prompt. Shown only at the end of the Discover why page so the
++ * rest of the site doesn't feel like it's pushing people toward testing;
++ * the Genetic Risk Check stays one tap away in the header on every page.
+  */
+ export function CTARow({ tint }: { tint: Tint }) {
+   return (
+@@ -15,11 +15,11 @@ export function CTARow({ tint }: { tint: Tint }) {
+         Ready to see if this applies to you?
+       </p>
+       <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+-        <Button href="/check" variant="secondary" size="md">
+-          Check if testing may help
++        <Button href="/check" variant="secondary" size="md" className="whitespace-nowrap">
++          Genetic Risk Check
+           <ArrowRight aria-hidden="true" className="size-4.5" />
+         </Button>
+-        <Button href="/next-steps" variant="quiet" size="md">
++        <Button href="/next-steps" variant="quiet" size="md" className="whitespace-nowrap">
+           How to get tested
+         </Button>
+       </div>
+diff --git a/src/components/learn/GettingStartedHero.tsx b/src/components/learn/GettingStartedHero.tsx
+index f14aba1..a017cb1 100644
+--- a/src/components/learn/GettingStartedHero.tsx
++++ b/src/components/learn/GettingStartedHero.tsx
+@@ -1,4 +1,4 @@
+-import { BookOpen, HeartHandshake, Info, Landmark, ListChecks, MessagesSquare, ShieldCheck } from 'lucide-react'
++import { BookOpen, HeartHandshake, Info, Landmark, ListChecks, Signpost } from 'lucide-react'
+ import type { LucideIcon } from 'lucide-react'
+ import { Button } from '../Button'
+ import { Card } from '../Card'
+@@ -7,30 +7,25 @@ import type { Tint } from '../IconChip'
+ import { IconChip } from '../IconChip'
+ import { TrustBadge } from '../TrustBadge'
+ 
++/* Mirrors the header navigation: Learn, Genetic Risk Check, How to get tested. */
+ const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; tooltip: string }> = [
+   {
+     icon: BookOpen,
+     tint: 'brand',
+-    label: 'Guides to genetic testing',
+-    tooltip: 'Short reads on what testing involves.',
++    label: 'Learn',
++    tooltip: 'Short guides to genetic testing, including privacy, cost, and your rights.',
+   },
+   {
+     icon: ListChecks,
+     tint: 'accent',
+-    label: 'A short question check',
+-    tooltip: 'See if testing may be worth discussing.',
++    label: 'Genetic Risk Check',
++    tooltip: 'A few simple questions to see if testing may be worth discussing.',
+   },
+   {
+-    icon: MessagesSquare,
++    icon: Signpost,
+     tint: 'plum',
+-    label: 'Help talking with your care team',
+-    tooltip: 'Questions to ask your doctor or a genetic counselor.',
+-  },
+-  {
+-    icon: ShieldCheck,
+-    tint: 'brand',
+-    label: 'Privacy, cost, and your rights',
+-    tooltip: 'Plain answers about protections and cost.',
++    label: 'How to get tested',
++    tooltip: 'Help talking with your care team.',
+   },
+ ]
+ 
+@@ -74,7 +69,6 @@ export function GettingStartedHero() {
+       <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-24">
+         <div>
+           <div className="flex flex-col items-start gap-2">
+-            <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation</TrustBadge>
+             <TrustBadge icon={Landmark}>
+               Columbia University Irving Medical Center research project
+             </TrustBadge>
+@@ -83,17 +77,13 @@ export function GettingStartedHero() {
+             id="hero-heading"
+             className="mt-6 font-display text-[2.3rem] leading-[1.12] font-semibold text-ink sm:text-5xl sm:leading-[1.08] lg:text-[3.35rem]"
+           >
+-            Could genetic testing help you or your family understand kidney disease?
++            Could genetic testing help you or your family know the cause of your kidney disease?
+           </h1>
+           <p className="mt-5 max-w-xl text-lg leading-relaxed text-body sm:text-xl">
+-            GARNET helps people with kidney disease learn about genetic testing and prepare to
+-            talk with their care team.
++            Consider genetic testing to explain a kidney disease.
+           </p>
+           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+             <Button href="#why-it-matters">Start learning</Button>
+-            <Button href="/check" variant="secondary">
+-              Check if testing may help
+-            </Button>
+           </div>
+           <p className="mt-6 flex max-w-xl items-start gap-2.5 text-[0.99rem] leading-normal text-muted">
+             <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />
+diff --git a/src/components/learn/JourneyPicker.tsx b/src/components/learn/JourneyPicker.tsx
+deleted file mode 100644
+index 32021bf..0000000
+--- a/src/components/learn/JourneyPicker.tsx
++++ /dev/null
+@@ -1,52 +0,0 @@
+-import { Compass, HandHeart, Stethoscope } from 'lucide-react'
+-import type { LucideIcon } from 'lucide-react'
+-import { Link } from 'react-router-dom'
+-import type { Tint } from '../IconChip'
+-import { IconChip } from '../IconChip'
+-
+-/**
+- * The more useful split is whether a genetic cause has already been named,
+- * not how long someone has had kidney disease. Visitors self-sort into the
+- * Learn page most relevant to that starting point.
+- */
+-const PATHS: Array<{ icon: LucideIcon; tint: Tint; title: string; text: string; to: string }> = [
+-  {
+-    icon: Compass,
+-    tint: 'brand',
+-    title: 'No genetic diagnosis yet',
+-    text: 'Learn what testing looks for and what a result can tell you.',
+-    to: '/learn/testing-basics',
+-  },
+-  {
+-    icon: Stethoscope,
+-    tint: 'accent',
+-    title: 'Already have a genetic diagnosis',
+-    text: 'See how a result can guide care and family conversations.',
+-    to: '/learn/how-it-helps',
+-  },
+-  {
+-    icon: HandHeart,
+-    tint: 'plum',
+-    title: 'Thinking about family or donation',
+-    text: 'Learn how to share a result with relatives, or what it means for a living donor.',
+-    to: '/learn/family-sharing',
+-  },
+-]
+-
+-export function JourneyPicker() {
+-  return (
+-    <div className="grid gap-4 sm:grid-cols-3">
+-      {PATHS.map((path) => (
+-        <Link
+-          key={path.title}
+-          to={path.to}
+-          className="group flex scale-100 flex-col rounded-2xl border border-line bg-surface p-5 shadow-soft transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.02] hover:shadow-lift sm:p-6"
+-        >
+-          <IconChip icon={path.icon} tint={path.tint} />
+-          <p className="mt-4 text-[1.05rem] leading-snug font-semibold text-ink">{path.title}</p>
+-          <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{path.text}</p>
+-        </Link>
+-      ))}
+-    </div>
+-  )
+-}
+diff --git a/src/lib/citations.ts b/src/lib/citations.ts
+new file mode 100644
+index 0000000..6811946
+--- /dev/null
++++ b/src/lib/citations.ts
+@@ -0,0 +1,76 @@
++/**
++ * References reused on more than one Learn page, kept in one place so the
++ * wording and links stay identical everywhere they're cited.
++ */
++export const CITATIONS = {
++  groopman2025: {
++    citation:
++      'Groopman, E. & Milo Rasouly, H. Navigating genetic testing in nephrology: options and decision-making strategies. Kidney International Reports 10, 673-695 (2025).',
++    url: 'https://doi.org/10.1016/j.ekir.2024.12.020',
++  },
++  groopman2019: {
++    citation:
++      'Groopman, E.E. et al. Diagnostic utility of exome sequencing for kidney disease. New England Journal of Medicine 380, 142-151 (2019).',
++    url: 'https://doi.org/10.1056/NEJMoa1806891',
++  },
++  dahl2023: {
++    citation:
++      'Dahl, N.K. et al. The clinical utility of genetic testing in the diagnosis and management of adults with chronic kidney disease. Journal of the American Society of Nephrology 34, 2039-2050 (2023).',
++    url: 'https://doi.org/10.1681/ASN.0000000000000249',
++  },
++  franceschini2024: {
++    citation:
++      'Franceschini, N. et al. Advancing Genetic Testing in Kidney Diseases: Report From a National Kidney Foundation Working Group. American Journal of Kidney Diseases 84, 751-766 (2024).',
++    url: 'https://doi.org/10.1053/j.ajkd.2024.05.010',
++  },
++  chebib2026: {
++    citation:
++      'Chebib, F.T. et al. Genetic testing in the management of adult CKD. Journal of the American Society of Nephrology 37, 777-789 (2026).',
++    url: 'https://doi.org/10.1681/ASN.0000000913',
++  },
++  kdigo2022: {
++    citation:
++      'KDIGO Conference Participants. Genetics in chronic kidney disease: conclusions from a Kidney Disease: Improving Global Outcomes (KDIGO) Controversies Conference. Kidney International 101, 1126-1141 (2022).',
++    url: 'https://doi.org/10.1016/j.kint.2022.03.019',
++  },
++  gross2012: {
++    citation:
++      'Gross, O. et al. Early angiotensin-converting enzyme inhibition in Alport syndrome delays renal failure and improves life expectancy. Kidney International 81, 494-501 (2012).',
++    url: 'https://doi.org/10.1038/ki.2011.407',
++  },
++  ortiz2025: {
++    citation:
++      'Ortiz, A., Yanagita, M., Yokoi, H. & Torra, R. Evolving strategies for early diagnosis, proactive prevention and treatment of CKD. Nephrology Dialysis Transplantation gfaf151 (2025).',
++    url: 'https://doi.org/10.1093/ndt/gfaf151',
++  },
++  fernandezFernandez2023: {
++    citation:
++      'Fernández-Fernandez, B., Sarafidis, P., Soler, M.J. & Ortiz, A. EMPA-KIDNEY: expanding the range of kidney protection by SGLT2 inhibitors. Clinical Kidney Journal 16, 1187-1198 (2023).',
++    url: 'https://doi.org/10.1093/ckj/sfad082',
++  },
++  sabatello2020: {
++    citation:
++      'Sabatello, M. & Milo Rasouly, H. The ethics of genetic testing for kidney diseases. Nature Reviews Nephrology 16, 615-616 (2020).',
++    url: 'https://doi.org/10.1038/s41581-020-0294-5',
++  },
++  thomas2023: {
++    citation:
++      'Thomas, C.P. et al. Genetic evaluation of living kidney donor candidates: a review and recommendations for best practices. American Journal of Transplantation 23, 597-607 (2023).',
++    url: 'https://doi.org/10.1016/j.ajt.2023.02.020',
++  },
++  wynn2021: {
++    citation:
++      'Wynn, J. et al. Do research participants share genomic screening results with family members? Journal of Genetic Counseling 00, 1-12 (2021).',
++    url: 'https://doi.org/10.1002/jgc4.1511',
++  },
++  bogyo2025: {
++    citation:
++      'Bogyo, K., Vena, N. & Milo Rasouly, H. The art and science of genetic counseling in nephrology. Kidney360 6, 1230-1244 (2025).',
++    url: 'https://doi.org/10.34067/KID.0000000825',
++  },
++} as const
++
++/** Builds a numbered Sources list from citation keys, in the order given. */
++export function numbered(...keys: Array<keyof typeof CITATIONS>) {
++  return keys.map((key, index) => ({ n: index + 1, ...CITATIONS[key] }))
++}
+diff --git a/src/lib/learnTopics.ts b/src/lib/learnTopics.ts
+index c495ac1..8dccbbf 100644
+--- a/src/lib/learnTopics.ts
++++ b/src/lib/learnTopics.ts
+@@ -1,9 +1,12 @@
+ import {
+   BookOpen,
++  Dna,
+   FlaskConical,
+   HandHeart,
+   HeartHandshake,
+   Layers,
++  Lightbulb,
++  MessagesSquare,
+   Search,
+   ShieldCheck,
+   Stethoscope,
+@@ -41,14 +44,46 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     intro: 'Guides to genetic testing for kidney disease, based on published research.',
+   },
+   {
+-    label: 'How genetic testing helps',
+-    to: '/learn/how-it-helps',
++    label: 'Discover why',
++    to: '/learn/discover-why',
+     end: false,
+-    icon: Stethoscope,
++    icon: Lightbulb,
+     tint: 'brand',
+-    eyebrow: 'How results help',
+-    title: 'How genetic testing can help you?',
+-    intro: 'For many patients, a single result changes what happens next with their care team.',
++    eyebrow: 'Discover why',
++    title: 'Discover why your kidney disease happened',
++    intro:
++      'A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis.',
++  },
++  {
++    label: 'Guide care',
++    to: '/learn/guide-care',
++    end: false,
++    icon: Stethoscope,
++    tint: 'accent',
++    eyebrow: 'Guide care',
++    title: 'How a genetic result can guide your care',
++    intro: 'Knowing the exact cause can help your care team start, avoid, or switch a treatment.',
++  },
++  {
++    label: 'Help your family',
++    to: '/learn/help-your-family',
++    end: false,
++    icon: Users,
++    tint: 'plum',
++    eyebrow: 'Help your family',
++    title: 'How your result can help your family',
++    intro:
++      'A genetic cause can help relatives be diagnosed early, plan a family, and find safe living donors.',
++  },
++  {
++    label: 'Support living donor decisions',
++    to: '/learn/kidney-donation',
++    end: false,
++    icon: HandHeart,
++    tint: 'plum',
++    eyebrow: 'Support living donor decisions',
++    title: 'Support living donor decisions',
++    intro: 'Testing can help identify relatives who did not inherit the genetic cause.',
+   },
+   {
+     label: 'How testing works',
+@@ -61,6 +96,16 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     intro:
+       'Most tests start with a cheek swab. The lab then looks at genes that can be linked to kidney disease.',
+   },
++  {
++    label: 'Types of tests',
++    to: '/learn/types-of-tests',
++    end: false,
++    icon: Layers,
++    tint: 'accent',
++    eyebrow: 'Types of tests',
++    title: 'Different tests look at different amounts of DNA',
++    intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
++  },
+   {
+     label: 'Signs testing may help',
+     to: '/learn/signs-testing-may-help',
+@@ -76,21 +121,22 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     label: 'Sharing with family',
+     to: '/learn/family-sharing',
+     end: false,
+-    icon: Users,
++    icon: Dna,
+     tint: 'accent',
+     eyebrow: 'Sharing with family',
+-    title: 'Sharing results with the people who share your DNA',
++    title: 'Why sharing your result with family matters',
+     intro: 'A result about you is sometimes a result about your relatives, too.',
+   },
+   {
+-    label: 'Kidney donors',
+-    to: '/learn/kidney-donation',
++    label: 'Genetic counselors',
++    to: '/learn/genetic-counselors',
+     end: false,
+-    icon: HandHeart,
+-    tint: 'plum',
+-    eyebrow: 'Kidney donors',
+-    title: "If you're considering donating a kidney",
+-    intro: 'What genetic testing means for donor candidates, and why the order of testing matters.',
++    icon: MessagesSquare,
++    tint: 'brand',
++    eyebrow: 'Genetic counselors',
++    title: 'Who genetic counselors are, and what a session looks like',
++    intro:
++      'Genetic counselors help you decide about testing, understand your result, and share it with family.',
+   },
+   {
+     label: 'Your rights & choices',
+@@ -104,32 +150,22 @@ export const LEARN_TOPICS: LearnTopic[] = [
+       "It's normal to wonder who can see a result and what happens to your DNA afterward.",
+   },
+   {
+-    label: 'Types of tests',
+-    to: '/learn/types-of-tests',
+-    end: false,
+-    icon: Layers,
+-    tint: 'accent',
+-    eyebrow: 'Types of tests',
+-    title: 'Different tests look at different amounts of DNA',
+-    intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
+-  },
+-  {
+-    label: 'Support groups',
++    label: 'Find a support group',
+     to: '/learn/support-groups',
+     end: false,
+     icon: HeartHandshake,
+     tint: 'accent',
+-    eyebrow: 'Beyond GARNET',
++    eyebrow: 'Find a support group',
+     title: 'Find a support group',
+     intro: "Connect with other patients who understand what it's like to live with your condition.",
+   },
+   {
+-    label: 'Research opportunities',
++    label: 'Explore research opportunities',
+     to: '/learn/research-opportunities',
+     end: false,
+     icon: FlaskConical,
+     tint: 'plum',
+-    eyebrow: 'Beyond GARNET',
++    eyebrow: 'Explore research opportunities',
+     title: 'Explore research opportunities',
+     intro: 'See whether a relevant clinical trial or research study is currently open to join.',
+   },
+diff --git a/src/lib/supportLinks.ts b/src/lib/supportLinks.ts
+index b4e365f..76ea2b6 100644
+--- a/src/lib/supportLinks.ts
++++ b/src/lib/supportLinks.ts
+@@ -118,4 +118,29 @@ export const RESEARCH_LINKS: ExternalLink[] = [
+     text: 'Look up a specific rare kidney condition and connected patient organizations.',
+     href: 'https://rarediseases.org/',
+   },
++  {
++    label: 'Columbia Center for Precision Medicine and Genomics (CPMG)',
++    text: 'Research, education, and clinical care in genetics at Columbia University.',
++    href: 'https://columbiamedicine.org/cpmg/',
++  },
++  {
++    label: 'CureGN',
++    text: 'A long-term research study of people with glomerular kidney diseases.',
++    href: 'https://www.curegn.org/',
++  },
++  {
++    label: 'NephCure',
++    text: 'Patient organization for rare kidney diseases, with information on research and trials.',
++    href: 'https://nephcure.org/',
++  },
++  {
++    label: 'American Kidney Fund: clinical trials',
++    text: 'What clinical trials are and how to find one for kidney disease.',
++    href: 'https://www.kidneyfund.org/treatments/clinical-trials-for-kidney-disease',
++  },
++  {
++    label: 'National Kidney Foundation: clinical trial directory',
++    text: 'A directory of clinical trials for kidney diseases.',
++    href: 'https://www.kidney.org/kidney-topics/kidney-diseases-clinical-trial-directory',
++  },
+ ]
+diff --git a/src/pages/Check.tsx b/src/pages/Check.tsx
+index f0b267e..8d4f33a 100644
+--- a/src/pages/Check.tsx
++++ b/src/pages/Check.tsx
+@@ -9,7 +9,7 @@ export function Check() {
+       <PageHero
+         icon={ListChecks}
+         tint="accent"
+-        eyebrow="Check if testing may help"
++        eyebrow="Genetic Risk Check"
+         title="A few simple questions"
+         intro="Answer five simple questions about your kidney disease, family history, and related health signs, and we will tell you what the chances are that you have a genetic disease."
+       />
+diff --git a/src/pages/Home.tsx b/src/pages/Home.tsx
+index afa222e..f61ee3e 100644
+--- a/src/pages/Home.tsx
++++ b/src/pages/Home.tsx
+@@ -1,10 +1,9 @@
+-import { ArrowRight, HeartHandshake, Landmark, Stethoscope } from 'lucide-react'
++import { ArrowRight, HeartHandshake, Stethoscope } from 'lucide-react'
+ import type { LucideIcon } from 'lucide-react'
+ import { Button } from '../components/Button'
+ import { Card } from '../components/Card'
+ import type { Tint } from '../components/IconChip'
+ import { IconChip } from '../components/IconChip'
+-import { TrustBadge } from '../components/TrustBadge'
+ 
+ const DOCTOR_APP_URL = '/doctor/dashboard'
+ 
+@@ -49,15 +48,12 @@ export function Home() {
+         className="absolute -bottom-24 -left-16 size-72 rounded-full bg-accent/20 blur-3xl"
+       />
+       <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-16 text-center sm:px-8 sm:py-24">
+-        <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation</TrustBadge>
+-        <p className="mt-6 text-[1.05rem] font-semibold tracking-[0.14em] text-brand uppercase">
+-          Hello, and welcome
+-        </p>
+         <h1
+           id="hero-heading"
+-          className="mt-3 max-w-4xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
++          className="max-w-4xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
+         >
+-          Could genetic testing help you, your family, or your patient understand kidney disease?
++          Could genetic testing help you, your family, or your patient know the cause of kidney
++          disease?
+         </h1>
+         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-body sm:text-xl">
+           GARNET guides patients, families, and clinicians to the right kidney genetics resources.
+diff --git a/src/pages/learn/DiscoverWhy.tsx b/src/pages/learn/DiscoverWhy.tsx
+new file mode 100644
+index 0000000..52751d1
+--- /dev/null
++++ b/src/pages/learn/DiscoverWhy.tsx
+@@ -0,0 +1,111 @@
++import { Cite } from '../../components/Cite'
++import { CTARow } from '../../components/learn/CTARow'
++import { LearnLink } from '../../components/learn/LearnLink'
++import { StatGrid } from '../../components/learn/StatGrid'
++import { Section } from '../../components/Section'
++import { Sources } from '../../components/Sources'
++import { numbered } from '../../lib/citations'
++
++const IMPACT_STATS = [
++  { value: '10–15%', label: 'of kidney disease in adults has a genetic cause' },
++  { value: '7 in 10', label: 'cases in some groups of children have a genetic cause' },
++  { value: '1 in 5', label: 'adults with CKD in one study had a positive genetic finding' },
++]
++
++/**
++ * First half of the former "How genetic testing helps" page: why a genetic
++ * cause matters and what finding it can tell you. The treatment half lives
++ * on Guide care. This is the only Learn page that ends with the
++ * Genetic Risk Check prompt.
++ */
++export function DiscoverWhy() {
++  return (
++    <>
++      <Section id="discover-why" tone="wash" title="How often a genetic cause is behind kidney disease">
++        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
++          <p>
++            Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults,
++            and as many as 7 in 10 cases in some groups of children.
++            <Cite n={1} />
++            <Cite n={2} />
++            <Cite n={3} />
++          </p>
++
++          <StatGrid tint="brand" stats={IMPACT_STATS} />
++
++          <p>
++            A genetic result is one more piece of information for your care team, alongside your
++            symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
++            conversation with your doctor about what's next.
++            <Cite n={2} />
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            Confirm or correct a diagnosis
++          </h3>
++          <p>
++            In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
++            people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly
++            half of those people, the result gave them a brand-new diagnosis or corrected an
++            earlier one.
++            <Cite n={2} />
++          </p>
++          <p>
++            A positive result also changed a doctor's estimate of a patient's long-term outlook for
++            more than half of people who received one.
++            <Cite n={4} />
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Change treatment</h3>
++          <p>
++            In the same study, a positive result changed how doctors managed care for about 9 in 10
++            patients, including an actual change in treatment plan for roughly a third. A follow-up
++            study that tracked patients for a full year found genetic testing was reported helpful,
++            or led to a change in management, for 86% of people with a positive result — and still
++            helped 42% of people with a negative result, often by ruling other causes out.
++            <Cite n={2} />
++            <Cite n={4} />
++          </p>
++          <p>
++            See <LearnLink to="/learn/guide-care">Guide care</LearnLink> for examples of treatments
++            that depend on knowing the exact genetic cause.
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Avoid a biopsy</h3>
++          <p>
++            When a genetic test finds the cause, some people may be able to avoid an invasive test
++            like a kidney biopsy.
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            A genetic diagnosis can also:
++          </h3>
++          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
++            <li>
++              Help your family members be diagnosed and treated early —{' '}
++              <LearnLink to="/learn/help-your-family">Help your family</LearnLink>
++            </li>
++            <li>
++              Help you make decisions about family planning —{' '}
++              <LearnLink to="/learn/help-your-family">Help your family</LearnLink>
++            </li>
++            <li>
++              Help guide kidney donation —{' '}
++              <LearnLink to="/learn/kidney-donation">Support living donor decisions</LearnLink>
++            </li>
++            <li>
++              Lead to a referral to other specialists for other medical problems caused by the same
++              genetic disease
++            </li>
++          </ul>
++        </div>
++
++        <div className="mx-auto max-w-3xl">
++          <CTARow tint="brand" />
++        </div>
++
++        <Sources sources={numbered('groopman2019', 'dahl2023', 'franceschini2024', 'chebib2026')} />
++      </Section>
++    </>
++  )
++}
+diff --git a/src/pages/learn/FamilySharing.tsx b/src/pages/learn/FamilySharing.tsx
+index eda4b85..1505bb6 100644
+--- a/src/pages/learn/FamilySharing.tsx
++++ b/src/pages/learn/FamilySharing.tsx
+@@ -1,8 +1,9 @@
+ import { Cite } from '../../components/Cite'
+ import { BarCompare } from '../../components/learn/BarCompare'
+-import { CTARow } from '../../components/learn/CTARow'
++import { LearnLink } from '../../components/learn/LearnLink'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
++import { numbered } from '../../lib/citations'
+ 
+ const SHARING_ROWS = [
+   { label: 'Told all close relatives within 6 months', percent: 34, display: '34%' },
+@@ -14,73 +15,60 @@ const SHARING_ROWS = [
+ export function FamilySharing() {
+   return (
+     <>
+-      <Section id="family-sharing" title="How families actually share results">
++      <Section id="family-sharing" title="Why sharing your result matters">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+           <p>
+-            A genetic result doesn't only affect you — close relatives share some of the same DNA,
+-            so a finding can matter for them too. But research shows that sharing results within
+-            families is inconsistent.
++            A genetic result doesn't only affect you. Close relatives share some of the same DNA,
++            so a finding can matter for them too.
+             <Cite n={1} />
+           </p>
+-
+-          <BarCompare tint="accent" rows={SHARING_ROWS} />
+-
+           <p>
+-            Sharing wasn't even across relatives. People were more likely to tell their siblings
+-            and children than their parents.
+-            <Cite n={1} />
++            When relatives know about your result, they can choose to be tested for the same
++            genetic cause. Those who share it can be diagnosed and treated early, and those who
++            didn't inherit it may be able to donate a kidney. See{' '}
++            <LearnLink to="/learn/help-your-family">Help your family</LearnLink> for what this can
++            mean.
+           </p>
+           <p>
+-            Who explains the result seems to matter: people who received their results from a
+-            genetics specialist were far more likely to share with all their relatives than people
+-            who heard from a doctor without genetics training.
++            But research shows that sharing results within families is inconsistent. Many close
++            relatives are never told.
+             <Cite n={1} />
+           </p>
+ 
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+-            Why people do — and don't — share
+-          </h3>
++          <BarCompare tint="accent" rows={SHARING_ROWS} />
++
+           <p>
+             The most common reasons people gave for sharing were a sense of obligation and a belief
+             that the information could help relatives make their own medical decisions — each
+-            cited by about 7 in 10 people.
++            cited by about 7 in 10 people. The most common reasons for not sharing were that a
++            relative seemed too young for the information to matter yet, or that the person simply
++            wasn't in close contact with that relative.
+             <Cite n={1} />
+           </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            How a genetic counselor can help you share
++          </h3>
+           <p>
+-            The most common reasons for not sharing were that a relative seemed too young for the
+-            information to matter yet, or that the person simply wasn't in close contact with that
+-            relative.
++            Who explains the result seems to matter: people who received their results from a
++            genetics specialist were far more likely to share with all their relatives than people
++            who heard from a doctor without genetics training.
+             <Cite n={1} />
+           </p>
+           <p>
+-            Because the stakes are personal on both sides, doctors and genetic counselors are
+-            expected to actively encourage patients to talk with relatives about shared risk — and
+-            can help coordinate that conversation, especially when a relative doesn't yet know they
+-            might be at risk.
++            Doctors and genetic counselors are expected to encourage patients to talk with
++            relatives about shared risk. A genetic counselor can help you plan those conversations
++            and help coordinate them, especially when a relative doesn't yet know they might be at
++            risk.
+             <Cite n={2} />
+           </p>
++          <p>
++            Learn more about <LearnLink to="/learn/genetic-counselors">genetic counselors</LearnLink>{' '}
++            and what a session looks like.
++          </p>
+         </div>
+ 
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="accent" />
+-        </div>
+-
+-        <Sources
+-          sources={[
+-            {
+-              n: 1,
+-              citation:
+-                'Wynn, J. et al. Do research participants share genomic screening results with family members? Journal of Genetic Counseling 00, 1-12 (2021).',
+-              url: 'https://doi.org/10.1002/jgc4.1511',
+-            },
+-            {
+-              n: 2,
+-              citation:
+-                'Bogyo, K., Vena, N. & Milo Rasouly, H. The art and science of genetic counseling in nephrology. Kidney360 6, 1230-1244 (2025).',
+-              url: 'https://doi.org/10.34067/KID.0000000825',
+-            },
+-          ]}
+-        />
++        <Sources sources={numbered('wynn2021', 'bogyo2025')} />
+       </Section>
+     </>
+   )
+diff --git a/src/pages/learn/GeneticCounselors.tsx b/src/pages/learn/GeneticCounselors.tsx
+new file mode 100644
+index 0000000..d616809
+--- /dev/null
++++ b/src/pages/learn/GeneticCounselors.tsx
+@@ -0,0 +1,106 @@
++import { ArrowUpRight } from 'lucide-react'
++import { Card } from '../../components/Card'
++import { Cite } from '../../components/Cite'
++import { LearnLink } from '../../components/learn/LearnLink'
++import { Section } from '../../components/Section'
++import { Sources } from '../../components/Sources'
++import { numbered } from '../../lib/citations'
++
++const FIND_A_COUNSELOR_URL = 'https://findageneticcounselor.nsgc.org/'
++
++/* Patient-facing version of the doctor side's informed-consent talking points. */
++const BEFORE_TESTING = [
++  {
++    title: 'Why test',
++    text: 'What testing could do in your case — for example, clarify your diagnosis, guide treatment, help your family, support family planning, or inform kidney donation.',
++  },
++  {
++    title: 'Your family history',
++    text: 'Questions about the health of your relatives, which can point to an inherited cause and shape which test to choose.',
++  },
++  {
++    title: 'What the test involves',
++    text: 'How the sample is collected, who orders the test, and when and how you will get your result.',
++  },
++  {
++    title: 'What a result can and can’t tell you',
++    text: 'Results can be uncertain. And unless the test looks for a cause already known in your family, not finding a genetic cause does not mean there isn’t one.',
++  },
++  {
++    title: 'Privacy and your rights',
++    text: 'Who will see your result, and the legal protections against genetic discrimination.',
++  },
++  {
++    title: 'What it means for your family',
++    text: 'A result can show which relatives may be at risk and could be tested too.',
++  },
++]
++
++export function GeneticCounselors() {
++  return (
++    <>
++      <Section id="genetic-counselors" tone="wash" title="Who genetic counselors are">
++        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
++          <p>
++            Genetic counselors are health professionals trained to explain genetic testing and what
++            a result means. They are best equipped to walk you through a result, though there
++            currently aren't enough of them to meet demand, so other clinicians often help explain
++            results too. If your result feels confusing, it's reasonable to ask for a referral to a
++            genetic counselor.
++            <Cite n={1} />
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            What a session looks like before testing
++          </h3>
++          <p>
++            Before a test, you'll talk through what testing could mean for you. A session often
++            covers:
++            <Cite n={2} />
++          </p>
++          <div className="grid gap-4 sm:grid-cols-2">
++            {BEFORE_TESTING.map((item) => (
++              <Card key={item.title} className="p-5">
++                <p className="text-[1.05rem] leading-snug font-semibold text-ink">{item.title}</p>
++                <p className="mt-2 text-[0.98rem] leading-relaxed text-body">{item.text}</p>
++              </Card>
++            ))}
++          </div>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            What happens after testing
++          </h3>
++          <p>
++            After testing, your result is reviewed and explained with you. Your care may be adjusted,
++            and you may be referred to other specialists or offered another genetic test.
++            <Cite n={2} />
++          </p>
++          <p>
++            A genetic counselor can also help you tell relatives about your result. See{' '}
++            <LearnLink to="/learn/family-sharing">Sharing with family</LearnLink>.
++          </p>
++
++          <a
++            href={FIND_A_COUNSELOR_URL}
++            target="_blank"
++            rel="noreferrer"
++            className="group mt-2 flex items-center justify-between gap-3 rounded-2xl border border-line bg-surface p-5 shadow-soft transition-colors hover:bg-brand-soft"
++          >
++            <span>
++              <span className="block font-semibold text-ink">Find a genetic counselor</span>
++              <span className="mt-0.5 block text-[0.95rem] text-muted">
++                Search the National Society of Genetic Counselors directory.
++              </span>
++            </span>
++            <ArrowUpRight
++              aria-hidden="true"
++              className="size-5 shrink-0 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand"
++            />
++          </a>
++        </div>
++
++        <Sources sources={numbered('sabatello2020', 'bogyo2025')} />
++      </Section>
++    </>
++  )
++}
+diff --git a/src/pages/learn/GuideCare.tsx b/src/pages/learn/GuideCare.tsx
+new file mode 100644
+index 0000000..6c5b7f6
+--- /dev/null
++++ b/src/pages/learn/GuideCare.tsx
+@@ -0,0 +1,81 @@
++import { Cite } from '../../components/Cite'
++import { Card } from '../../components/Card'
++import { LearnLink } from '../../components/learn/LearnLink'
++import { Section } from '../../components/Section'
++import { Sources } from '../../components/Sources'
++import { numbered } from '../../lib/citations'
++
++const TREATMENT_EXAMPLES = [
++  {
++    condition: 'Fabry disease',
++    text: 'A genetic diagnosis of Fabry disease can lead to enzyme replacement therapy, which replaces the enzyme the body is missing.',
++  },
++  {
++    condition: 'Primary hyperoxaluria type 1',
++    text: 'A diagnosis of primary hyperoxaluria type 1 enables the prescription of lumasiran, a medicine that lowers how much oxalate the body makes.',
++  },
++  {
++    condition: 'Primary coenzyme Q10 deficiency',
++    text: 'Early diagnosis of primary coenzyme Q10 deficiency can help preserve kidney function by simply prescribing high-dose CoQ10 supplements.',
++  },
++]
++
++/**
++ * Second half of the former "How genetic testing helps" page: how knowing
++ * the exact cause can start, avoid, or switch a treatment.
++ */
++export function GuideCare() {
++  return (
++    <>
++      <Section id="guide-care" tone="wash" title="Start, avoid, or switch a treatment">
++        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
++          <p>
++            Some kidney diseases with a genetic cause have treatments made for that exact cause.
++            Knowing the cause can help your care team start the right treatment, avoid one that is
++            unlikely to work, or switch to a better option.
++          </p>
++          <p>
++            In one large study of adults with chronic kidney disease, a positive genetic result
++            changed how doctors managed care for about 9 in 10 patients, including an actual change
++            in treatment plan for roughly a third.
++            <Cite n={1} />
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            Examples of treatments that depend on the genetic cause
++          </h3>
++          <div className="grid gap-4">
++            {TREATMENT_EXAMPLES.map((example) => (
++              <Card key={example.condition} className="p-5 sm:p-6">
++                <p className="text-[1.08rem] leading-snug font-semibold text-ink">
++                  {example.condition}
++                </p>
++                <p className="mt-2 text-[1rem] leading-relaxed text-body">{example.text}</p>
++              </Card>
++            ))}
++          </div>
++
++          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
++            <img
++              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
++              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
++              className="w-full rounded-xl border border-line"
++            />
++            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
++              More examples of how a genetic diagnosis can guide care.
++              <Cite n={2} />
++            </figcaption>
++          </figure>
++
++          <p>
++            Every situation is different. Talk with your doctor or a{' '}
++            <LearnLink to="/learn/genetic-counselors">genetic counselor</LearnLink> about whether a
++            genetic result could change your own care.
++          </p>
++        </div>
++
++        <Sources sources={numbered('dahl2023', 'kdigo2022')} />
++      </Section>
++    </>
++  )
++}
+diff --git a/src/pages/learn/HelpYourFamily.tsx b/src/pages/learn/HelpYourFamily.tsx
+new file mode 100644
+index 0000000..86081fe
+--- /dev/null
++++ b/src/pages/learn/HelpYourFamily.tsx
+@@ -0,0 +1,75 @@
++import { Cite } from '../../components/Cite'
++import { LearnLink } from '../../components/learn/LearnLink'
++import { Section } from '../../components/Section'
++import { Sources } from '../../components/Sources'
++import { numbered } from '../../lib/citations'
++
++/**
++ * What a genetic cause can mean for relatives: early diagnosis, family
++ * planning (moved here from Your rights & choices), and living donation.
++ */
++export function HelpYourFamily() {
++  return (
++    <>
++      <Section id="help-your-family" tone="wash" title="What your result can mean for relatives">
++        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
++          <p>
++            Close relatives share some of your DNA, so a genetic cause found in you may matter for
++            them too. <LearnLink to="/learn/family-sharing">Sharing with family</LearnLink> explains
++            why telling relatives matters, and how a genetic counselor can help.
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            Early diagnosis for relatives
++          </h3>
++          <p>
++            Once the genetic cause is known, relatives who may share it can be tested for that
++            same cause. This can help them be diagnosed early and start kidney-protective treatment
++            early, which can delay the need for dialysis by up to 27 years.
++            <Cite n={1} />
++            <Cite n={2} />
++            <Cite n={3} />
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            Before and during pregnancy
++          </h3>
++          <p>
++            For people with a known genetic kidney condition in the family, testing embryos before
++            pregnancy — called preimplantation genetic diagnosis — is one option that can be
++            discussed with a care team. It lets people avoid passing on a specific known genetic
++            variant without facing a decision about an existing pregnancy.
++            <Cite n={4} />
++          </p>
++          <p>
++            Cost is a real barrier here: this kind of testing, combined with fertility treatment,
++            can run into the tens of thousands of dollars, and it's often only partly covered by
++            insurance, unlike dialysis, which is generally covered by government programs despite
++            being far more expensive over time.
++            <Cite n={4} />
++          </p>
++          <p>
++            Testing during a pregnancy (prenatal testing) is another option some families talk
++            through with a genetic counselor.
++          </p>
++
++          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++            Identifying safe living donors
++          </h3>
++          <p>
++            When a relative wants to donate a kidney, knowing the exact genetic cause lets doctors
++            test that relative for the same finding. This helps identify relatives who did not
++            inherit the genetic cause.
++            <Cite n={5} /> See{' '}
++            <LearnLink to="/learn/kidney-donation">Support living donor decisions</LearnLink> to
++            learn more.
++          </p>
++        </div>
++
++        <Sources
++          sources={numbered('gross2012', 'ortiz2025', 'fernandezFernandez2023', 'sabatello2020', 'thomas2023')}
++        />
++      </Section>
++    </>
++  )
++}
+diff --git a/src/pages/learn/HowItHelps.tsx b/src/pages/learn/HowItHelps.tsx
+deleted file mode 100644
+index 364518e..0000000
+--- a/src/pages/learn/HowItHelps.tsx
++++ /dev/null
+@@ -1,114 +0,0 @@
+-import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+-import { StatGrid } from '../../components/learn/StatGrid'
+-import { Section } from '../../components/Section'
+-import { Sources } from '../../components/Sources'
+-
+-const IMPACT_STATS = [
+-  { value: '1 in 5', label: 'patients with CKD had a positive genetic finding' },
+-  { value: '9 in 10', label: "had their doctor's care plan change because of it" },
+-  { value: '86%', label: 'said testing was helpful, among those with a positive result' },
+-]
+-
+-export function HowItHelps() {
+-  return (
+-    <>
+-      <Section id="how-it-helps" tone="wash" title="What the research shows">
+-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+-          <p>
+-            A genetic result is one more piece of information for your care team, alongside your
+-            symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
+-            conversation with your doctor about what's next.
+-            <Cite n={1} />
+-          </p>
+-
+-          <p>
+-            In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
+-            people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly
+-            half of those people, the result gave them a brand-new diagnosis or corrected an
+-            earlier one.
+-            <Cite n={1} />
+-          </p>
+-
+-          <StatGrid tint="brand" stats={IMPACT_STATS} />
+-
+-          <p>
+-            The same study found that a positive result changed how doctors managed care for about
+-            9 in 10 patients, including an actual change in treatment plan for roughly a third. A
+-            follow-up study that tracked patients for a full year found genetic testing was
+-            reported helpful, or led to a change in management, for 86% of people with a positive
+-            result — and still helped 42% of people with a negative result, often by ruling
+-            other causes out.
+-            <Cite n={1} />
+-            <Cite n={2} />
+-          </p>
+-          <p>
+-            A positive result also changed a doctor's estimate of a patient's long-term outlook for
+-            more than half of people who received one.
+-            <Cite n={2} />
+-          </p>
+-
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">A genetic diagnosis can:</h3>
+-          <ul className="list-disc space-y-2 pl-6 marker:text-brand">
+-            <li>Confirm or correct your diagnosis</li>
+-            <li>Start, avoid, or switch a treatment based on the exact cause of your kidney disease</li>
+-            <li>Avoid an invasive test like a kidney biopsy</li>
+-            <li>Help you make decisions about family planning</li>
+-            <li>Help guide kidney donation</li>
+-            <li>Lead to a referral to other specialists for other medical problems caused by this genetic disease</li>
+-            <li>
+-              Help your family members be diagnosed early and start treatment early, which can
+-              delay the need of dialysis by up to 27 years
+-              <Cite n={3} />
+-            </li>
+-          </ul>
+-
+-          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
+-            <img
+-              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
+-              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
+-              className="w-full rounded-xl border border-line"
+-            />
+-            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+-              Examples of how a genetic diagnosis can guide care.
+-              <Cite n={4} />
+-            </figcaption>
+-          </figure>
+-        </div>
+-
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="brand" />
+-        </div>
+-
+-        <Sources
+-          sources={[
+-            {
+-              n: 1,
+-              citation:
+-                'Dahl, N.K. et al. The clinical utility of genetic testing in the diagnosis and management of adults with chronic kidney disease. Journal of the American Society of Nephrology 34, 2039-2050 (2023).',
+-              url: 'https://doi.org/10.1681/ASN.0000000000000249',
+-            },
+-            {
+-              n: 2,
+-              citation:
+-                'Chebib, F.T. et al. Genetic testing in the management of adult CKD. Journal of the American Society of Nephrology 37, 777-789 (2026).',
+-              url: 'https://doi.org/10.1681/ASN.0000000913',
+-            },
+-            {
+-              n: 3,
+-              citation:
+-                'Gross, O. et al. Early angiotensin-converting enzyme inhibition in Alport syndrome delays renal failure and improves life expectancy. Kidney International 81, 494-501 (2012).',
+-              url: 'https://doi.org/10.1038/ki.2011.407',
+-            },
+-            {
+-              n: 4,
+-              citation:
+-                'KDIGO Conference Participants. Genetics in chronic kidney disease: conclusions from a Kidney Disease: Improving Global Outcomes (KDIGO) Controversies Conference. Kidney International 101, 1126-1141 (2022).',
+-              url: 'https://doi.org/10.1016/j.kint.2022.03.019',
+-            },
+-          ]}
+-        />
+-      </Section>
+-    </>
+-  )
+-}
+diff --git a/src/pages/learn/KidneyDonation.tsx b/src/pages/learn/KidneyDonation.tsx
+index 89be541..5061931 100644
+--- a/src/pages/learn/KidneyDonation.tsx
++++ b/src/pages/learn/KidneyDonation.tsx
+@@ -1,6 +1,5 @@
+ import { HeartHandshake, Search, Stethoscope } from 'lucide-react'
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { FlowDiagram } from '../../components/learn/FlowDiagram'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+@@ -16,6 +15,12 @@ export function KidneyDonation() {
+     <>
+       <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
++          <p>
++            When a family member needs a kidney, relatives often want to help. If the kidney disease
++            has a genetic cause, testing can help identify relatives who did not inherit that cause
++            and may be able to donate more safely.
++            <Cite n={1} />
++          </p>
+           <p>
+             The recommended approach is sequential: test the relative who already has kidney
+             disease first, to pin down the exact genetic cause, and only then test the healthy
+@@ -64,10 +69,6 @@ export function KidneyDonation() {
+           </p>
+         </div>
+ 
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="plum" />
+-        </div>
+-
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/Overview.tsx b/src/pages/learn/Overview.tsx
+index 65b7195..4872998 100644
+--- a/src/pages/learn/Overview.tsx
++++ b/src/pages/learn/Overview.tsx
+@@ -3,12 +3,11 @@ import type { LucideIcon } from 'lucide-react'
+ import { Link } from 'react-router-dom'
+ import { Card } from '../../components/Card'
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+-import { JourneyPicker } from '../../components/learn/JourneyPicker'
+ import { Sources } from '../../components/Sources'
+ import type { Tint } from '../../components/IconChip'
+ import { IconChip } from '../../components/IconChip'
+ import { Section } from '../../components/Section'
++import { numbered } from '../../lib/citations'
+ import { LEARN_TOPICS } from '../../lib/learnTopics'
+ 
+ type TopicCardData = {
+@@ -38,7 +37,6 @@ const TOPIC_CARDS: TopicCardData[] = [
+ ]
+ 
+ const TRUST_POINTS = [
+-  'Supported by the National Kidney Foundation',
+   'Columbia University Irving Medical Center research project',
+   'Developed with input from medical researchers and genetic counseling experts',
+   'Designed for patients and families',
+@@ -74,10 +72,13 @@ export function Overview() {
+       >
+         <p className="mx-auto mb-10 max-w-6xl text-center text-xl leading-snug text-body sm:mb-12">
+           <span className="block">Genetic causes explain a meaningful share of kidney disease.</span>
+-          <span className="mt-1 block tracking-tight min-[1100px]:whitespace-nowrap">
++          <span className="mt-1 block tracking-tight">
+             Studies suggest a genetic cause is behind kidney failure in roughly 10% to 15% of
+             adults, and in as many as 7 in 10 children.
+             <Cite n={1} />
++            <Cite n={2} />
++            <Cite n={3} />
++            <Cite n={4} />
+           </span>
+         </p>
+         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+@@ -87,18 +88,6 @@ export function Overview() {
+         </div>
+       </Section>
+ 
+-      <Section
+-        id="find-your-path"
+-        tone="wash"
+-        headerClassName="max-w-6xl"
+-        introClassName="sm:whitespace-nowrap sm:text-lg"
+-        eyebrow="Where are you today?"
+-        title="Start with what's relevant to you"
+-        intro="The information you need depends on whether a genetic cause has already been named. Pick what fits you."
+-      >
+-        <JourneyPicker />
+-      </Section>
+-
+       <Section
+         id="about"
+         tone="warm"
+@@ -138,20 +127,7 @@ export function Overview() {
+           </div>
+         </Card>
+ 
+-        <div className="mx-auto mt-10 max-w-3xl">
+-          <CTARow tint="brand" />
+-        </div>
+-
+-        <Sources
+-          sources={[
+-            {
+-              n: 1,
+-              citation:
+-                'Groopman, E. & Milo Rasouly, H. Navigating genetic testing in nephrology: options and decision-making strategies. Kidney International Reports 10, 673-695 (2025).',
+-              url: 'https://doi.org/10.1016/j.ekir.2024.12.020',
+-            },
+-          ]}
+-        />
++        <Sources sources={numbered('groopman2025', 'groopman2019', 'dahl2023', 'franceschini2024')} />
+       </Section>
+     </>
+   )
+diff --git a/src/pages/learn/ResearchOpportunities.tsx b/src/pages/learn/ResearchOpportunities.tsx
+index 092cb64..2c4de5f 100644
+--- a/src/pages/learn/ResearchOpportunities.tsx
++++ b/src/pages/learn/ResearchOpportunities.tsx
+@@ -1,6 +1,5 @@
+ import { FlaskConical } from 'lucide-react'
+ import { LinkListCard } from '../../components/learn/LinkCards'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { Section } from '../../components/Section'
+ import { RESEARCH_LINKS } from '../../lib/supportLinks'
+ 
+@@ -21,10 +20,6 @@ export function ResearchOpportunities() {
+             links={RESEARCH_LINKS}
+           />
+         </div>
+-
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="plum" />
+-        </div>
+       </Section>
+     </>
+   )
+diff --git a/src/pages/learn/SignsTestingMayHelp.tsx b/src/pages/learn/SignsTestingMayHelp.tsx
+index b8db5b2..bd2c935 100644
+--- a/src/pages/learn/SignsTestingMayHelp.tsx
++++ b/src/pages/learn/SignsTestingMayHelp.tsx
+@@ -1,5 +1,4 @@
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
+@@ -39,10 +38,6 @@ export function SignsTestingMayHelp() {
+           </figure>
+         </div>
+ 
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="brand" />
+-        </div>
+-
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/SupportGroups.tsx b/src/pages/learn/SupportGroups.tsx
+index 639bbea..911c0ea 100644
+--- a/src/pages/learn/SupportGroups.tsx
++++ b/src/pages/learn/SupportGroups.tsx
+@@ -1,6 +1,5 @@
+ import { HeartHandshake } from 'lucide-react'
+ import { GroupedLinkListCard } from '../../components/learn/LinkCards'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { Section } from '../../components/Section'
+ import { GENERAL_SUPPORT_RESOURCE, SUPPORT_GROUP_LINKS } from '../../lib/supportLinks'
+ 
+@@ -23,10 +22,6 @@ export function SupportGroups() {
+             generalResource={GENERAL_SUPPORT_RESOURCE}
+           />
+         </div>
+-
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="accent" />
+-        </div>
+       </Section>
+     </>
+   )
+diff --git a/src/pages/learn/TestingBasics.tsx b/src/pages/learn/TestingBasics.tsx
+index c581c59..e0593ae 100644
+--- a/src/pages/learn/TestingBasics.tsx
++++ b/src/pages/learn/TestingBasics.tsx
+@@ -1,5 +1,4 @@
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ import { LearnLink } from '../../components/learn/LearnLink'
+@@ -47,15 +46,24 @@ export function TestingBasics() {
+             <Cite n={1} />
+           </p>
+           <p>
+-            Tests also differ in how much DNA they check, from a single gene your doctor already
+-            suspects to nearly all of it. See <LearnLink to="/learn/types-of-tests">Types of tests</LearnLink> for
+-            what each option involves, and how doctors weigh cost, turnaround time, and the chance
+-            of an uncertain result when choosing between them.
++            Tests also differ in how much DNA they check: some look at a single gene your doctor
++            already suspects causes your kidney disease, and others look at nearly all of your
++            genes. See <LearnLink to="/learn/types-of-tests">Types of tests</LearnLink> for what
++            each option involves, and how doctors weigh cost, turnaround time, and the chance of an
++            uncertain result when choosing between them.
++          </p>
++          <p>
++            New to DNA and genes? MedlinePlus, from the U.S. National Library of Medicine, has a{' '}
++            <a
++              href="https://medlineplus.gov/genetics/understanding/basics/dna/"
++              target="_blank"
++              rel="noreferrer"
++              className="font-semibold text-brand underline underline-offset-2 transition-colors hover:text-brand-strong"
++            >
++              short plain-language explainer
++            </a>
++            .
+           </p>
+-        </div>
+-
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="accent" />
+         </div>
+ 
+         <Sources
+diff --git a/src/pages/learn/TypesOfTests.tsx b/src/pages/learn/TypesOfTests.tsx
+index b4cad8b..75172d2 100644
+--- a/src/pages/learn/TypesOfTests.tsx
++++ b/src/pages/learn/TypesOfTests.tsx
+@@ -1,6 +1,5 @@
+ import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { FlowDiagram } from '../../components/learn/FlowDiagram'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+@@ -100,10 +99,6 @@ export function TypesOfTests() {
+           </p>
+         </div>
+ 
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="accent" />
+-        </div>
+-
+         <Sources
+           sources={[
+             {
+diff --git a/src/pages/learn/YourRights.tsx b/src/pages/learn/YourRights.tsx
+index 3d080d4..3baf38e 100644
+--- a/src/pages/learn/YourRights.tsx
++++ b/src/pages/learn/YourRights.tsx
+@@ -1,5 +1,5 @@
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
++import { LearnLink } from '../../components/learn/LearnLink'
+ import { ProtectionGrid } from '../../components/learn/ProtectionGrid'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+@@ -49,29 +49,12 @@ export function YourRights() {
+ 
+           <ProtectionGrid />
+ 
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+-            Family planning options
+-          </h3>
+           <p>
+-            For people with a known genetic kidney condition in the family, testing embryos before
+-            pregnancy — called preimplantation genetic diagnosis — is one option that can be
+-            discussed with a care team. It lets people avoid passing on a specific known genetic
+-            variant without facing a decision about an existing pregnancy.
+-            <Cite n={1} />
+-          </p>
+-          <p>
+-            Cost is a real barrier here: this kind of testing, combined with fertility treatment,
+-            can run into the tens of thousands of dollars, and it's often only partly covered by
+-            insurance, unlike dialysis, which is generally covered by government programs despite
+-            being far more expensive over time.
+-            <Cite n={1} />
++            For family planning options before and during pregnancy, see{' '}
++            <LearnLink to="/learn/help-your-family">Help your family</LearnLink>.
+           </p>
+         </div>
+ 
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="plum" />
+-        </div>
+-
+         <Sources
+           sources={[
+             {
+-- 
+2.43.0
+
