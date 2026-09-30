@@ -20,7 +20,7 @@ export function CTARow({ tint }: { tint: Tint }) {
           <ArrowRight aria-hidden="true" className="size-4.5" />
         </Button>
         <Button href="/next-steps" variant="quiet" size="md">
-          See next steps
+          How to get tested
         </Button>
       </div>
     </div>

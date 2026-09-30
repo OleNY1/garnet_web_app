@@ -4,6 +4,7 @@ import {
   HandHeart,
   HeartHandshake,
   Layers,
+  Search,
   ShieldCheck,
   Stethoscope,
   TestTubes,
@@ -59,6 +60,17 @@ export const LEARN_TOPICS: LearnTopic[] = [
     title: 'How a sample is collected, and what it looks for',
     intro:
       'Most tests start with a cheek swab. The lab then looks at genes that can be linked to kidney disease.',
+  },
+  {
+    label: 'Signs testing may help',
+    to: '/learn/signs-testing-may-help',
+    end: false,
+    icon: Search,
+    tint: 'brand',
+    eyebrow: 'Signs testing may help',
+    title: 'Signs testing may help',
+    intro:
+      'These signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
   },
   {
     label: 'Sharing with family',
