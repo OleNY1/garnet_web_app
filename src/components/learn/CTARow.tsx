@@ -4,9 +4,9 @@ import type { Tint } from '../IconChip'
 import { tints } from '../IconChip'
 
 /**
- * Patients in the flyer study wanted a way to move from awareness to
- * action on their own, without waiting on a doctor. Every Learn article
- * ends with this so the next step is never more than one tap away.
+ * Next-step prompt. Shown only at the end of the Discover why page so the
+ * rest of the site doesn't feel like it's pushing people toward testing;
+ * the Genetic Risk Check stays one tap away in the header on every page.
  */
 export function CTARow({ tint }: { tint: Tint }) {
   return (
@@ -15,11 +15,11 @@ export function CTARow({ tint }: { tint: Tint }) {
         Ready to see if this applies to you?
       </p>
       <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-        <Button href="/check" variant="secondary" size="md">
-          Check if testing may help
+        <Button href="/check" variant="secondary" size="md" className="whitespace-nowrap">
+          Genetic Risk Check
           <ArrowRight aria-hidden="true" className="size-4.5" />
         </Button>
-        <Button href="/next-steps" variant="quiet" size="md">
+        <Button href="/next-steps" variant="quiet" size="md" className="whitespace-nowrap">
           How to get tested
         </Button>
       </div>

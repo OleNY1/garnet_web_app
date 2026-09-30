@@ -1,6 +1,5 @@
 import { HeartHandshake, Search, Stethoscope } from 'lucide-react'
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
 import { FlowDiagram } from '../../components/learn/FlowDiagram'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
@@ -16,6 +15,12 @@ export function KidneyDonation() {
     <>
       <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+          <p>
+            When a family member needs a kidney, relatives often want to help. If the kidney disease
+            has a genetic cause, testing can help identify relatives who did not inherit that cause
+            and may be able to donate more safely.
+            <Cite n={1} />
+          </p>
           <p>
             The recommended approach is sequential: test the relative who already has kidney
             disease first, to pin down the exact genetic cause, and only then test the healthy
@@ -62,10 +67,6 @@ export function KidneyDonation() {
             not a mandatory test or an automatic disqualifier.
             <Cite n={1} />
           </p>
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="plum" />
         </div>
 
         <Sources

@@ -1,10 +1,9 @@
-import { ArrowRight, HeartHandshake, Landmark, Stethoscope } from 'lucide-react'
+import { ArrowRight, HeartHandshake, Stethoscope } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import type { Tint } from '../components/IconChip'
 import { IconChip } from '../components/IconChip'
-import { TrustBadge } from '../components/TrustBadge'
 
 const DOCTOR_APP_URL = '/doctor/dashboard'
 
@@ -49,15 +48,12 @@ export function Home() {
         className="absolute -bottom-24 -left-16 size-72 rounded-full bg-accent/20 blur-3xl"
       />
       <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-16 text-center sm:px-8 sm:py-24">
-        <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation</TrustBadge>
-        <p className="mt-6 text-[1.05rem] font-semibold tracking-[0.14em] text-brand uppercase">
-          Hello, and welcome
-        </p>
         <h1
           id="hero-heading"
-          className="mt-3 max-w-4xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
+          className="max-w-4xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
         >
-          Could genetic testing help you, your family, or your patient understand kidney disease?
+          Could genetic testing help you, your family, or your patient know the cause of kidney
+          disease?
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-body sm:text-xl">
           GARNET guides patients, families, and clinicians to the right kidney genetics resources.

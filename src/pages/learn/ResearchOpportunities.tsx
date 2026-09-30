@@ -1,6 +1,5 @@
 import { FlaskConical } from 'lucide-react'
 import { LinkListCard } from '../../components/learn/LinkCards'
-import { CTARow } from '../../components/learn/CTARow'
 import { Section } from '../../components/Section'
 import { RESEARCH_LINKS } from '../../lib/supportLinks'
 
@@ -20,10 +19,6 @@ export function ResearchOpportunities() {
             intro="Search or browse studies related to kidney disease."
             links={RESEARCH_LINKS}
           />
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="plum" />
         </div>
       </Section>
     </>

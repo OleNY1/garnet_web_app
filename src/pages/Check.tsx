@@ -9,7 +9,7 @@ export function Check() {
       <PageHero
         icon={ListChecks}
         tint="accent"
-        eyebrow="Check if testing may help"
+        eyebrow="Genetic Risk Check"
         title="A few simple questions"
         intro="Answer five simple questions about your kidney disease, family history, and related health signs, and we will tell you what the chances are that you have a genetic disease."
       />

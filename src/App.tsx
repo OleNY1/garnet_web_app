@@ -5,7 +5,10 @@ import { ScrollToTop } from './components/ScrollToTop'
 import { Check } from './pages/Check'
 import { Home } from './pages/Home'
 import { FamilySharing } from './pages/learn/FamilySharing'
-import { HowItHelps } from './pages/learn/HowItHelps'
+import { DiscoverWhy } from './pages/learn/DiscoverWhy'
+import { GeneticCounselors } from './pages/learn/GeneticCounselors'
+import { GuideCare } from './pages/learn/GuideCare'
+import { HelpYourFamily } from './pages/learn/HelpYourFamily'
 import { KidneyDonation } from './pages/learn/KidneyDonation'
 import { LearnLayout } from './pages/learn/LearnLayout'
 import { Overview } from './pages/learn/Overview'
@@ -54,7 +57,12 @@ export default function App() {
             <Route index element={<Overview />} />
             <Route path="testing-basics" element={<TestingBasics />} />
             <Route path="signs-testing-may-help" element={<SignsTestingMayHelp />} />
-            <Route path="how-it-helps" element={<HowItHelps />} />
+            <Route path="discover-why" element={<DiscoverWhy />} />
+            <Route path="guide-care" element={<GuideCare />} />
+            <Route path="help-your-family" element={<HelpYourFamily />} />
+            <Route path="genetic-counselors" element={<GeneticCounselors />} />
+            {/* Old address for the page that was split into Discover why and Guide care. */}
+            <Route path="how-it-helps" element={<Navigate to="/learn/discover-why" replace />} />
             <Route path="family-sharing" element={<FamilySharing />} />
             <Route path="kidney-donation" element={<KidneyDonation />} />
             <Route path="your-rights" element={<YourRights />} />

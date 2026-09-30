@@ -1,5 +1,5 @@
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
+import { LearnLink } from '../../components/learn/LearnLink'
 import { ProtectionGrid } from '../../components/learn/ProtectionGrid'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
@@ -49,27 +49,10 @@ export function YourRights() {
 
           <ProtectionGrid />
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
-            Family planning options
-          </h3>
           <p>
-            For people with a known genetic kidney condition in the family, testing embryos before
-            pregnancy — called preimplantation genetic diagnosis — is one option that can be
-            discussed with a care team. It lets people avoid passing on a specific known genetic
-            variant without facing a decision about an existing pregnancy.
-            <Cite n={1} />
+            For family planning options before and during pregnancy, see{' '}
+            <LearnLink to="/learn/help-your-family">Help your family</LearnLink>.
           </p>
-          <p>
-            Cost is a real barrier here: this kind of testing, combined with fertility treatment,
-            can run into the tens of thousands of dollars, and it's often only partly covered by
-            insurance, unlike dialysis, which is generally covered by government programs despite
-            being far more expensive over time.
-            <Cite n={1} />
-          </p>
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="plum" />
         </div>
 
         <Sources

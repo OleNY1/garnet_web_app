@@ -1,5 +1,4 @@
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 import { LearnLink } from '../../components/learn/LearnLink'
@@ -47,15 +46,24 @@ export function TestingBasics() {
             <Cite n={1} />
           </p>
           <p>
-            Tests also differ in how much DNA they check, from a single gene your doctor already
-            suspects to nearly all of it. See <LearnLink to="/learn/types-of-tests">Types of tests</LearnLink> for
-            what each option involves, and how doctors weigh cost, turnaround time, and the chance
-            of an uncertain result when choosing between them.
+            Tests also differ in how much DNA they check: some look at a single gene your doctor
+            already suspects causes your kidney disease, and others look at nearly all of your
+            genes. See <LearnLink to="/learn/types-of-tests">Types of tests</LearnLink> for what
+            each option involves, and how doctors weigh cost, turnaround time, and the chance of an
+            uncertain result when choosing between them.
           </p>
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="accent" />
+          <p>
+            New to DNA and genes? MedlinePlus, from the U.S. National Library of Medicine, has a{' '}
+            <a
+              href="https://medlineplus.gov/genetics/understanding/basics/dna/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-brand underline underline-offset-2 transition-colors hover:text-brand-strong"
+            >
+              short plain-language explainer
+            </a>
+            .
+          </p>
         </div>
 
         <Sources

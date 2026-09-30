@@ -1,5 +1,4 @@
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 
@@ -37,10 +36,6 @@ export function SignsTestingMayHelp() {
               <Cite n={2} />
             </figcaption>
           </figure>
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="brand" />
         </div>
 
         <Sources

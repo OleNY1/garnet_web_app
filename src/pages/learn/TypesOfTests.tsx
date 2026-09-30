@@ -1,6 +1,5 @@
 import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
 import { FlowDiagram } from '../../components/learn/FlowDiagram'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
@@ -98,10 +97,6 @@ export function TypesOfTests() {
             what each possible result would mean.
             <Cite n={2} />
           </p>
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="accent" />
         </div>
 
         <Sources

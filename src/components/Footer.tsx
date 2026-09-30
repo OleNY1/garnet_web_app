@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const EXPLORE_LINKS = [
   { label: 'Learn', href: '/learn' },
-  { label: 'Check if testing may help', href: '/check' },
+  { label: 'Genetic Risk Check', href: '/check' },
   { label: 'How to get tested', href: '/next-steps' },
   { label: 'FAQ', href: '/next-steps#cost-privacy' },
 ]
@@ -39,7 +39,7 @@ export function Footer() {
             </div>
             <p className="mt-5 max-w-md leading-relaxed">
               A patient education website created as part of a research project at Columbia
-              University Irving Medical Center, supported by the National Kidney Foundation.
+              University Irving Medical Center.
             </p>
             <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-footer-line px-4 py-2 text-[0.95rem] font-medium text-footer-ink">
               <BadgeCheck aria-hidden="true" className="size-4.5 shrink-0 text-[#8fd0df]" />

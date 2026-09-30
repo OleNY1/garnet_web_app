@@ -1,4 +1,4 @@
-import { BookOpen, HeartHandshake, Info, Landmark, ListChecks, MessagesSquare, ShieldCheck } from 'lucide-react'
+import { BookOpen, HeartHandshake, Info, Landmark, ListChecks, Signpost } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Button } from '../Button'
 import { Card } from '../Card'
@@ -7,30 +7,25 @@ import type { Tint } from '../IconChip'
 import { IconChip } from '../IconChip'
 import { TrustBadge } from '../TrustBadge'
 
+/* Mirrors the header navigation: Learn, Genetic Risk Check, How to get tested. */
 const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; tooltip: string }> = [
   {
     icon: BookOpen,
     tint: 'brand',
-    label: 'Guides to genetic testing',
-    tooltip: 'Short reads on what testing involves.',
+    label: 'Learn',
+    tooltip: 'Short guides to genetic testing, including privacy, cost, and your rights.',
   },
   {
     icon: ListChecks,
     tint: 'accent',
-    label: 'A short question check',
-    tooltip: 'See if testing may be worth discussing.',
+    label: 'Genetic Risk Check',
+    tooltip: 'A few simple questions to see if testing may be worth discussing.',
   },
   {
-    icon: MessagesSquare,
+    icon: Signpost,
     tint: 'plum',
-    label: 'Help talking with your care team',
-    tooltip: 'Questions to ask your doctor or a genetic counselor.',
-  },
-  {
-    icon: ShieldCheck,
-    tint: 'brand',
-    label: 'Privacy, cost, and your rights',
-    tooltip: 'Plain answers about protections and cost.',
+    label: 'How to get tested',
+    tooltip: 'Help talking with your care team.',
   },
 ]
 
@@ -74,7 +69,6 @@ export function GettingStartedHero() {
       <div className="relative mx-auto grid w-full max-w-6xl gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:py-24">
         <div>
           <div className="flex flex-col items-start gap-2">
-            <TrustBadge icon={Landmark}>Supported by the National Kidney Foundation</TrustBadge>
             <TrustBadge icon={Landmark}>
               Columbia University Irving Medical Center research project
             </TrustBadge>
@@ -83,17 +77,13 @@ export function GettingStartedHero() {
             id="hero-heading"
             className="mt-6 font-display text-[2.3rem] leading-[1.12] font-semibold text-ink sm:text-5xl sm:leading-[1.08] lg:text-[3.35rem]"
           >
-            Could genetic testing help you or your family understand kidney disease?
+            Could genetic testing help you or your family know the cause of your kidney disease?
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-body sm:text-xl">
-            GARNET helps people with kidney disease learn about genetic testing and prepare to
-            talk with their care team.
+            Consider genetic testing to explain a kidney disease.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <Button href="#why-it-matters">Start learning</Button>
-            <Button href="/check" variant="secondary">
-              Check if testing may help
-            </Button>
           </div>
           <p className="mt-6 flex max-w-xl items-start gap-2.5 text-[0.99rem] leading-normal text-muted">
             <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />

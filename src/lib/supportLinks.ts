@@ -118,4 +118,29 @@ export const RESEARCH_LINKS: ExternalLink[] = [
     text: 'Look up a specific rare kidney condition and connected patient organizations.',
     href: 'https://rarediseases.org/',
   },
+  {
+    label: 'Columbia Center for Precision Medicine and Genomics (CPMG)',
+    text: 'Research, education, and clinical care in genetics at Columbia University.',
+    href: 'https://columbiamedicine.org/cpmg/',
+  },
+  {
+    label: 'CureGN',
+    text: 'A long-term research study of people with glomerular kidney diseases.',
+    href: 'https://www.curegn.org/',
+  },
+  {
+    label: 'NephCure',
+    text: 'Patient organization for rare kidney diseases, with information on research and trials.',
+    href: 'https://nephcure.org/',
+  },
+  {
+    label: 'American Kidney Fund: clinical trials',
+    text: 'What clinical trials are and how to find one for kidney disease.',
+    href: 'https://www.kidneyfund.org/treatments/clinical-trials-for-kidney-disease',
+  },
+  {
+    label: 'National Kidney Foundation: clinical trial directory',
+    text: 'A directory of clinical trials for kidney diseases.',
+    href: 'https://www.kidney.org/kidney-topics/kidney-diseases-clinical-trial-directory',
+  },
 ]

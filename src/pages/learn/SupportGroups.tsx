@@ -1,6 +1,5 @@
 import { HeartHandshake } from 'lucide-react'
 import { GroupedLinkListCard } from '../../components/learn/LinkCards'
-import { CTARow } from '../../components/learn/CTARow'
 import { Section } from '../../components/Section'
 import { GENERAL_SUPPORT_RESOURCE, SUPPORT_GROUP_LINKS } from '../../lib/supportLinks'
 
@@ -22,10 +21,6 @@ export function SupportGroups() {
             groups={SUPPORT_GROUP_LINKS}
             generalResource={GENERAL_SUPPORT_RESOURCE}
           />
-        </div>
-
-        <div className="mx-auto max-w-3xl">
-          <CTARow tint="accent" />
         </div>
       </Section>
     </>

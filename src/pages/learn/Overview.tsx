@@ -3,12 +3,11 @@ import type { LucideIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Card } from '../../components/Card'
 import { Cite } from '../../components/Cite'
-import { CTARow } from '../../components/learn/CTARow'
-import { JourneyPicker } from '../../components/learn/JourneyPicker'
 import { Sources } from '../../components/Sources'
 import type { Tint } from '../../components/IconChip'
 import { IconChip } from '../../components/IconChip'
 import { Section } from '../../components/Section'
+import { numbered } from '../../lib/citations'
 import { LEARN_TOPICS } from '../../lib/learnTopics'
 
 type TopicCardData = {
@@ -38,7 +37,6 @@ const TOPIC_CARDS: TopicCardData[] = [
 ]
 
 const TRUST_POINTS = [
-  'Supported by the National Kidney Foundation',
   'Columbia University Irving Medical Center research project',
   'Developed with input from medical researchers and genetic counseling experts',
   'Designed for patients and families',
@@ -74,10 +72,13 @@ export function Overview() {
       >
         <p className="mx-auto mb-10 max-w-6xl text-center text-xl leading-snug text-body sm:mb-12">
           <span className="block">Genetic causes explain a meaningful share of kidney disease.</span>
-          <span className="mt-1 block tracking-tight min-[1100px]:whitespace-nowrap">
+          <span className="mt-1 block tracking-tight">
             Studies suggest a genetic cause is behind kidney failure in roughly 10% to 15% of
             adults, and in as many as 7 in 10 children.
             <Cite n={1} />
+            <Cite n={2} />
+            <Cite n={3} />
+            <Cite n={4} />
           </span>
         </p>
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
@@ -85,18 +86,6 @@ export function Overview() {
             <TopicCard key={topic.to} topic={topic} />
           ))}
         </div>
-      </Section>
-
-      <Section
-        id="find-your-path"
-        tone="wash"
-        headerClassName="max-w-6xl"
-        introClassName="sm:whitespace-nowrap sm:text-lg"
-        eyebrow="Where are you today?"
-        title="Start with what's relevant to you"
-        intro="The information you need depends on whether a genetic cause has already been named. Pick what fits you."
-      >
-        <JourneyPicker />
       </Section>
 
       <Section
@@ -138,20 +127,7 @@ export function Overview() {
           </div>
         </Card>
 
-        <div className="mx-auto mt-10 max-w-3xl">
-          <CTARow tint="brand" />
-        </div>
-
-        <Sources
-          sources={[
-            {
-              n: 1,
-              citation:
-                'Groopman, E. & Milo Rasouly, H. Navigating genetic testing in nephrology: options and decision-making strategies. Kidney International Reports 10, 673-695 (2025).',
-              url: 'https://doi.org/10.1016/j.ekir.2024.12.020',
-            },
-          ]}
-        />
+        <Sources sources={numbered('groopman2025', 'groopman2019', 'dahl2023', 'franceschini2024')} />
       </Section>
     </>
   )
