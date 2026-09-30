@@ -1,0 +1,119 @@
+From 4cf2920da659119ad245a6af908f3403e3a7ed7a Mon Sep 17 00:00:00 2001
+From: Quinby Janes <qcj2000@columbia.edu>
+Date: Wed, 30 Sep 2026 12:18:31 -0400
+Subject: [PATCH] Drop Discover why prompt, stop stat boxes growing, reword
+ intro
+
+- Remove the "Ready to see if this applies to you?" box from the bottom of
+  Discover why (the Genetic Risk Check stays in the header). The prompt
+  component is no longer used anywhere, so it is deleted.
+- Stat boxes on Discover why no longer grow on hover, so they don't look
+  clickable.
+- Getting started intro now reads "GARNET helps patients and families
+  consider genetic testing to explain a kidney disease."
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_0175aRCbwbvCDiP9xhejQHa7
+---
+ src/components/learn/CTARow.tsx             | 28 ---------------------
+ src/components/learn/GettingStartedHero.tsx |  3 ++-
+ src/components/learn/StatGrid.tsx           |  2 +-
+ src/pages/learn/DiscoverWhy.tsx             |  8 +-----
+ 4 files changed, 4 insertions(+), 37 deletions(-)
+ delete mode 100644 src/components/learn/CTARow.tsx
+
+diff --git a/src/components/learn/CTARow.tsx b/src/components/learn/CTARow.tsx
+deleted file mode 100644
+index d431f27..0000000
+--- a/src/components/learn/CTARow.tsx
++++ /dev/null
+@@ -1,28 +0,0 @@
+-import { ArrowRight } from 'lucide-react'
+-import { Button } from '../Button'
+-import type { Tint } from '../IconChip'
+-import { tints } from '../IconChip'
+-
+-/**
+- * Next-step prompt. Shown only at the end of the Discover why page so the
+- * rest of the site doesn't feel like it's pushing people toward testing;
+- * the Genetic Risk Check stays one tap away in the header on every page.
+- */
+-export function CTARow({ tint }: { tint: Tint }) {
+-  return (
+-    <div className={`mt-12 flex flex-col items-start gap-4 rounded-2xl ${tints[tint].chip} p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7`}>
+-      <p className="text-[1.05rem] leading-snug font-semibold text-ink">
+-        Ready to see if this applies to you?
+-      </p>
+-      <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+-        <Button href="/check" variant="secondary" size="md" className="whitespace-nowrap">
+-          Genetic Risk Check
+-          <ArrowRight aria-hidden="true" className="size-4.5" />
+-        </Button>
+-        <Button href="/next-steps" variant="quiet" size="md" className="whitespace-nowrap">
+-          How to get tested
+-        </Button>
+-      </div>
+-    </div>
+-  )
+-}
+diff --git a/src/components/learn/GettingStartedHero.tsx b/src/components/learn/GettingStartedHero.tsx
+index a017cb1..cb711b0 100644
+--- a/src/components/learn/GettingStartedHero.tsx
++++ b/src/components/learn/GettingStartedHero.tsx
+@@ -80,7 +80,8 @@ export function GettingStartedHero() {
+             Could genetic testing help you or your family know the cause of your kidney disease?
+           </h1>
+           <p className="mt-5 max-w-xl text-lg leading-relaxed text-body sm:text-xl">
+-            Consider genetic testing to explain a kidney disease.
++            GARNET helps patients and families consider genetic testing to explain a kidney
++            disease.
+           </p>
+           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+             <Button href="#why-it-matters">Start learning</Button>
+diff --git a/src/components/learn/StatGrid.tsx b/src/components/learn/StatGrid.tsx
+index 1062e93..095573a 100644
+--- a/src/components/learn/StatGrid.tsx
++++ b/src/components/learn/StatGrid.tsx
+@@ -17,7 +17,7 @@ export function StatGrid({ tint, stats }: { tint: Tint; stats: Stat[] }) {
+       {stats.map((stat) => (
+         <div
+           key={stat.label}
+-          className={`scale-100 rounded-2xl border border-line ${tints[tint].chip} p-5 text-center transition-transform duration-200 hover:scale-[1.04] sm:p-6`}
++          className={`rounded-2xl border border-line ${tints[tint].chip} p-5 text-center sm:p-6`}
+         >
+           <p className={`font-display text-[2rem] leading-none font-bold sm:text-[2.3rem] ${tints[tint].icon}`}>
+             {stat.value}
+diff --git a/src/pages/learn/DiscoverWhy.tsx b/src/pages/learn/DiscoverWhy.tsx
+index 52751d1..e009da9 100644
+--- a/src/pages/learn/DiscoverWhy.tsx
++++ b/src/pages/learn/DiscoverWhy.tsx
+@@ -1,5 +1,4 @@
+ import { Cite } from '../../components/Cite'
+-import { CTARow } from '../../components/learn/CTARow'
+ import { LearnLink } from '../../components/learn/LearnLink'
+ import { StatGrid } from '../../components/learn/StatGrid'
+ import { Section } from '../../components/Section'
+@@ -15,8 +14,7 @@ const IMPACT_STATS = [
+ /**
+  * First half of the former "How genetic testing helps" page: why a genetic
+  * cause matters and what finding it can tell you. The treatment half lives
+- * on Guide care. This is the only Learn page that ends with the
+- * Genetic Risk Check prompt.
++ * on Guide care.
+  */
+ export function DiscoverWhy() {
+   return (
+@@ -100,10 +98,6 @@ export function DiscoverWhy() {
+           </ul>
+         </div>
+ 
+-        <div className="mx-auto max-w-3xl">
+-          <CTARow tint="brand" />
+-        </div>
+-
+         <Sources sources={numbered('groopman2019', 'dahl2023', 'franceschini2024', 'chebib2026')} />
+       </Section>
+     </>
+-- 
+2.43.0
+
