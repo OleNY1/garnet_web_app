@@ -25,6 +25,17 @@ export function TypesOfTests() {
           </p>
 
           <FlowDiagram tint="accent" steps={TEST_TYPES} connected={false} />
+          <p className="-mt-2 text-center text-[0.95rem] leading-snug text-muted">
+            <a
+              href="https://doi.org/10.1016/j.ekir.2024.12.020"
+              target="_blank"
+              rel="noreferrer"
+              className="text-brand underline underline-offset-2 hover:text-brand-strong"
+            >
+              Learn more about types of genetic testing
+            </a>
+            <Cite n={1} />
+          </p>
 
           <h3 className="mt-2 font-display text-xl font-semibold text-ink">
             Why the choice matters

@@ -26,7 +26,7 @@ export function FlowDiagram({
         {steps.map((step) => (
           <div
             key={step.label}
-            className="flex h-full min-h-[11.5rem] scale-100 flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center transition-transform duration-200 hover:scale-[1.03]"
+            className="flex h-full min-h-[11.5rem] flex-col items-center rounded-2xl border border-line bg-surface p-5 text-center"
           >
             <span
               className={`flex size-12 shrink-0 items-center justify-center rounded-2xl ${tints[tint].chip}`}
