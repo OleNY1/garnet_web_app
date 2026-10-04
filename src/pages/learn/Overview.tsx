@@ -28,7 +28,7 @@ const TOPIC_CARDS: TopicCardData[] = [
   })),
   {
     label: 'How to get tested',
-    to: '/next-steps',
+    to: '/how-to-get-tested',
     icon: Signpost,
     tint: 'plum',
     intro:

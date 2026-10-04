@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 const EXPLORE_LINKS = [
   { label: 'Learn', href: '/learn' },
   { label: 'Genetic Risk Check', href: '/check' },
-  { label: 'How to get tested', href: '/next-steps' },
-  { label: 'FAQ', href: '/next-steps#cost-privacy' },
+  { label: 'How to Get Tested', href: '/how-to-get-tested' },
+  { label: 'FAQ', href: '/faq' },
 ]
 
 /* Placeholder routes; replace when these pages are built. */

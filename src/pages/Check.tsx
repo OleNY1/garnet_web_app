@@ -31,7 +31,7 @@ export function Check() {
             They may help you prepare for a conversation with a doctor or genetic counselor.
           </p>
           <div className="relative mt-8">
-            <Button href="/next-steps" variant="inverse" className="w-full sm:w-auto">
+            <Button href="/how-to-get-tested" variant="inverse" className="w-full sm:w-auto">
               See what happens next
               <ArrowRight aria-hidden="true" className="size-5" />
             </Button>

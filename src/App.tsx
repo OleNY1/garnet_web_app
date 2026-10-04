@@ -20,7 +20,8 @@ import { TestingBasics } from './pages/learn/TestingBasics'
 import { TypesOfTests } from './pages/learn/TypesOfTests'
 import { UncertainResults } from './pages/learn/UncertainResults'
 import { YourRights } from './pages/learn/YourRights'
-import { NextSteps } from './pages/NextSteps'
+import { Faq } from './pages/Faq'
+import { HowToGetTested } from './pages/HowToGetTested'
 import DoctorAssessmentResult from './doctor/pages/AssessmentResult'
 import DoctorCounselorProfile from './doctor/pages/CounselorProfile'
 import DoctorEducation from './doctor/pages/Education'
@@ -37,6 +38,11 @@ import DoctorPatientAssessment from './doctor/pages/PatientAssessment'
 import DoctorProfile from './doctor/pages/Profile'
 import DoctorResourceDestinationPage from './doctor/pages/ResourceDestinationPage'
 import DoctorResourceModePage from './doctor/pages/ResourceModePage'
+
+function NextStepsRedirect() {
+  const { hash } = useLocation()
+  return <Navigate to={hash === '#cost-privacy' ? '/faq' : '/how-to-get-tested'} replace />
+}
 
 export default function App() {
   const location = useLocation()
@@ -75,7 +81,9 @@ export default function App() {
             <Route path="research-opportunities" element={<ResearchOpportunities />} />
           </Route>
           <Route path="/check" element={<Check />} />
-          <Route path="/next-steps" element={<NextSteps />} />
+          <Route path="/how-to-get-tested" element={<HowToGetTested />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/next-steps" element={<NextStepsRedirect />} />
           <Route path="/doctor" element={<Navigate to="/doctor/dashboard" replace />} />
           <Route path="/doctor/onboarding" element={<DoctorOnboarding />} />
           <Route path="/doctor/login" element={<DoctorLogin />} />

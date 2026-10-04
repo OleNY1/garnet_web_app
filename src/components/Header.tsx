@@ -7,17 +7,15 @@ import { ThemeToggle } from './ThemeToggle'
 const NAV_LINKS = [
   { label: 'Learn', href: '/learn' },
   { label: 'Genetic Risk Check', href: '/check' },
-  { label: 'FAQ', href: '/next-steps#cost-privacy' },
+  { label: 'How to Get Tested', href: '/how-to-get-tested' },
+  { label: 'FAQ', href: '/faq' },
 ]
 
-const LEARN_MENU = [
-  ...LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
-    label: topic.label,
-    to: topic.to,
-    end: topic.end,
-  })),
-  { label: 'How to get tested', to: '/next-steps', end: false },
-]
+const LEARN_MENU = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
+  label: topic.label,
+  to: topic.to,
+  end: topic.end,
+}))
 
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
   `inline-block rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium transition-all duration-150 hover:scale-105 hover:bg-brand-soft hover:text-ink ${
