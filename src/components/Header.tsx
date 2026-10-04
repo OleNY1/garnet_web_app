@@ -17,13 +17,18 @@ const LEARN_MENU = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
   end: topic.end,
 }))
 
+const hoverLift =
+  'transition-transform duration-150 hover:-translate-y-0.5 hover:scale-105 focus-visible:-translate-y-0.5 focus-visible:scale-105'
+
+const outlineHeaderButton = `items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[0.9rem] font-semibold text-body ${hoverLift}`
+
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-  `inline-block rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium transition-all duration-150 hover:scale-105 hover:bg-brand-soft hover:text-ink ${
+  `inline-block rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium ${hoverLift} ${
     isActive ? 'bg-brand-soft text-ink' : 'text-body'
   }`
 
 const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
-  `block rounded-xl px-4 py-3.5 text-lg font-medium transition-colors hover:bg-brand-soft ${
+  `block rounded-xl px-4 py-3.5 text-lg font-medium ${hoverLift} ${
     isActive ? 'bg-brand-soft text-ink' : 'text-ink'
   }`
 
@@ -91,18 +96,16 @@ function LearnNavItem() {
       <NavLink
         to="/learn"
         end
-        className={navLinkClasses}
+        className={`inline-flex ${outlineHeaderButton}`}
         aria-expanded={open}
         aria-haspopup="true"
         onFocus={openMenu}
       >
-        <span className="inline-flex items-center gap-1">
-          Learn
-          <ChevronDown
-            aria-hidden="true"
-            className={`size-4 transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
-          />
-        </span>
+        Learn
+        <ChevronDown
+          aria-hidden="true"
+          className={`size-4 transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
+        />
       </NavLink>
 
       <div
@@ -120,7 +123,7 @@ function LearnNavItem() {
             role="menuitem"
             onClick={closeMenu}
             onFocus={openMenu}
-            className="block scale-100 rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body transition-all duration-150 hover:scale-[1.03] hover:bg-brand-soft hover:text-ink"
+            className={`block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body ${hoverLift}`}
           >
             {topic.label}
           </NavLink>
@@ -155,19 +158,23 @@ function BrandMark() {
     )
   }
 
+  const brandLinkClasses = `-m-1.5 rounded-2xl p-1.5 ${hoverLift}`
+
   return (
     <div className="flex items-center gap-3">
       <Link
         to="/"
         aria-label="Go to the GARNET welcome page"
-        className="-m-1.5 rounded-2xl p-1.5"
+        title="Welcome page"
+        className={brandLinkClasses}
       >
         {mark}
       </Link>
       <Link
         to="/learn"
         aria-label="Go to Getting started"
-        className="-m-1.5 rounded-2xl p-1.5"
+        title="Getting started"
+        className={brandLinkClasses}
       >
         {wordmark}
       </Link>
@@ -201,7 +208,7 @@ export function Header() {
           </ul>
           <Link
             to="/doctor/dashboard"
-            className="hidden items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[0.9rem] font-semibold text-body transition-colors hover:bg-brand-soft hover:text-ink sm:inline-flex"
+            className={`hidden sm:inline-flex ${outlineHeaderButton}`}
           >
             <Stethoscope aria-hidden="true" className="size-4" />
             For doctors
@@ -213,7 +220,7 @@ export function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-brand-soft lg:hidden"
+            className={`flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-ink lg:hidden ${hoverLift}`}
           >
             {menuOpen ? (
               <X aria-hidden="true" className="size-5.5" />
@@ -242,7 +249,7 @@ export function Header() {
                       to={topic.to}
                       onClick={() => setMenuOpen(false)}
                       className={({ isActive }) =>
-                        `block rounded-lg px-3 py-2.5 text-[1.02rem] font-medium transition-colors hover:bg-brand-soft ${
+                        `block rounded-lg px-3 py-2.5 text-[1.02rem] font-medium ${hoverLift} ${
                           isActive ? 'bg-brand-soft text-ink' : 'text-muted'
                         }`
                       }
@@ -264,7 +271,7 @@ export function Header() {
               <Link
                 to="/doctor/dashboard"
                 onClick={() => setMenuOpen(false)}
-                className="flex items-center gap-2 rounded-xl px-4 py-3.5 text-lg font-medium text-body transition-colors hover:bg-brand-soft"
+                className={`flex items-center gap-2 rounded-xl px-4 py-3.5 text-lg font-medium text-body ${hoverLift}`}
               >
                 <Stethoscope aria-hidden="true" className="size-5" />
                 For doctors
