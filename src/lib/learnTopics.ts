@@ -1,7 +1,9 @@
 import {
   BookOpen,
+  CircleHelp,
   Dna,
   FlaskConical,
+  Globe,
   HandHeart,
   HeartHandshake,
   Layers,
@@ -86,6 +88,17 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'Testing can help identify relatives who did not inherit the genetic cause.',
   },
   {
+    label: 'APOL1',
+    to: '/learn/apol1',
+    end: false,
+    icon: Globe,
+    tint: 'plum',
+    eyebrow: 'APOL1',
+    title: 'APOL1 and ancestry-linked testing',
+    intro:
+      'For some people with recent West African ancestry, doctors may discuss testing a gene called APOL1.',
+  },
+  {
     label: 'How testing works',
     to: '/learn/testing-basics',
     end: false,
@@ -105,6 +118,17 @@ export const LEARN_TOPICS: LearnTopic[] = [
     eyebrow: 'Types of tests',
     title: 'Different tests look at different amounts of DNA',
     intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
+  },
+  {
+    label: 'Uncertain results / VUS',
+    to: '/learn/uncertain-results',
+    end: false,
+    icon: CircleHelp,
+    tint: 'accent',
+    eyebrow: 'Uncertain results / VUS',
+    title: 'When a result comes back uncertain',
+    intro:
+      'Sometimes a test finds a change that has not yet been classified as clearly harmful or clearly harmless.',
   },
   {
     label: 'Signs testing may help',

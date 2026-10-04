@@ -1,6 +1,7 @@
 import { HeartHandshake, Search, Stethoscope } from 'lucide-react'
 import { Cite } from '../../components/Cite'
 import { FlowDiagram } from '../../components/learn/FlowDiagram'
+import { LearnLink } from '../../components/learn/LearnLink'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 
@@ -55,17 +56,10 @@ export function KidneyDonation() {
             negative result reduces concern but doesn't always rule out risk completely.
             <Cite n={1} />
           </p>
-
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
-            A note on ancestry-linked testing
-          </h3>
           <p>
-            For donor candidates with recent West African ancestry, doctors may also raise the
-            option of testing a gene called APOL1, which is linked to a higher risk of kidney
-            disease in this population. Having a higher-risk APOL1 result doesn't automatically
-            rule someone out as a donor — it's a factor to weigh together with the transplant team,
-            not a mandatory test or an automatic disqualifier.
-            <Cite n={1} />
+            Donor candidates with recent West African ancestry may also be offered testing of a
+            gene called APOL1. See <LearnLink to="/learn/apol1">APOL1</LearnLink> for what that
+            result can and cannot mean for donation.
           </p>
         </div>
 

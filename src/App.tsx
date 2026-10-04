@@ -4,6 +4,7 @@ import { Header } from './components/Header'
 import { ScrollToTop } from './components/ScrollToTop'
 import { Check } from './pages/Check'
 import { Home } from './pages/Home'
+import { Apol1 } from './pages/learn/Apol1'
 import { FamilySharing } from './pages/learn/FamilySharing'
 import { DiscoverWhy } from './pages/learn/DiscoverWhy'
 import { GeneticCounselors } from './pages/learn/GeneticCounselors'
@@ -17,6 +18,7 @@ import { SignsTestingMayHelp } from './pages/learn/SignsTestingMayHelp'
 import { SupportGroups } from './pages/learn/SupportGroups'
 import { TestingBasics } from './pages/learn/TestingBasics'
 import { TypesOfTests } from './pages/learn/TypesOfTests'
+import { UncertainResults } from './pages/learn/UncertainResults'
 import { YourRights } from './pages/learn/YourRights'
 import { NextSteps } from './pages/NextSteps'
 import DoctorAssessmentResult from './doctor/pages/AssessmentResult'
@@ -65,8 +67,10 @@ export default function App() {
             <Route path="how-it-helps" element={<Navigate to="/learn/discover-why" replace />} />
             <Route path="family-sharing" element={<FamilySharing />} />
             <Route path="kidney-donation" element={<KidneyDonation />} />
+            <Route path="apol1" element={<Apol1 />} />
             <Route path="your-rights" element={<YourRights />} />
             <Route path="types-of-tests" element={<TypesOfTests />} />
+            <Route path="uncertain-results" element={<UncertainResults />} />
             <Route path="support-groups" element={<SupportGroups />} />
             <Route path="research-opportunities" element={<ResearchOpportunities />} />
           </Route>

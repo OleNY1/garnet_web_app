@@ -1,6 +1,7 @@
 import { Dna, Layers, ScanSearch, TestTube } from 'lucide-react'
 import { Cite } from '../../components/Cite'
 import { FlowDiagram } from '../../components/learn/FlowDiagram'
+import { LearnLink } from '../../components/learn/LearnLink'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 
@@ -33,7 +34,9 @@ export function TypesOfTests() {
             test, and the wider net means they're more likely to turn up genetic changes whose
             relevance isn't fully clear yet. A narrower test is faster and simpler to interpret,
             but only works well when your doctor already has a strong reason to suspect a
-            particular gene.
+            particular gene. See{' '}
+            <LearnLink to="/learn/uncertain-results">Uncertain results / VUS</LearnLink> for what
+            happens when a finding is not yet clearly harmful or clearly harmless.
             <Cite n={1} />
           </p>
 
@@ -46,37 +49,6 @@ export function TypesOfTests() {
             only. Other kidney diseases can be caused by many different genes, and a large panel
             is more effective.
             <Cite n={3} />
-          </p>
-
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
-            When a result comes back "uncertain"
-          </h3>
-          <p>
-            Sometimes a test finds a change in a gene that geneticists do not know whether to
-            classify as clearly harmful or clearly harmless. In those cases, they classify the
-            genetic change as a variant of uncertain significance, or VUS. By current guidelines,
-            a VUS on its own shouldn't be used to make medical decisions. As more people are
-            tested and more research is done, these results are sometimes reclassified later —
-            most often turning out to be harmless, though occasionally they're upgraded to a
-            clear diagnosis.{' '}
-            <a
-              href="https://www.genomeconnect.org/"
-              target="_blank"
-              rel="noreferrer"
-              className="text-brand underline underline-offset-2 hover:text-brand-strong"
-            >
-              GenomeConnect
-            </a>{' '}
-            is an NIH tool that notifies people if their variant is reclassified.
-            <Cite n={1} />
-            <Cite n={2} />
-          </p>
-          <p>
-            People from backgrounds underrepresented in genetic research are more likely to
-            receive an uncertain result — not because their DNA is more unusual, but because there
-            is less existing data available for comparison. That's a gap in the research itself,
-            not a reflection of any one person's results.
-            <Cite n={1} />
           </p>
 
           <h3 className="mt-2 font-display text-xl font-semibold text-ink">
