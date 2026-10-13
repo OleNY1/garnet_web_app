@@ -223,3 +223,23 @@
       );
   }
 }
+
+/* Briefly marks the section a search result pointed to. */
+@layer components {
+  .search-target {
+    border-radius: 0.5rem;
+    animation: search-target-fade 2.4s ease-out;
+  }
+
+  @keyframes search-target-fade {
+    0%,
+    40% {
+      background: color-mix(in srgb, var(--brand) 22%, transparent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand) 22%, transparent);
+    }
+    100% {
+      background: transparent;
+      box-shadow: 0 0 0 6px transparent;
+    }
+  }
+}

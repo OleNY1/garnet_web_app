@@ -2,6 +2,7 @@ import { ChevronDown, Menu, Stethoscope, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { LEARN_TOPICS } from '../lib/learnTopics'
+import { SiteSearch } from './SiteSearch'
 import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
@@ -213,6 +214,9 @@ export function Header() {
             <Stethoscope aria-hidden="true" className="size-4" />
             For doctors
           </Link>
+          <SiteSearch
+            className={`flex h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full border border-line bg-surface text-[0.95rem] font-semibold text-ink xl:px-4 ${hoverLift}`}
+          />
           <ThemeToggle />
           <button
             type="button"
