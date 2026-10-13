@@ -1,0 +1,779 @@
+From 2619ce75426e92ef65aab54cc2d24ddf1f3251c6 Mon Sep 17 00:00:00 2001
+From: Quinby Janes <qcj2000@columbia.edu>
+Date: Tue, 13 Oct 2026 16:45:02 -0400
+Subject: [PATCH] Reorder the Learn menu and split Discover why, per Hila's
+ suggestions
+
+- Discover why is split in two:
+  - How common? (/learn/how-common): the "how often" statistics, up to
+    "...not replace the conversation with your doctor about what's next."
+  - How can genetic testing help? (/learn/how-testing-helps): everything
+    below, ending with cards for its sub-pages.
+  Old /learn/discover-why and /learn/how-it-helps addresses redirect.
+- Learn menu order: How common?; How can genetic testing help? (sub-pages
+  Guide care, Help your family, Support living donor decisions); Signs
+  testing may help; How testing works (sub-page Types of tests); Genetic
+  counselors; Your rights & choices; APOL1; Understanding your genetic
+  test report; Sharing with family; Find a support group; Explore
+  research opportunities.
+- Sub-pages are indented under their parent in the header and mobile
+  menus, and their banner has a link back to the parent page.
+- "Uncertain results / VUS" is now labeled "Understanding your genetic
+  test report" in menus and cards.
+- Getting started cards show the top-level pages only, in the new order.
+- Signs testing may help: two sentences linking to the Genetic Risk Check
+  and How to get tested.
+- FAQ: new "How common is a genetic cause of kidney disease?" question;
+  "Why would I get genetic testing?" now points to How can genetic
+  testing help?. Search index refreshed.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_012p2rj8y1uznXf4UStSfSh8
+---
+ src/App.tsx                                   |  11 +-
+ src/components/Header.tsx                     |  16 ++-
+ src/components/PageHero.tsx                   |  14 +++
+ src/components/learn/SubtopicCards.tsx        |  35 ++++++
+ src/lib/learnTopics.ts                        | 112 +++++++++++-------
+ src/lib/searchIndex.generated.ts              |  37 ++++--
+ src/pages/Faq.tsx                             |   7 +-
+ src/pages/learn/HowCommon.tsx                 |  47 ++++++++
+ .../{DiscoverWhy.tsx => HowTestingHelps.tsx}  |  57 +++------
+ src/pages/learn/LearnLayout.tsx               |   2 +
+ src/pages/learn/Overview.tsx                  |   4 +-
+ src/pages/learn/SignsTestingMayHelp.tsx       |  12 ++
+ src/pages/learn/TestingBasics.tsx             |   3 +
+ 13 files changed, 253 insertions(+), 104 deletions(-)
+ create mode 100644 src/components/learn/SubtopicCards.tsx
+ create mode 100644 src/pages/learn/HowCommon.tsx
+ rename src/pages/learn/{DiscoverWhy.tsx => HowTestingHelps.tsx} (61%)
+
+diff --git a/src/App.tsx b/src/App.tsx
+index 957b91b..ee03c1e 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -6,10 +6,11 @@ import { Check } from './pages/Check'
+ import { Home } from './pages/Home'
+ import { Apol1 } from './pages/learn/Apol1'
+ import { FamilySharing } from './pages/learn/FamilySharing'
+-import { DiscoverWhy } from './pages/learn/DiscoverWhy'
+ import { GeneticCounselors } from './pages/learn/GeneticCounselors'
+ import { GuideCare } from './pages/learn/GuideCare'
+ import { HelpYourFamily } from './pages/learn/HelpYourFamily'
++import { HowCommon } from './pages/learn/HowCommon'
++import { HowTestingHelps } from './pages/learn/HowTestingHelps'
+ import { KidneyDonation } from './pages/learn/KidneyDonation'
+ import { LearnLayout } from './pages/learn/LearnLayout'
+ import { Overview } from './pages/learn/Overview'
+@@ -65,12 +66,14 @@ export default function App() {
+             <Route index element={<Overview />} />
+             <Route path="testing-basics" element={<TestingBasics />} />
+             <Route path="signs-testing-may-help" element={<SignsTestingMayHelp />} />
+-            <Route path="discover-why" element={<DiscoverWhy />} />
++            <Route path="how-common" element={<HowCommon />} />
++            <Route path="how-testing-helps" element={<HowTestingHelps />} />
+             <Route path="guide-care" element={<GuideCare />} />
+             <Route path="help-your-family" element={<HelpYourFamily />} />
+             <Route path="genetic-counselors" element={<GeneticCounselors />} />
+-            {/* Old address for the page that was split into Discover why and Guide care. */}
+-            <Route path="how-it-helps" element={<Navigate to="/learn/discover-why" replace />} />
++            {/* Old addresses: Discover why was split into How common? and How can genetic testing help?. */}
++            <Route path="discover-why" element={<Navigate to="/learn/how-common" replace />} />
++            <Route path="how-it-helps" element={<Navigate to="/learn/how-testing-helps" replace />} />
+             <Route path="family-sharing" element={<FamilySharing />} />
+             <Route path="kidney-donation" element={<KidneyDonation />} />
+             <Route path="apol1" element={<Apol1 />} />
+diff --git a/src/components/Header.tsx b/src/components/Header.tsx
+index 299303a..f5281c0 100644
+--- a/src/components/Header.tsx
++++ b/src/components/Header.tsx
+@@ -12,10 +12,12 @@ const NAV_LINKS = [
+   { label: 'FAQ', href: '/faq' },
+ ]
+ 
++/* Sub-pages (e.g. Guide care under How can genetic testing help?) are indented under their parent. */
+ const LEARN_MENU = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
+   label: topic.label,
+   to: topic.to,
+   end: topic.end,
++  sub: Boolean(topic.parent),
+ }))
+ 
+ const hoverLift =
+@@ -112,7 +114,7 @@ function LearnNavItem() {
+       <div
+         role="menu"
+         aria-label="Learn topics"
+-        className={`absolute top-full left-0 z-30 mt-1.5 w-72 origin-top-left rounded-2xl border border-line bg-surface p-2 shadow-lift transition-all duration-150 ${
++        className={`absolute top-full left-0 z-30 mt-1.5 max-h-[calc(100dvh-6rem)] w-80 origin-top-left overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-lift transition-all duration-150 ${
+           open ? 'pointer-events-auto scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
+         }`}
+       >
+@@ -124,7 +126,11 @@ function LearnNavItem() {
+             role="menuitem"
+             onClick={closeMenu}
+             onFocus={openMenu}
+-            className={`block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body ${hoverLift}`}
++            className={
++              topic.sub
++                ? `ml-5 block rounded-r-xl border-l-2 border-line py-2 pr-3.5 pl-3 text-[0.9rem] font-medium text-muted ${hoverLift}`
++                : `block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body ${hoverLift}`
++            }
+           >
+             {topic.label}
+           </NavLink>
+@@ -253,9 +259,9 @@ export function Header() {
+                       to={topic.to}
+                       onClick={() => setMenuOpen(false)}
+                       className={({ isActive }) =>
+-                        `block rounded-lg px-3 py-2.5 text-[1.02rem] font-medium ${hoverLift} ${
+-                          isActive ? 'bg-brand-soft text-ink' : 'text-muted'
+-                        }`
++                        `block rounded-lg py-2.5 pr-3 font-medium ${hoverLift} ${
++                          topic.sub ? 'ml-4 rounded-l-none border-l-2 border-line pl-3 text-[0.95rem]' : 'pl-3 text-[1.02rem]'
++                        } ${isActive ? 'bg-brand-soft text-ink' : 'text-muted'}`
+                       }
+                     >
+                       {topic.label}
+diff --git a/src/components/PageHero.tsx b/src/components/PageHero.tsx
+index 58cc221..fb829af 100644
+--- a/src/components/PageHero.tsx
++++ b/src/components/PageHero.tsx
+@@ -1,4 +1,6 @@
++import { ChevronLeft } from 'lucide-react'
+ import type { LucideIcon } from 'lucide-react'
++import { Link } from 'react-router-dom'
+ import type { Tint } from './IconChip'
+ import { IconChip } from './IconChip'
+ 
+@@ -25,18 +27,30 @@ export function PageHero({
+   eyebrow,
+   title,
+   intro,
++  parent,
+ }: {
+   icon: LucideIcon
+   tint: Tint
+   eyebrow: string
+   title: string
+   intro: string
++  /** For sub-pages: a link back to the page they sit under. */
++  parent?: { to: string; label: string }
+ }) {
+   return (
+     <section className={`${washClasses[tint]} border-b border-line`}>
+       <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-5 px-5 py-7 sm:px-8 sm:py-10">
+         <IconChip icon={icon} tint={tint} className="size-14" />
+         <div>
++          {parent ? (
++            <Link
++              to={parent.to}
++              className="mb-3 inline-flex items-center gap-1 text-[0.95rem] font-semibold text-muted underline-offset-2 hover:text-brand hover:underline"
++            >
++              <ChevronLeft aria-hidden="true" className="size-4" />
++              {parent.label}
++            </Link>
++          ) : null}
+           <p
+             className={`mb-2 text-[0.95rem] font-bold tracking-[0.14em] uppercase ${eyebrowClasses[tint]}`}
+           >
+diff --git a/src/components/learn/SubtopicCards.tsx b/src/components/learn/SubtopicCards.tsx
+new file mode 100644
+index 0000000..33c0bf5
+--- /dev/null
++++ b/src/components/learn/SubtopicCards.tsx
+@@ -0,0 +1,35 @@
++import { ArrowRight } from 'lucide-react'
++import { Link } from 'react-router-dom'
++import { subtopicsOf } from '../../lib/learnTopics'
++import { IconChip } from '../IconChip'
++
++/** Cards linking a Learn page to the sub-pages listed under it in the Learn menu. */
++export function SubtopicCards({ parent, title = 'Read more on this topic' }: { parent: string; title?: string }) {
++  const topics = subtopicsOf(parent)
++  if (!topics.length) return null
++
++  return (
++    <div className="mx-auto mt-12 max-w-3xl">
++      <h2 className="font-display text-[1.5rem] font-semibold text-ink sm:text-[1.7rem]">{title}</h2>
++      <div className="mt-5 grid gap-4 sm:grid-cols-2">
++        {topics.map((topic) => (
++          <Link
++            key={topic.to}
++            to={topic.to}
++            className="group flex flex-col rounded-3xl border border-line bg-surface p-6 shadow-soft transition-colors duration-150 hover:border-brand/60"
++          >
++            <IconChip icon={topic.icon} tint={topic.tint} />
++            <span className="mt-4 text-[1.15rem] leading-snug font-semibold text-ink group-hover:text-brand-strong">
++              {topic.label}
++            </span>
++            <span className="mt-2 text-[1rem] leading-relaxed text-body">{topic.intro}</span>
++            <span className="mt-auto inline-flex items-center gap-1 pt-4 text-[0.95rem] font-semibold text-brand">
++              Read more
++              <ArrowRight aria-hidden="true" className="size-4" />
++            </span>
++          </Link>
++        ))}
++      </div>
++    </div>
++  )
++}
+diff --git a/src/lib/learnTopics.ts b/src/lib/learnTopics.ts
+index 16d5e54..f39852f 100644
+--- a/src/lib/learnTopics.ts
++++ b/src/lib/learnTopics.ts
+@@ -8,6 +8,7 @@ import {
+   HeartHandshake,
+   Layers,
+   Lightbulb,
++  Percent,
+   MessagesSquare,
+   Search,
+   ShieldCheck,
+@@ -22,6 +23,8 @@ export type LearnTopic = {
+   label: string
+   to: string
+   end: boolean
++  /** Set on sub-pages: the page they sit under in the Learn menu. */
++  parent?: string
+   icon: LucideIcon
+   tint: Tint
+   eyebrow: string
+@@ -46,20 +49,30 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     intro: 'Guides to genetic testing for kidney disease, based on published research.',
+   },
+   {
+-    label: 'Discover why',
+-    to: '/learn/discover-why',
++    label: 'How common?',
++    to: '/learn/how-common',
++    end: false,
++    icon: Percent,
++    tint: 'brand',
++    eyebrow: 'How common?',
++    title: 'How common is a genetic cause of kidney disease?',
++    intro: 'A genetic cause is behind some kidney disease, in adults and in children.',
++  },
++  {
++    label: 'How can genetic testing help?',
++    to: '/learn/how-testing-helps',
+     end: false,
+     icon: Lightbulb,
+     tint: 'brand',
+-    eyebrow: 'Discover why',
+-    title: 'Discover why your kidney disease happened',
+-    intro:
+-      'A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis.',
++    eyebrow: 'How can genetic testing help?',
++    title: 'How can genetic testing help?',
++    intro: 'Finding a genetic cause can confirm or correct a diagnosis, guide your care, and help your family.',
+   },
+   {
+     label: 'Guide care',
+     to: '/learn/guide-care',
+     end: false,
++    parent: '/learn/how-testing-helps',
+     icon: Stethoscope,
+     tint: 'accent',
+     eyebrow: 'Guide care',
+@@ -70,6 +83,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     label: 'Help your family',
+     to: '/learn/help-your-family',
+     end: false,
++    parent: '/learn/how-testing-helps',
+     icon: Users,
+     tint: 'plum',
+     eyebrow: 'Help your family',
+@@ -81,6 +95,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     label: 'Support living donor decisions',
+     to: '/learn/kidney-donation',
+     end: false,
++    parent: '/learn/how-testing-helps',
+     icon: HandHeart,
+     tint: 'plum',
+     eyebrow: 'Support living donor decisions',
+@@ -88,14 +103,15 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     intro: 'Testing can help identify relatives who did not inherit the genetic cause.',
+   },
+   {
+-    label: 'APOL1',
+-    to: '/learn/apol1',
++    label: 'Signs testing may help',
++    to: '/learn/signs-testing-may-help',
+     end: false,
+-    icon: Globe,
+-    tint: 'plum',
+-    eyebrow: 'APOL1',
+-    title: 'APOL1 risk factor',
+-    intro: 'Increased risk of having APOL1-Mediated Kidney Disease (AMKD)',
++    icon: Search,
++    tint: 'brand',
++    eyebrow: 'Signs testing may help',
++    title: 'Signs testing may help',
++    intro:
++      'These signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
+   },
+   {
+     label: 'How testing works',
+@@ -112,43 +128,13 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     label: 'Types of tests',
+     to: '/learn/types-of-tests',
+     end: false,
++    parent: '/learn/testing-basics',
+     icon: Layers,
+     tint: 'accent',
+     eyebrow: 'Types of tests',
+     title: 'Different tests look at different amounts of DNA',
+     intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
+   },
+-  {
+-    label: 'Uncertain results / VUS',
+-    to: '/learn/uncertain-results',
+-    end: false,
+-    icon: CircleHelp,
+-    tint: 'accent',
+-    eyebrow: 'Uncertain results / VUS',
+-    title: 'Understanding your genetic test report',
+-    intro: 'What about Variants of Uncertain Significance (VUS)?',
+-  },
+-  {
+-    label: 'Signs testing may help',
+-    to: '/learn/signs-testing-may-help',
+-    end: false,
+-    icon: Search,
+-    tint: 'brand',
+-    eyebrow: 'Signs testing may help',
+-    title: 'Signs testing may help',
+-    intro:
+-      'These signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
+-  },
+-  {
+-    label: 'Sharing with family',
+-    to: '/learn/family-sharing',
+-    end: false,
+-    icon: Dna,
+-    tint: 'accent',
+-    eyebrow: 'Sharing with family',
+-    title: 'Why sharing your result with family matters',
+-    intro: 'A result about you is sometimes a result about your relatives, too.',
+-  },
+   {
+     label: 'Genetic counselors',
+     to: '/learn/genetic-counselors',
+@@ -171,6 +157,36 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     intro:
+       "It's normal to wonder who can see a result and what happens to your DNA afterward.",
+   },
++  {
++    label: 'APOL1',
++    to: '/learn/apol1',
++    end: false,
++    icon: Globe,
++    tint: 'plum',
++    eyebrow: 'APOL1',
++    title: 'APOL1 risk factor',
++    intro: 'Increased risk of having APOL1-Mediated Kidney Disease (AMKD)',
++  },
++  {
++    label: 'Understanding your genetic test report',
++    to: '/learn/uncertain-results',
++    end: false,
++    icon: CircleHelp,
++    tint: 'accent',
++    eyebrow: 'Understanding your genetic test report',
++    title: 'Understanding your genetic test report',
++    intro: 'What about Variants of Uncertain Significance (VUS)?',
++  },
++  {
++    label: 'Sharing with family',
++    to: '/learn/family-sharing',
++    end: false,
++    icon: Dna,
++    tint: 'accent',
++    eyebrow: 'Sharing with family',
++    title: 'Why sharing your result with family matters',
++    intro: 'A result about you is sometimes a result about your relatives, too.',
++  },
+   {
+     label: 'Find a support group',
+     to: '/learn/support-groups',
+@@ -192,3 +208,11 @@ export const LEARN_TOPICS: LearnTopic[] = [
+     intro: 'See whether a relevant clinical trial or research study is currently open to join.',
+   },
+ ]
++
++/** Top-level Learn pages (excluding Getting started), in menu order. */
++export const LEARN_MAIN_TOPICS = LEARN_TOPICS.filter((topic) => !topic.end && !topic.parent)
++
++/** Sub-pages listed under a Learn page, in menu order. */
++export function subtopicsOf(path: string): LearnTopic[] {
++  return LEARN_TOPICS.filter((topic) => topic.parent === path)
++}
+diff --git a/src/lib/searchIndex.generated.ts b/src/lib/searchIndex.generated.ts
+index d11a413..7176e16 100644
+--- a/src/lib/searchIndex.generated.ts
++++ b/src/lib/searchIndex.generated.ts
+@@ -27,21 +27,28 @@ export const SEARCH_INDEX: IndexedPage[] = [
+     ]
+   },
+   {
+-    "path": "/learn/discover-why",
+-    "title": "Discover why your kidney disease happened",
+-    "intro": "A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis.",
++    "path": "/learn/how-common",
++    "title": "How common is a genetic cause of kidney disease?",
++    "intro": "A genetic cause is behind some kidney disease, in adults and in children.",
+     "sections": [
+       {
+         "heading": "How often a genetic cause is behind kidney disease",
+-        "text": "Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children.[1][2][3] 10–15% of kidney disease in adults has a genetic cause 7 in 10 cases in some groups of children have a genetic cause 1 in 5 adults with CKD in one study had a positive genetic finding A genetic result is one more piece of information for your care team, alongside your symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the conversation with your doctor about what's next.[2]"
+-      },
++        "text": "Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children.[1][2][3] 10–15% of kidney disease in adults has a genetic cause 7 in 10 cases in some groups of children have a genetic cause 1 in 5 adults with CKD in one study had a positive genetic finding A genetic result is one more piece of information for your care team, alongside your symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the conversation with your doctor about what's next.[2] See How can genetic testing help? for what finding a genetic cause can change."
++      }
++    ]
++  },
++  {
++    "path": "/learn/how-testing-helps",
++    "title": "How can genetic testing help?",
++    "intro": "Finding a genetic cause can confirm or correct a diagnosis, guide your care, and help your family.",
++    "sections": [
+       {
+         "heading": "Confirm or correct a diagnosis",
+-        "text": "In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5 people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly half of those people, the result gave them a brand-new diagnosis or corrected an earlier one.[2] A positive result also changed a doctor's estimate of a patient's long-term outlook for more than half of people who received one.[4]"
++        "text": "In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5 people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly half of those people, the result gave them a brand-new diagnosis or corrected an earlier one.[1] A positive result also changed a doctor's estimate of a patient's long-term outlook for more than half of people who received one.[2]"
+       },
+       {
+         "heading": "Change treatment",
+-        "text": "In the same study, a positive result changed how doctors managed care for about 9 in 10 patients, including an actual change in treatment plan for roughly a third. A follow-up study that tracked patients for a full year found genetic testing was reported helpful, or led to a change in management, for 86% of people with a positive result — and still helped 42% of people with a negative result, often by ruling other causes out.[2][4] See Guide care for examples of treatments that depend on knowing the exact genetic cause."
++        "text": "In the same study, a positive result changed how doctors managed care for about 9 in 10 patients, including an actual change in treatment plan for roughly a third. A follow-up study that tracked patients for a full year found genetic testing was reported helpful, or led to a change in management, for 86% of people with a positive result — and still helped 42% of people with a negative result, often by ruling other causes out.[1][2] See Guide care for examples of treatments that depend on knowing the exact genetic cause."
+       },
+       {
+         "heading": "Avoid a biopsy",
+@@ -50,6 +57,10 @@ export const SEARCH_INDEX: IndexedPage[] = [
+       {
+         "heading": "A genetic diagnosis can also:",
+         "text": "Help your family members be diagnosed and treated early — Help your family Help you make decisions about family planning — Help your family Help guide kidney donation — Support living donor decisions Lead to a referral to other specialists for other medical problems caused by the same genetic disease"
++      },
++      {
++        "heading": "Read more on this topic",
++        "text": ""
+       }
+     ]
+   },
+@@ -133,6 +144,10 @@ export const SEARCH_INDEX: IndexedPage[] = [
+       {
+         "heading": "What the tests look for",
+         "text": "For most people, testing means a quick cheek swab — not a blood draw or a procedure.[1] Tests also differ in how much DNA they check: some look at a single gene your doctor already suspects causes your kidney disease, and others look at nearly all of your genes. See Types of tests for what each option involves, and how doctors weigh cost, turnaround time, and the chance of an uncertain result when choosing between them. New to DNA and genes? MedlinePlus, from the U.S. National Library of Medicine, has a short plain-language explainer."
++      },
++      {
++        "heading": "Read more on this topic",
++        "text": ""
+       }
+     ]
+   },
+@@ -181,7 +196,7 @@ export const SEARCH_INDEX: IndexedPage[] = [
+     "sections": [
+       {
+         "heading": "When doctors are more likely to suggest testing",
+-        "text": "These signs make it more likely that testing will find a genetic cause. They do not guarantee a result. You can still benefit from testing if none of these apply. Doctors are more likely to suggest testing when someone has:[1] Kidney disease that started before the age of 50, got worse quickly, or is very serious Other parts of the body also affected, not only because the kidneys are failing Kidney disease in the family A type of kidney disease that often has a genetic cause, such as cysts in the kidneys, certain kinds of scarring, or kidney disease with no clear cause Clues from a kidney biopsy or blood tests that point to a known genetic condition"
++        "text": "These signs make it more likely that testing will find a genetic cause. They do not guarantee a result. You can still benefit from testing if none of these apply. Doctors are more likely to suggest testing when someone has:[1] Kidney disease that started before the age of 50, got worse quickly, or is very serious Other parts of the body also affected, not only because the kidneys are failing Kidney disease in the family A type of kidney disease that often has a genetic cause, such as cysts in the kidneys, certain kinds of scarring, or kidney disease with no clear cause Clues from a kidney biopsy or blood tests that point to a known genetic condition To see how these signs apply to you, take the Genetic Risk Check and share your result with your doctor. When you are ready, How to get tested explains how to start, from talking with your doctor to cost and insurance."
+       }
+     ]
+   },
+@@ -339,9 +354,13 @@ export const SEARCH_INDEX: IndexedPage[] = [
+         "heading": "About genetic testing",
+         "text": ""
+       },
++      {
++        "heading": "How common is a genetic cause of kidney disease?",
++        "text": "Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children."
++      },
+       {
+         "heading": "Why would I get genetic testing for kidney disease?",
+-        "text": "A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis."
++        "text": "Finding a genetic cause can confirm or correct a diagnosis, guide your care, and help your family."
+       },
+       {
+         "heading": "How do I know if testing might find something?",
+diff --git a/src/pages/Faq.tsx b/src/pages/Faq.tsx
+index 746d173..60a23a2 100644
+--- a/src/pages/Faq.tsx
++++ b/src/pages/Faq.tsx
+@@ -106,7 +106,12 @@ const FAQ_GROUPS: Array<{ id: string; title: string; items: FaqItem[] }> = [
+     id: 'about-testing',
+     title: 'About genetic testing',
+     items: [
+-      learnQuestion('/learn/discover-why', 'Why would I get genetic testing for kidney disease?'),
++      learnQuestion(
++        '/learn/how-common',
++        'How common is a genetic cause of kidney disease?',
++        'Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children.',
++      ),
++      learnQuestion('/learn/how-testing-helps', 'Why would I get genetic testing for kidney disease?'),
+       learnQuestion(
+         '/learn/signs-testing-may-help',
+         'How do I know if testing might find something?',
+diff --git a/src/pages/learn/HowCommon.tsx b/src/pages/learn/HowCommon.tsx
+new file mode 100644
+index 0000000..495f46d
+--- /dev/null
++++ b/src/pages/learn/HowCommon.tsx
+@@ -0,0 +1,47 @@
++import { Cite } from '../../components/Cite'
++import { StatGrid } from '../../components/learn/StatGrid'
++import { LearnLink } from '../../components/learn/LearnLink'
++import { Section } from '../../components/Section'
++import { Sources } from '../../components/Sources'
++import { numbered } from '../../lib/citations'
++
++const IMPACT_STATS = [
++  { value: '10–15%', label: 'of kidney disease in adults has a genetic cause' },
++  { value: '7 in 10', label: 'cases in some groups of children have a genetic cause' },
++  { value: '1 in 5', label: 'adults with CKD in one study had a positive genetic finding' },
++]
++
++/** Top half of the former "Discover why" page: how often a genetic cause is found. */
++export function HowCommon() {
++  return (
++    <>
++      <Section id="how-common" tone="wash" title="How often a genetic cause is behind kidney disease">
++        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
++          <p>
++            Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults,
++            and as many as 7 in 10 cases in some groups of children.
++            <Cite n={1} />
++            <Cite n={2} />
++            <Cite n={3} />
++          </p>
++
++          <StatGrid tint="brand" stats={IMPACT_STATS} />
++
++          <p>
++            A genetic result is one more piece of information for your care team, alongside your
++            symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
++            conversation with your doctor about what's next.
++            <Cite n={2} />
++          </p>
++
++          <p>
++            See <LearnLink to="/learn/how-testing-helps">How can genetic testing help?</LearnLink> for what
++            finding a genetic cause can change.
++          </p>
++        </div>
++
++        <Sources sources={numbered('groopman2019', 'dahl2023', 'franceschini2024')} />
++      </Section>
++    </>
++  )
++}
+diff --git a/src/pages/learn/DiscoverWhy.tsx b/src/pages/learn/HowTestingHelps.tsx
+similarity index 61%
+rename from src/pages/learn/DiscoverWhy.tsx
+rename to src/pages/learn/HowTestingHelps.tsx
+index e009da9..ac01d90 100644
+--- a/src/pages/learn/DiscoverWhy.tsx
++++ b/src/pages/learn/HowTestingHelps.tsx
+@@ -1,83 +1,60 @@
+ import { Cite } from '../../components/Cite'
+ import { LearnLink } from '../../components/learn/LearnLink'
+-import { StatGrid } from '../../components/learn/StatGrid'
++import { SubtopicCards } from '../../components/learn/SubtopicCards'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ import { numbered } from '../../lib/citations'
+ 
+-const IMPACT_STATS = [
+-  { value: '10–15%', label: 'of kidney disease in adults has a genetic cause' },
+-  { value: '7 in 10', label: 'cases in some groups of children have a genetic cause' },
+-  { value: '1 in 5', label: 'adults with CKD in one study had a positive genetic finding' },
+-]
+-
+ /**
+- * First half of the former "How genetic testing helps" page: why a genetic
+- * cause matters and what finding it can tell you. The treatment half lives
+- * on Guide care.
++ * Bottom half of the former "Discover why" page: what finding a genetic
++ * cause can change. Guide care, Help your family and Support living donor
++ * decisions sit under this page in the Learn menu.
+  */
+-export function DiscoverWhy() {
++export function HowTestingHelps() {
+   return (
+     <>
+-      <Section id="discover-why" tone="wash" title="How often a genetic cause is behind kidney disease">
++      <Section id="how-testing-helps" tone="wash">
+         <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+-          <p>
+-            Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults,
+-            and as many as 7 in 10 cases in some groups of children.
+-            <Cite n={1} />
+-            <Cite n={2} />
+-            <Cite n={3} />
+-          </p>
+-
+-          <StatGrid tint="brand" stats={IMPACT_STATS} />
+-
+-          <p>
+-            A genetic result is one more piece of information for your care team, alongside your
+-            symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the
+-            conversation with your doctor about what's next.
+-            <Cite n={2} />
+-          </p>
+-
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++          <h2 className="font-display text-xl font-semibold text-ink">
+             Confirm or correct a diagnosis
+-          </h3>
++          </h2>
+           <p>
+             In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5
+             people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly
+             half of those people, the result gave them a brand-new diagnosis or corrected an
+             earlier one.
+-            <Cite n={2} />
++            <Cite n={1} />
+           </p>
+           <p>
+             A positive result also changed a doctor's estimate of a patient's long-term outlook for
+             more than half of people who received one.
+-            <Cite n={4} />
++            <Cite n={2} />
+           </p>
+ 
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Change treatment</h3>
++          <h2 className="mt-2 font-display text-xl font-semibold text-ink">Change treatment</h2>
+           <p>
+             In the same study, a positive result changed how doctors managed care for about 9 in 10
+             patients, including an actual change in treatment plan for roughly a third. A follow-up
+             study that tracked patients for a full year found genetic testing was reported helpful,
+             or led to a change in management, for 86% of people with a positive result — and still
+             helped 42% of people with a negative result, often by ruling other causes out.
++            <Cite n={1} />
+             <Cite n={2} />
+-            <Cite n={4} />
+           </p>
+           <p>
+             See <LearnLink to="/learn/guide-care">Guide care</LearnLink> for examples of treatments
+             that depend on knowing the exact genetic cause.
+           </p>
+ 
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Avoid a biopsy</h3>
++          <h2 className="mt-2 font-display text-xl font-semibold text-ink">Avoid a biopsy</h2>
+           <p>
+             When a genetic test finds the cause, some people may be able to avoid an invasive test
+             like a kidney biopsy.
+           </p>
+ 
+-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
++          <h2 className="mt-2 font-display text-xl font-semibold text-ink">
+             A genetic diagnosis can also:
+-          </h3>
++          </h2>
+           <ul className="list-disc space-y-2 pl-6 marker:text-brand">
+             <li>
+               Help your family members be diagnosed and treated early —{' '}
+@@ -98,7 +75,9 @@ export function DiscoverWhy() {
+           </ul>
+         </div>
+ 
+-        <Sources sources={numbered('groopman2019', 'dahl2023', 'franceschini2024', 'chebib2026')} />
++        <SubtopicCards parent="/learn/how-testing-helps" />
++
++        <Sources sources={numbered('dahl2023', 'chebib2026')} />
+       </Section>
+     </>
+   )
+diff --git a/src/pages/learn/LearnLayout.tsx b/src/pages/learn/LearnLayout.tsx
+index 740d7ca..0b2c285 100644
+--- a/src/pages/learn/LearnLayout.tsx
++++ b/src/pages/learn/LearnLayout.tsx
+@@ -14,6 +14,7 @@ export function LearnLayout() {
+     LEARN_TOPICS.find((tab) => (tab.end ? pathname === tab.to : pathname.startsWith(tab.to))) ??
+     LEARN_TOPICS[0]
+   const isGettingStarted = activeTab.end
++  const parentTopic = activeTab.parent ? LEARN_TOPICS.find((tab) => tab.to === activeTab.parent) : undefined
+ 
+   return (
+     <>
+@@ -26,6 +27,7 @@ export function LearnLayout() {
+           eyebrow={activeTab.eyebrow}
+           title={activeTab.title}
+           intro={activeTab.intro}
++          parent={parentTopic ? { to: parentTopic.to, label: parentTopic.label } : undefined}
+         />
+       )}
+ 
+diff --git a/src/pages/learn/Overview.tsx b/src/pages/learn/Overview.tsx
+index f821aac..e6f2410 100644
+--- a/src/pages/learn/Overview.tsx
++++ b/src/pages/learn/Overview.tsx
+@@ -8,7 +8,7 @@ import type { Tint } from '../../components/IconChip'
+ import { IconChip } from '../../components/IconChip'
+ import { Section } from '../../components/Section'
+ import { numbered } from '../../lib/citations'
+-import { LEARN_TOPICS } from '../../lib/learnTopics'
++import { LEARN_MAIN_TOPICS } from '../../lib/learnTopics'
+ 
+ type TopicCardData = {
+   label: string
+@@ -19,7 +19,7 @@ type TopicCardData = {
+ }
+ 
+ const TOPIC_CARDS: TopicCardData[] = [
+-  ...LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
++  ...LEARN_MAIN_TOPICS.map((topic) => ({
+     label: topic.label,
+     to: topic.to,
+     icon: topic.icon,
+diff --git a/src/pages/learn/SignsTestingMayHelp.tsx b/src/pages/learn/SignsTestingMayHelp.tsx
+index bd2c935..cae9e62 100644
+--- a/src/pages/learn/SignsTestingMayHelp.tsx
++++ b/src/pages/learn/SignsTestingMayHelp.tsx
+@@ -1,4 +1,5 @@
+ import { Cite } from '../../components/Cite'
++import { LearnLink } from '../../components/learn/LearnLink'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
+ 
+@@ -36,6 +37,17 @@ export function SignsTestingMayHelp() {
+               <Cite n={2} />
+             </figcaption>
+           </figure>
++
++          <div className="rounded-2xl border border-line bg-surface px-6 py-5 shadow-soft">
++            <p>
++              To see how these signs apply to you, take the{' '}
++              <LearnLink to="/check">Genetic Risk Check</LearnLink> and share your result with your doctor.
++            </p>
++            <p className="mt-3">
++              When you are ready, <LearnLink to="/how-to-get-tested">How to get tested</LearnLink> explains how to
++              start, from talking with your doctor to cost and insurance.
++            </p>
++          </div>
+         </div>
+ 
+         <Sources
+diff --git a/src/pages/learn/TestingBasics.tsx b/src/pages/learn/TestingBasics.tsx
+index e0593ae..161b7df 100644
+--- a/src/pages/learn/TestingBasics.tsx
++++ b/src/pages/learn/TestingBasics.tsx
+@@ -1,6 +1,7 @@
+ import { Cite } from '../../components/Cite'
+ import { Section } from '../../components/Section'
+ import { Sources } from '../../components/Sources'
++import { SubtopicCards } from '../../components/learn/SubtopicCards'
+ import { LearnLink } from '../../components/learn/LearnLink'
+ 
+ export function TestingBasics() {
+@@ -66,6 +67,8 @@ export function TestingBasics() {
+           </p>
+         </div>
+ 
++        <SubtopicCards parent="/learn/testing-basics" />
++
+         <Sources
+           sources={[
+             {
+-- 
+2.43.0
+
