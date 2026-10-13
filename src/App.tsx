@@ -6,10 +6,11 @@ import { Check } from './pages/Check'
 import { Home } from './pages/Home'
 import { Apol1 } from './pages/learn/Apol1'
 import { FamilySharing } from './pages/learn/FamilySharing'
-import { DiscoverWhy } from './pages/learn/DiscoverWhy'
 import { GeneticCounselors } from './pages/learn/GeneticCounselors'
 import { GuideCare } from './pages/learn/GuideCare'
 import { HelpYourFamily } from './pages/learn/HelpYourFamily'
+import { HowCommon } from './pages/learn/HowCommon'
+import { HowTestingHelps } from './pages/learn/HowTestingHelps'
 import { KidneyDonation } from './pages/learn/KidneyDonation'
 import { LearnLayout } from './pages/learn/LearnLayout'
 import { Overview } from './pages/learn/Overview'
@@ -65,12 +66,14 @@ export default function App() {
             <Route index element={<Overview />} />
             <Route path="testing-basics" element={<TestingBasics />} />
             <Route path="signs-testing-may-help" element={<SignsTestingMayHelp />} />
-            <Route path="discover-why" element={<DiscoverWhy />} />
+            <Route path="how-common" element={<HowCommon />} />
+            <Route path="how-testing-helps" element={<HowTestingHelps />} />
             <Route path="guide-care" element={<GuideCare />} />
             <Route path="help-your-family" element={<HelpYourFamily />} />
             <Route path="genetic-counselors" element={<GeneticCounselors />} />
-            {/* Old address for the page that was split into Discover why and Guide care. */}
-            <Route path="how-it-helps" element={<Navigate to="/learn/discover-why" replace />} />
+            {/* Old addresses: Discover why was split into How common? and How can genetic testing help?. */}
+            <Route path="discover-why" element={<Navigate to="/learn/how-common" replace />} />
+            <Route path="how-it-helps" element={<Navigate to="/learn/how-testing-helps" replace />} />
             <Route path="family-sharing" element={<FamilySharing />} />
             <Route path="kidney-donation" element={<KidneyDonation />} />
             <Route path="apol1" element={<Apol1 />} />

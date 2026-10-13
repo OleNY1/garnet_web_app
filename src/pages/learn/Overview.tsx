@@ -8,7 +8,7 @@ import type { Tint } from '../../components/IconChip'
 import { IconChip } from '../../components/IconChip'
 import { Section } from '../../components/Section'
 import { numbered } from '../../lib/citations'
-import { LEARN_TOPICS } from '../../lib/learnTopics'
+import { LEARN_MAIN_TOPICS } from '../../lib/learnTopics'
 
 type TopicCardData = {
   label: string
@@ -19,7 +19,7 @@ type TopicCardData = {
 }
 
 const TOPIC_CARDS: TopicCardData[] = [
-  ...LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
+  ...LEARN_MAIN_TOPICS.map((topic) => ({
     label: topic.label,
     to: topic.to,
     icon: topic.icon,

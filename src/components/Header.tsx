@@ -12,10 +12,12 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '/faq' },
 ]
 
+/* Sub-pages (e.g. Guide care under How can genetic testing help?) are indented under their parent. */
 const LEARN_MENU = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
   label: topic.label,
   to: topic.to,
   end: topic.end,
+  sub: Boolean(topic.parent),
 }))
 
 const hoverLift =
@@ -112,7 +114,7 @@ function LearnNavItem() {
       <div
         role="menu"
         aria-label="Learn topics"
-        className={`absolute top-full left-0 z-30 mt-1.5 w-72 origin-top-left rounded-2xl border border-line bg-surface p-2 shadow-lift transition-all duration-150 ${
+        className={`absolute top-full left-0 z-30 mt-1.5 max-h-[calc(100dvh-6rem)] w-80 origin-top-left overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-lift transition-all duration-150 ${
           open ? 'pointer-events-auto scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
         }`}
       >
@@ -124,7 +126,11 @@ function LearnNavItem() {
             role="menuitem"
             onClick={closeMenu}
             onFocus={openMenu}
-            className={`block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body ${hoverLift}`}
+            className={
+              topic.sub
+                ? `ml-5 block rounded-r-xl border-l-2 border-line py-2 pr-3.5 pl-3 text-[0.9rem] font-medium text-muted ${hoverLift}`
+                : `block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body ${hoverLift}`
+            }
           >
             {topic.label}
           </NavLink>
@@ -253,9 +259,9 @@ export function Header() {
                       to={topic.to}
                       onClick={() => setMenuOpen(false)}
                       className={({ isActive }) =>
-                        `block rounded-lg px-3 py-2.5 text-[1.02rem] font-medium ${hoverLift} ${
-                          isActive ? 'bg-brand-soft text-ink' : 'text-muted'
-                        }`
+                        `block rounded-lg py-2.5 pr-3 font-medium ${hoverLift} ${
+                          topic.sub ? 'ml-4 rounded-l-none border-l-2 border-line pl-3 text-[0.95rem]' : 'pl-3 text-[1.02rem]'
+                        } ${isActive ? 'bg-brand-soft text-ink' : 'text-muted'}`
                       }
                     >
                       {topic.label}

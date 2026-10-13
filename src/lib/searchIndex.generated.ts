@@ -27,21 +27,28 @@ export const SEARCH_INDEX: IndexedPage[] = [
     ]
   },
   {
-    "path": "/learn/discover-why",
-    "title": "Discover why your kidney disease happened",
-    "intro": "A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis.",
+    "path": "/learn/how-common",
+    "title": "How common is a genetic cause of kidney disease?",
+    "intro": "A genetic cause is behind some kidney disease, in adults and in children.",
     "sections": [
       {
         "heading": "How often a genetic cause is behind kidney disease",
-        "text": "Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children.[1][2][3] 10–15% of kidney disease in adults has a genetic cause 7 in 10 cases in some groups of children have a genetic cause 1 in 5 adults with CKD in one study had a positive genetic finding A genetic result is one more piece of information for your care team, alongside your symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the conversation with your doctor about what's next.[2]"
-      },
+        "text": "Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children.[1][2][3] 10–15% of kidney disease in adults has a genetic cause 7 in 10 cases in some groups of children have a genetic cause 1 in 5 adults with CKD in one study had a positive genetic finding A genetic result is one more piece of information for your care team, alongside your symptoms, imaging, and lab work. It's meant to sharpen the picture, not replace the conversation with your doctor about what's next.[2] See How can genetic testing help? for what finding a genetic cause can change."
+      }
+    ]
+  },
+  {
+    "path": "/learn/how-testing-helps",
+    "title": "How can genetic testing help?",
+    "intro": "Finding a genetic cause can confirm or correct a diagnosis, guide your care, and help your family.",
+    "sections": [
       {
         "heading": "Confirm or correct a diagnosis",
-        "text": "In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5 people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly half of those people, the result gave them a brand-new diagnosis or corrected an earlier one.[2] A positive result also changed a doctor's estimate of a patient's long-term outlook for more than half of people who received one.[4]"
+        "text": "In one large study of over 1,600 adults with chronic kidney disease, about 1 in 5 people (20.8%) had a positive genetic finding, spanning 54 different genes. For nearly half of those people, the result gave them a brand-new diagnosis or corrected an earlier one.[1] A positive result also changed a doctor's estimate of a patient's long-term outlook for more than half of people who received one.[2]"
       },
       {
         "heading": "Change treatment",
-        "text": "In the same study, a positive result changed how doctors managed care for about 9 in 10 patients, including an actual change in treatment plan for roughly a third. A follow-up study that tracked patients for a full year found genetic testing was reported helpful, or led to a change in management, for 86% of people with a positive result — and still helped 42% of people with a negative result, often by ruling other causes out.[2][4] See Guide care for examples of treatments that depend on knowing the exact genetic cause."
+        "text": "In the same study, a positive result changed how doctors managed care for about 9 in 10 patients, including an actual change in treatment plan for roughly a third. A follow-up study that tracked patients for a full year found genetic testing was reported helpful, or led to a change in management, for 86% of people with a positive result — and still helped 42% of people with a negative result, often by ruling other causes out.[1][2] See Guide care for examples of treatments that depend on knowing the exact genetic cause."
       },
       {
         "heading": "Avoid a biopsy",
@@ -50,6 +57,10 @@ export const SEARCH_INDEX: IndexedPage[] = [
       {
         "heading": "A genetic diagnosis can also:",
         "text": "Help your family members be diagnosed and treated early — Help your family Help you make decisions about family planning — Help your family Help guide kidney donation — Support living donor decisions Lead to a referral to other specialists for other medical problems caused by the same genetic disease"
+      },
+      {
+        "heading": "Read more on this topic",
+        "text": ""
       }
     ]
   },
@@ -133,6 +144,10 @@ export const SEARCH_INDEX: IndexedPage[] = [
       {
         "heading": "What the tests look for",
         "text": "For most people, testing means a quick cheek swab — not a blood draw or a procedure.[1] Tests also differ in how much DNA they check: some look at a single gene your doctor already suspects causes your kidney disease, and others look at nearly all of your genes. See Types of tests for what each option involves, and how doctors weigh cost, turnaround time, and the chance of an uncertain result when choosing between them. New to DNA and genes? MedlinePlus, from the U.S. National Library of Medicine, has a short plain-language explainer."
+      },
+      {
+        "heading": "Read more on this topic",
+        "text": ""
       }
     ]
   },
@@ -181,7 +196,7 @@ export const SEARCH_INDEX: IndexedPage[] = [
     "sections": [
       {
         "heading": "When doctors are more likely to suggest testing",
-        "text": "These signs make it more likely that testing will find a genetic cause. They do not guarantee a result. You can still benefit from testing if none of these apply. Doctors are more likely to suggest testing when someone has:[1] Kidney disease that started before the age of 50, got worse quickly, or is very serious Other parts of the body also affected, not only because the kidneys are failing Kidney disease in the family A type of kidney disease that often has a genetic cause, such as cysts in the kidneys, certain kinds of scarring, or kidney disease with no clear cause Clues from a kidney biopsy or blood tests that point to a known genetic condition"
+        "text": "These signs make it more likely that testing will find a genetic cause. They do not guarantee a result. You can still benefit from testing if none of these apply. Doctors are more likely to suggest testing when someone has:[1] Kidney disease that started before the age of 50, got worse quickly, or is very serious Other parts of the body also affected, not only because the kidneys are failing Kidney disease in the family A type of kidney disease that often has a genetic cause, such as cysts in the kidneys, certain kinds of scarring, or kidney disease with no clear cause Clues from a kidney biopsy or blood tests that point to a known genetic condition To see how these signs apply to you, take the Genetic Risk Check and share your result with your doctor. When you are ready, How to get tested explains how to start, from talking with your doctor to cost and insurance."
       }
     ]
   },
@@ -340,8 +355,12 @@ export const SEARCH_INDEX: IndexedPage[] = [
         "text": ""
       },
       {
+        "heading": "How common is a genetic cause of kidney disease?",
+        "text": "Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children."
+      },
+      {
         "heading": "Why would I get genetic testing for kidney disease?",
-        "text": "A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis."
+        "text": "Finding a genetic cause can confirm or correct a diagnosis, guide your care, and help your family."
       },
       {
         "heading": "How do I know if testing might find something?",

@@ -1,4 +1,6 @@
+import { ChevronLeft } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import type { Tint } from './IconChip'
 import { IconChip } from './IconChip'
 
@@ -25,18 +27,30 @@ export function PageHero({
   eyebrow,
   title,
   intro,
+  parent,
 }: {
   icon: LucideIcon
   tint: Tint
   eyebrow: string
   title: string
   intro: string
+  /** For sub-pages: a link back to the page they sit under. */
+  parent?: { to: string; label: string }
 }) {
   return (
     <section className={`${washClasses[tint]} border-b border-line`}>
       <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-5 px-5 py-7 sm:px-8 sm:py-10">
         <IconChip icon={icon} tint={tint} className="size-14" />
         <div>
+          {parent ? (
+            <Link
+              to={parent.to}
+              className="mb-3 inline-flex items-center gap-1 text-[0.95rem] font-semibold text-muted underline-offset-2 hover:text-brand hover:underline"
+            >
+              <ChevronLeft aria-hidden="true" className="size-4" />
+              {parent.label}
+            </Link>
+          ) : null}
           <p
             className={`mb-2 text-[0.95rem] font-bold tracking-[0.14em] uppercase ${eyebrowClasses[tint]}`}
           >

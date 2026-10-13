@@ -106,7 +106,12 @@ const FAQ_GROUPS: Array<{ id: string; title: string; items: FaqItem[] }> = [
     id: 'about-testing',
     title: 'About genetic testing',
     items: [
-      learnQuestion('/learn/discover-why', 'Why would I get genetic testing for kidney disease?'),
+      learnQuestion(
+        '/learn/how-common',
+        'How common is a genetic cause of kidney disease?',
+        'Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults, and as many as 7 in 10 cases in some groups of children.',
+      ),
+      learnQuestion('/learn/how-testing-helps', 'Why would I get genetic testing for kidney disease?'),
       learnQuestion(
         '/learn/signs-testing-may-help',
         'How do I know if testing might find something?',

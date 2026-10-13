@@ -14,6 +14,7 @@ export function LearnLayout() {
     LEARN_TOPICS.find((tab) => (tab.end ? pathname === tab.to : pathname.startsWith(tab.to))) ??
     LEARN_TOPICS[0]
   const isGettingStarted = activeTab.end
+  const parentTopic = activeTab.parent ? LEARN_TOPICS.find((tab) => tab.to === activeTab.parent) : undefined
 
   return (
     <>
@@ -26,6 +27,7 @@ export function LearnLayout() {
           eyebrow={activeTab.eyebrow}
           title={activeTab.title}
           intro={activeTab.intro}
+          parent={parentTopic ? { to: parentTopic.to, label: parentTopic.label } : undefined}
         />
       )}
 

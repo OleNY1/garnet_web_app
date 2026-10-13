@@ -8,6 +8,7 @@ import {
   HeartHandshake,
   Layers,
   Lightbulb,
+  Percent,
   MessagesSquare,
   Search,
   ShieldCheck,
@@ -22,6 +23,8 @@ export type LearnTopic = {
   label: string
   to: string
   end: boolean
+  /** Set on sub-pages: the page they sit under in the Learn menu. */
+  parent?: string
   icon: LucideIcon
   tint: Tint
   eyebrow: string
@@ -46,20 +49,30 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'Guides to genetic testing for kidney disease, based on published research.',
   },
   {
-    label: 'Discover why',
-    to: '/learn/discover-why',
+    label: 'How common?',
+    to: '/learn/how-common',
+    end: false,
+    icon: Percent,
+    tint: 'brand',
+    eyebrow: 'How common?',
+    title: 'How common is a genetic cause of kidney disease?',
+    intro: 'A genetic cause is behind some kidney disease, in adults and in children.',
+  },
+  {
+    label: 'How can genetic testing help?',
+    to: '/learn/how-testing-helps',
     end: false,
     icon: Lightbulb,
     tint: 'brand',
-    eyebrow: 'Discover why',
-    title: 'Discover why your kidney disease happened',
-    intro:
-      'A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis.',
+    eyebrow: 'How can genetic testing help?',
+    title: 'How can genetic testing help?',
+    intro: 'Finding a genetic cause can confirm or correct a diagnosis, guide your care, and help your family.',
   },
   {
     label: 'Guide care',
     to: '/learn/guide-care',
     end: false,
+    parent: '/learn/how-testing-helps',
     icon: Stethoscope,
     tint: 'accent',
     eyebrow: 'Guide care',
@@ -70,6 +83,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     label: 'Help your family',
     to: '/learn/help-your-family',
     end: false,
+    parent: '/learn/how-testing-helps',
     icon: Users,
     tint: 'plum',
     eyebrow: 'Help your family',
@@ -81,6 +95,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     label: 'Support living donor decisions',
     to: '/learn/kidney-donation',
     end: false,
+    parent: '/learn/how-testing-helps',
     icon: HandHeart,
     tint: 'plum',
     eyebrow: 'Support living donor decisions',
@@ -88,14 +103,15 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'Testing can help identify relatives who did not inherit the genetic cause.',
   },
   {
-    label: 'APOL1',
-    to: '/learn/apol1',
+    label: 'Signs testing may help',
+    to: '/learn/signs-testing-may-help',
     end: false,
-    icon: Globe,
-    tint: 'plum',
-    eyebrow: 'APOL1',
-    title: 'APOL1 risk factor',
-    intro: 'Increased risk of having APOL1-Mediated Kidney Disease (AMKD)',
+    icon: Search,
+    tint: 'brand',
+    eyebrow: 'Signs testing may help',
+    title: 'Signs testing may help',
+    intro:
+      'These signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
   },
   {
     label: 'How testing works',
@@ -112,42 +128,12 @@ export const LEARN_TOPICS: LearnTopic[] = [
     label: 'Types of tests',
     to: '/learn/types-of-tests',
     end: false,
+    parent: '/learn/testing-basics',
     icon: Layers,
     tint: 'accent',
     eyebrow: 'Types of tests',
     title: 'Different tests look at different amounts of DNA',
     intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
-  },
-  {
-    label: 'Uncertain results / VUS',
-    to: '/learn/uncertain-results',
-    end: false,
-    icon: CircleHelp,
-    tint: 'accent',
-    eyebrow: 'Uncertain results / VUS',
-    title: 'Understanding your genetic test report',
-    intro: 'What about Variants of Uncertain Significance (VUS)?',
-  },
-  {
-    label: 'Signs testing may help',
-    to: '/learn/signs-testing-may-help',
-    end: false,
-    icon: Search,
-    tint: 'brand',
-    eyebrow: 'Signs testing may help',
-    title: 'Signs testing may help',
-    intro:
-      'These signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
-  },
-  {
-    label: 'Sharing with family',
-    to: '/learn/family-sharing',
-    end: false,
-    icon: Dna,
-    tint: 'accent',
-    eyebrow: 'Sharing with family',
-    title: 'Why sharing your result with family matters',
-    intro: 'A result about you is sometimes a result about your relatives, too.',
   },
   {
     label: 'Genetic counselors',
@@ -172,6 +158,36 @@ export const LEARN_TOPICS: LearnTopic[] = [
       "It's normal to wonder who can see a result and what happens to your DNA afterward.",
   },
   {
+    label: 'APOL1',
+    to: '/learn/apol1',
+    end: false,
+    icon: Globe,
+    tint: 'plum',
+    eyebrow: 'APOL1',
+    title: 'APOL1 risk factor',
+    intro: 'Increased risk of having APOL1-Mediated Kidney Disease (AMKD)',
+  },
+  {
+    label: 'Understanding your genetic test report',
+    to: '/learn/uncertain-results',
+    end: false,
+    icon: CircleHelp,
+    tint: 'accent',
+    eyebrow: 'Understanding your genetic test report',
+    title: 'Understanding your genetic test report',
+    intro: 'What about Variants of Uncertain Significance (VUS)?',
+  },
+  {
+    label: 'Sharing with family',
+    to: '/learn/family-sharing',
+    end: false,
+    icon: Dna,
+    tint: 'accent',
+    eyebrow: 'Sharing with family',
+    title: 'Why sharing your result with family matters',
+    intro: 'A result about you is sometimes a result about your relatives, too.',
+  },
+  {
     label: 'Find a support group',
     to: '/learn/support-groups',
     end: false,
@@ -192,3 +208,11 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'See whether a relevant clinical trial or research study is currently open to join.',
   },
 ]
+
+/** Top-level Learn pages (excluding Getting started), in menu order. */
+export const LEARN_MAIN_TOPICS = LEARN_TOPICS.filter((topic) => !topic.end && !topic.parent)
+
+/** Sub-pages listed under a Learn page, in menu order. */
+export function subtopicsOf(path: string): LearnTopic[] {
+  return LEARN_TOPICS.filter((topic) => topic.parent === path)
+}

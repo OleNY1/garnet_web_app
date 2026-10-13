@@ -1,4 +1,5 @@
 import { Cite } from '../../components/Cite'
+import { LearnLink } from '../../components/learn/LearnLink'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 
@@ -36,6 +37,17 @@ export function SignsTestingMayHelp() {
               <Cite n={2} />
             </figcaption>
           </figure>
+
+          <div className="rounded-2xl border border-line bg-surface px-6 py-5 shadow-soft">
+            <p>
+              To see how these signs apply to you, take the{' '}
+              <LearnLink to="/check">Genetic Risk Check</LearnLink> and share your result with your doctor.
+            </p>
+            <p className="mt-3">
+              When you are ready, <LearnLink to="/how-to-get-tested">How to get tested</LearnLink> explains how to
+              start, from talking with your doctor to cost and insurance.
+            </p>
+          </div>
         </div>
 
         <Sources

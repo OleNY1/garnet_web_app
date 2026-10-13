@@ -1,6 +1,7 @@
 import { Cite } from '../../components/Cite'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
+import { SubtopicCards } from '../../components/learn/SubtopicCards'
 import { LearnLink } from '../../components/learn/LearnLink'
 
 export function TestingBasics() {
@@ -65,6 +66,8 @@ export function TestingBasics() {
             .
           </p>
         </div>
+
+        <SubtopicCards parent="/learn/testing-basics" />
 
         <Sources
           sources={[
