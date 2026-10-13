@@ -94,9 +94,8 @@ export const LEARN_TOPICS: LearnTopic[] = [
     icon: Globe,
     tint: 'plum',
     eyebrow: 'APOL1',
-    title: 'APOL1 and ancestry-linked testing',
-    intro:
-      'For some people with recent West African ancestry, doctors may discuss testing a gene called APOL1.',
+    title: 'APOL1 risk factor',
+    intro: 'Increased risk of having APOL1-Mediated Kidney Disease (AMKD)',
   },
   {
     label: 'How testing works',
@@ -126,9 +125,8 @@ export const LEARN_TOPICS: LearnTopic[] = [
     icon: CircleHelp,
     tint: 'accent',
     eyebrow: 'Uncertain results / VUS',
-    title: 'When a result comes back uncertain',
-    intro:
-      'Sometimes a test finds a change that has not yet been classified as clearly harmful or clearly harmless.',
+    title: 'Understanding your genetic test report',
+    intro: 'What about Variants of Uncertain Significance (VUS)?',
   },
   {
     label: 'Signs testing may help',

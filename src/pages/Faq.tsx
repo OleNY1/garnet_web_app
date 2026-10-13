@@ -9,7 +9,8 @@ import { PageHero } from '../components/PageHero'
 import { Section } from '../components/Section'
 import { LEARN_TOPICS } from '../lib/learnTopics'
 
-type FaqLink = { to: string; label: string }
+/** `heading` scrolls to that section of the page when the link is opened. */
+type FaqLink = { to: string; label: string; heading?: string }
 
 type FaqItem = {
   icon: LucideIcon
@@ -42,34 +43,34 @@ const PRACTICAL_ITEMS: FaqItem[] = [
     title: 'Do I need a referral to genetic counseling?',
     answer: (
       <p>
-        In some states and with some health insurance, you will need your nephrologist or primary
-        care doctor to refer you to a genetic counselor or a genetics clinic. In others, you can
-        simply schedule a meeting with a genetic counselor directly.
+        In many states in the US, you can simply schedule an appointment with a genetic counselor directly. Some
+        insurance plans require a referral to a genetic counselor to cover the appointment costs.
       </p>
     ),
+    links: [
+      {
+        to: '/how-to-get-tested',
+        heading: 'What do I need to do to meet with a genetic counselor?',
+        label: 'Meeting with a genetic counselor',
+      },
+    ],
   },
   {
     icon: DollarSign,
     title: 'How much does testing cost, and does insurance cover it?',
     answer: (
       <p>
-        Health insurance often covers genetic testing, and many laboratories offer financial
-        assistance if not. Costs vary by test type and laboratory. Some tests could be free, but
-        others could cost several thousand dollars, so ask before testing. Genetic counselors have
-        experience managing insurance costs and can help you navigate the system. Some genetic
-        counselors work with insurance; others offer a maximum out-of-pocket cost. The information
-        should be provided before meeting with a genetic counselor (
-        <a
-          href="https://findageneticcounselor.nsgc.org/?reload=timezone"
-          target="_blank"
-          rel="noreferrer"
-          className="text-brand underline underline-offset-2 hover:text-brand-strong"
-        >
-          find a genetic counselor
-        </a>
-        ).
+        Health insurance often covers genetic testing, and many laboratories offer financial assistance if not. Costs
+        vary by test type and laboratory.
       </p>
     ),
+    links: [
+      {
+        to: '/how-to-get-tested',
+        heading: 'Is genetic testing covered by insurance?',
+        label: 'Cost and insurance',
+      },
+    ],
   },
   {
     icon: ShieldCheck,
@@ -134,9 +135,17 @@ const FAQ_GROUPS: Array<{ id: string; title: string; items: FaqItem[] }> = [
     id: 'results',
     title: 'Understanding results',
     items: [
-      learnQuestion('/learn/uncertain-results', 'What if my result is uncertain?'),
+      learnQuestion(
+        '/learn/uncertain-results',
+        'What if my result is uncertain?',
+        'Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as harmful (pathogenic) or harmless (benign). A VUS should NOT be used to make medical decisions.',
+      ),
       learnQuestion('/learn/guide-care', 'Can a genetic result change my treatment?'),
-      learnQuestion('/learn/apol1', 'What is APOL1?'),
+      learnQuestion(
+        '/learn/apol1',
+        'What is APOL1?',
+        'Everyone has two copies of the APOL1 gene, which normally helps the body fight off certain infections. People with 2 variants (one on each copy of the gene) are at risk of developing APOL1-Mediated Kidney Disease (AMKD). Most (~80%) people with 2 variants do NOT develop kidney disease.',
+      ),
     ],
   },
   {
@@ -206,12 +215,13 @@ function FaqCard({
               <div className="mt-4 flex flex-wrap gap-2">
                 {links.map((link) => (
                   <Link
-                    key={link.to}
+                    key={link.label}
                     to={link.to}
+                    state={link.heading ? { searchHeading: link.heading } : undefined}
                     tabIndex={open ? undefined : -1}
                     className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-brand/40 bg-surface px-4 py-2 text-[0.95rem] font-semibold text-brand transition-colors duration-150 hover:border-brand/70 hover:bg-brand-soft"
                   >
-                    {link.to.startsWith('/learn') ? 'Read more: ' : ''}
+                    {link.to === '/check' ? '' : 'Read more: '}
                     {link.label}
                     <ArrowRight aria-hidden="true" className="size-4" />
                   </Link>

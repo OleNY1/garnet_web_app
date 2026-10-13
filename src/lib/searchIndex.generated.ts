@@ -104,12 +104,20 @@ export const SEARCH_INDEX: IndexedPage[] = [
   },
   {
     "path": "/learn/apol1",
-    "title": "APOL1 and ancestry-linked testing",
-    "intro": "For some people with recent West African ancestry, doctors may discuss testing a gene called APOL1.",
+    "title": "APOL1 risk factor",
+    "intro": "Increased risk of having APOL1-Mediated Kidney Disease (AMKD)",
     "sections": [
       {
-        "heading": "A note on ancestry-linked testing",
-        "text": "For donor candidates with recent West African ancestry, doctors may also raise the option of testing a gene called APOL1, which is linked to a higher risk of kidney disease in this population. Having a higher-risk APOL1 result doesn't automatically rule someone out as a donor — it's a factor to weigh together with the transplant team, not a mandatory test or an automatic disqualifier.[1] See Support living donor decisions for how specialists usually decide whether — and how — to test a donor candidate."
+        "heading": "",
+        "text": "Everyone has two copies of the APOL1 gene, which normally helps the body fight off certain infections. Specific variations (called G1 and G2) evolved long ago in Western and Central Africa to protect people from a parasite that causes African sleeping sickness. Therefore, they are more common in people with ancestors from those regions. These APOL1 variants are recessive risk factors. People with 2 variants (one on each copy of the gene) are at risk of developing APOL1-Mediated Kidney Disease (AMKD). Having 2 variants is also called the APOL1 high-risk genotype. Most (~80%) people with 2 variants do NOT develop kidney disease. DEFINITIONS Genotype = genetic information APOL1 high-risk genotype = G1/G1 or G2/G2 or G1/G2"
+      },
+      {
+        "heading": "A note on kidney transplantation",
+        "text": "Having 2 APOL1 variants doesn't automatically rule someone out as a donor — it's a factor to weigh together with the transplant team, not a mandatory test or an automatic disqualifier.[1] See Support living donor decisions for how specialists usually decide whether — and how — to test a donor candidate."
+      },
+      {
+        "heading": "For more information",
+        "text": "National Kidney Foundation: APOL1-Mediated Kidney Disease (AMKD) American Association of Kidney Patients (AAKP): APOL1 American Kidney Fund: APOL1-mediated kidney disease (AMKD) NephCure: genetic testing Basketball legend and Hall-of-Famer Alonzo Mourning has APOL1-mediated kidney disease (AMKD). Hear his story."
       }
     ]
   },
@@ -153,12 +161,16 @@ export const SEARCH_INDEX: IndexedPage[] = [
   },
   {
     "path": "/learn/uncertain-results",
-    "title": "When a result comes back uncertain",
-    "intro": "Sometimes a test finds a change that has not yet been classified as clearly harmful or clearly harmless.",
+    "title": "Understanding your genetic test report",
+    "intro": "What about Variants of Uncertain Significance (VUS)?",
     "sections": [
       {
+        "heading": "",
+        "text": "We are all different, and so is our DNA. Geneticists use multiple sources of information to classify the variants in each of us. Genetic reports usually include the conclusion of the test: Positive or Negative. Positive A potential diagnostic finding is reported. The variant(s) are either classified as Pathogenic or Likely Pathogenic. Negative No definitive diagnostic finding is reported. These results include heterozygote variants (1 variant on 1 copy of the gene) in genes associated with recessive diseases (2 variants cause disease). They also include Variants of Uncertain Significance."
+      },
+      {
         "heading": "What a VUS means",
-        "text": "Sometimes a test finds a change in a gene that geneticists do not know whether to classify as clearly harmful or clearly harmless. In those cases, they classify the genetic change as a variant of uncertain significance, or VUS. By current guidelines, a VUS on its own shouldn't be used to make medical decisions. As more people are tested and more research is done, these results are sometimes reclassified later — most often turning out to be harmless, though occasionally they're upgraded to a clear diagnosis. GenomeConnect is an NIH tool that notifies people if their variant is reclassified.[1][2] People from backgrounds underrepresented in genetic research are more likely to receive an uncertain result — not because their DNA is more unusual, but because there is less existing data available for comparison. That's a gap in the research itself, not a reflection of any one person's results.[1] Broader tests are more likely to turn up an uncertain finding. See Types of tests for how doctors weigh that when choosing how much DNA to check."
+        "text": "Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as harmful (pathogenic) or harmless (benign). A VUS should NOT be used to make medical decisions. As more people are tested and more research is done, these results are sometimes reclassified later — most often turning out to be harmless, though occasionally they're upgraded to a clear diagnosis. GenomeConnect is an NIH tool that notifies people if their variant is reclassified.[1][2] People from backgrounds underrepresented in genetic research are more likely to receive an uncertain result — not because their DNA is more unusual, but because there is less existing data available for comparison. That's a gap in the research itself, not a reflection of any one person's results.[1] Broader tests are more likely to turn up an uncertain finding. See Types of tests for how doctors weigh that when choosing how much DNA to check."
       }
     ]
   },
@@ -277,16 +289,28 @@ export const SEARCH_INDEX: IndexedPage[] = [
   },
   {
     "path": "/how-to-get-tested",
-    "title": "How to get tested?",
+    "title": "How can I get genetic testing?",
     "intro": "Learn how to talk with your doctor or a genetic counselor, ask about cost, and prepare for testing.",
     "sections": [
       {
-        "heading": "",
-        "text": "HELP TALKING WITH YOUR CARE TEAM"
+        "heading": "The path to the test",
+        "text": "Your health care provider needs to order the genetic test. Your health care provider can be your primary care provider, family doctor, nephrologist, or a genetic counselor. You can use the Genetic Risk Check to receive personalized information to share with your doctor and start the process. HELP TALKING WITH YOUR CARE TEAM"
       },
       {
         "heading": "Questions to ask your doctor or a genetic counselor",
         "text": "Consider asking these questions at your next appointment. Is the type of kidney disease I have sometimes due to a genetic disease? Does my family history of kidney disease point to a possible genetic risk running in my family? As a child I had [a condition, such as a learning difficulty or hearing impairment] — could that be linked to my kidney disease? If I have a genetic disease, would it change how you manage my kidney disease? Could you refer me for genetic testing, or refer me to a genetic counselor? Do you know how much a genetic test would cost?"
+      },
+      {
+        "heading": "What do I need to do to meet with a genetic counselor?",
+        "text": "In many states in the US, you can simply schedule an appointment with a genetic counselor directly (find a genetic counselor). Some insurance plans require a referral to a genetic counselor to cover the appointment costs. To learn more about genetic counselors."
+      },
+      {
+        "heading": "Is genetic testing covered by insurance?",
+        "text": "Health insurance often covers genetic testing, and many laboratories offer financial assistance if not. Receiving approval for genetic testing from private insurance companies can sometimes be difficult and time-consuming. If denied, your doctor's office can submit an appeal. Some laboratories offer financial aid, and others have relatively affordable out-of-pocket costs (saving you the time of chasing your insurance). Costs vary by test type and laboratory. Some tests could be free, but others could cost several thousand dollars, so ask before testing. Genetic counselors have experience managing insurance costs and can help you navigate the system. Some genetic counselors work with insurance; others offer a maximum out-of-pocket cost. The information should be provided before meeting with a genetic counselor (find a genetic counselor)."
+      },
+      {
+        "heading": "Additional information",
+        "text": "American Kidney Fund: Genetic testing and counseling NephCure: Genetic testing"
       }
     ]
   },
@@ -301,11 +325,11 @@ export const SEARCH_INDEX: IndexedPage[] = [
       },
       {
         "heading": "Do I need a referral to genetic counseling?",
-        "text": "In some states and with some health insurance, you will need your nephrologist or primary care doctor to refer you to a genetic counselor or a genetics clinic. In others, you can simply schedule a meeting with a genetic counselor directly."
+        "text": "In many states in the US, you can simply schedule an appointment with a genetic counselor directly. Some insurance plans require a referral to a genetic counselor to cover the appointment costs."
       },
       {
         "heading": "How much does testing cost, and does insurance cover it?",
-        "text": "Health insurance often covers genetic testing, and many laboratories offer financial assistance if not. Costs vary by test type and laboratory. Some tests could be free, but others could cost several thousand dollars, so ask before testing. Genetic counselors have experience managing insurance costs and can help you navigate the system. Some genetic counselors work with insurance; others offer a maximum out-of-pocket cost. The information should be provided before meeting with a genetic counselor (find a genetic counselor)."
+        "text": "Health insurance often covers genetic testing, and many laboratories offer financial assistance if not. Costs vary by test type and laboratory."
       },
       {
         "heading": "Is my genetic information kept private?",
@@ -345,7 +369,7 @@ export const SEARCH_INDEX: IndexedPage[] = [
       },
       {
         "heading": "What if my result is uncertain?",
-        "text": "Sometimes a test finds a change that has not yet been classified as clearly harmful or clearly harmless."
+        "text": "Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as harmful (pathogenic) or harmless (benign). A VUS should NOT be used to make medical decisions."
       },
       {
         "heading": "Can a genetic result change my treatment?",
@@ -353,7 +377,7 @@ export const SEARCH_INDEX: IndexedPage[] = [
       },
       {
         "heading": "What is APOL1?",
-        "text": "For some people with recent West African ancestry, doctors may discuss testing a gene called APOL1."
+        "text": "Everyone has two copies of the APOL1 gene, which normally helps the body fight off certain infections. People with 2 variants (one on each copy of the gene) are at risk of developing APOL1-Mediated Kidney Disease (AMKD). Most (~80%) people with 2 variants do NOT develop kidney disease."
       },
       {
         "heading": "Your family",
