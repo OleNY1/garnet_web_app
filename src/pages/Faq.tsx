@@ -1,19 +1,45 @@
 import { useId, useState, type ReactNode } from 'react'
-import { ChevronDown, HelpCircle, ShieldCheck, Stethoscope, Wallet } from 'lucide-react'
+import { ArrowRight, ChevronDown, DollarSign, HelpCircle, ShieldCheck, Signpost, Stethoscope } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { Card } from '../components/Card'
 import { IconChip } from '../components/IconChip'
+import type { Tint } from '../components/IconChip'
 import { PageHero } from '../components/PageHero'
 import { Section } from '../components/Section'
+import { LEARN_TOPICS } from '../lib/learnTopics'
 
-const FAQ_ITEMS: Array<{
+type FaqLink = { to: string; label: string }
+
+type FaqItem = {
   icon: LucideIcon
+  tint?: Tint
   title: string
   answer: ReactNode
-}> = [
+  /** Pages that explain more, shown as "Read more" links under the answer. */
+  links?: FaqLink[]
+}
+
+/**
+ * A question whose short answer is the Learn page's own intro, so the FAQ
+ * points to the page instead of repeating it (and stays in sync with it).
+ */
+function learnQuestion(path: string, title: string, answer?: string, extraLinks: FaqLink[] = []): FaqItem {
+  const topic = LEARN_TOPICS.find((t) => t.to === path)
+  if (!topic) throw new Error(`Unknown Learn page: ${path}`)
+  return {
+    icon: topic.icon,
+    tint: topic.tint,
+    title,
+    answer: <p>{answer ?? topic.intro}</p>,
+    links: [{ to: topic.to, label: topic.label }, ...extraLinks],
+  }
+}
+
+const PRACTICAL_ITEMS: FaqItem[] = [
   {
     icon: Stethoscope,
-    title: 'Referral to Genetic Counseling',
+    title: 'Do I need a referral to genetic counseling?',
     answer: (
       <p>
         In some states and with some health insurance, you will need your nephrologist or primary
@@ -23,8 +49,8 @@ const FAQ_ITEMS: Array<{
     ),
   },
   {
-    icon: Wallet,
-    title: 'Cost and insurance',
+    icon: DollarSign,
+    title: 'How much does testing cost, and does insurance cover it?',
     answer: (
       <p>
         Health insurance often covers genetic testing, and many laboratories offer financial
@@ -47,7 +73,7 @@ const FAQ_ITEMS: Array<{
   },
   {
     icon: ShieldCheck,
-    title: 'Privacy and legal protections',
+    title: 'Is my genetic information kept private?',
     answer: (
       <p>
         Genetic information is protected like any other clinical information, and your doctor needs
@@ -65,20 +91,81 @@ const FAQ_ITEMS: Array<{
         .
       </p>
     ),
+    links: [{ to: '/learn/your-rights', label: 'Your rights & choices' }],
+  },
+]
+
+const FAQ_GROUPS: Array<{ id: string; title: string; items: FaqItem[] }> = [
+  {
+    id: 'cost-privacy',
+    title: 'Referrals, cost, and privacy',
+    items: PRACTICAL_ITEMS,
+  },
+  {
+    id: 'about-testing',
+    title: 'About genetic testing',
+    items: [
+      learnQuestion('/learn/discover-why', 'Why would I get genetic testing for kidney disease?'),
+      learnQuestion(
+        '/learn/signs-testing-may-help',
+        'How do I know if testing might find something?',
+        'Some signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
+        [{ to: '/check', label: 'Take the Genetic Risk Check' }],
+      ),
+      learnQuestion('/learn/testing-basics', 'How is the test done?'),
+      learnQuestion(
+        '/learn/types-of-tests',
+        'Which genetic test will I get?',
+        'Different tests look at different amounts of DNA. Your doctor or a genetic counselor can help choose the test that fits your situation.',
+      ),
+      learnQuestion('/learn/genetic-counselors', 'What does a genetic counselor do?'),
+      {
+        icon: Signpost,
+        tint: 'plum',
+        title: 'How do I get tested?',
+        answer: (
+          <p>Learn how to talk with your doctor or a genetic counselor, ask about cost, and prepare for testing.</p>
+        ),
+        links: [{ to: '/how-to-get-tested', label: 'How to get tested' }],
+      },
+    ],
+  },
+  {
+    id: 'results',
+    title: 'Understanding results',
+    items: [
+      learnQuestion('/learn/uncertain-results', 'What if my result is uncertain?'),
+      learnQuestion('/learn/guide-care', 'Can a genetic result change my treatment?'),
+      learnQuestion('/learn/apol1', 'What is APOL1?'),
+    ],
+  },
+  {
+    id: 'family',
+    title: 'Your family',
+    items: [
+      learnQuestion('/learn/help-your-family', 'Can my result help my relatives?'),
+      learnQuestion('/learn/family-sharing', 'Should I share my result with my family?'),
+      learnQuestion('/learn/kidney-donation', 'A relative wants to donate a kidney to me. Can testing help?'),
+    ],
+  },
+  {
+    id: 'support-research',
+    title: 'Support and research',
+    items: [
+      learnQuestion('/learn/support-groups', 'Where can I find a support group?'),
+      learnQuestion('/learn/research-opportunities', 'Can I join a research study?'),
+    ],
   },
 ]
 
 function FaqCard({
   icon,
+  tint = 'plum',
   title,
   answer,
+  links,
   defaultOpen = false,
-}: {
-  icon: LucideIcon
-  title: string
-  answer: ReactNode
-  defaultOpen?: boolean
-}) {
+}: FaqItem & { defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen)
   const panelId = useId()
 
@@ -91,7 +178,7 @@ function FaqCard({
         onClick={() => setOpen((current) => !current)}
         className="flex w-full cursor-pointer items-center gap-4 p-6 text-left sm:p-7"
       >
-        <IconChip icon={icon} tint="plum" className="size-12 shrink-0" />
+        <IconChip icon={icon} tint={tint} className="size-12 shrink-0" />
         <h3 className="flex-1 font-display text-[1.25rem] leading-snug font-semibold text-ink sm:text-[1.3rem]">
           {title}
         </h3>
@@ -115,6 +202,22 @@ function FaqCard({
             }`}
           >
             {answer}
+            {links?.length ? (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {links.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    tabIndex={open ? undefined : -1}
+                    className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-brand/40 bg-surface px-4 py-2 text-[0.95rem] font-semibold text-brand transition-colors duration-150 hover:border-brand/70 hover:bg-brand-soft"
+                  >
+                    {link.to.startsWith('/learn') ? 'Read more: ' : ''}
+                    {link.label}
+                    <ArrowRight aria-hidden="true" className="size-4" />
+                  </Link>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -129,17 +232,29 @@ export function Faq() {
         icon={HelpCircle}
         tint="plum"
         eyebrow="FAQ"
-        title="Cost, referrals, and privacy"
-        intro="The practical questions patients ask about most."
+        title="Frequently asked questions"
+        intro="Short answers to the questions patients ask most, with links to the pages that explain more."
       />
 
-      <Section id="cost-privacy" className="!pt-10 sm:!pt-14">
-        <div className="mx-auto flex max-w-3xl flex-col gap-4">
-          {FAQ_ITEMS.map((item, index) => (
-            <FaqCard key={item.title} {...item} defaultOpen={index === 0} />
-          ))}
-        </div>
-      </Section>
+      <div className="pt-4 pb-10 sm:pb-14">
+        {FAQ_GROUPS.map((group, groupIndex) => (
+          <Section
+            key={group.id}
+            id={group.id}
+            title={group.title}
+            align="left"
+            className="!py-6 sm:!py-8"
+            headerClassName="mx-auto !mb-5 sm:!mb-6"
+            titleClassName="!text-[1.6rem] sm:!text-[1.9rem]"
+          >
+            <div className="mx-auto flex max-w-3xl flex-col gap-4">
+              {group.items.map((item, index) => (
+                <FaqCard key={item.title} {...item} defaultOpen={groupIndex === 0 && index === 0} />
+              ))}
+            </div>
+          </Section>
+        ))}
+      </div>
     </>
   )
 }

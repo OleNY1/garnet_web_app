@@ -292,20 +292,96 @@ export const SEARCH_INDEX: IndexedPage[] = [
   },
   {
     "path": "/faq",
-    "title": "Cost, referrals, and privacy",
-    "intro": "The practical questions patients ask about most.",
+    "title": "Frequently asked questions",
+    "intro": "Short answers to the questions patients ask most, with links to the pages that explain more.",
     "sections": [
       {
-        "heading": "Referral to Genetic Counseling",
+        "heading": "Referrals, cost, and privacy",
+        "text": ""
+      },
+      {
+        "heading": "Do I need a referral to genetic counseling?",
         "text": "In some states and with some health insurance, you will need your nephrologist or primary care doctor to refer you to a genetic counselor or a genetics clinic. In others, you can simply schedule a meeting with a genetic counselor directly."
       },
       {
-        "heading": "Cost and insurance",
+        "heading": "How much does testing cost, and does insurance cover it?",
         "text": "Health insurance often covers genetic testing, and many laboratories offer financial assistance if not. Costs vary by test type and laboratory. Some tests could be free, but others could cost several thousand dollars, so ask before testing. Genetic counselors have experience managing insurance costs and can help you navigate the system. Some genetic counselors work with insurance; others offer a maximum out-of-pocket cost. The information should be provided before meeting with a genetic counselor (find a genetic counselor)."
       },
       {
-        "heading": "Privacy and legal protections",
+        "heading": "Is my genetic information kept private?",
         "text": "Genetic information is protected like any other clinical information, and your doctor needs your agreement to share it with other doctors and family members. For healthy individuals who have a genetic risk to develop disease, there is a law to protect them from genetic discrimination called GINA."
+      },
+      {
+        "heading": "About genetic testing",
+        "text": ""
+      },
+      {
+        "heading": "Why would I get genetic testing for kidney disease?",
+        "text": "A genetic cause is behind some kidney disease. Finding it can confirm or correct a diagnosis."
+      },
+      {
+        "heading": "How do I know if testing might find something?",
+        "text": "Some signs make it more likely that testing will find a genetic cause. They do not guarantee a result."
+      },
+      {
+        "heading": "How is the test done?",
+        "text": "Most tests start with a cheek swab. The lab then looks at genes that can be linked to kidney disease."
+      },
+      {
+        "heading": "Which genetic test will I get?",
+        "text": "Different tests look at different amounts of DNA. Your doctor or a genetic counselor can help choose the test that fits your situation."
+      },
+      {
+        "heading": "What does a genetic counselor do?",
+        "text": "Genetic counselors help you decide about testing, understand your result, and share it with family."
+      },
+      {
+        "heading": "How do I get tested?",
+        "text": "Learn how to talk with your doctor or a genetic counselor, ask about cost, and prepare for testing."
+      },
+      {
+        "heading": "Understanding results",
+        "text": ""
+      },
+      {
+        "heading": "What if my result is uncertain?",
+        "text": "Sometimes a test finds a change that has not yet been classified as clearly harmful or clearly harmless."
+      },
+      {
+        "heading": "Can a genetic result change my treatment?",
+        "text": "Knowing the exact cause can help your care team start, avoid, or switch a treatment."
+      },
+      {
+        "heading": "What is APOL1?",
+        "text": "For some people with recent West African ancestry, doctors may discuss testing a gene called APOL1."
+      },
+      {
+        "heading": "Your family",
+        "text": ""
+      },
+      {
+        "heading": "Can my result help my relatives?",
+        "text": "A genetic cause can help relatives be diagnosed early, plan a family, and find safe living donors."
+      },
+      {
+        "heading": "Should I share my result with my family?",
+        "text": "A result about you is sometimes a result about your relatives, too."
+      },
+      {
+        "heading": "A relative wants to donate a kidney to me. Can testing help?",
+        "text": "Testing can help identify relatives who did not inherit the genetic cause."
+      },
+      {
+        "heading": "Support and research",
+        "text": ""
+      },
+      {
+        "heading": "Where can I find a support group?",
+        "text": "Connect with other patients who understand what it's like to live with your condition."
+      },
+      {
+        "heading": "Can I join a research study?",
+        "text": "See whether a relevant clinical trial or research study is currently open to join."
       }
     ]
   }
