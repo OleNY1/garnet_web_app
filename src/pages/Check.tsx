@@ -405,7 +405,7 @@ export function Check() {
             ))}
           </div>
 
-          <div className="mt-5 rounded-3xl border border-line bg-wash px-6 py-5 text-[1.02rem] leading-relaxed text-body sm:px-7">
+          <div className="mt-5 rounded-3xl border border-line bg-wash px-6 py-5 text-lg leading-relaxed text-body sm:px-7 sm:text-xl">
             {prefaces[audience]}
           </div>
 
