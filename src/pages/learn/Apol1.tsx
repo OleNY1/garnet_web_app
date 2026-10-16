@@ -44,6 +44,16 @@ export function Apol1() {
               alt="Three people side by side. Left: no variant in APOL1, where trypanosome infection can be lethal. Middle: 1 variant (heterozygote, G1 or G2) in APOL1, protected against trypanosome infection. Right: 2 variants (G1/G2) in APOL1, protected against trypanosome infection, shown with worried-looking kidneys holding a 'help' sign."
               className="w-full rounded-xl border border-line bg-white"
             />
+            <figcaption className="text-center text-[0.95rem] leading-snug text-muted">
+              <a
+                href="https://www.sciencedirect.com/topics/pharmacology-toxicology-and-pharmaceutical-science/trypanosoma"
+                target="_blank"
+                rel="noreferrer"
+                className={linkClasses}
+              >
+                Learn more about trypanosome
+              </a>
+            </figcaption>
           </figure>
 
           <p>
