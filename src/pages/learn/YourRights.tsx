@@ -8,7 +8,7 @@ export function YourRights() {
   return (
     <>
       <Section id="your-rights" title="Making an informed, personal choice">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Whether to learn your genetic results is a personal choice. Ethicists increasingly
             agree that being offered that choice, with real information about what a result could
@@ -39,7 +39,7 @@ export function YourRights() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">Legal protections</h3>
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">Legal protections</h3>
           <p>
             In the United States, a federal law called the Genetic Information Nondiscrimination
             Act (GINA) stops health insurers and most employers from discriminating against you

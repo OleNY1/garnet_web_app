@@ -14,8 +14,8 @@ export function HowTestingHelps() {
   return (
     <>
       <Section id="how-testing-helps" tone="wash">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
-          <h2 className="font-display text-xl font-semibold text-ink">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
+          <h2 className="font-display type-sub font-semibold text-ink">
             Confirm or correct a diagnosis
           </h2>
           <p>
@@ -31,7 +31,7 @@ export function HowTestingHelps() {
             <Cite n={2} />
           </p>
 
-          <h2 className="mt-2 font-display text-xl font-semibold text-ink">Change treatment</h2>
+          <h2 className="mt-2 font-display type-sub font-semibold text-ink">Change treatment</h2>
           <p>
             In the same study, a positive result changed how doctors managed care for about 9 in 10
             patients, including an actual change in treatment plan for roughly a third. A follow-up
@@ -46,13 +46,13 @@ export function HowTestingHelps() {
             that depend on knowing the exact genetic cause.
           </p>
 
-          <h2 className="mt-2 font-display text-xl font-semibold text-ink">Avoid a biopsy</h2>
+          <h2 className="mt-2 font-display type-sub font-semibold text-ink">Avoid a biopsy</h2>
           <p>
             When a genetic test finds the cause, some people may be able to avoid an invasive test
             like a kidney biopsy.
           </p>
 
-          <h2 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h2 className="mt-2 font-display type-sub font-semibold text-ink">
             A genetic diagnosis can also:
           </h2>
           <ul className="list-disc space-y-2 pl-6 marker:text-brand">

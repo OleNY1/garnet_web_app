@@ -23,15 +23,15 @@ const LEARN_MENU = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
 const hoverLift =
   'transition-transform duration-150 hover:-translate-y-0.5 hover:scale-105 focus-visible:-translate-y-0.5 focus-visible:scale-105'
 
-const outlineHeaderButton = `items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[0.9rem] font-semibold text-body ${hoverLift}`
+const outlineHeaderButton = `items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 type-support font-semibold text-body ${hoverLift}`
 
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-  `inline-block rounded-full px-3.5 py-2.5 text-[0.98rem] font-medium ${hoverLift} ${
+  `inline-block rounded-full px-3.5 py-2.5 type-support font-medium ${hoverLift} ${
     isActive ? 'bg-brand-soft text-ink' : 'text-body'
   }`
 
 const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
-  `block rounded-xl px-4 py-3.5 text-lg font-medium ${hoverLift} ${
+  `block rounded-xl px-4 py-3.5 type-support font-medium ${hoverLift} ${
     isActive ? 'bg-brand-soft text-ink' : 'text-ink'
   }`
 
@@ -128,8 +128,8 @@ function LearnNavItem() {
             onFocus={openMenu}
             className={
               topic.sub
-                ? `ml-5 block rounded-r-xl border-l-2 border-line py-2 pr-3.5 pl-3 text-[0.9rem] font-medium text-muted ${hoverLift}`
-                : `block rounded-xl px-3.5 py-2.5 text-[0.95rem] font-medium text-body ${hoverLift}`
+                ? `ml-5 block rounded-r-xl border-l-2 border-line py-2 pr-3.5 pl-3 type-support font-medium text-muted ${hoverLift}`
+                : `block rounded-xl px-3.5 py-2.5 type-support font-medium text-body ${hoverLift}`
             }
           >
             {topic.label}
@@ -152,7 +152,7 @@ function BrandMark() {
     />
   )
   const wordmark = (
-    <span className="text-[1.25rem] font-bold tracking-[0.18em] text-brand">GARNET</span>
+    <span className="type-sub font-bold tracking-[0.18em] text-brand">GARNET</span>
   )
 
   /* On the welcome page the logo is not split into two destinations. */
@@ -221,7 +221,7 @@ export function Header() {
             For doctors
           </Link>
           <SiteSearch
-            className={`flex h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full border border-line bg-surface text-[0.95rem] font-semibold text-ink xl:px-4 ${hoverLift}`}
+            className={`flex h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full border border-line bg-surface type-support font-semibold text-ink xl:px-4 ${hoverLift}`}
           />
           <ThemeToggle />
           <button
@@ -260,7 +260,7 @@ export function Header() {
                       onClick={() => setMenuOpen(false)}
                       className={({ isActive }) =>
                         `block rounded-lg py-2.5 pr-3 font-medium ${hoverLift} ${
-                          topic.sub ? 'ml-4 rounded-l-none border-l-2 border-line pl-3 text-[0.95rem]' : 'pl-3 text-[1.02rem]'
+                          topic.sub ? 'ml-4 rounded-l-none border-l-2 border-line pl-3 type-support' : 'pl-3 type-copy'
                         } ${isActive ? 'bg-brand-soft text-ink' : 'text-muted'}`
                       }
                     >
@@ -281,7 +281,7 @@ export function Header() {
               <Link
                 to="/doctor/dashboard"
                 onClick={() => setMenuOpen(false)}
-                className={`flex items-center gap-2 rounded-xl px-4 py-3.5 text-lg font-medium text-body ${hoverLift}`}
+                className={`flex items-center gap-2 rounded-xl px-4 py-3.5 type-support font-medium text-body ${hoverLift}`}
               >
                 <Stethoscope aria-hidden="true" className="size-5" />
                 For doctors

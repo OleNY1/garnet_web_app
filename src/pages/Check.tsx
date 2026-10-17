@@ -51,7 +51,7 @@ function renderLabel(label: string): ReactNode {
 /* ---------- Option inputs ---------- */
 
 const optionClasses =
-  'flex cursor-pointer items-start gap-3 rounded-2xl border border-line bg-surface px-4 py-3 text-[1rem] leading-snug text-ink transition-colors duration-150 hover:border-brand/60 hover:bg-brand-soft/40 has-[:checked]:border-brand has-[:checked]:bg-brand-soft'
+  'flex cursor-pointer items-start gap-3 rounded-2xl border border-line bg-surface px-4 py-3 type-copy leading-snug text-ink transition-colors duration-150 hover:border-brand/60 hover:bg-brand-soft/40 has-[:checked]:border-brand has-[:checked]:bg-brand-soft'
 
 function OptionInput({
   type,
@@ -108,16 +108,16 @@ function Question({
         Question {number}: {title}
       </legend>
       <div aria-hidden="true" className="flex items-start gap-4">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft font-display text-[1.05rem] font-semibold text-brand">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft font-display type-copy font-semibold text-brand">
           {number}
         </span>
         <div className="pt-1.5">
-          <p className="font-display text-[1.25rem] leading-snug font-semibold text-ink sm:text-[1.35rem]">{title}</p>
-          {hint ? <div className="mt-2 text-[0.98rem] leading-relaxed text-muted">{hint}</div> : null}
+          <p className="font-display type-sub font-semibold text-ink">{title}</p>
+          {hint ? <div className="mt-2 type-support leading-relaxed text-muted">{hint}</div> : null}
         </div>
       </div>
       {missing ? (
-        <p className="mt-4 flex items-center gap-2 text-[0.98rem] font-semibold text-accent">
+        <p className="mt-4 flex items-center gap-2 type-support font-semibold text-accent">
           <TriangleAlert aria-hidden="true" className="size-4" />
           Please answer this question.
         </p>
@@ -226,24 +226,24 @@ function ResultPanel({ answers, result, onReset }: { answers: Answers; result: R
           {increased ? <TriangleAlert aria-hidden="true" className="size-6" /> : <CircleCheck aria-hidden="true" className="size-6" />}
         </span>
         <div>
-          <p className={cx('text-[0.95rem] font-bold tracking-[0.14em] uppercase', increased ? 'text-accent' : 'text-brand')}>
+          <p className={cx('type-support font-bold tracking-[0.14em] uppercase', increased ? 'text-accent' : 'text-brand')}>
             Your result
           </p>
-          <h2 id="result-heading" className="mt-1 font-display text-[1.7rem] leading-tight font-semibold text-ink sm:text-[2rem]">
+          <h2 id="result-heading" className="mt-1 font-display type-section font-semibold text-ink">
             {increased ? 'Increased risk of a genetic cause' : 'Low risk of a genetic cause'}
           </h2>
         </div>
       </div>
 
       <div className="px-6 py-7 sm:px-9 sm:py-9">
-        <p className="text-[1.08rem] leading-relaxed text-ink sm:text-[1.15rem]">{result.sentence}</p>
+        <p className="type-copy text-ink">{result.sentence}</p>
 
-        <h3 className="mt-9 font-display text-[1.3rem] font-semibold text-ink">Summary of your answers</h3>
-        <p className="mt-1 text-[0.98rem] text-muted">
+        <h3 className="mt-9 font-display type-sub font-semibold text-ink">Summary of your answers</h3>
+        <p className="mt-1 type-support text-muted">
           {increased ? (
             <>
               Answers marked{' '}
-              <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[0.85rem] font-semibold text-accent">
+              <span className="rounded-full bg-accent-soft px-2 py-0.5 type-support font-semibold text-accent">
                 Contributed to your result
               </span>{' '}
               are the ones that raised your result.
@@ -260,7 +260,7 @@ function ResultPanel({ answers, result, onReset }: { answers: Answers; result: R
             const labels = optionsFor[key].filter((o) => ids.includes(o.id))
             return (
               <div key={key} className="grid gap-2 px-5 py-4 sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-6">
-                <dt className="text-[0.95rem] font-semibold text-muted">
+                <dt className="type-support font-semibold text-muted">
                   {questionNumber[key]}. {summaryTitles[key]}
                 </dt>
                 <dd>
@@ -271,7 +271,7 @@ function ResultPanel({ answers, result, onReset }: { answers: Answers; result: R
                         <li key={o.id} className="flex flex-wrap items-center gap-x-2 gap-y-1 text-ink">
                           <span className={cx(raised && 'font-semibold')}>{renderLabel(o.label)}</span>
                           {raised ? (
-                            <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[0.8rem] font-semibold text-accent">
+                            <span className="rounded-full bg-accent-soft px-2 py-0.5 type-support font-semibold text-accent">
                               Contributed to your result
                             </span>
                           ) : null}
@@ -285,7 +285,7 @@ function ResultPanel({ answers, result, onReset }: { answers: Answers; result: R
           })}
         </dl>
 
-        <p className="mt-6 flex items-start gap-2 text-[0.98rem] leading-relaxed text-muted">
+        <p className="mt-6 flex items-start gap-2 type-support leading-relaxed text-muted">
           <Info aria-hidden="true" className="mt-1 size-4 shrink-0" />
           This does not replace professional genetic counseling. Your answers are not recorded.
         </p>
@@ -367,7 +367,7 @@ export function Check() {
 
   const visible = new Set(visibleQuestions(answers))
   const isMissing = (k: QuestionKey) => missing.includes(k)
-  const groupTitle = 'mb-4 mt-12 font-display text-[1.5rem] font-semibold text-ink first:mt-0 sm:text-[1.7rem]'
+  const groupTitle = 'mb-4 mt-12 font-display type-section font-semibold text-ink first:mt-0'
 
   return (
     <>
@@ -395,7 +395,7 @@ export function Check() {
                 aria-pressed={audience === value}
                 onClick={() => setAudience(value)}
                 className={cx(
-                  'inline-flex min-h-[2.75rem] cursor-pointer items-center gap-2 rounded-full px-5 text-[0.98rem] font-semibold transition-colors duration-150',
+                  'inline-flex min-h-[2.75rem] cursor-pointer items-center gap-2 rounded-full px-5 type-support font-semibold transition-colors duration-150',
                   audience === value ? 'bg-btn text-on-brand' : 'text-muted hover:text-brand',
                 )}
               >
@@ -405,7 +405,7 @@ export function Check() {
             ))}
           </div>
 
-          <div className="mt-5 rounded-3xl border border-line bg-wash px-6 py-5 text-lg leading-relaxed text-body sm:px-7 sm:text-xl">
+          <div className="mt-5 rounded-3xl border border-line bg-wash px-6 py-5 type-copy text-body sm:px-7">
             {prefaces[audience]}
           </div>
 
@@ -476,7 +476,7 @@ export function Check() {
               <div className="space-y-6">
                 {featureGroups.map((g) => (
                   <div key={g.title}>
-                    <p className="mb-3 text-[0.9rem] font-bold tracking-[0.12em] text-brand uppercase">{g.title}</p>
+                    <p className="mb-3 type-support font-bold tracking-[0.12em] text-brand uppercase">{g.title}</p>
                     <MultiChoice
                       name="features"
                       options={g.options}
@@ -596,7 +596,7 @@ export function Check() {
 
             <div className="mt-10 flex flex-col items-start gap-3">
               {missing.length ? (
-                <p role="alert" className="flex items-center gap-2 font-semibold text-accent">
+                <p role="alert" className="flex items-center gap-2 type-support font-semibold text-accent">
                   <TriangleAlert aria-hidden="true" className="size-5" />
                   Please answer question{missing.length > 1 ? 's' : ''}{' '}
                   {missing.map((k) => questionNumber[k]).join(', ')} before analyzing.

@@ -19,10 +19,10 @@ export function StatGrid({ tint, stats }: { tint: Tint; stats: Stat[] }) {
           key={stat.label}
           className={`rounded-2xl border border-line ${tints[tint].chip} p-5 text-center sm:p-6`}
         >
-          <p className={`font-display text-[2rem] leading-none font-bold sm:text-[2.3rem] ${tints[tint].icon}`}>
+          <p className={`font-display type-section leading-none font-bold ${tints[tint].icon}`}>
             {stat.value}
           </p>
-          <p className="mt-2.5 text-[0.95rem] leading-snug font-medium text-ink">{stat.label}</p>
+          <p className="mt-2.5 type-support leading-snug font-medium text-ink">{stat.label}</p>
         </div>
       ))}
     </div>

@@ -16,7 +16,7 @@ export function FamilySharing() {
   return (
     <>
       <Section id="family-sharing" title="Why sharing your result matters">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             A genetic result doesn't only affect you. Close relatives share some of the same DNA,
             so a finding can matter for them too.
@@ -46,7 +46,7 @@ export function FamilySharing() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             How a genetic counselor can help you share
           </h3>
           <p>

@@ -8,8 +8,8 @@ export type Source = {
 export function Sources({ sources }: { sources: Source[] }) {
   return (
     <div className="mt-14 border-t border-line pt-8">
-      <h2 className="font-display text-lg font-semibold text-ink">Sources</h2>
-      <ol className="mt-4 flex flex-col gap-3 text-[0.92rem] leading-relaxed text-muted">
+      <h2 className="font-display type-section font-semibold text-ink">Sources</h2>
+      <ol className="mt-4 flex flex-col gap-3 type-support leading-relaxed text-muted">
         {sources.map((source) => (
           <li key={source.n} id={`source-${source.n}`} className="scroll-mt-28">
             <span className="font-semibold text-body">[{source.n}]</span>{' '}

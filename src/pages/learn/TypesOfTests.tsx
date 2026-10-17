@@ -16,7 +16,7 @@ export function TypesOfTests() {
   return (
     <>
       <Section id="types-of-tests" title="The main types of genetic tests">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Not every genetic test looks at the same amount of DNA. Broader tests can find more,
             but they also take longer to process and can turn up findings unrelated to your
@@ -25,7 +25,7 @@ export function TypesOfTests() {
           </p>
 
           <FlowDiagram tint="accent" steps={TEST_TYPES} connected={false} />
-          <p className="-mt-2 text-center text-[0.95rem] leading-snug text-muted">
+          <p className="-mt-2 text-center type-support leading-snug text-muted">
             <a
               href="https://doi.org/10.1016/j.ekir.2024.12.020"
               target="_blank"
@@ -37,7 +37,7 @@ export function TypesOfTests() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Why the choice matters
           </h3>
           <p>
@@ -51,7 +51,7 @@ export function TypesOfTests() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Tests can also be grouped by disease
           </h3>
           <p>
@@ -62,7 +62,7 @@ export function TypesOfTests() {
             <Cite n={3} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Findings beyond your kidneys
           </h3>
           <p>

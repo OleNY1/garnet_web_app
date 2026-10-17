@@ -48,8 +48,8 @@ function HeroFeature({
     <li className="flex items-start gap-4 rounded-xl p-1.5 -m-1.5">
       <IconChip icon={icon} tint={tint} className="size-11 shrink-0 rounded-xl" />
       <div>
-        <p className="text-[1.05rem] leading-snug font-semibold text-ink">{label}</p>
-        <p className="mt-0.5 text-[0.92rem] leading-snug text-muted">{tooltip}</p>
+        <p className="type-copy font-semibold leading-snug text-ink">{label}</p>
+        <p className="mt-0.5 type-support leading-snug text-muted">{tooltip}</p>
       </div>
     </li>
   )
@@ -75,18 +75,18 @@ export function GettingStartedHero() {
           </div>
           <h1
             id="hero-heading"
-            className="mt-6 font-display text-[2.3rem] leading-[1.12] font-semibold text-ink sm:text-5xl sm:leading-[1.08] lg:text-[3.35rem]"
+            className="mt-6 font-display type-page font-semibold text-ink"
           >
             Could genetic testing help you or your family know the cause of your kidney disease?
           </h1>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-body sm:text-xl">
+          <p className="mt-5 max-w-xl type-copy text-body">
             GARNET helps patients and families consider genetic testing to explain a kidney
             disease.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
             <Button href="#why-it-matters">Start learning</Button>
           </div>
-          <p className="mt-6 flex max-w-xl items-start gap-2.5 text-[0.99rem] leading-normal text-muted">
+          <p className="mt-6 flex max-w-xl items-start gap-2.5 type-support leading-normal text-muted">
             <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />
             GARNET is for education only. It does not provide a diagnosis or medical advice.
           </p>
@@ -102,7 +102,7 @@ export function GettingStartedHero() {
             className="absolute -bottom-12 -left-10 size-56 rounded-full bg-accent/25 blur-3xl"
           />
           <Card className="relative bg-gradient-to-br from-surface to-wash-warm p-6 sm:p-8">
-            <p className="font-display text-xl font-semibold text-ink">
+            <p className="font-display type-sub font-semibold text-ink">
               What you’ll find on GARNET
             </p>
             <ul className="mt-6 flex flex-col gap-5">
@@ -110,7 +110,7 @@ export function GettingStartedHero() {
                 <HeroFeature key={feature.label} {...feature} />
               ))}
             </ul>
-            <div className="mt-7 flex items-center gap-3 border-t border-line pt-5 text-[0.95rem] font-medium text-muted">
+            <div className="mt-7 flex items-center gap-3 border-t border-line pt-5 type-support font-medium text-muted">
               <HeartHandshake aria-hidden="true" className="size-5 shrink-0 text-accent" />
               Made for patients and families.
             </div>

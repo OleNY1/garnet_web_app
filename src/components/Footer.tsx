@@ -16,7 +16,7 @@ const ABOUT_LINKS = [
 ]
 
 const footerLinkClasses =
-  'inline-block scale-100 rounded-md py-1.5 text-[1.02rem] text-footer-muted underline-offset-4 transition-all duration-150 hover:scale-105 hover:text-footer-ink hover:underline'
+  'inline-block scale-100 rounded-md py-1.5 type-copy text-footer-muted underline-offset-4 transition-all duration-150 hover:scale-105 hover:text-footer-ink hover:underline'
 
 export function Footer() {
   return (
@@ -31,8 +31,8 @@ export function Footer() {
                 className="size-10 shrink-0 object-contain"
               />
               <div className="leading-tight">
-                <p className="text-xl font-bold tracking-[0.18em] text-footer-ink">GARNET</p>
-                <p className="text-[0.95rem]">
+                <p className="type-sub font-bold tracking-[0.18em] text-footer-ink">GARNET</p>
+                <p className="type-support">
                   Genetic indicators Assessment Referral Note and Education Tool
                 </p>
               </div>
@@ -41,14 +41,14 @@ export function Footer() {
               A patient education website created as part of a research project at Columbia
               University Irving Medical Center.
             </p>
-            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-footer-line px-4 py-2 text-[0.95rem] font-medium text-footer-ink">
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-footer-line px-4 py-2 type-support font-medium text-footer-ink">
               <BadgeCheck aria-hidden="true" className="size-4.5 shrink-0 text-[#8fd0df]" />
               For educational purposes only
             </p>
           </div>
 
           <nav aria-label="Explore GARNET">
-            <h3 className="text-[0.95rem] font-bold tracking-[0.14em] uppercase text-footer-ink">
+            <h3 className="type-support font-bold tracking-[0.14em] uppercase text-footer-ink">
               Explore
             </h3>
             <ul className="mt-4 space-y-1.5">
@@ -63,7 +63,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label="About this site">
-            <h3 className="text-[0.95rem] font-bold tracking-[0.14em] uppercase text-footer-ink">
+            <h3 className="type-support font-bold tracking-[0.14em] uppercase text-footer-ink">
               About
             </h3>
             <ul className="mt-4 space-y-1.5">
@@ -79,12 +79,12 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-footer-line pt-8">
-          <p className="max-w-3xl text-[0.98rem] leading-relaxed">
+          <p className="max-w-3xl type-support leading-relaxed">
             <strong className="font-semibold text-footer-ink">Medical disclaimer: </strong>
             GARNET does not provide medical advice, diagnosis, risk estimates, genetic counseling,
             or treatment recommendations. Please speak with a qualified healthcare professional.
           </p>
-          <p className="mt-5 text-[0.95rem]">
+          <p className="mt-5 type-support">
             © {new Date().getFullYear()} GARNET · A Columbia medical research project
           </p>
         </div>

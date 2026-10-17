@@ -50,12 +50,12 @@ export function Home() {
       <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-16 text-center sm:px-8 sm:py-24">
         <h1
           id="hero-heading"
-          className="max-w-4xl font-display text-[2.2rem] leading-[1.14] font-semibold text-ink sm:text-5xl sm:leading-[1.1]"
+          className="max-w-4xl font-display type-page font-semibold text-ink"
         >
           Could genetic testing help you, your family, or your patient know the cause of kidney
           disease?
         </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-body sm:text-xl">
+        <p className="mt-5 max-w-2xl type-copy text-body">
           GARNET guides patients, families, and clinicians to the right kidney genetics resources.
           Choose your path to continue.
         </p>
@@ -67,13 +67,13 @@ export function Home() {
               className="flex scale-100 flex-col p-6 text-left transition-all duration-200 motion-safe:hover:-translate-y-1 motion-safe:hover:scale-[1.015] hover:shadow-lift sm:p-8"
             >
               <IconChip icon={path.icon} tint={path.tint} className="size-[3.25rem]" />
-              <p className="mt-6 text-[0.9rem] font-bold tracking-[0.14em] text-brand uppercase">
+              <p className="mt-6 type-support font-bold tracking-[0.14em] text-brand uppercase">
                 {path.eyebrow}
               </p>
-              <h2 className="mt-3 font-display text-[1.7rem] leading-snug font-semibold text-ink sm:text-[1.9rem]">
+              <h2 className="mt-3 font-display type-section font-semibold text-ink">
                 {path.title}
               </h2>
-              <p className="mt-3 text-[1.02rem] leading-relaxed text-body">{path.text}</p>
+              <p className="mt-3 type-copy text-body">{path.text}</p>
               <div className="mt-auto pt-7">
                 <Button href={path.href} variant="secondary" size="md" className="w-full">
                   {path.cta}
@@ -84,7 +84,7 @@ export function Home() {
           ))}
         </div>
 
-        <p className="mt-10 max-w-xl text-[0.95rem] leading-relaxed text-muted">
+        <p className="mt-10 max-w-xl type-support leading-relaxed text-muted">
           GARNET is for education only. It does not provide a diagnosis or medical advice, and you
           can switch sides at any time using the link in the header.
         </p>

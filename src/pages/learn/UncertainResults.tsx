@@ -6,7 +6,7 @@ export function UncertainResults() {
   return (
     <>
       <Section id="test-report">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             We are all different, and so is our DNA. Geneticists use multiple sources of information to classify the
             variants in each of us.
@@ -18,14 +18,14 @@ export function UncertainResults() {
 
           <dl className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-line border-t-4 border-t-accent bg-surface px-5 py-5 shadow-soft">
-              <dt className="font-display text-[1.25rem] font-semibold text-accent">Positive</dt>
+              <dt className="font-display type-sub font-semibold text-accent">Positive</dt>
               <dd className="mt-2">
                 A potential diagnostic finding is reported. The variant(s) are either classified as Pathogenic or Likely
                 Pathogenic.
               </dd>
             </div>
             <div className="rounded-2xl border border-line border-t-4 border-t-brand bg-surface px-5 py-5 shadow-soft">
-              <dt className="font-display text-[1.25rem] font-semibold text-brand">Negative</dt>
+              <dt className="font-display type-sub font-semibold text-brand">Negative</dt>
               <dd className="mt-2">
                 No definitive diagnostic finding is reported. These results include heterozygote variants (1 variant on 1
                 copy of the gene) in genes associated with recessive diseases (2 variants cause disease). They also

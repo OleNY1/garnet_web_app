@@ -8,7 +8,7 @@ export function TestingBasics() {
   return (
     <>
       <Section id="testing-basics" title="How DNA is collected">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             To get genetic testing, you need to provide a DNA sample. DNA is in all our cells, so
             labs can use a blood, cheek swab, or saliva sample.
@@ -20,7 +20,7 @@ export function TestingBasics() {
             alt="How a DNA sample can be collected: a cheek swab, a collection kit, or a saliva sample."
             className="mx-auto w-full"
           />
-          <div className="mx-auto -mt-2 grid max-w-2xl grid-cols-3 gap-4 text-center text-[0.9rem] font-medium text-muted">
+          <div className="mx-auto -mt-2 grid max-w-2xl grid-cols-3 gap-4 text-center type-support font-medium text-muted">
             <span>Cheek swab</span>
             <span>Collection kit</span>
             <span>Saliva sample</span>
@@ -39,7 +39,7 @@ export function TestingBasics() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             What the tests look for
           </h3>
           <p>

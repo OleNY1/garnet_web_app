@@ -66,21 +66,21 @@ function ResultThumb({
       >
         <span className={cx('flex items-center gap-3 px-4 py-3.5', thumbWash[hit.tint])}>
           <IconChip icon={hit.icon} tint={hit.tint} className="size-10 !bg-surface" />
-          <span className={cx('text-[0.78rem] font-bold tracking-[0.12em] uppercase', thumbEyebrow[hit.tint])}>
+          <span className={cx('type-support font-bold tracking-[0.12em] uppercase', thumbEyebrow[hit.tint])}>
             {hit.label}
           </span>
         </span>
         <span className="flex flex-1 flex-col px-4 pt-3.5 pb-4">
-          <span className="font-display text-[1.08rem] leading-snug font-semibold text-ink">{hit.title}</span>
+          <span className="font-display type-copy font-semibold leading-snug text-ink">{hit.title}</span>
           {hit.heading ? (
-            <span className="mt-1.5 text-[0.85rem] font-semibold text-muted">
+            <span className="mt-1.5 type-support font-semibold text-muted">
               In: <Highlighted text={hit.heading} terms={hit.highlight} />
             </span>
           ) : null}
-          <span className="mt-1.5 line-clamp-3 text-[0.92rem] leading-relaxed text-body">
+          <span className="mt-1.5 line-clamp-3 type-support leading-relaxed text-body">
             <Highlighted text={hit.snippet} terms={hit.highlight} />
           </span>
-          <span className="mt-auto inline-flex items-center gap-1 pt-3 text-[0.88rem] font-semibold text-brand">
+          <span className="mt-auto inline-flex items-center gap-1 pt-3 type-support font-semibold text-brand">
             Open page
             <ArrowRight aria-hidden="true" className="size-4" />
           </span>
@@ -161,7 +161,7 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
             aria-controls={listId}
             aria-activedescendant={hits.length ? `${listId}-${active}` : undefined}
             autoComplete="off"
-            className="min-h-[2.75rem] w-full min-w-0 bg-transparent text-[1.08rem] text-ink outline-none placeholder:text-muted [&::-webkit-search-cancel-button]:hidden"
+            className="min-h-[2.75rem] w-full min-w-0 bg-transparent type-copy text-ink outline-none placeholder:text-muted [&::-webkit-search-cancel-button]:hidden"
           />
           <button
             type="button"
@@ -174,7 +174,7 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="overflow-y-auto px-4 pt-4 pb-5 sm:px-5">
-          <p className="mb-3 text-[0.85rem] font-bold tracking-[0.12em] text-muted uppercase" aria-live="polite">
+          <p className="mb-3 type-support font-bold tracking-[0.12em] text-muted uppercase" aria-live="polite">
             {!trimmed
               ? 'Popular pages'
               : hits.length
@@ -197,8 +197,8 @@ function SearchDialog({ onClose }: { onClose: () => void }) {
             </ul>
           ) : (
             <div className="rounded-2xl border border-dashed border-line px-5 py-8 text-center">
-              <p className="text-ink">Nothing on GARNET matches &ldquo;{trimmed}&rdquo;.</p>
-              <p className="mt-1 text-[0.95rem] text-muted">Try a shorter or more general word, like &ldquo;test&rdquo; or &ldquo;family&rdquo;.</p>
+              <p className="type-copy text-ink">Nothing on GARNET matches &ldquo;{trimmed}&rdquo;.</p>
+              <p className="mt-1 type-support text-muted">Try a shorter or more general word, like &ldquo;test&rdquo; or &ldquo;family&rdquo;.</p>
             </div>
           )}
         </div>

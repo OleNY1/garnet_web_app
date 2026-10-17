@@ -50,8 +50,8 @@ function TopicCard({ topic }: { topic: TopicCardData }) {
       className="scale-100 rounded-3xl border border-line bg-surface p-6 shadow-soft transition-transform duration-200 hover:scale-[1.03] hover:shadow-lift sm:p-7"
     >
       <IconChip icon={topic.icon} tint={topic.tint} />
-      <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">{topic.label}</h3>
-      <p className="mt-2.5 text-[1.02rem] leading-relaxed text-body">{topic.intro}</p>
+      <h3 className="mt-4 type-sub leading-snug font-semibold text-ink">{topic.label}</h3>
+      <p className="mt-2.5 type-copy text-body">{topic.intro}</p>
     </Link>
   )
 }
@@ -66,11 +66,11 @@ export function Overview() {
       <Section
         id="why-it-matters"
         headerClassName="max-w-6xl"
-        titleClassName="sm:whitespace-nowrap sm:text-[2.05rem] lg:text-[2.25rem]"
+        titleClassName="sm:whitespace-nowrap"
         eyebrow="Why it matters"
         title="How genetic testing could help you or your family?"
       >
-        <p className="mx-auto mb-10 max-w-6xl text-center text-xl leading-snug text-body sm:mb-12">
+        <p className="mx-auto mb-10 max-w-6xl text-center type-copy leading-snug text-body sm:mb-12">
           <span className="block">Genetic causes explain a meaningful share of kidney disease.</span>
           <span className="mt-1 block tracking-tight">
             Studies suggest a genetic cause is behind kidney failure in roughly 10% to 15% of
@@ -97,7 +97,7 @@ export function Overview() {
         <Card className="bg-gradient-to-br from-surface to-wash-warm p-7 sm:p-10 lg:p-12">
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <div>
-              <p className="text-lg leading-relaxed text-body">
+              <p className="type-copy text-body">
                 GARNET is being created as part of a research project at Columbia University Irving
                 Medical Center. Medical researchers and genetic counseling experts help shape the
                 information you read here for patients and families.
@@ -110,7 +110,7 @@ export function Overview() {
                   <p className="font-semibold text-ink">
                     Columbia University Irving Medical Center
                   </p>
-                  <p className="text-[0.95rem] text-muted">GARNET research project affiliation</p>
+                  <p className="type-support text-muted">GARNET research project affiliation</p>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ export function Overview() {
               {TRUST_POINTS.map((point) => (
                 <li key={point} className="flex items-start gap-3.5">
                   <BadgeCheck aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-brand" />
-                  <span className="text-[1.05rem] leading-normal font-medium text-ink">
+                  <span className="type-copy font-medium leading-normal text-ink">
                     {point}
                   </span>
                 </li>

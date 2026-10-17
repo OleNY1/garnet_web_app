@@ -7,7 +7,7 @@ export function SignsTestingMayHelp() {
   return (
     <>
       <Section id="signs-testing-may-help" title="When doctors are more likely to suggest testing">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             These signs make it more likely that testing will find a genetic cause. They do not
             guarantee a result. You can still benefit from testing if none of these apply. Doctors
@@ -31,7 +31,7 @@ export function SignsTestingMayHelp() {
               alt="Flowchart of general recommendations for when genetic testing is indicated in symptomatic adult and pediatric kidney patients."
               className="w-full rounded-xl border border-line"
             />
-            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+            <figcaption className="text-center type-support leading-snug text-muted">
               When genetic testing is generally recommended for people who already have kidney
               disease.
               <Cite n={2} />

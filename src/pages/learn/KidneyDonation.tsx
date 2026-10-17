@@ -15,7 +15,7 @@ export function KidneyDonation() {
   return (
     <>
       <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             When a family member needs a kidney, relatives often want to help. If the kidney disease
             has a genetic cause, testing can help identify relatives who did not inherit that cause
@@ -37,7 +37,7 @@ export function KidneyDonation() {
               alt="Flowchart of recommendations for genetic testing in at-risk adults and children, including kidney donor candidates and relatives at risk for a familial kidney disease."
               className="w-full rounded-xl border border-line"
             />
-            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+            <figcaption className="text-center type-support leading-snug text-muted">
               How specialists decide whether — and how — to test a donor candidate or an at-risk
               relative.
               <Cite n={2} />

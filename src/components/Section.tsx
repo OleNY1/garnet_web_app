@@ -52,7 +52,7 @@ export function Section({
             )}
           >
             {eyebrow && (
-              <p className="mb-3 text-[0.95rem] font-bold tracking-[0.14em] uppercase text-brand">
+              <p className="mb-3 type-support font-bold tracking-[0.14em] uppercase text-brand">
                 {eyebrow}
               </p>
             )}
@@ -60,7 +60,7 @@ export function Section({
               <h2
                 id={headingId}
                 className={cx(
-                  'font-display text-[1.9rem] leading-tight font-semibold text-ink sm:text-[2.4rem]',
+                  'font-display type-section font-semibold text-ink',
                   titleClassName,
                 )}
               >
@@ -68,7 +68,7 @@ export function Section({
               </h2>
             )}
             {intro && (
-              <p className={cx('mt-4 text-lg leading-relaxed text-muted sm:text-xl', introClassName)}>
+              <p className={cx('mt-4 type-copy text-muted', introClassName)}>
                 {intro}
               </p>
             )}

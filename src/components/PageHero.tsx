@@ -45,21 +45,21 @@ export function PageHero({
           {parent ? (
             <Link
               to={parent.to}
-              className="mb-3 inline-flex items-center gap-1 text-[0.95rem] font-semibold text-muted underline-offset-2 hover:text-brand hover:underline"
+              className="mb-3 inline-flex items-center gap-1 type-support font-semibold text-muted underline-offset-2 hover:text-brand hover:underline"
             >
               <ChevronLeft aria-hidden="true" className="size-4" />
               {parent.label}
             </Link>
           ) : null}
           <p
-            className={`mb-2 text-[0.95rem] font-bold tracking-[0.14em] uppercase ${eyebrowClasses[tint]}`}
+            className={`mb-2 type-support font-bold tracking-[0.14em] uppercase ${eyebrowClasses[tint]}`}
           >
             {eyebrow}
           </p>
-          <h1 className="font-display text-[2.1rem] leading-tight font-semibold text-ink sm:text-[2.6rem]">
+          <h1 className="font-display type-page font-semibold text-ink">
             {title}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-body sm:text-xl">{intro}</p>
+          <p className="mt-4 max-w-2xl type-copy text-body">{intro}</p>
         </div>
       </div>
     </section>

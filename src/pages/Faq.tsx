@@ -193,7 +193,7 @@ function FaqCard({
         className="flex w-full cursor-pointer items-center gap-4 p-6 text-left sm:p-7"
       >
         <IconChip icon={icon} tint={tint} className="size-12 shrink-0" />
-        <h3 className="flex-1 font-display text-[1.25rem] leading-snug font-semibold text-ink sm:text-[1.3rem]">
+        <h3 className="flex-1 font-display type-sub font-semibold text-ink">
           {title}
         </h3>
         <ChevronDown
@@ -211,7 +211,7 @@ function FaqCard({
       >
         <div className="overflow-hidden">
           <div
-            className={`px-6 pb-6 text-[1.02rem] leading-relaxed text-body transition-opacity duration-300 ease-in-out motion-reduce:transition-none sm:px-7 sm:pb-7 ${
+            className={`px-6 pb-6 type-copy text-body transition-opacity duration-300 ease-in-out motion-reduce:transition-none sm:px-7 sm:pb-7 ${
               open ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -224,7 +224,7 @@ function FaqCard({
                     to={link.to}
                     state={link.heading ? { searchHeading: link.heading } : undefined}
                     tabIndex={open ? undefined : -1}
-                    className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-brand/40 bg-surface px-4 py-2 text-[0.95rem] font-semibold text-brand transition-colors duration-150 hover:border-brand/70 hover:bg-brand-soft"
+                    className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-brand/40 bg-surface px-4 py-2 type-support font-semibold text-brand transition-colors duration-150 hover:border-brand/70 hover:bg-brand-soft"
                   >
                     {link.to === '/check' ? '' : 'Read more: '}
                     {link.label}
@@ -260,7 +260,6 @@ export function Faq() {
             align="left"
             className="!py-6 sm:!py-8"
             headerClassName="mx-auto !mb-5 sm:!mb-6"
-            titleClassName="!text-[1.6rem] sm:!text-[1.9rem]"
           >
             <div className="mx-auto flex max-w-3xl flex-col gap-4">
               {group.items.map((item, index) => (

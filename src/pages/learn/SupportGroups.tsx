@@ -7,7 +7,7 @@ export function SupportGroups() {
   return (
     <>
       <Section id="support-groups" title="Find a support group">
-        <p className="mx-auto mb-10 max-w-2xl text-center text-lg leading-relaxed text-body">
+        <p className="mx-auto mb-10 max-w-2xl text-center type-copy text-body">
           These outside patient organizations aren't part of GARNET, but they're a good next stop
           for talking with people who understand what it's like to live with a specific kidney
           condition.

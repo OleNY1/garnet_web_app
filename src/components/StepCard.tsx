@@ -19,16 +19,16 @@ export function StepCard({ number, title, children, last = false }: StepCardProp
       )}
       <span
         aria-hidden="true"
-        className="flex size-[3.25rem] items-center justify-center rounded-full bg-brand-soft font-display text-xl font-bold text-brand ring-1 ring-brand/25"
+        className="flex size-[3.25rem] items-center justify-center rounded-full bg-brand-soft font-display type-sub font-bold text-brand ring-1 ring-brand/25"
       >
         {number}
       </span>
       <div className="pt-1.5">
-        <h3 className="text-xl font-semibold text-ink">
+        <h3 className="type-sub font-semibold text-ink">
           <span className="sr-only">Step {number}: </span>
           {title}
         </h3>
-        <p className="mt-2 max-w-xl text-[1.02rem] leading-relaxed text-body">{children}</p>
+        <p className="mt-2 max-w-xl type-copy text-body">{children}</p>
       </div>
     </li>
   )

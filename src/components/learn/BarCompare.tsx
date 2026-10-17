@@ -20,8 +20,8 @@ export function BarCompare({ tint, rows }: { tint: Tint; rows: Row[] }) {
       {rows.map((row) => (
         <div key={row.label}>
           <div className="mb-1.5 flex items-baseline justify-between gap-3">
-            <span className="text-[0.98rem] font-medium text-ink">{row.label}</span>
-            <span className={`shrink-0 font-display text-[1.05rem] font-bold ${tints[tint].icon}`}>
+            <span className="type-support font-medium text-ink">{row.label}</span>
+            <span className={`shrink-0 font-display type-copy font-bold ${tints[tint].icon}`}>
               {row.display}
             </span>
           </div>

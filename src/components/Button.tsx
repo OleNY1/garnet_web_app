@@ -10,8 +10,8 @@ const baseClasses =
 
 /* Large tap targets: md is 46px tall, lg is 52px. */
 const sizeClasses: Record<Size, string> = {
-  md: 'min-h-[2.875rem] px-6 text-[1rem]',
-  lg: 'min-h-[3.25rem] px-7 text-[1.0625rem]',
+  md: 'min-h-[2.875rem] px-6 type-copy',
+  lg: 'min-h-[3.25rem] px-7 type-copy',
 }
 
 const variantClasses: Record<Variant, string> = {

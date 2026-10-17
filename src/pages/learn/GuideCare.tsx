@@ -28,7 +28,7 @@ export function GuideCare() {
   return (
     <>
       <Section id="guide-care" tone="wash" title="Start, avoid, or switch a treatment">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Some kidney diseases with a genetic cause have treatments made for that exact cause.
             Knowing the cause can help your care team start the right treatment, avoid one that is
@@ -41,16 +41,16 @@ export function GuideCare() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Examples of treatments that depend on the genetic cause
           </h3>
           <div className="grid gap-4">
             {TREATMENT_EXAMPLES.map((example) => (
               <Card key={example.condition} className="p-5 sm:p-6">
-                <p className="text-[1.08rem] leading-snug font-semibold text-ink">
+                <p className="type-copy font-semibold leading-snug text-ink">
                   {example.condition}
                 </p>
-                <p className="mt-2 text-[1rem] leading-relaxed text-body">{example.text}</p>
+                <p className="mt-2 type-copy text-body">{example.text}</p>
               </Card>
             ))}
           </div>
@@ -61,7 +61,7 @@ export function GuideCare() {
               alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
               className="w-full rounded-xl border border-line"
             />
-            <figcaption className="text-center text-[0.9rem] leading-snug text-muted">
+            <figcaption className="text-center type-support leading-snug text-muted">
               More examples of how a genetic diagnosis can guide care.
               <Cite n={2} />
             </figcaption>

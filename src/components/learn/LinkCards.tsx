@@ -20,10 +20,10 @@ export function LinkRow({ link }: { link: ExternalLink }) {
       className="group flex items-start justify-between gap-3 rounded-xl p-2 -m-2 transition-colors duration-150 hover:bg-wash"
     >
       <span>
-        <span className="block text-[1rem] leading-snug font-semibold text-ink group-hover:text-brand-strong">
+        <span className="block type-copy leading-snug font-semibold text-ink group-hover:text-brand-strong">
           {link.label}
         </span>
-        <span className="mt-0.5 block text-[0.92rem] leading-snug text-muted">{link.text}</span>
+        <span className="mt-0.5 block type-support leading-snug text-muted">{link.text}</span>
       </span>
       <ArrowUpRight
         aria-hidden="true"
@@ -50,8 +50,8 @@ export function LinkListCard({
   return (
     <Card className="flex h-full flex-col p-6 sm:p-7">
       <IconChip icon={icon} tint={tint} />
-      <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">{title}</h3>
-      <p className="mt-2 text-[1.02rem] leading-relaxed text-body">{intro}</p>
+      <h3 className="mt-4 type-sub leading-snug font-semibold text-ink">{title}</h3>
+      <p className="mt-2 type-copy text-body">{intro}</p>
       <ul className="mt-5 flex flex-col gap-3 border-t border-line pt-5">
         {links.map((link) => (
           <li key={link.href}>
@@ -59,7 +59,7 @@ export function LinkListCard({
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-[0.85rem] leading-snug text-muted">
+      <p className="mt-4 type-support leading-snug text-muted">
         These are outside organizations, not part of GARNET. Ask your care team which ones fit
         your situation.
       </p>
@@ -91,12 +91,12 @@ export function GroupedLinkListCard({
   return (
     <Card className="flex h-full flex-col p-6 sm:p-7">
       <IconChip icon={icon} tint={tint} />
-      <h3 className="mt-4 text-[1.22rem] leading-snug font-semibold text-ink">{title}</h3>
-      <p className="mt-2 text-[1.02rem] leading-relaxed text-body">{intro}</p>
+      <h3 className="mt-4 type-sub leading-snug font-semibold text-ink">{title}</h3>
+      <p className="mt-2 type-copy text-body">{intro}</p>
       <div className="mt-5 grid gap-5 border-t border-line pt-5 sm:grid-cols-2">
         {groups.map((group) => (
           <div key={group.condition}>
-            <p className="text-[0.8rem] font-bold tracking-[0.1em] text-muted uppercase">
+            <p className="type-support font-bold tracking-[0.1em] text-muted uppercase">
               {group.condition}
             </p>
             <ul className="mt-2 flex flex-col gap-2.5">
@@ -110,7 +110,7 @@ export function GroupedLinkListCard({
         ))}
       </div>
       <div className="mt-5 border-t border-line pt-5">
-        <p className="text-[0.8rem] font-bold tracking-[0.1em] text-muted uppercase">
+        <p className="type-support font-bold tracking-[0.1em] text-muted uppercase">
           General resource
         </p>
         <ul className="mt-2 flex flex-col gap-2.5">
@@ -119,7 +119,7 @@ export function GroupedLinkListCard({
           </li>
         </ul>
       </div>
-      <p className="mt-4 text-[0.85rem] leading-snug text-muted">
+      <p className="mt-4 type-support leading-snug text-muted">
         These are outside organizations, not part of GARNET. Ask your care team which ones fit
         your situation.
       </p>

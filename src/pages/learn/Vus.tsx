@@ -8,13 +8,13 @@ export function Vus() {
   return (
     <>
       <Section id="uncertain-results" tone="wash" title="If your result is a VUS">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as
             harmful (pathogenic) or harmless (benign).
           </p>
 
-          <p className="rounded-2xl border border-line bg-surface px-6 py-5 text-[1.12rem] font-semibold text-ink shadow-soft">
+          <p className="rounded-2xl border border-line bg-surface px-6 py-5 type-copy font-semibold text-ink shadow-soft">
             A VUS should <strong className="underline underline-offset-2">NOT</strong> be used to make medical decisions.
           </p>
 

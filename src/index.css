@@ -152,6 +152,15 @@
     text-size-adjust: 100%;
   }
 
+  /*
+    Patient-only type scale (does not apply on /doctor):
+      page title 32–40px, section 24–28px, subheading 20px,
+      body/options 18px, supporting/disclaimers 16px.
+  */
+  .patient-site {
+    font-size: 1.125rem;
+  }
+
   h1,
   h2,
   h3,
@@ -176,6 +185,40 @@
 
   ::selection {
     background: color-mix(in srgb, var(--brand) 25%, transparent);
+  }
+}
+
+/*
+  Unlayered so these five roles beat Tailwind text-* utilities.
+  Scoped to .patient-site so /doctor is unchanged.
+*/
+.patient-site .type-page {
+  font-size: 2rem;
+  line-height: 1.15;
+}
+.patient-site .type-section {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+.patient-site .type-sub {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+.patient-site .type-copy {
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+.patient-site .type-support {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .patient-site .type-page {
+    font-size: 2.5rem;
+  }
+  .patient-site .type-section {
+    font-size: 1.75rem;
   }
 }
 

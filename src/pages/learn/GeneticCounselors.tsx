@@ -40,7 +40,7 @@ export function GeneticCounselors() {
   return (
     <>
       <Section id="genetic-counselors" tone="wash" title="Who genetic counselors are">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Genetic counselors are health professionals trained to explain genetic testing and what
             a result means. They are best equipped to walk you through a result, though there
@@ -50,7 +50,7 @@ export function GeneticCounselors() {
             <Cite n={1} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             What a session looks like before testing
           </h3>
           <p>
@@ -61,13 +61,13 @@ export function GeneticCounselors() {
           <div className="grid gap-4 sm:grid-cols-2">
             {BEFORE_TESTING.map((item) => (
               <Card key={item.title} className="p-5">
-                <p className="text-[1.05rem] leading-snug font-semibold text-ink">{item.title}</p>
-                <p className="mt-2 text-[0.98rem] leading-relaxed text-body">{item.text}</p>
+                <p className="type-copy font-semibold leading-snug text-ink">{item.title}</p>
+                <p className="mt-2 type-support leading-relaxed text-body">{item.text}</p>
               </Card>
             ))}
           </div>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             What happens after testing
           </h3>
           <p>
@@ -88,7 +88,7 @@ export function GeneticCounselors() {
           >
             <span>
               <span className="block font-semibold text-ink">Find a genetic counselor</span>
-              <span className="mt-0.5 block text-[0.95rem] text-muted">
+              <span className="mt-0.5 block type-support text-muted">
                 Search the National Society of Genetic Counselors directory.
               </span>
             </span>

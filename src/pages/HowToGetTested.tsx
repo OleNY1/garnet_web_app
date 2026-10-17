@@ -26,7 +26,7 @@ const ADDITIONAL_INFO = [
 ]
 
 const linkClasses = 'text-brand underline underline-offset-2 hover:text-brand-strong'
-const bodyClasses = 'mx-auto flex max-w-3xl flex-col gap-5 text-[1.05rem] leading-relaxed text-body'
+const bodyClasses = 'mx-auto flex max-w-3xl flex-col gap-5 type-copy text-body'
 
 export function HowToGetTested() {
   return (
@@ -71,7 +71,7 @@ export function HowToGetTested() {
             {CARE_TEAM_QUESTIONS.map((question) => (
               <li key={question} className="flex items-start gap-3.5">
                 <IconChip icon={MessagesSquare} tint="plum" className="mt-0.5 size-9 shrink-0 rounded-lg" />
-                <span className="text-[1.02rem] leading-relaxed text-ink">{question}</span>
+                <span className="type-copy text-ink">{question}</span>
               </li>
             ))}
           </ul>
@@ -115,7 +115,7 @@ export function HowToGetTested() {
       </Section>
 
       <Section id="additional-info" title="Additional information">
-        <ul className="mx-auto flex max-w-3xl flex-col gap-3 text-[1.05rem]">
+        <ul className="mx-auto flex max-w-3xl flex-col gap-3 type-copy">
           {ADDITIONAL_INFO.map((item) => (
             <li key={item.href}>
               <a href={item.href} target="_blank" rel="noreferrer" className={`inline-flex items-start gap-2 ${linkClasses}`}>

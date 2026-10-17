@@ -16,27 +16,27 @@ export function ProtectionGrid() {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <div className="rounded-2xl border border-line bg-brand-soft p-5 sm:p-6">
-        <h4 className="text-[0.95rem] font-bold tracking-[0.08em] text-brand uppercase">
+        <h4 className="type-support font-bold tracking-[0.08em] text-brand uppercase">
           Protected by GINA
         </h4>
         <ul className="mt-3 flex flex-col gap-2.5">
           {PROTECTED.map((item) => (
             <li key={item} className="flex items-start gap-2.5">
               <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />
-              <span className="text-[0.98rem] leading-snug text-ink">{item}</span>
+              <span className="type-copy leading-snug text-ink">{item}</span>
             </li>
           ))}
         </ul>
       </div>
       <div className="rounded-2xl border border-line bg-accent-soft p-5 sm:p-6">
-        <h4 className="text-[0.95rem] font-bold tracking-[0.08em] text-accent uppercase">
+        <h4 className="type-support font-bold tracking-[0.08em] text-accent uppercase">
           Not protected by GINA
         </h4>
         <ul className="mt-3 flex flex-col gap-2.5">
           {NOT_COVERED.map((item) => (
             <li key={item} className="flex items-start gap-2.5">
               <CircleX aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-accent" />
-              <span className="text-[0.98rem] leading-snug text-ink">{item}</span>
+              <span className="type-copy leading-snug text-ink">{item}</span>
             </li>
           ))}
         </ul>

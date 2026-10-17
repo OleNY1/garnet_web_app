@@ -16,7 +16,7 @@ export function HowCommon() {
   return (
     <>
       <Section id="how-common" tone="wash" title="How often a genetic cause is behind kidney disease">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Studies suggest a genetic cause explains roughly 10% to 15% of kidney disease in adults,
             and as many as 7 in 10 cases in some groups of children.

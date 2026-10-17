@@ -12,14 +12,14 @@ export function HelpYourFamily() {
   return (
     <>
       <Section id="help-your-family" tone="wash" title="What your result can mean for relatives">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Close relatives share some of your DNA, so a genetic cause found in you may matter for
             them too. <LearnLink to="/learn/family-sharing">Sharing with family</LearnLink> explains
             why telling relatives matters, and how a genetic counselor can help.
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Early diagnosis for relatives
           </h3>
           <p>
@@ -31,7 +31,7 @@ export function HelpYourFamily() {
             <Cite n={3} />
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Before and during pregnancy
           </h3>
           <p>
@@ -53,7 +53,7 @@ export function HelpYourFamily() {
             through with a genetic counselor.
           </p>
 
-          <h3 className="mt-2 font-display text-xl font-semibold text-ink">
+          <h3 className="mt-2 font-display type-sub font-semibold text-ink">
             Identifying safe living donors
           </h3>
           <p>

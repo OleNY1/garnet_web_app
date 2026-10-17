@@ -30,7 +30,7 @@ export function Apol1() {
   return (
     <>
       <Section id="apol1">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Everyone has two copies of the <em>APOL1</em> gene, which normally helps the body fight off certain
             infections. Specific variations (called G1 and G2) evolved long ago in Western and Central Africa to
@@ -44,7 +44,7 @@ export function Apol1() {
               alt="Three people side by side. Left: no variant in APOL1, where trypanosome infection can be lethal. Middle: 1 variant (heterozygote, G1 or G2) in APOL1, protected against trypanosome infection. Right: 2 variants (G1/G2) in APOL1, protected against trypanosome infection, shown with worried-looking kidneys holding a 'help' sign."
               className="w-full rounded-xl border border-line bg-white"
             />
-            <figcaption className="text-center text-[0.95rem] leading-snug text-muted">
+            <figcaption className="text-center type-support leading-snug text-muted">
               <a
                 href="https://www.sciencedirect.com/topics/pharmacology-toxicology-and-pharmaceutical-science/trypanosoma"
                 target="_blank"
@@ -62,13 +62,13 @@ export function Apol1() {
             <em>APOL1</em> high-risk genotype.
           </p>
 
-          <p className="rounded-2xl border border-line bg-brand-soft px-6 py-5 text-[1.12rem] font-semibold text-ink">
+          <p className="rounded-2xl border border-line bg-brand-soft px-6 py-5 type-copy font-semibold text-ink">
             Most (~80%) people with 2 variants do{' '}
             <strong className="underline underline-offset-2">NOT</strong> develop kidney disease.
           </p>
 
           <div className="rounded-2xl border border-line bg-surface px-6 py-5 shadow-soft">
-            <p className="mb-3 text-[0.9rem] font-bold tracking-[0.12em] text-plum uppercase">Definitions</p>
+            <p className="mb-3 type-support font-bold tracking-[0.12em] text-plum uppercase">Definitions</p>
             <dl>
             <div className="flex flex-col gap-1 sm:flex-row sm:gap-3">
               <dt className="font-semibold text-ink">Genotype</dt>
@@ -86,7 +86,7 @@ export function Apol1() {
       </Section>
 
       <Section id="apol1-transplant" tone="wash" title="A note on kidney transplantation">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Having 2 <em>APOL1</em> variants doesn't automatically rule someone out as a donor — it's a factor to weigh
             together with the transplant team, not a mandatory test or an automatic disqualifier.
@@ -100,7 +100,7 @@ export function Apol1() {
       </Section>
 
       <Section id="apol1-more" title="For more information">
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 text-[1.05rem] leading-relaxed text-body">
+        <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <ul className="flex flex-col gap-3">
             {MORE_INFO.map((item) => (
               <li key={item.href}>

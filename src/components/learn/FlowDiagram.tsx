@@ -33,8 +33,8 @@ export function FlowDiagram({
             >
               <step.icon aria-hidden="true" className={`size-[55%] ${tints[tint].icon}`} />
             </span>
-            <p className="mt-3 text-[1rem] leading-snug font-semibold text-ink">{step.label}</p>
-            <p className="mt-1.5 text-[0.9rem] leading-snug text-muted">{step.caption}</p>
+            <p className="mt-3 type-copy leading-snug font-semibold text-ink">{step.label}</p>
+            <p className="mt-1.5 type-support leading-snug text-muted">{step.caption}</p>
           </div>
         ))}
       </div>
@@ -50,8 +50,8 @@ export function FlowDiagram({
             >
               <step.icon aria-hidden="true" className={`size-[55%] ${tints[tint].icon}`} />
             </span>
-            <p className="mt-3 text-[1rem] leading-snug font-semibold text-ink">{step.label}</p>
-            <p className="mt-1.5 text-[0.9rem] leading-snug text-muted">{step.caption}</p>
+            <p className="mt-3 type-copy leading-snug font-semibold text-ink">{step.label}</p>
+            <p className="mt-1.5 type-support leading-snug text-muted">{step.caption}</p>
           </div>
           {index < steps.length - 1 && (
             <>
