@@ -20,6 +20,7 @@ import { SupportGroups } from './pages/learn/SupportGroups'
 import { TestingBasics } from './pages/learn/TestingBasics'
 import { TypesOfTests } from './pages/learn/TypesOfTests'
 import { UncertainResults } from './pages/learn/UncertainResults'
+import { Vus } from './pages/learn/Vus'
 import { YourRights } from './pages/learn/YourRights'
 import { Faq } from './pages/Faq'
 import { HowToGetTested } from './pages/HowToGetTested'
@@ -80,6 +81,7 @@ export default function App() {
             <Route path="your-rights" element={<YourRights />} />
             <Route path="types-of-tests" element={<TypesOfTests />} />
             <Route path="uncertain-results" element={<UncertainResults />} />
+            <Route path="vus" element={<Vus />} />
             <Route path="support-groups" element={<SupportGroups />} />
             <Route path="research-opportunities" element={<ResearchOpportunities />} />
           </Route>

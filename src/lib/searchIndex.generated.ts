@@ -162,7 +162,7 @@ export const SEARCH_INDEX: IndexedPage[] = [
       },
       {
         "heading": "Why the choice matters",
-        "text": "Broader tests generally cost more and take longer to come back than a single-gene test, and the wider net means they're more likely to turn up genetic changes whose relevance isn't fully clear yet. A narrower test is faster and simpler to interpret, but only works well when your doctor already has a strong reason to suspect a particular gene. See Uncertain results / VUS for what happens when a finding is not yet clearly harmful or clearly harmless.[1]"
+        "text": "Broader tests generally cost more and take longer to come back than a single-gene test, and the wider net means they're more likely to turn up genetic changes whose relevance isn't fully clear yet. A narrower test is faster and simpler to interpret, but only works well when your doctor already has a strong reason to suspect a particular gene. See If your result is a VUS for what happens when a finding is not yet clearly harmful or clearly harmless.[1]"
       },
       {
         "heading": "Tests can also be grouped by disease",
@@ -177,14 +177,21 @@ export const SEARCH_INDEX: IndexedPage[] = [
   {
     "path": "/learn/uncertain-results",
     "title": "Understanding your genetic test report",
-    "intro": "What about Variants of Uncertain Significance (VUS)?",
+    "intro": "Genetic reports usually include the conclusion of the test: Positive or Negative.",
     "sections": [
       {
         "heading": "",
-        "text": "We are all different, and so is our DNA. Geneticists use multiple sources of information to classify the variants in each of us. Genetic reports usually include the conclusion of the test: Positive or Negative. Positive A potential diagnostic finding is reported. The variant(s) are either classified as Pathogenic or Likely Pathogenic. Negative No definitive diagnostic finding is reported. These results include heterozygote variants (1 variant on 1 copy of the gene) in genes associated with recessive diseases (2 variants cause disease). They also include Variants of Uncertain Significance."
-      },
+        "text": "We are all different, and so is our DNA. Geneticists use multiple sources of information to classify the variants in each of us. Genetic reports usually include the conclusion of the test: Positive or Negative. Positive A potential diagnostic finding is reported. The variant(s) are either classified as Pathogenic or Likely Pathogenic. Negative No definitive diagnostic finding is reported. These results include heterozygote variants (1 variant on 1 copy of the gene) in genes associated with recessive diseases (2 variants cause disease). They also include Variants of Uncertain Significance. Sometimes a result is not clearly positive or clearly negative. See If your result is a VUS for what that finding is, and why it should not be used to make medical decisions."
+      }
+    ]
+  },
+  {
+    "path": "/learn/vus",
+    "title": "Variants of Uncertain Significance (VUS)",
+    "intro": "Variants of Uncertain Significance are changes that geneticists cannot yet classify as harmful or harmless.",
+    "sections": [
       {
-        "heading": "What a VUS means",
+        "heading": "If your result is a VUS",
         "text": "Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as harmful (pathogenic) or harmless (benign). A VUS should NOT be used to make medical decisions. As more people are tested and more research is done, these results are sometimes reclassified later — most often turning out to be harmless, though occasionally they're upgraded to a clear diagnosis. GenomeConnect is an NIH tool that notifies people if their variant is reclassified.[1][2] People from backgrounds underrepresented in genetic research are more likely to receive an uncertain result — not because their DNA is more unusual, but because there is less existing data available for comparison. That's a gap in the research itself, not a reflection of any one person's results.[1] Broader tests are more likely to turn up an uncertain finding. See Types of tests for how doctors weigh that when choosing how much DNA to check."
       }
     ]

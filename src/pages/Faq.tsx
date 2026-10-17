@@ -141,7 +141,7 @@ const FAQ_GROUPS: Array<{ id: string; title: string; items: FaqItem[] }> = [
     title: 'Understanding results',
     items: [
       learnQuestion(
-        '/learn/uncertain-results',
+        '/learn/vus',
         'What if my result is uncertain?',
         'Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as harmful (pathogenic) or harmless (benign). A VUS should NOT be used to make medical decisions.',
       ),

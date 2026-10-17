@@ -46,7 +46,7 @@ export function TypesOfTests() {
             relevance isn't fully clear yet. A narrower test is faster and simpler to interpret,
             but only works well when your doctor already has a strong reason to suspect a
             particular gene. See{' '}
-            <LearnLink to="/learn/uncertain-results">Uncertain results / VUS</LearnLink> for what
+            <LearnLink to="/learn/vus">If your result is a VUS</LearnLink> for what
             happens when a finding is not yet clearly harmful or clearly harmless.
             <Cite n={1} />
           </p>

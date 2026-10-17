@@ -24,7 +24,7 @@ export const SUGGESTED_PATHS = [
   '/check',
   '/learn/testing-basics',
   '/faq',
-  '/learn/uncertain-results',
+  '/learn/vus',
   '/learn/genetic-counselors',
   '/how-to-get-tested',
 ]
