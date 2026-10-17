@@ -179,13 +179,13 @@ export const LEARN_TOPICS: LearnTopic[] = [
     intro: 'Genetic reports usually include the conclusion of the test: Positive or Negative.',
   },
   {
-    label: 'If your result is a VUS',
+    label: 'What a VUS means',
     to: '/learn/vus',
     end: false,
     parent: '/learn/uncertain-results',
     icon: CircleHelp,
     tint: 'accent',
-    eyebrow: 'If your result is a VUS',
+    eyebrow: 'What a VUS means',
     title: 'Variants of Uncertain Significance (VUS)',
     intro:
       'Variants of Uncertain Significance are changes that geneticists cannot yet classify as harmful or harmless.',
