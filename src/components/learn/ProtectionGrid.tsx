@@ -17,7 +17,7 @@ export function ProtectionGrid() {
     <div className="grid gap-4 sm:grid-cols-2">
       <div className="rounded-2xl border border-line bg-brand-soft p-5 sm:p-6">
         <h4 className="type-support font-bold tracking-[0.08em] text-brand uppercase">
-          Protected by GINA
+          Protected by the law
         </h4>
         <ul className="mt-3 flex flex-col gap-2.5">
           {PROTECTED.map((item) => (
@@ -30,7 +30,7 @@ export function ProtectionGrid() {
       </div>
       <div className="rounded-2xl border border-line bg-accent-soft p-5 sm:p-6">
         <h4 className="type-support font-bold tracking-[0.08em] text-accent uppercase">
-          Not protected by GINA
+          Not protected by the law
         </h4>
         <ul className="mt-3 flex flex-col gap-2.5">
           {NOT_COVERED.map((item) => (

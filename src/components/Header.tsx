@@ -6,7 +6,7 @@ import { SiteSearch } from './SiteSearch'
 import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
-  { label: 'Learn', href: '/learn' },
+  { label: 'Learn More', href: '/learn' },
   { label: 'Genetic Risk Check', href: '/check' },
   { label: 'How to Get Tested', href: '/how-to-get-tested' },
   { label: 'FAQ', href: '/faq' },
@@ -170,7 +170,7 @@ function LearnNavItem() {
         aria-haspopup="true"
         onFocus={openMenu}
       >
-        Learn
+        Learn More
         <ChevronDown
           aria-hidden="true"
           className={`size-4 transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
@@ -306,7 +306,7 @@ export function Header() {
           <ul className="flex flex-col gap-1">
             <li>
               <NavLink to="/learn" end onClick={() => setMenuOpen(false)} className={mobileNavLinkClasses}>
-                Learn
+                Learn More
               </NavLink>
               <ul className="ml-4 flex flex-col gap-0.5 border-l border-line pl-3">
                 {LEARN_MENU.map((topic) => (

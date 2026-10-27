@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { GettingStartedHero } from '../../components/learn/GettingStartedHero'
+import { LearnPager } from '../../components/learn/LearnPager'
 import { PageHero } from '../../components/PageHero'
 import { LEARN_TOPICS } from '../../lib/learnTopics'
 
@@ -26,12 +27,13 @@ export function LearnLayout() {
           tint={activeTab.tint}
           eyebrow={activeTab.eyebrow}
           title={activeTab.title}
-          intro={activeTab.intro}
           parent={parentTopic ? { to: parentTopic.to, label: parentTopic.label } : undefined}
         />
       )}
 
       <Outlet />
+
+      {isGettingStarted ? null : <LearnPager path={activeTab.to} />}
     </>
   )
 }

@@ -3,15 +3,16 @@ import { Card } from '../components/Card'
 import { IconChip } from '../components/IconChip'
 import { LearnLink } from '../components/learn/LearnLink'
 import { PageHero } from '../components/PageHero'
+import { PathToTestFigure } from '../components/PathToTestFigure'
 import { Section } from '../components/Section'
 import { TrustBadge } from '../components/TrustBadge'
 
 const CARE_TEAM_QUESTIONS = [
-  'Is the type of kidney disease I have sometimes due to a genetic disease?',
+  'Could my kidney disease be genetic?',
   'Does my family history of kidney disease point to a possible genetic risk running in my family?',
   "As a child I had [a condition, such as a learning difficulty or hearing impairment] — could that be linked to my kidney disease?",
-  'If I have a genetic disease, would it change how you manage my kidney disease?',
-  'Could you refer me for genetic testing, or refer me to a genetic counselor?',
+  'If I have a genetic diagnosis, would it change how you manage my kidney disease?',
+  'Could you refer me for genetic testing or to a genetic counselor?',
   'Do you know how much a genetic test would cost?',
 ]
 
@@ -47,7 +48,8 @@ export function HowToGetTested() {
 
       <Section id="path-to-test" className="!pt-0" title="The path to the test">
         <div className={bodyClasses}>
-          <p className="font-semibold text-ink">Your health care provider needs to order the genetic test.</p>
+          <PathToTestFigure />
+          <p className="mt-4 font-semibold text-ink">Your health care provider needs to order the genetic test.</p>
           <p>
             Your health care provider can be your primary care provider, family doctor, nephrologist, or a{' '}
             <LearnLink to="/learn/genetic-counselors">genetic counselor</LearnLink>.
@@ -59,26 +61,7 @@ export function HowToGetTested() {
         </div>
       </Section>
 
-      <Section
-        id="care-team-questions"
-        tone="wash"
-        eyebrow="Help talking with your care team"
-        title="Questions to ask your doctor or a genetic counselor"
-        intro="Consider asking these questions at your next appointment."
-      >
-        <Card className="mx-auto max-w-3xl p-7 sm:p-8">
-          <ul className="flex flex-col gap-4">
-            {CARE_TEAM_QUESTIONS.map((question) => (
-              <li key={question} className="flex items-start gap-3.5">
-                <IconChip icon={MessagesSquare} tint="plum" className="mt-0.5 size-9 shrink-0 rounded-lg" />
-                <span className="type-copy text-ink">{question}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
-      </Section>
-
-      <Section id="genetic-counselor" title="What do I need to do to meet with a genetic counselor?">
+      <Section id="genetic-counselor" tone="wash" title="What do I need to do to meet with a genetic counselor?">
         <div className={bodyClasses}>
           <p>
             In many states in the US, you can simply schedule an appointment with a genetic counselor directly (
@@ -93,7 +76,7 @@ export function HowToGetTested() {
         </div>
       </Section>
 
-      <Section id="cost-insurance" tone="wash" title="Is genetic testing covered by insurance?">
+      <Section id="cost-insurance" title="Is genetic testing covered by insurance?">
         <div className={bodyClasses}>
           <p>
             Health insurance often covers genetic testing, and many laboratories offer financial assistance if not.
@@ -102,8 +85,9 @@ export function HowToGetTested() {
             and others have relatively affordable out-of-pocket costs (saving you the time of chasing your insurance).
           </p>
           <p>
-            Costs vary by test type and laboratory. Some tests could be free, but others could cost several thousand
-            dollars, so ask before testing. Genetic counselors have experience managing insurance costs and can help you
+            Costs vary by <LearnLink to="/learn/types-of-tests">test type</LearnLink> and laboratory. Some tests could be
+            free, but others could cost several thousand dollars, so ask before testing.{' '}
+            <LearnLink to="/learn/genetic-counselors">Genetic counselors</LearnLink> have experience managing insurance costs and can help you
             navigate the system. Some genetic counselors work with insurance; others offer a maximum out-of-pocket cost.
             The information should be provided before meeting with a genetic counselor (
             <a href={FIND_A_GENETIC_COUNSELOR} target="_blank" rel="noreferrer" className={linkClasses}>
@@ -112,6 +96,19 @@ export function HowToGetTested() {
             ).
           </p>
         </div>
+      </Section>
+
+      <Section id="care-team-questions" tone="wash" title="Questions to ask your doctor or a genetic counselor">
+        <Card className="mx-auto max-w-3xl p-7 sm:p-8">
+          <ul className="flex flex-col gap-4">
+            {CARE_TEAM_QUESTIONS.map((question) => (
+              <li key={question} className="flex items-start gap-3.5">
+                <IconChip icon={MessagesSquare} tint="plum" className="mt-0.5 size-9 shrink-0 rounded-lg" />
+                <span className="type-copy text-ink">{question}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
       </Section>
 
       <Section id="additional-info" title="Additional information">

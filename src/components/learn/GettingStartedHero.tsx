@@ -12,7 +12,7 @@ const HERO_FEATURES: Array<{ icon: LucideIcon; tint: Tint; label: string; toolti
   {
     icon: BookOpen,
     tint: 'brand',
-    label: 'Learn',
+    label: 'Learn More',
     tooltip: 'Short guides to genetic testing, including privacy, cost, and your rights.',
   },
   {
@@ -84,7 +84,7 @@ export function GettingStartedHero() {
             disease.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-            <Button href="#why-it-matters">Start learning</Button>
+            <Button href="#why-it-matters">Learn More</Button>
           </div>
           <p className="mt-6 flex max-w-xl items-start gap-2.5 type-support leading-normal text-muted">
             <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand" />

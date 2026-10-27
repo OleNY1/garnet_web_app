@@ -11,7 +11,13 @@ export function ScrollToTop() {
   const searchHeading = (state as { searchHeading?: string } | null)?.searchHeading
 
   useEffect(() => {
-    if (hash) return
+    if (hash) {
+      // Links like /how-to-get-tested#cost-insurance: scroll to that section once it has rendered.
+      const frame = requestAnimationFrame(() => {
+        document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ block: 'start' })
+      })
+      return () => cancelAnimationFrame(frame)
+    }
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
     if (!searchHeading) return
 

@@ -7,7 +7,7 @@ import { numbered } from '../../lib/citations'
 export function Vus() {
   return (
     <>
-      <Section id="uncertain-results" tone="wash" title="If your result is a VUS">
+      <Section id="uncertain-results" tone="wash" title="If you have questions about Variants of Uncertain Significance (VUS) in your report">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
           <p>
             Variants of Uncertain Significance (VUS) are changes that geneticists do not know whether to classify as

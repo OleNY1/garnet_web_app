@@ -6,7 +6,7 @@ import { RESEARCH_LINKS } from '../../lib/supportLinks'
 export function ResearchOpportunities() {
   return (
     <>
-      <Section id="research-opportunities" title="Explore research opportunities">
+      <Section id="research-opportunities">
         <p className="mx-auto mb-10 max-w-2xl text-center type-copy text-body">
           See whether a relevant clinical trial or research study is currently open to join.
           GARNET doesn't run these studies — the links below take you to outside registries.

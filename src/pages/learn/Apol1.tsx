@@ -1,6 +1,7 @@
 import { ExternalLink } from 'lucide-react'
 import { Cite } from '../../components/Cite'
 import { LearnLink } from '../../components/learn/LearnLink'
+import { TopicIntro } from '../../components/learn/TopicIntro'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 import { numbered } from '../../lib/citations'
@@ -31,13 +32,6 @@ export function Apol1() {
     <>
       <Section id="apol1">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
-          <p>
-            Everyone has two copies of the <em>APOL1</em> gene, which normally helps the body fight off certain
-            infections. Specific variations (called G1 and G2) evolved long ago in Western and Central Africa to
-            protect people from a parasite that causes African sleeping sickness. Therefore, they are more common in
-            people with ancestors from those regions.
-          </p>
-
           <figure className="flex flex-col items-center gap-3">
             <img
               src={`${import.meta.env.BASE_URL}learn-figures/apol1-variants-and-trypanosome-protection.png`}
@@ -56,10 +50,18 @@ export function Apol1() {
             </figcaption>
           </figure>
 
+          <TopicIntro path="/learn/apol1" />
           <p>
-            These <em>APOL1</em> variants are recessive risk factors. People with 2 variants (one on each copy of the
-            gene) are at risk of developing APOL1-Mediated Kidney Disease (AMKD). Having 2 variants is also called the{' '}
-            <em>APOL1</em> high-risk genotype.
+            Everyone has two copies of the <em>APOL1</em> gene (one from dad and one from mom), which normally helps
+            the body fight off certain infections. Specific variations (called G1 and G2) evolved long ago in Western
+            and Central Africa to protect people from a parasite named Trypanosome that causes African sleeping
+            sickness. Therefore, the G1 and G2 variants are more common in people with ancestors from those regions.
+          </p>
+
+          <p>
+            People with 2 variants (one on each copy of the gene) are at risk of developing APOL1-Mediated Kidney
+            Disease (AMKD). Having 2 variants is also called the <em>APOL1</em> high-risk genotype. AMKD is considered a
+            recessive disease.
           </p>
 
           <p className="rounded-2xl border border-line bg-brand-soft px-6 py-5 type-copy font-semibold text-ink">

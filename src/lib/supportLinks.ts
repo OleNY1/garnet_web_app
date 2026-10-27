@@ -94,9 +94,8 @@ export const SUPPORT_GROUP_LINKS: ConditionLinkGroup[] = [
 ]
 
 /**
- * General, condition-agnostic genetics resource — not a support group, so
- * it's kept separate from SUPPORT_GROUP_LINKS and shown as its own line
- * under the grouped list.
+ * General, condition-agnostic genetics resource — not a support group.
+ * Shown on the Types of tests page (moved there from Find a support group).
  */
 export const GENERAL_SUPPORT_RESOURCE: ExternalLink = {
   label: 'Global Genes: gene-based diagnosis 101',
@@ -105,18 +104,18 @@ export const GENERAL_SUPPORT_RESOURCE: ExternalLink = {
 }
 
 /**
- * Starter list for the "Explore research opportunities" box.
+ * Links for the "Explore research opportunities" box, in alphabetical order.
  */
 export const RESEARCH_LINKS: ExternalLink[] = [
+  {
+    label: 'American Kidney Fund: clinical trials',
+    text: 'What clinical trials are and how to find one for kidney disease.',
+    href: 'https://www.kidneyfund.org/treatments/clinical-trials-for-kidney-disease',
+  },
   {
     label: 'ClinicalTrials.gov',
     text: 'Search open studies for kidney disease by condition or location.',
     href: 'https://clinicaltrials.gov/search?cond=Kidney%20Disease',
-  },
-  {
-    label: 'NORD rare disease database',
-    text: 'Look up a specific rare kidney condition and connected patient organizations.',
-    href: 'https://rarediseases.org/',
   },
   {
     label: 'Columbia Center for Precision Medicine and Genomics (CPMG)',
@@ -129,18 +128,18 @@ export const RESEARCH_LINKS: ExternalLink[] = [
     href: 'https://www.curegn.org/',
   },
   {
+    label: 'National Kidney Foundation: clinical trial directory',
+    text: 'A directory of clinical trials for kidney diseases.',
+    href: 'https://www.kidney.org/kidney-topics/kidney-diseases-clinical-trial-directory',
+  },
+  {
     label: 'NephCure',
     text: 'Patient organization for rare kidney diseases, with information on research and trials.',
     href: 'https://nephcure.org/',
   },
   {
-    label: 'American Kidney Fund: clinical trials',
-    text: 'What clinical trials are and how to find one for kidney disease.',
-    href: 'https://www.kidneyfund.org/treatments/clinical-trials-for-kidney-disease',
-  },
-  {
-    label: 'National Kidney Foundation: clinical trial directory',
-    text: 'A directory of clinical trials for kidney diseases.',
-    href: 'https://www.kidney.org/kidney-topics/kidney-diseases-clinical-trial-directory',
+    label: 'NORD rare disease database',
+    text: 'Look up a specific rare kidney condition and connected patient organizations.',
+    href: 'https://rarediseases.org/',
   },
 ]

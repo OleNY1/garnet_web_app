@@ -84,15 +84,15 @@ export function GroupedLinkListCard({
   icon: LucideIcon
   tint: Tint
   title: string
-  intro: string
+  intro?: string
   groups: ConditionLinkGroup[]
-  generalResource: ExternalLink
+  generalResource?: ExternalLink
 }) {
   return (
     <Card className="flex h-full flex-col p-6 sm:p-7">
       <IconChip icon={icon} tint={tint} />
       <h3 className="mt-4 type-sub leading-snug font-semibold text-ink">{title}</h3>
-      <p className="mt-2 type-copy text-body">{intro}</p>
+      {intro ? <p className="mt-2 type-copy text-body">{intro}</p> : null}
       <div className="mt-5 grid gap-5 border-t border-line pt-5 sm:grid-cols-2">
         {groups.map((group) => (
           <div key={group.condition}>
@@ -109,16 +109,18 @@ export function GroupedLinkListCard({
           </div>
         ))}
       </div>
-      <div className="mt-5 border-t border-line pt-5">
-        <p className="type-support font-bold tracking-[0.1em] text-muted uppercase">
-          General resource
-        </p>
-        <ul className="mt-2 flex flex-col gap-2.5">
-          <li>
-            <LinkRow link={generalResource} />
-          </li>
-        </ul>
-      </div>
+      {generalResource ? (
+        <div className="mt-5 border-t border-line pt-5">
+          <p className="type-support font-bold tracking-[0.1em] text-muted uppercase">
+            General resource
+          </p>
+          <ul className="mt-2 flex flex-col gap-2.5">
+            <li>
+              <LinkRow link={generalResource} />
+            </li>
+          </ul>
+        </div>
+      ) : null}
       <p className="mt-4 type-support leading-snug text-muted">
         These are outside organizations, not part of GARNET. Ask your care team which ones fit
         your situation.

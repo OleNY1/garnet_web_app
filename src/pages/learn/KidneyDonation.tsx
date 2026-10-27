@@ -1,6 +1,8 @@
 import { HeartHandshake, Search, Stethoscope } from 'lucide-react'
 import { Cite } from '../../components/Cite'
 import { FlowDiagram } from '../../components/learn/FlowDiagram'
+import { Illustration } from '../../components/learn/Illustration'
+import { TopicIntro } from '../../components/learn/TopicIntro'
 import { LearnLink } from '../../components/learn/LearnLink'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
@@ -16,6 +18,15 @@ export function KidneyDonation() {
     <>
       <Section id="kidney-donation" tone="wash" title="What genetic testing means for donor candidates">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
+          <Illustration
+            src="family-generations.png"
+            alt="Four people of increasing age, from a baby to an adult aged 50, standing along a timeline."
+            size="sm"
+          />
+
+          <FlowDiagram tint="plum" steps={DONATION_STEPS} />
+
+          <TopicIntro path="/learn/kidney-donation" />
           <p>
             When a family member needs a kidney, relatives often want to help. If the kidney disease
             has a genetic cause, testing can help identify relatives who did not inherit that cause
@@ -23,13 +34,12 @@ export function KidneyDonation() {
             <Cite n={1} />
           </p>
           <p>
-            The recommended approach is sequential: test the relative who already has kidney
-            disease first, to pin down the exact genetic cause, and only then test the healthy
-            donor candidate for that specific finding.
+            The best way is to test the family member who already has kidney disease first. This
+            helps doctors find the exact genetic change causing the disease. Then they can test the
+            healthy person who wants to donate a kidney to see if they have that same genetic
+            change.
             <Cite n={1} />
           </p>
-
-          <FlowDiagram tint="plum" steps={DONATION_STEPS} />
 
           <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
             <img
@@ -45,20 +55,18 @@ export function KidneyDonation() {
           </figure>
 
           <p>
-            Testing a healthy candidate directly, without first confirming the cause in an
-            affected relative, is generally discouraged — it's more likely to turn up confusing or
-            misleading results in someone who was never at meaningful risk to begin with.
-            <Cite n={1} />
-          </p>
-          <p>
-            Before any testing, donor candidates should be counseled on what each possible result
-            would mean: a positive result usually means donation isn't recommended, while a
-            negative result reduces concern but doesn't always rule out risk completely.
+            Doctors usually do not recommend testing a healthy person first. If they do, the test may
+            find results that are confusing or hard to understand. Testing the family member who
+            has kidney disease first gives clearer answers and helps avoid unnecessary worry.
             <Cite n={1} />
           </p>
           <p>
             Donor candidates with recent West African ancestry may also be offered testing of a
-            gene called APOL1. See <LearnLink to="/learn/apol1">APOL1</LearnLink> for what that
+            gene called <em>APOL1</em>. See{' '}
+            <LearnLink to="/learn/apol1">
+              <em>APOL1</em> risk factor
+            </LearnLink>{' '}
+            for what that
             result can and cannot mean for donation.
           </p>
         </div>

@@ -20,6 +20,14 @@ import { educationalCards, practicalCards } from "../data/resourceCards";
 import { resourceDestinationContent } from "../data/resourceDestinationContent";
 import { DoctorDecorativeArt, DoctorFooter, DoctorHeader } from "../components/DoctorShell";
 
+/* Family-sharing figures from Wynn et al. 2021 (moved from the patient Sharing with family page). */
+const familySharingRows = [
+  { label: "Told all close relatives within 6 months", percent: 34, display: "34%" },
+  { label: "Close relatives who were never told at all", percent: 39, display: "39%" },
+  { label: "Shared with all relatives — told by a genetics specialist", percent: 50, display: "~50%" },
+  { label: "Shared with all relatives — told by a non-genetics doctor", percent: 10, display: "~10%" },
+];
+
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 
 type QuizPrompt = {
@@ -2724,6 +2732,53 @@ Referring clinician
                           </li>
                         ))}
                       </ul>
+                    </div>
+
+                    {/* Moved from the patient Sharing with family page (Hila, Oct 2026). Source: Wynn et al. 2021. */}
+                    <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-5">
+                      <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                        What research shows about family sharing
+                      </h4>
+                      <p className="mt-3 text-black/75">
+                        Research shows that sharing results within families is inconsistent. Many close relatives are
+                        never told.
+                      </p>
+                      <div className="mt-4 space-y-3">
+                        {familySharingRows.map((row) => (
+                          <div key={row.label}>
+                            <div className="mb-1 flex items-baseline justify-between gap-3">
+                              <span className="text-sm text-black/80">{row.label}</span>
+                              <span className="shrink-0 font-semibold text-cyan-800">{row.display}</span>
+                            </div>
+                            <div className="h-2.5 w-full overflow-hidden rounded-full bg-white">
+                              <div className="h-full rounded-full bg-cyan-700" style={{ width: `${row.percent}%` }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-4 text-black/75">
+                        The most common reasons people gave for sharing were a sense of obligation and a belief that the
+                        information could help relatives make their own medical decisions — each cited by about 7 in 10
+                        people. The most common reasons for not sharing were that a relative seemed too young for the
+                        information to matter yet, or that the person simply wasn't in close contact with that relative.
+                      </p>
+                      <p className="mt-4 text-black/75">
+                        Who explains the result seems to matter: people who received their results from a genetics
+                        specialist were far more likely to share with all their relatives than people who heard from a
+                        doctor without genetics training.
+                      </p>
+                      <p className="mt-4 text-sm text-black/60">
+                        Source: Wynn, J. et al. Do research participants share genomic screening results with family
+                        members? Journal of Genetic Counseling (2021).{" "}
+                        <a
+                          href="https://doi.org/10.1002/jgc4.1511"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-cyan-800 underline underline-offset-2"
+                        >
+                          doi.org/10.1002/jgc4.1511
+                        </a>
+                      </p>
                     </div>
                   </div>
 

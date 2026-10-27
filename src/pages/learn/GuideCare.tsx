@@ -1,6 +1,7 @@
 import { Cite } from '../../components/Cite'
 import { Card } from '../../components/Card'
 import { LearnLink } from '../../components/learn/LearnLink'
+import { TopicIntro } from '../../components/learn/TopicIntro'
 import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 import { numbered } from '../../lib/citations'
@@ -29,6 +30,19 @@ export function GuideCare() {
     <>
       <Section id="guide-care" tone="wash" title="Start, avoid, or switch a treatment">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
+          <figure className="mx-auto flex max-w-3xl flex-col items-center gap-3">
+            <img
+              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
+              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
+              className="w-full rounded-xl border border-line"
+            />
+            <figcaption className="text-center type-support leading-snug text-muted">
+              Examples of how a genetic diagnosis can guide care.
+              <Cite n={1} />
+            </figcaption>
+          </figure>
+
+          <TopicIntro path="/learn/guide-care" />
           <p>
             Some kidney diseases with a genetic cause have treatments made for that exact cause.
             Knowing the cause can help your care team start the right treatment, avoid one that is
@@ -37,8 +51,8 @@ export function GuideCare() {
           <p>
             In one large study of adults with chronic kidney disease, a positive genetic result
             changed how doctors managed care for about 9 in 10 patients, including an actual change
-            in treatment plan for roughly a third.
-            <Cite n={1} />
+            in treatment plan for 1 in 3 patients.
+            <Cite n={2} />
           </p>
 
           <h3 className="mt-2 font-display type-sub font-semibold text-ink">
@@ -55,17 +69,6 @@ export function GuideCare() {
             ))}
           </div>
 
-          <figure className="mx-auto mt-2 flex max-w-3xl flex-col items-center gap-3">
-            <img
-              src={`${import.meta.env.BASE_URL}learn-figures/kdigo-conditions-amenable-to-genetic-testing.png`}
-              alt="Table of kidney conditions where a genetic diagnosis can guide care, including disease-modifying therapies, renoprotective strategies, avoidance of unnecessary immunosuppression, transplant recurrence risk, extra-renal screening, and reproductive counseling."
-              className="w-full rounded-xl border border-line"
-            />
-            <figcaption className="text-center type-support leading-snug text-muted">
-              More examples of how a genetic diagnosis can guide care.
-              <Cite n={2} />
-            </figcaption>
-          </figure>
 
           <p>
             Every situation is different. Talk with your doctor or a{' '}
@@ -74,7 +77,7 @@ export function GuideCare() {
           </p>
         </div>
 
-        <Sources sources={numbered('dahl2023', 'kdigo2022')} />
+        <Sources sources={numbered('kdigo2022', 'dahl2023')} />
       </Section>
     </>
   )

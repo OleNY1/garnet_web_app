@@ -4,7 +4,6 @@ import {
   Dna,
   FileText,
   FlaskConical,
-  Globe,
   HandHeart,
   HeartHandshake,
   Layers,
@@ -12,6 +11,7 @@ import {
   Percent,
   MessagesSquare,
   Search,
+  Share2,
   ShieldCheck,
   Stethoscope,
   TestTubes,
@@ -28,8 +28,9 @@ export type LearnTopic = {
   parent?: string
   icon: LucideIcon
   tint: Tint
-  eyebrow: string
+  eyebrow?: string
   title: string
+  /** One-line description: shown on topic cards and as the first line of most pages. */
   intro: string
 }
 
@@ -90,7 +91,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     eyebrow: 'Help your family',
     title: 'How your result can help your family',
     intro:
-      'A genetic cause can help relatives be diagnosed early, plan a family, and find safe living donors.',
+      'A genetic cause can help relatives be diagnosed early, plan a family, and find the best living donors.',
   },
   {
     label: 'Support living donor decisions',
@@ -112,7 +113,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     eyebrow: 'Signs testing may help',
     title: 'Signs testing may help',
     intro:
-      'These signs make it more likely that testing will find a genetic cause. They do not guarantee a result.',
+      'The following signs make it more likely that genetic testing will find the cause of a kidney disease.',
   },
   {
     label: 'How testing works',
@@ -133,7 +134,7 @@ export const LEARN_TOPICS: LearnTopic[] = [
     icon: Layers,
     tint: 'accent',
     eyebrow: 'Types of tests',
-    title: 'Different tests look at different amounts of DNA',
+    title: 'Different tests look at different numbers of genes and types of genetic changes',
     intro: 'Your doctor or a genetic counselor can help choose the test that fits your situation.',
   },
   {
@@ -153,18 +154,16 @@ export const LEARN_TOPICS: LearnTopic[] = [
     end: false,
     icon: ShieldCheck,
     tint: 'plum',
-    eyebrow: 'Your rights & choices',
     title: 'Your rights, privacy, and choices',
     intro:
       "It's normal to wonder who can see a result and what happens to your DNA afterward.",
   },
   {
-    label: 'APOL1',
+    label: 'APOL1 risk factor',
     to: '/learn/apol1',
     end: false,
-    icon: Globe,
+    icon: Dna,
     tint: 'plum',
-    eyebrow: 'APOL1',
     title: 'APOL1 risk factor',
     intro: 'Increased risk of having APOL1-Mediated Kidney Disease (AMKD)',
   },
@@ -194,11 +193,11 @@ export const LEARN_TOPICS: LearnTopic[] = [
     label: 'Sharing with family',
     to: '/learn/family-sharing',
     end: false,
-    icon: Dna,
+    icon: Share2,
     tint: 'accent',
     eyebrow: 'Sharing with family',
     title: 'Why sharing your result with family matters',
-    intro: 'A result about you is sometimes a result about your relatives, too.',
+    intro: 'A positive result about you is sometimes relevant to your relatives, too.',
   },
   {
     label: 'Find a support group',

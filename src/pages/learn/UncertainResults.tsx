@@ -7,6 +7,14 @@ export function UncertainResults() {
     <>
       <Section id="test-report">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
+          <figure className="flex flex-col items-center gap-3">
+            <img
+              src={`${import.meta.env.BASE_URL}learn-figures/genetic-report-positive-vs-negative.png`}
+              alt="Positive vs negative result. Variants run on a scale from Benign and Likely Benign (not reported), through Uncertain (negative; the report depends on the laboratory and type of test ordered), to Likely Pathogenic and Pathogenic, which give a positive result with one copy in dominant disease or two copies in recessive disease."
+              className="w-full rounded-xl border border-line bg-white"
+            />
+          </figure>
+
           <p>
             We are all different, and so is our DNA. Geneticists use multiple sources of information to classify the
             variants in each of us.
@@ -34,17 +42,9 @@ export function UncertainResults() {
             </div>
           </dl>
 
-          <figure className="flex flex-col items-center gap-3">
-            <img
-              src={`${import.meta.env.BASE_URL}learn-figures/genetic-report-positive-vs-negative.png`}
-              alt="Positive vs negative result. Variants run on a scale from Benign and Likely Benign (not reported), through Uncertain (negative; the report depends on the laboratory and type of test ordered), to Likely Pathogenic and Pathogenic, which give a positive result with one copy in dominant disease or two copies in recessive disease."
-              className="w-full rounded-xl border border-line bg-white"
-            />
-          </figure>
-
           <p>
             Sometimes a result is not clearly positive or clearly negative. See{' '}
-            <LearnLink to="/learn/vus">If your result is a VUS</LearnLink> for what that finding is, and why it should not be
+            <LearnLink to="/learn/vus">What a VUS means</LearnLink> for what that finding is, and why it should not be
             used to make medical decisions.
           </p>
         </div>

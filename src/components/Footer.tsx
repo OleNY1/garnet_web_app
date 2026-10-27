@@ -2,7 +2,7 @@ import { BadgeCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const EXPLORE_LINKS = [
-  { label: 'Learn', href: '/learn' },
+  { label: 'Learn More', href: '/learn' },
   { label: 'Genetic Risk Check', href: '/check' },
   { label: 'How to Get Tested', href: '/how-to-get-tested' },
   { label: 'FAQ', href: '/faq' },

@@ -3,18 +3,13 @@ import { Section } from '../../components/Section'
 import { Sources } from '../../components/Sources'
 import { SubtopicCards } from '../../components/learn/SubtopicCards'
 import { LearnLink } from '../../components/learn/LearnLink'
+import { TopicIntro } from '../../components/learn/TopicIntro'
 
 export function TestingBasics() {
   return (
     <>
       <Section id="testing-basics" title="How DNA is collected">
         <div className="mx-auto flex max-w-3xl flex-col gap-6 type-copy text-body">
-          <p>
-            To get genetic testing, you need to provide a DNA sample. DNA is in all our cells, so
-            labs can use a blood, cheek swab, or saliva sample.
-            <Cite n={1} />
-          </p>
-
           <img
             src={`${import.meta.env.BASE_URL}medical-art/cheek-swab-test.png`}
             alt="How a DNA sample can be collected: a cheek swab, a collection kit, or a saliva sample."
@@ -25,6 +20,13 @@ export function TestingBasics() {
             <span>Collection kit</span>
             <span>Saliva sample</span>
           </div>
+
+          <TopicIntro path="/learn/testing-basics" />
+          <p>
+            To get genetic testing, you need to provide a DNA sample. DNA is in all our cells, so
+            labs can use a blood, cheek swab, or saliva sample.
+            <Cite n={1} />
+          </p>
 
           <p>
             The test needs to be ordered by a doctor or a genetic counselor. Ask all your
@@ -43,11 +45,7 @@ export function TestingBasics() {
             What the tests look for
           </h3>
           <p>
-            For most people, testing means a quick cheek swab — not a blood draw or a procedure.
-            <Cite n={1} />
-          </p>
-          <p>
-            Tests also differ in how much DNA they check: some look at a single gene your doctor
+            There are different tests: some look at a single gene your doctor
             already suspects causes your kidney disease, and others look at nearly all of your
             genes. See <LearnLink to="/learn/types-of-tests">Types of tests</LearnLink> for what
             each option involves, and how doctors weigh cost, turnaround time, and the chance of an
@@ -64,6 +62,9 @@ export function TestingBasics() {
               short plain-language explainer
             </a>
             .
+          </p>
+          <p>
+            Learn more about <LearnLink to="/learn/genetic-counselors">genetic counselors</LearnLink>.
           </p>
         </div>
 

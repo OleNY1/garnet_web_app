@@ -31,12 +31,15 @@ export function PageHero({
 }: {
   icon: LucideIcon
   tint: Tint
-  eyebrow: string
+  /** Small label above the title. Hidden when it would only repeat the title. */
+  eyebrow?: string
   title: string
-  intro: string
+  intro?: string
   /** For sub-pages: a link back to the page they sit under. */
   parent?: { to: string; label: string }
 }) {
+  const showEyebrow = Boolean(eyebrow) && eyebrow!.trim().toLowerCase() !== title.trim().toLowerCase()
+
   return (
     <section className={`${washClasses[tint]} border-b border-line`}>
       <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-5 px-5 py-7 sm:px-8 sm:py-10">
@@ -51,15 +54,17 @@ export function PageHero({
               {parent.label}
             </Link>
           ) : null}
-          <p
-            className={`mb-2 type-support font-bold tracking-[0.14em] uppercase ${eyebrowClasses[tint]}`}
-          >
-            {eyebrow}
-          </p>
+          {showEyebrow ? (
+            <p
+              className={`mb-2 type-support font-bold tracking-[0.14em] uppercase ${eyebrowClasses[tint]}`}
+            >
+              {eyebrow}
+            </p>
+          ) : null}
           <h1 className="font-display type-page font-semibold text-ink">
             {title}
           </h1>
-          <p className="mt-4 max-w-2xl type-copy text-body">{intro}</p>
+          {intro ? <p className="mt-4 max-w-2xl type-copy text-body">{intro}</p> : null}
         </div>
       </div>
     </section>
