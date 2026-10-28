@@ -12,13 +12,43 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '/faq' },
 ]
 
+type LearnMenuItem = {
+  label: string
+  to: string
+  end: boolean
+  sub: boolean
+}
+
 /* Sub-pages (e.g. Guide care under How can genetic testing help?) are indented under their parent. */
-const LEARN_MENU = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
+const LEARN_MENU: LearnMenuItem[] = LEARN_TOPICS.filter((topic) => !topic.end).map((topic) => ({
   label: topic.label,
   to: topic.to,
   end: topic.end,
   sub: Boolean(topic.parent),
 }))
+
+/* Keep a parent with its sub-pages so a two-column dropdown never splits them. */
+const LEARN_MENU_GROUPS = LEARN_MENU.reduce<LearnMenuItem[][]>((groups, item) => {
+  if (!item.sub || groups.length === 0) groups.push([item])
+  else groups[groups.length - 1].push(item)
+  return groups
+}, [])
+
+const LEARN_MENU_COLUMNS = (() => {
+  const target = Math.ceil(LEARN_MENU.length / 2)
+  const left: LearnMenuItem[][] = []
+  const right: LearnMenuItem[][] = []
+  let count = 0
+  for (const group of LEARN_MENU_GROUPS) {
+    if (count < target) {
+      left.push(group)
+      count += group.length
+    } else {
+      right.push(group)
+    }
+  }
+  return [left, right] as const
+})()
 
 const hoverLift =
   'transition-transform duration-150 hover:-translate-y-0.5 hover:scale-105 focus-visible:-translate-y-0.5 focus-visible:scale-105'
@@ -34,6 +64,42 @@ const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
   `block rounded-xl px-4 py-3.5 type-support font-medium ${hoverLift} ${
     isActive ? 'bg-brand-soft text-ink' : 'text-ink'
   }`
+
+function LearnMenuLinks({
+  groups,
+  onClick,
+  onFocus,
+}: {
+  groups: LearnMenuItem[][]
+  onClick?: () => void
+  onFocus?: () => void
+}) {
+  return (
+    <>
+      {groups.map((group) => (
+        <div key={group[0].to}>
+          {group.map((topic) => (
+            <NavLink
+              key={topic.to}
+              to={topic.to}
+              end={topic.end}
+              role="menuitem"
+              onClick={onClick}
+              onFocus={onFocus}
+              className={
+                topic.sub
+                  ? `ml-5 block rounded-r-xl border-l-2 border-line py-2 pr-3.5 pl-3 type-support font-medium text-muted ${hoverLift}`
+                  : `block rounded-xl px-3.5 py-2.5 type-support font-medium text-body ${hoverLift}`
+              }
+            >
+              {topic.label}
+            </NavLink>
+          ))}
+        </div>
+      ))}
+    </>
+  )
+}
 
 /**
  * "Learn" nav item with a hover/focus dropdown listing every Learn
@@ -114,27 +180,17 @@ function LearnNavItem() {
       <div
         role="menu"
         aria-label="Learn topics"
-        className={`absolute top-full left-0 z-30 mt-1.5 max-h-[calc(100dvh-6rem)] w-80 origin-top-left overflow-y-auto rounded-2xl border border-line bg-surface p-2 shadow-lift transition-all duration-150 ${
+        className={`absolute top-full left-0 z-30 mt-1.5 grid w-[min(48rem,calc(100vw-2.5rem))] grid-cols-[1fr_auto_1fr] origin-top-left rounded-2xl border border-line bg-surface p-3 shadow-lift transition-all duration-150 ${
           open ? 'pointer-events-auto scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
         }`}
       >
-        {LEARN_MENU.map((topic) => (
-          <NavLink
-            key={topic.to}
-            to={topic.to}
-            end={topic.end}
-            role="menuitem"
-            onClick={closeMenu}
-            onFocus={openMenu}
-            className={
-              topic.sub
-                ? `ml-5 block rounded-r-xl border-l-2 border-line py-2 pr-3.5 pl-3 type-support font-medium text-muted ${hoverLift}`
-                : `block rounded-xl px-3.5 py-2.5 type-support font-medium text-body ${hoverLift}`
-            }
-          >
-            {topic.label}
-          </NavLink>
-        ))}
+        <div className="pr-2">
+          <LearnMenuLinks groups={LEARN_MENU_COLUMNS[0]} onClick={closeMenu} onFocus={openMenu} />
+        </div>
+        <div aria-hidden="true" className="mx-2 my-1 w-[3px] rounded-full bg-brand" />
+        <div className="pl-2">
+          <LearnMenuLinks groups={LEARN_MENU_COLUMNS[1]} onClick={closeMenu} onFocus={openMenu} />
+        </div>
       </div>
     </li>
   )
