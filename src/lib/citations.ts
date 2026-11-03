@@ -60,7 +60,7 @@ export const CITATIONS = {
   },
   wynn2021: {
     citation:
-      'Wynn, J. et al. Do research participants share genomic screening results with family members? Journal of Genetic Counseling 00, 1-12 (2021).',
+      'Wynn, J. et al. Do research participants share genomic screening results with family members? Journal of Genetic Counseling 31, 447-458 (2022; published online 2021).',
     url: 'https://doi.org/10.1002/jgc4.1511',
   },
   bogyo2025: {

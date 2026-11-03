@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="title">
+  <title id="title">National Kidney Foundation genetic testing microlearning series</title>
+  <rect width="640" height="360" fill="#eef7f8"/>
+  <path d="M60 68H155Q170 68 170 83V174Q155 159 135 159H60ZM280 68H185Q170 68 170 83V174Q185 159 205 159H280Z" fill="white" stroke="#00687b" stroke-width="7" stroke-linejoin="round"/>
+  <g stroke="#78924c" stroke-width="6" stroke-linecap="round"><path d="M85 94H141M85 117H141M85 140H123M200 94H255M200 117H255M200 140H235"/></g>
+  <g fill="#16323b" font-family="sans-serif"><text x="320" y="93" font-size="20">National Kidney</text><text x="320" y="122" font-size="20">Foundation</text><text x="55" y="230" font-size="29" font-weight="bold">Genetic Testing in the</text><text x="55" y="270" font-size="29" font-weight="bold">Diagnosis of Kidney Diseases</text><text x="55" y="315" font-size="20">CME microlearning series</text></g>
+</svg>

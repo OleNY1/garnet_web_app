@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { ConsentPanels } from "./ClinicalEducationPage";
 import { DoctorDecorativeArt, DoctorFooter, DoctorHeader, doctorSerifFont } from "../components/DoctorShell";
 
 const workflowTopicMeta: Record<string, { title: string; summary: string }> = {
@@ -17,7 +18,7 @@ const workflowTopicMeta: Record<string, { title: string; summary: string }> = {
     summary: "Framework for genetic test selection and follow-up pathways in individuals with kidney disease.",
   },
   "informed-consent": {
-    title: "Informed Consent",
+    title: "Explain the Goals of the Test to Your Patient",
     summary: "Core talking points before testing, including purpose, benefits, limitations, privacy, and family implications.",
   },
   "results-disclosure-follow-up": {
@@ -47,48 +48,6 @@ const howToChooseTestReference = {
 const howToChooseTestFigureUrl =
   "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/27cf/11993218/856da1b2ff90/gr2.jpg";
 
-const informedConsentPanels = [
-  {
-    title: "Purpose of Genetic Testing",
-    accentClassName: "from-[#6bb8f0] to-[#84cdfa]",
-    text: "Discuss with your patient the goal of genetic testing in their case. It might be to clarify diagnosis, guide management, support family screening, support family planning or reproductive counseling, inform donor or transplant planning, or determine whether results could change treatment planning.",
-  },
-  {
-    title: "What the Test Involves",
-    accentClassName: "from-[#77bc67] to-[#97d98d]",
-    text: "A blood or saliva sample is used to analyze DNA. Explain how the sample is collected, who orders the test, where results will be returned, and what type of result discussion the patient should expect.",
-  },
-  {
-    title: "Benefits of Testing",
-    accentClassName: "from-[#d1cf4b] to-[#efe780]",
-    text: "Results may clarify cause, improve treatment choices, support donor or transplant planning, and guide referrals for counseling or specialty care.",
-  },
-  {
-    title: "Types of Genetic Tests",
-    accentClassName: "from-[#8ccc72] to-[#b7e298]",
-    text: "Testing may include single-gene analysis, a kidney gene panel, exome sequencing, genome sequencing, CNV analysis, or other targeted methods depending on the phenotype and suspected diagnosis.",
-  },
-  {
-    title: "Limitations",
-    accentClassName: "from-[#f2b04c] to-[#ffd57a]",
-    text: "Results often include variants of uncertain significance because there is a lot we still do not know, and it is difficult to know for certain whether genetic differences between us cause disease or only explain why we are not all identical. Unless the test is done for a variant known to cause disease in the family, not finding a genetic cause does not mean that there is none; it means that we have not found one.",
-  },
-  {
-    title: "Risks & Considerations",
-    accentClassName: "from-[#6db5e5] to-[#9fcef2]",
-    text: "Patients may have privacy concerns, emotional stress, uncertainty about results, and questions about what a finding means for future care or relatives. Share with the patient information about GINA.",
-  },
-  {
-    title: "Impact on Family",
-    accentClassName: "from-[#8ccb75] to-[#b8e39c]",
-    text: "A result can identify at-risk relatives and may prompt cascade testing or earlier kidney surveillance in family members.",
-  },
-  {
-    title: "What Happens Next?",
-    accentClassName: "from-[#f0b250] to-[#ffd47e]",
-    text: "After testing, results are reviewed with the patient, follow-up plans are adjusted, and referral to a genetic counselor may be recommended. Inform the patient when to expect the result and what to expect to happen: you will review and explain the results, adjust care if needed, and consider referral to other specialists or another genetic test.",
-  },
-];
 
 const resultsDisclosureReference = {
   href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12338368/",
@@ -124,7 +83,7 @@ const createInitialLetterFormState = (): LetterFormState => ({
 
 const letterFallback = (value: string, placeholder: string) => value.trim() || placeholder;
 
-function renderClinicalExaminationContent(onBack: () => void) {
+function renderClinicalExaminationContent() {
   return (
     <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-start">
@@ -133,19 +92,12 @@ function renderClinicalExaminationContent(onBack: () => void) {
             Clinical examination
           </h3>
 
+          <p className="mt-5 text-base leading-relaxed"><Link to="/doctor/dashboard/resource/genetic-testing-risks" className="font-semibold text-[#00687b] underline underline-offset-4">You can use the questions from the Assess Risk for Genetic Condition form.</Link></p>
           <p className="mt-6 text-xl leading-10 text-black/80">
             Look for extra-renal manifestations such as hearing loss, ocular findings, neurological symptoms,
             electrolyte abnormalities, congenital anomalies, or other syndromic findings that may point toward an
             inherited kidney condition.
           </p>
-
-          <button
-            type="button"
-            onClick={onBack}
-            className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-          >
-            Back
-          </button>
         </div>
 
         <div className="overflow-hidden rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
@@ -174,7 +126,7 @@ function renderClinicalExaminationContent(onBack: () => void) {
   );
 }
 
-function renderFamilyHistoryCollectionContent(onBack: () => void) {
+function renderFamilyHistoryCollectionContent() {
   return (
     <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-start">
@@ -182,6 +134,7 @@ function renderFamilyHistoryCollectionContent(onBack: () => void) {
           <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
             Family History Collection
           </h3>
+          <p className="mt-5 text-base leading-relaxed"><Link to="/doctor/dashboard/resource/family-history-collection" className="font-semibold text-[#00687b] underline underline-offset-4">How to collect a three-generation family history</Link></p>
 
           <p className="mt-6 text-xl leading-10 text-black/80">
             Obtain a detailed family history for kidney disease, asking about affected relatives, age of onset,
@@ -202,14 +155,6 @@ function renderFamilyHistoryCollectionContent(onBack: () => void) {
           >
             Open DrawPed in a separate tab
           </a>
-
-          <button
-            type="button"
-            onClick={onBack}
-            className="mt-8 block min-w-[180px] bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-          >
-            Back
-          </button>
         </div>
 
         <div className="rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] p-4 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
@@ -229,78 +174,27 @@ function renderFamilyHistoryCollectionContent(onBack: () => void) {
   );
 }
 
-function renderInformedConsentContent(onBack: () => void) {
-  return (
-    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
-      <div className="max-w-4xl">
-        <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
-          Understanding Genetic Testing for Kidney Disease
-        </h3>
-        <p className="mt-5 text-xl leading-10 text-black/80">
-          Before testing, patients should understand why testing is being offered, what the sample collection involves,
-          what results can and cannot tell them, and how findings may affect family members and follow-up care.
-        </p>
-      </div>
-
-      <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {informedConsentPanels.map((panel) => (
-          <article
-            key={panel.title}
-            className="overflow-hidden rounded-[1.5rem] border border-black/10 bg-[#f8fbff] shadow-[0_10px_24px_rgba(16,35,71,0.08)]"
-          >
-            <div className={`bg-gradient-to-r ${panel.accentClassName} px-5 py-4 text-[#14325b]`}>
-              <h4 className="text-xl leading-tight" style={{ fontFamily: "Georgia, serif" }}>
-                {panel.title}
-              </h4>
-            </div>
-            <div className="px-5 py-5">
-              <p className="text-base leading-8 text-black/75">{panel.text}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-lg leading-8 text-black/75">
-        <p>
-          Genetic discrimination protections:{" "}
-          <a
-            href="/doctor/dashboard/resource/risks-not-offering"
-            className="text-[#1b4fd1] underline underline-offset-4"
-          >
-            GINA and privacy considerations
-          </a>
-          .
-        </p>
-        <p className="mt-3">
-          Ethics reference:{" "}
-          <a
-            href="https://code-medical-ethics.ama-assn.org/ethics-opinions/genetic-testing-counseling"
-            target="_blank"
-            rel="noreferrer"
-            className="text-[#1b4fd1] underline underline-offset-4"
-          >
-            AMA Code of Medical Ethics: Genetic Testing and Counseling
-          </a>
-        </p>
-      </div>
-
-      <button
-        type="button"
-        onClick={onBack}
-        className="mt-10 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-      >
-        Back
-      </button>
-    </div>
-  );
+function renderInformedConsentContent() {
+  return <div className="mt-8 space-y-6">
+    <ConsentPanels compact />
+  </div>;
 }
 
-function renderHowToChooseTheTestContent(onBack: () => void) {
+function renderHowToChooseTheTestContent() {
   return (
     <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
         Choosing the right test
       </h3>
+
+      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
+        <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
+        <p className="mt-3 text-xl leading-9 underline decoration-black/50 underline-offset-4">
+          <a href={howToChooseTestReference.href} target="_blank" rel="noreferrer">
+            {howToChooseTestReference.citation}
+          </a>
+        </p>
+      </div>
 
       <div className="mt-8 rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[linear-gradient(180deg,#fdfefe_0%,#f4fbff_100%)] p-5 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
         <img
@@ -323,27 +217,12 @@ function renderHowToChooseTheTestContent(onBack: () => void) {
         </p>
       </div>
 
-      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
-        <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
-        <p className="mt-3 text-xl leading-9 underline decoration-black/50 underline-offset-4">
-          <a href={howToChooseTestReference.href} target="_blank" rel="noreferrer">
-            {howToChooseTestReference.citation}
-          </a>
-        </p>
-      </div>
 
-      <button
-        type="button"
-        onClick={onBack}
-        className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-      >
-        Back
-      </button>
     </div>
   );
 }
 
-function renderResultsDisclosureContent(onBack: () => void) {
+function renderResultsDisclosureContent() {
   return (
     <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="max-w-4xl">
@@ -353,7 +232,7 @@ function renderResultsDisclosureContent(onBack: () => void) {
 
         <p className="mt-6 text-xl leading-10 text-black/80">
           After testing, results are reviewed with the patient, follow-up plans are adjusted, and referral to a genetic
-          counselor may be recommended.
+          counselor may be recommended. <Link to="/doctor/counselors" className="font-semibold text-[#00687b] underline underline-offset-4">Review the genetic counseling referral path.</Link>
         </p>
 
         <p className="mt-8 text-xl leading-10 text-black/80">
@@ -369,21 +248,12 @@ function renderResultsDisclosureContent(onBack: () => void) {
             </a>
           </p>
         </div>
-
-        <button
-          type="button"
-          onClick={onBack}
-          className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-        >
-          Back
-        </button>
       </div>
     </div>
   );
 }
 
 function renderLetterOfMedicalNecessityContent(
-  onBack: () => void,
   form: LetterFormState,
   onFieldChange: (field: keyof LetterFormState, value: string) => void,
 ) {
@@ -435,14 +305,6 @@ function renderLetterOfMedicalNecessityContent(
               />
             </label>
           </div>
-
-          <button
-            type="button"
-            onClick={onBack}
-            className="mt-8 inline-flex min-w-[180px] items-center justify-center bg-[#232323] px-8 py-4 text-2xl tracking-[0.08em] text-white transition hover:bg-black"
-          >
-            Back
-          </button>
         </div>
 
         <div className="rounded-[1.5rem] border border-[#d9e3f3] bg-white p-6 shadow-[0_16px_36px_rgba(0,0,0,0.10)]">
@@ -550,7 +412,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <button
             type="button"
             onClick={() => navigate(workflowRoute)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#c3d6d9] bg-white text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c3d6d9] bg-white text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
             aria-label="Back to workflow"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -576,7 +438,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <div className="pointer-events-none absolute inset-0 hero-wash" />
           <DoctorDecorativeArt activeMode={activeMode} />
           <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
-            {renderClinicalExaminationContent(() => navigate(workflowRoute))}
+            {renderClinicalExaminationContent()}
           </div>
         </main>
         <DoctorFooter />
@@ -592,7 +454,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <div className="pointer-events-none absolute inset-0 hero-wash" />
           <DoctorDecorativeArt activeMode={activeMode} />
           <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
-            {renderFamilyHistoryCollectionContent(() => navigate(workflowRoute))}
+            {renderFamilyHistoryCollectionContent()}
           </div>
         </main>
         <DoctorFooter />
@@ -608,7 +470,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <div className="pointer-events-none absolute inset-0 hero-wash" />
           <DoctorDecorativeArt activeMode={activeMode} />
           <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
-            {renderHowToChooseTheTestContent(() => navigate(workflowRoute))}
+            {renderHowToChooseTheTestContent()}
           </div>
         </main>
         <DoctorFooter />
@@ -624,7 +486,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <div className="pointer-events-none absolute inset-0 hero-wash" />
           <DoctorDecorativeArt activeMode={activeMode} />
           <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
-            {renderInformedConsentContent(() => navigate(workflowRoute))}
+            {renderInformedConsentContent()}
           </div>
         </main>
         <DoctorFooter />
@@ -643,7 +505,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <div className="pointer-events-none absolute inset-0 hero-wash" />
           <DoctorDecorativeArt activeMode={activeMode} />
           <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
-            {renderResultsDisclosureContent(() => navigate(workflowRoute))}
+            {renderResultsDisclosureContent()}
           </div>
         </main>
         <DoctorFooter />
@@ -663,7 +525,6 @@ export default function GeneticCounselingWorkflowDetailPage() {
           <DoctorDecorativeArt activeMode={activeMode} />
           <div className="relative z-10 mx-auto max-w-6xl px-5 py-6 sm:px-8">
             {renderLetterOfMedicalNecessityContent(
-              () => navigate(workflowRoute),
               letterForm,
               (field, value) => setLetterForm((prev) => ({ ...prev, [field]: value })),
             )}

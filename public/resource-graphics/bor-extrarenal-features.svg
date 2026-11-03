@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 310" role="img" aria-labelledby="title desc">
+  <title id="title">Extra renal features of branchio oto renal spectrum disorder</title>
+  <desc id="desc">Two simple anatomical illustrations mark a preauricular pit in front of the ear and a branchial sinus opening on the side of the neck.</desc>
+  <rect width="820" height="310" rx="16" fill="#f1f7f7"/>
+  <g fill="none" stroke="#4b747b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M100 240V190C75 174 65 141 70 107C76 69 108 46 146 47C181 48 202 68 210 96L223 122L209 133V156C209 176 192 189 175 191V239"/>
+    <path d="M144 115C132 101 116 115 119 135C121 151 131 155 138 146M136 122C125 121 124 135 133 138"/>
+    <path d="M495 49C533 43 572 59 583 91L598 118L585 131V151C585 174 565 190 547 192V244M494 67C463 89 462 146 481 171L496 184V244"/>
+    <path d="M515 114C501 104 492 118 495 136C498 153 508 154 514 146"/>
+  </g>
+  <g fill="#bb563c" stroke="white" stroke-width="2"><circle cx="151" cy="121" r="6"/><circle cx="516" cy="211" r="6"/></g>
+  <g fill="none" stroke="#bb563c" stroke-width="2"><path d="M158 121H257V107"/><path d="M523 211H635V191"/></g>
+  <g font-family="Georgia,serif" fill="#16323b" font-size="20"><text x="38" y="283">Preauricular pit</text><text x="445" y="283">Branchial sinus opening</text></g>
+  <g font-family="sans-serif" fill="#5b6472" font-size="15"><text x="231" y="88">Just in front</text><text x="231" y="107">of the ear</text><text x="618" y="171">Side of</text><text x="618" y="190">the neck</text></g>
+</svg>

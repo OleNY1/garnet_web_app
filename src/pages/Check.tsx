@@ -206,7 +206,7 @@ const optionsFor: Record<QuestionKey, OptionDef[]> = {
   familyFailureAges: ageOptions,
 }
 
-function ResultPanel({ answers, result, onReset }: { answers: Answers; result: RiskResult; onReset: () => void }) {
+function ResultPanel({ answers, result, onReset, clinician = false }: { answers: Answers; result: RiskResult; onReset: () => void; clinician?: boolean }) {
   const increased = result.level === 'increased'
 
   return (
@@ -291,8 +291,8 @@ function ResultPanel({ answers, result, onReset }: { answers: Answers; result: R
         </p>
 
         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-          <Button href="/how-to-get-tested" className="w-full sm:w-auto">
-            See how to get tested
+          <Button href={clinician ? "/doctor/counselors" : "/how-to-get-tested"} className="w-full sm:w-auto">
+            {clinician ? "Refer for genetic counseling" : "See how to get tested"}
             <ArrowRight aria-hidden="true" className="size-5" />
           </Button>
           <Button variant="secondary" onClick={onReset} className="w-full sm:w-auto">
@@ -326,9 +326,9 @@ const prefaces: Record<Audience, ReactNode> = {
   ),
 }
 
-export function Check() {
+export function Check({ clinician = false }: { clinician?: boolean }) {
   const [params, setParams] = useSearchParams()
-  const audience: Audience = params.get('for') === 'doctor' ? 'doctor' : 'patient'
+  const audience: Audience = clinician || params.get('for') === 'doctor' ? 'doctor' : 'patient'
   const [answers, setAnswers] = useState<Answers>(emptyAnswers)
   const [result, setResult] = useState<RiskResult | null>(null)
   const [missing, setMissing] = useState<QuestionKey[]>([])
@@ -375,14 +375,14 @@ export function Check() {
         icon={ListChecks}
         tint="accent"
         eyebrow="Genetic Risk Check"
-        title="A few questions about your kidney disease"
+        title={clinician ? "Assess Risk for Genetic Condition" : "A few questions about your kidney disease"}
         intro="Answer questions about your diagnosis, other health problems, and your family's health, and we will tell you how your chance of having a genetic cause of kidney disease compares."
       />
 
       <Section id="check" className="!py-10 sm:!py-14">
         <div className="mx-auto max-w-3xl">
           {/* Who is filling in the form: only the preface changes. */}
-          <div role="group" aria-label="Who is filling in this form" className="inline-flex rounded-full border border-line bg-surface p-1">
+          <div role="group" aria-label="Who is filling in this form" className={cx(clinician ? 'hidden' : 'inline-flex', 'rounded-full border border-line bg-surface p-1')}>
             {(
               [
                 ['patient', 'For patients', UserRound],
@@ -612,7 +612,7 @@ export function Check() {
           <div ref={resultRef} aria-live="polite" className="scroll-mt-28">
             {result ? (
               <div className="mt-12">
-                <ResultPanel answers={answers} result={result} onReset={reset} />
+                <ResultPanel answers={answers} result={result} onReset={reset} clinician={clinician} />
               </div>
             ) : null}
           </div>

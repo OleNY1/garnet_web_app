@@ -33,6 +33,7 @@ export type VideoLinkItem = {
   embedUrl?: string;
   sourceLabel?: string;
   buttonLabel?: string;
+  duration?: string;
 };
 
 export type DiseaseLinkItem = {
@@ -142,7 +143,7 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
     mode: "educational",
     title: "Why Genetic Testing in Nephrology?",
     context:
-      "Genetic testing plays a critical role in nephrology because 10-20% of adults with chronic kidney disease and up to 70% of children with chronic kidney disease have a monogenic cause that can be identified with a genetic test. Despite this, nephrology currently lags behind other specialties in implementing genetic testing.",
+      "Diagnosis, prognosis, treatment decisions, and family care.",
     sections: [
       {
         title: "Improved Diagnostic Accuracy",
@@ -300,6 +301,8 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
     linkPreviews: [
       {
         title: "CME Kidney SPA Course",
+        imageUrl: `${import.meta.env.BASE_URL}resource-graphics/kidney-spa-course.svg`,
+        imageAlt: "Kidney genetics continuing medical education",
         subtitle: "Genetic testing in the diagnosis of kidney diseases microlearning series",
         url: "https://cme.kidney.org/spa/courses/resource/r860-genetic-testing-in-the-diagnosis-of-kidney-diseases-a-microlearning-series/curriculum/home/default",
       },
@@ -378,7 +381,7 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   "genetic-testing-counseling-videos": {
     id: "genetic-testing-counseling-videos",
     mode: "educational",
-    title: "Educational Videos",
+    title: "Kidney Genetics Explained by Experts - Videos",
     context:
       "Curated videos focused specifically on genetic testing and kidney disease.",
     sections: [],
@@ -533,7 +536,7 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   "order-testing-directly": {
     id: "order-testing-directly",
     mode: "practical",
-    title: "Order Testing Directly",
+    title: "How to Order Genetic Testing for Your Patient?",
     context:
       "Direct-order workflow with clinical steps and documentation tools for initiating testing in practice.",
     sections: [
@@ -734,13 +737,13 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
     sections: [],
     diseaseLinks: [
       {
-        label: "ADPKD",
+        label: "Autosomal Dominant Polycystic Kidney Disease (ADPKD)",
         topicId: "adpkd",
       },
-      { label: "Branchio-Oto-Renal Syndrome (EYA1)", topicId: "bor" },
+      { label: "Branchio-Oto-Renal Syndrome", topicId: "bor" },
       { label: "Collagenopathies: Alport Spectrum Disorder", topicId: "alport" },
       { label: "Dent disease", topicId: "dent" },
-      { label: "Fabry disease (GLA)", topicId: "fabry" },
+      { label: "Fabry disease", topicId: "fabry" },
       { label: "Gitelman and Bartter", topicId: "tubulopathies" },
       {
         label: "HNF1B-related Autosomal Dominant Tubulointerstitial Kidney Disease",
@@ -751,23 +754,23 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
         topicId: "ciliopathies",
       },
       {
-        label: "PAX2-Related Disorder (also known as Renal Coloboma Syndrome and Papillorenal syndrome)",
+        label: "PAX2-Related Disorder (Renal Coloboma Syndrome and Papillorenal Syndrome)",
         topicId: "pax2",
       },
     ],
     geneticDiseaseTopics: {
       bor: {
         id: "bor",
-        title: "Branchio-Oto-Renal Syndrome (EYA1)",
+        title: "Branchio-Oto-Renal Syndrome",
         primarySections: [],
         featureCards: [
           {
             title: "Genetics",
-            bullets: ["Most commonly associated with EYA1; other genes include SIX1 and SIX5."],
+            bullets: ["Autosomal dominant disease associated with EYA1 or SIX1 variants or deletions."],
           },
           {
             title: "Clinical Features",
-            bullets: ["Branchial arch anomalies", "Ear malformations or hearing loss", "Renal anomalies including CAKUT spectrum findings"],
+            bullets: ["Renal anomalies including CAKUT spectrum findings", "Ear malformations or hearing loss", "Branchial arch anomalies"],
           },
           {
             title: "Why It's Important",
@@ -816,8 +819,8 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
             bullets: ["Explains syndromic kidney presentations", "Guides family screening", "Prompts evaluation for extra-renal features"],
           },
         ],
-        referenceLabel: "GeneReviews: HNF1B-Related Disease.",
-        referenceUrl: "https://www.ncbi.nlm.nih.gov/books/NBK532299/",
+        referenceLabel: "Clissold RL, Hamilton AJ, Hattersley AT, Ellard S, Bingham C. HNF1B-associated renal and extra-renal disease - an expanding clinical spectrum. Nat Rev Nephrol. 2015;11:102-112. doi:10.1038/nrneph.2014.232.",
+        referenceUrl: "https://doi.org/10.1038/nrneph.2014.232",
       },
       pax2: {
         id: "pax2",
@@ -842,7 +845,7 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
       },
       adpkd: {
         id: "adpkd",
-        title: "ADPKD",
+        title: "Autosomal Dominant Polycystic Kidney Disease (ADPKD)",
         primarySections: [
           {
             title: "Indications for Testing",
@@ -1102,8 +1105,8 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
           },
         ],
         referenceLabel:
-          "Weber F, Lehmann-Horn F. Hypokalemic Periodic Paralysis. GeneReviews.",
-        referenceUrl: "https://www.ncbi.nlm.nih.gov/books/NBK1338/",
+          "Walsh PR, Tse Y, Ashton E, et al. Clinical and diagnostic features of Bartter and Gitelman syndromes. Clin Kidney J. 2018;11:302-309. doi:10.1093/ckj/sfx118.",
+        referenceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6007694/",
       },
       ciliopathies: {
         id: "ciliopathies",

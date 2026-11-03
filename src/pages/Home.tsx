@@ -30,7 +30,7 @@ const PATHS: Array<{
     tint: 'accent',
     eyebrow: 'For doctors and clinicians',
     title: 'I am a doctor',
-    text: 'Access the clinician-facing side with nephrology education, workflow guidance, counseling resources, and practical tools.',
+    text: 'Find education materials, workflow guidance, counseling resources, and practical tools.',
     cta: 'Enter doctor side',
     href: DOCTOR_APP_URL,
   },

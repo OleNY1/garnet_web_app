@@ -1,32 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
 import {
-  Activity,
+  ArrowLeft,
   ClipboardCheck,
   FileText,
-  FlaskConical,
   GitBranch,
   Microscope,
-  Pill,
-  Search,
   ShieldCheck,
   Stethoscope,
-  Users,
   type LucideIcon,
 } from "lucide-react";
+import { DiseaseSummary, GeneText } from "../components/DiseaseSummary";
+import { ReferenceLibrary } from "../components/ReferenceLibrary";
+import { annalsReference, clinicalReferences, videoDescriptions } from "../data/clinicalEducation";
+import { CITATIONS } from "../../lib/citations";
 import { educationalCards, practicalCards } from "../data/resourceCards";
 import { resourceDestinationContent } from "../data/resourceDestinationContent";
 import { DoctorDecorativeArt, DoctorFooter, DoctorHeader } from "../components/DoctorShell";
-
-/* Family-sharing figures from Wynn et al. 2021 (moved from the patient Sharing with family page). */
-const familySharingRows = [
-  { label: "Told all close relatives within 6 months", percent: 34, display: "34%" },
-  { label: "Close relatives who were never told at all", percent: 39, display: "39%" },
-  { label: "Shared with all relatives — told by a genetics specialist", percent: 50, display: "~50%" },
-  { label: "Shared with all relatives — told by a non-genetics doctor", percent: 10, display: "~10%" },
-];
 
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 
@@ -131,65 +123,7 @@ const whyGeneticTestingBenefits = [
   {
     label: "Therapeutic decision-making",
     description:
-      "Certain genetic diagnoses influence treatment choices or eligibility for targeted therapies (when available).",
-  },
-];
-
-const whyGeneticTestingInfographicCards: Array<{
-  title: string;
-  lines: string[];
-  icon: LucideIcon;
-  borderClassName: string;
-  iconClassName: string;
-  positionClassName: string;
-}> = [
-  {
-    title: "Accurate Diagnosis",
-    lines: ["Identify rare and atypical kidney disease causes.", "End diagnostic odysseys."],
-    icon: Search,
-    borderClassName: "border-[#8a7ab8]",
-    iconClassName: "text-[#5d4d95]",
-    positionClassName: "md:col-start-1 md:row-start-1",
-  },
-  {
-    title: "Family Planning & Counseling",
-    lines: ["Understand inheritance patterns.", "Risk assessment for relatives."],
-    icon: Users,
-    borderClassName: "border-[#8a7ab8]",
-    iconClassName: "text-[#59b8c7]",
-    positionClassName: "md:col-start-3 md:row-start-1",
-  },
-  {
-    title: "Prognostication & Monitoring",
-    lines: ["Predict disease course.", "Anticipate complications."],
-    icon: Activity,
-    borderClassName: "border-[#57b9c8]",
-    iconClassName: "text-[#57b9c8]",
-    positionClassName: "md:col-start-1 md:row-start-2",
-  },
-  {
-    title: "Prevention & Early Intervention",
-    lines: ["Screen at-risk individuals.", "Pre-symptomatic management."],
-    icon: ShieldCheck,
-    borderClassName: "border-[#57b9c8]",
-    iconClassName: "text-[#57b9c8]",
-    positionClassName: "md:col-start-3 md:row-start-2",
-  },
-  {
-    title: "Therapeutic Guidance",
-    lines: ["Personalize treatment strategies.", "Eligibility for clinical trials."],
-    icon: Pill,
-    borderClassName: "border-[#8a7ab8]",
-    iconClassName: "text-[#5d4d95]",
-    positionClassName: "md:col-start-1 md:row-start-3",
-  },
-  {
-    title: "Research & Drug Discovery",
-    lines: ["Uncover new gene-disease links.", "Develop novel therapies."],
-    icon: FlaskConical,
-    borderClassName: "border-[#8a7ab8]",
-    iconClassName: "text-[#5d4d95]",
-    positionClassName: "md:col-start-3 md:row-start-3",
+      "Certain genetic diagnoses influence treatment choices or eligibility for targeted therapies.",
   },
 ];
 
@@ -219,9 +153,9 @@ const orderTestingWorkflowSteps: WorkflowStepCard[] = [
   },
   {
     id: "informed-consent",
-    title: "Informed Consent",
+    title: "Explain the Goals of the Test to Your Patient",
     description:
-      "Consent essentials, limitations, uncertain findings, family implications, and expectations.",
+      "Key topics to discuss with your patient before testing.",
     icon: ShieldCheck,
     route: "/doctor/dashboard/resource/genetic-counseling-workflow/informed-consent",
   },
@@ -689,7 +623,6 @@ export default function ResourceDestinationPage() {
   const isLetterMedicalNecessityPage = detail.id === "letter-of-medical-necessity-template";
   const isPostersPage = detail.id === "posters";
   const isCostsPage = detail.id === "costs";
-  const isRisksNotOfferingPage = detail.id === "risks-not-offering";
   const isRenalPatientOrganizationsPage = detail.id === "renal-patient-organizations";
   const isExternalTrainingPage = detail.id === "external-training";
   const isGeneticTestingCounselingVideosPage = detail.id === "genetic-testing-counseling-videos";
@@ -717,7 +650,6 @@ export default function ResourceDestinationPage() {
     isCommonGeneticKidneyDiseasesPage && selectedGeneticDiseaseTopicId
       ? detail.geneticDiseaseTopics?.[selectedGeneticDiseaseTopicId]
       : undefined;
-  const risksDeckPath = publicAsset("resources/20220118_RenalGenetics_CME_Ethics.pptx");
   const costsHandoutPath = publicAsset("costs/OH-Patient-Billing-Postcard-2026.pdf");
   const costsCoveragePoints = [
     "Most government-insured patients are not expected to have out-of-pocket expenses.",
@@ -728,11 +660,6 @@ export default function ResourceDestinationPage() {
     "Discounted cash rates",
     "Compassionate care for patients who qualify",
     "Interest-free payment plans",
-  ];
-  const risksClinicalActions = [
-    "Review family history, age at onset, and extra-renal findings before discussing testing.",
-    "Use pre-test counseling to address discrimination fears, family implications, and test fit.",
-    "Offer genetic testing based on clinical indication rather than assumptions about ancestry, interest, or finances.",
   ];
 
   const getHostLabel = (url: string) => {
@@ -1433,7 +1360,7 @@ Referring clinician
               }}
               className="rounded-full border border-[#c3d6d9] bg-white px-4 py-2 text-sm font-semibold text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
             >
-              Back
+              <ArrowLeft className="h-5 w-5" aria-hidden="true" /><span className="sr-only">Back</span>
             </button>
           </div>
 
@@ -1445,12 +1372,14 @@ Referring clinician
               <h2 className="text-3xl font-bold text-[#16323b] md:text-4xl" style={{ fontFamily: "'Lora Variable', serif" }}>
                 {detail.title}
               </h2>
-              <p className="mt-3 max-w-4xl text-base leading-relaxed text-[#5b6472] md:text-lg">{detail.context}</p>
+              {!isWhyGeneticTestingPage && <p className="mt-3 max-w-4xl text-base leading-relaxed text-[#5b6472] md:text-lg">{detail.context}</p>}
             </div>
           ) : null}
 
           {isPeerReviewedPapersPage ? (
             <div className="space-y-5" style={{ fontFamily: "Georgia, serif" }}>
+              <h2 className="text-3xl font-semibold text-[#16323b]">Peer-Reviewed Papers</h2>
+              <ReferenceLibrary />
               {detail.sections.map((section, index) => (
                 <motion.article
                   key={`${section.title}-${index}`}
@@ -1598,11 +1527,12 @@ Referring clinician
             <div className="mx-auto max-w-[1400px]">
               <div className="mb-6 text-black">
                 <h2 className="text-3xl md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
-                  Genetic Counseling Workflow
+                  How to Order Genetic Testing for Your Patient?
                 </h2>
                 <p className="text-base md:text-lg opacity-85">
                   Clinical workflow and counseling steps
                 </p>
+                <Link to="/doctor/dashboard/resource/types-of-genetic-tests" className="mt-3 inline-block text-base text-[#00687b] underline underline-offset-4">Review types of genetic tests</Link>
               </div>
 
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:auto-rows-fr xl:grid-cols-3">
@@ -1633,7 +1563,7 @@ Referring clinician
                         }}
                         className={`${cardClasses} cursor-pointer`}
                       >
-                        <div className="flex items-start justify-between self-start">
+                        <div className="flex flex-row-reverse items-start justify-between self-start">
                           <div className="inline-flex h-[96px] w-[96px] items-center justify-center rounded-[28px] bg-[#eef4ff] text-[#193568]">
                             <Icon
                               className="h-10 w-10 transition-colors group-hover:text-cyan-700 md:h-12 md:w-12"
@@ -1836,588 +1766,7 @@ Referring clinician
                 className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 {selectedGeneticDiseaseTopic ? (
-                  <div className="space-y-6">
-                    {selectedGeneticDiseaseTopic.id === "tubulopathies" ? (
-                      <div className="space-y-5">
-                        <div className="grid gap-0 overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.06)] md:grid-cols-2">
-                          <div className="border-b border-black/10 bg-[#f5f8fd] p-6 md:border-b-0 md:border-r">
-                            <h3
-                              className="text-center text-3xl text-[#2f6fa5] md:text-5xl"
-                              style={{ fontFamily: "Georgia, serif" }}
-                            >
-                              BARTTER SYNDROME
-                            </h3>
-
-                            <div className="mt-6 space-y-3">
-                              {selectedGeneticDiseaseTopic.featureCards[0]?.bullets.slice(0, 4).map((bullet) => (
-                                <div
-                                  key={bullet}
-                                  className="rounded-2xl border-2 border-[#8caecc] bg-white px-4 py-3 text-xl text-black md:text-2xl"
-                                >
-                                  {bullet}
-                                </div>
-                              ))}
-                            </div>
-
-                            <div className="mt-6 rounded-[24px] border-2 border-[#7da6cb] bg-white px-5 py-4 text-center">
-                              <p className="text-2xl font-semibold text-black md:text-3xl">Indications:</p>
-                              <p className="mt-2 text-xl leading-snug text-black md:text-2xl">
-                                Neonatal/Infantile
-                                <br />
-                                Hypokalemic Alkalosis
-                              </p>
-                            </div>
-
-                            <div className="mt-6 rounded-[24px] bg-[#2f78b2] px-5 py-5 text-center text-white">
-                              <p className="text-2xl font-semibold md:text-3xl">Utility:</p>
-                              <p className="mt-2 text-xl leading-snug md:text-2xl">
-                                Guides Lifelong Electrolyte
-                                <br />
-                                and Growth Management
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="bg-[#f6fbf3] p-6">
-                            <h3
-                              className="text-center text-3xl text-[#54965c] md:text-5xl"
-                              style={{ fontFamily: "Georgia, serif" }}
-                            >
-                              GITELMAN SYNDROME
-                            </h3>
-
-                            <div className="mt-6 rounded-2xl border-2 border-[#7cae87] bg-white px-4 py-3 text-xl text-black md:text-2xl">
-                              {selectedGeneticDiseaseTopic.featureCards[1]?.bullets[0]}
-                            </div>
-
-                            <div className="mt-6 rounded-[24px] border-2 border-[#88bc8f] bg-white px-5 py-4 text-center">
-                              <p className="text-2xl font-semibold text-black md:text-3xl">Indications:</p>
-                              <p className="mt-2 text-xl leading-snug text-black md:text-2xl">
-                                Chronic Hypokalemia,
-                                <br />
-                                Hypomagnesemia, Low BP
-                              </p>
-                            </div>
-
-                            <div className="mt-6 rounded-[24px] bg-[#59a86c] px-5 py-5 text-center text-white">
-                              <p className="text-2xl font-semibold md:text-3xl">Utility:</p>
-                              <p className="mt-2 text-xl leading-snug md:text-2xl">
-                                Avoids Unnecessary Workups,
-                                <br />
-                                Confirms Benign Course
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-sm leading-relaxed text-black/75">
-                          <a
-                            href={selectedGeneticDiseaseTopic.referenceUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline underline-offset-2 transition-colors hover:text-cyan-700"
-                          >
-                            {selectedGeneticDiseaseTopic.referenceLabel}
-                          </a>
-                        </div>
-                      </div>
-                    ) : selectedGeneticDiseaseTopic.id === "ciliopathies" ? (
-                      <div className="space-y-5">
-                        <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]">
-                          <div className="grid gap-0 lg:grid-cols-[0.58fr_0.42fr]">
-                            <div className="border-b border-black/10 bg-[#244d73] px-5 py-4 text-white lg:border-b-0 lg:border-r">
-                              <h3
-                                className="text-3xl leading-tight md:text-5xl"
-                                style={{ fontFamily: "Georgia, serif" }}
-                              >
-                                Nephronophthisis-Related
-                                <br />
-                                Ciliopathies (NPHP-RC)
-                              </h3>
-                            </div>
-                            <div className="bg-[#244d73] px-5 py-4 text-white">
-                              <h3
-                                className="text-2xl leading-tight md:text-4xl"
-                                style={{ fontFamily: "Georgia, serif" }}
-                              >
-                                Genetic disorders affecting
-                                <br />
-                                kidney cilia and multiple organs
-                              </h3>
-                            </div>
-                          </div>
-
-                          <div className="grid gap-4 p-4 lg:grid-cols-[0.62fr_0.38fr]">
-                            <div className="grid gap-4 md:grid-cols-2">
-                              <article className="rounded-[24px] border border-[#9eb8c8] bg-[#f5fbff]">
-                                <div className="rounded-t-[24px] border-b border-[#9eb8c8] bg-[#e5f0f7] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    GENES
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-lg leading-relaxed text-black/90 md:text-2xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[0]?.bullets.slice(0, 2).map((bullet) => (
-                                    <div key={bullet}>• {bullet}</div>
-                                  ))}
-                                  <div className="rounded-2xl border border-[#d3a36c] bg-[#fff8ee] px-3 py-3 text-base md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[0]?.bullets[2]}
-                                  </div>
-                                </div>
-                              </article>
-
-                              <article className="rounded-[24px] border border-[#9eb8c8] bg-[#f5fbff]">
-                                <div className="rounded-t-[24px] border-b border-[#9eb8c8] bg-[#e5f0f7] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    CLINICAL FEATURES
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[3]?.bullets.map((bullet) => (
-                                    <div key={bullet}>• {bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-
-                              <article className="rounded-[24px] border border-[#9eb8c8] bg-[#f5fbff]">
-                                <div className="rounded-t-[24px] border-b border-[#9eb8c8] bg-[#e5f0f7] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    INHERITANCE
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-lg leading-relaxed text-black/90 md:text-2xl">
-                                  <div>{selectedGeneticDiseaseTopic.featureCards[1]?.bullets[0]}</div>
-                                  <div>{selectedGeneticDiseaseTopic.featureCards[1]?.bullets[1]}</div>
-                                  <div className="rounded-2xl border border-[#d99b9b] bg-[#fff1f1] px-3 py-3 text-base md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[1]?.bullets[2]}
-                                  </div>
-                                </div>
-                              </article>
-
-                              <article className="rounded-[24px] border border-[#9eb8c8] bg-[#f5fbff]">
-                                <div className="rounded-t-[24px] border-b border-[#9eb8c8] bg-[#e5f0f7] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    WHY IT MATTERS
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[2]?.bullets.map((bullet) => (
-                                    <div key={bullet}>• {bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-                            </div>
-
-                            <div className="space-y-4">
-                              <article className="rounded-[24px] border border-[#9eb8c8] bg-[#f5fbff]">
-                                <div className="rounded-t-[24px] border-b border-[#9eb8c8] bg-[#e5f0f7] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    ONSET
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[4]?.bullets.map((bullet) => (
-                                    <div key={bullet}>• {bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-
-                              <article className="rounded-[24px] border border-[#9eb8c8] bg-[#f5fbff]">
-                                <div className="rounded-t-[24px] border-b border-[#9eb8c8] bg-[#e5f0f7] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    EXAMPLES
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[5]?.bullets.map((bullet) => (
-                                    <div key={bullet}>• {bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-sm leading-relaxed text-black/75">
-                          <a
-                            href={selectedGeneticDiseaseTopic.referenceUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline underline-offset-2 transition-colors hover:text-cyan-700"
-                          >
-                            {selectedGeneticDiseaseTopic.referenceLabel}
-                          </a>
-                        </div>
-                      </div>
-                    ) : selectedGeneticDiseaseTopic.id === "fabry" ? (
-                      <div className="space-y-5">
-                        <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]">
-                          <div className="px-5 py-5 text-center">
-                            <h3
-                              className="text-3xl leading-tight text-[#2d6ea1] md:text-5xl"
-                              style={{ fontFamily: "Georgia, serif" }}
-                            >
-                              Fabry Disease: Key Features &amp; Clinical Value
-                            </h3>
-                          </div>
-
-                          <div className="px-5 pb-5">
-                            <div className="mx-auto flex w-fit items-center gap-3 rounded-2xl border border-[#6b9bb8] bg-[#e8f4fb] px-5 py-3">
-                              <span className="text-2xl text-[#2d6ea1] md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                Gene
-                              </span>
-                              <span className="rounded-xl border border-black/15 bg-white px-4 py-1 text-3xl font-semibold text-black md:text-4xl">
-                                {selectedGeneticDiseaseTopic.featureCards[0]?.bullets[0]}
-                              </span>
-                            </div>
-
-                            <div className="mt-6 overflow-hidden rounded-[24px] border-2 border-[#7ca7ba]">
-                              <div className="bg-[#e9f6fb] px-4 py-3 text-center">
-                                <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                  Testing Indications
-                                </h4>
-                              </div>
-                              <div className="grid gap-0 border-t border-[#7ca7ba] md:grid-cols-2">
-                                <div className="border-b border-[#7ca7ba] bg-[#eef9f1] px-5 py-5 text-center md:border-b-0 md:border-r">
-                                  <p className="text-2xl font-semibold text-black md:text-3xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[1]?.bullets[0]}
-                                  </p>
-                                </div>
-                                <div className="bg-[#eef9f1] px-5 py-5 text-center">
-                                  <p className="text-2xl font-semibold text-black md:text-3xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[1]?.bullets[1]}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="mt-6 overflow-hidden rounded-[24px] border-2 border-[#c5b6d9]">
-                              <div className="bg-[#efe8f8] px-4 py-3 text-center">
-                                <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                  Clinical Value
-                                </h4>
-                              </div>
-                              <div className="grid gap-0 border-t border-[#c5b6d9] md:grid-cols-3">
-                                {selectedGeneticDiseaseTopic.featureCards[2]?.bullets.map((bullet, index) => (
-                                  <div
-                                    key={bullet}
-                                    className={`bg-[#f6f1fb] px-5 py-5 text-center ${
-                                      index < 2 ? "border-b border-[#c5b6d9] md:border-b-0 md:border-r" : ""
-                                    }`}
-                                  >
-                                    <p className="text-xl font-semibold leading-snug text-black md:text-2xl">
-                                      {bullet.split(":")[0]}
-                                    </p>
-                                    <p className="mt-3 text-lg leading-relaxed text-black/85 md:text-xl">
-                                      {bullet.includes(":") ? bullet.split(":").slice(1).join(":").trim() : ""}
-                                    </p>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-sm leading-relaxed text-black/75">
-                          <a
-                            href={selectedGeneticDiseaseTopic.referenceUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline underline-offset-2 transition-colors hover:text-cyan-700"
-                          >
-                            {selectedGeneticDiseaseTopic.referenceLabel}
-                          </a>
-                        </div>
-                      </div>
-                    ) : selectedGeneticDiseaseTopic.id === "mitochondrial" ? (
-                      <div className="space-y-5">
-                        <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]">
-                          <div className="grid gap-4 p-4 lg:grid-cols-[0.33fr_0.31fr_0.36fr]">
-                            <div className="space-y-4">
-                              <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                <div className="bg-[#d9edf6] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    GENES
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-lg leading-relaxed text-black/90 md:text-2xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[0]?.bullets.map((bullet) => (
-                                    <div key={bullet}>{bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-
-                              <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                <div className="bg-[#d9edf6] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    INHERITANCE
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-lg leading-relaxed text-black/90 md:text-2xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[1]?.bullets.slice(0, 2).map((bullet) => (
-                                    <div key={bullet}>{bullet}</div>
-                                  ))}
-                                  <div className="rounded-2xl border border-[#d6b064] bg-[#fff6dc] px-3 py-3 text-base md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[1]?.bullets[2]}
-                                  </div>
-                                </div>
-                              </article>
-                            </div>
-
-                            <div className="space-y-4">
-                              <div className="px-2 py-1 text-center">
-                                <h3
-                                  className="text-3xl leading-tight text-black md:text-5xl"
-                                  style={{ fontFamily: "Georgia, serif" }}
-                                >
-                                  Mitochondrial Nephropathy
-                                </h3>
-                              </div>
-
-                              <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                <div className="bg-[#d9edf6] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    WHY IT MATTERS
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-lg leading-relaxed text-black/90 md:text-2xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[2]?.bullets.map((bullet) => (
-                                    <div key={bullet}>{bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-
-                              <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                <div className="bg-[#d9edf6] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    MITOCHONDRIA
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[3]?.bullets.map((bullet) => (
-                                    <div key={bullet}>{bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-                            </div>
-
-                            <div className="space-y-4">
-                              <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                <div className="bg-[#d9edf6] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    CLINICAL FEATURES
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[4]?.bullets.map((bullet) => (
-                                    <div key={bullet}>{bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-
-                              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                                <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                  <div className="bg-[#d9edf6] px-4 py-3">
-                                    <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                      ONSET
-                                    </h4>
-                                  </div>
-                                  <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[5]?.bullets.map((bullet) => (
-                                      <div key={bullet}>{bullet}</div>
-                                    ))}
-                                  </div>
-                                </article>
-
-                                <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                  <div className="bg-[#d9edf6] px-4 py-3">
-                                    <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                      EXAMPLES
-                                    </h4>
-                                  </div>
-                                  <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[6]?.bullets.map((bullet) => (
-                                      <div key={bullet}>{bullet}</div>
-                                    ))}
-                                  </div>
-                                </article>
-                              </div>
-
-                              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                                <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                  <div className="bg-[#d9edf6] px-4 py-3">
-                                    <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                      GENETIC COUNSELING
-                                    </h4>
-                                  </div>
-                                  <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[7]?.bullets.map((bullet) => (
-                                      <div key={bullet}>{bullet}</div>
-                                    ))}
-                                  </div>
-                                </article>
-
-                                <article className="overflow-hidden rounded-[24px] border border-[#a9c3d0] bg-[#eef8fd]">
-                                  <div className="bg-[#d9edf6] px-4 py-3">
-                                    <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                      GENETIC TESTING
-                                    </h4>
-                                  </div>
-                                  <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                    {selectedGeneticDiseaseTopic.featureCards[8]?.bullets.map((bullet) => (
-                                      <div key={bullet}>{bullet}</div>
-                                    ))}
-                                  </div>
-                                </article>
-                              </div>
-
-                              <article className="overflow-hidden rounded-[24px] border border-[#7999b0] bg-[#eef8fd]">
-                                <div className="bg-[#d9edf6] px-4 py-3">
-                                  <h4 className="text-2xl text-black md:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
-                                    KEY TAKEAWAY
-                                  </h4>
-                                </div>
-                                <div className="space-y-3 p-4 text-base leading-relaxed text-black/90 md:text-xl">
-                                  {selectedGeneticDiseaseTopic.featureCards[9]?.bullets.map((bullet) => (
-                                    <div key={bullet}>{bullet}</div>
-                                  ))}
-                                </div>
-                              </article>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-sm leading-relaxed text-black/75">
-                          <a
-                            href={selectedGeneticDiseaseTopic.referenceUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline underline-offset-2 transition-colors hover:text-cyan-700"
-                          >
-                            {selectedGeneticDiseaseTopic.referenceLabel}
-                          </a>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="rounded-[22px] bg-[#2e5c96] px-5 py-4 text-white shadow-[0_8px_20px_rgba(21,43,84,0.16)]">
-                          <h3
-                            className="text-2xl leading-tight md:text-4xl"
-                            style={{ fontFamily: "Georgia, serif" }}
-                          >
-                            {selectedGeneticDiseaseTopic.title}
-                          </h3>
-                        </div>
-
-                        <div
-                          className={`grid gap-6 ${
-                            selectedGeneticDiseaseTopic.id === "adpkd"
-                              ? "xl:grid-cols-[0.9fr_1.1fr]"
-                              : ""
-                          }`}
-                        >
-                          <div className="space-y-5">
-                            {selectedGeneticDiseaseTopic.primarySections.length > 0 ? (
-                              <div className="rounded-[24px] border border-black/10 bg-white p-5 shadow-[0_8px_20px_rgba(0,0,0,0.06)]">
-                                {selectedGeneticDiseaseTopic.primarySections.map((section) => (
-                                  <div key={section.title} className="mb-5 last:mb-0">
-                                    <h4
-                                      className="text-2xl text-black md:text-3xl"
-                                      style={{ fontFamily: "Georgia, serif" }}
-                                    >
-                                      {section.title}
-                                    </h4>
-                                    <ul className="mt-3 list-disc space-y-2 pl-6 text-lg leading-relaxed text-black/85 md:text-[1.65rem]">
-                                      {section.bullets.map((bullet) => (
-                                        <li key={bullet}>{bullet}</li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                ))}
-                              </div>
-                            ) : null}
-
-                            <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-sm leading-relaxed text-black/75">
-                              <a
-                                href={selectedGeneticDiseaseTopic.referenceUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="underline underline-offset-2 transition-colors hover:text-cyan-700"
-                              >
-                                {selectedGeneticDiseaseTopic.referenceLabel}
-                              </a>
-                            </div>
-
-                            {selectedGeneticDiseaseTopic.nextTopicLink ? (
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  navigate(
-                                    `/doctor/dashboard/resource/common-genetic-kidney-diseases?topic=${selectedGeneticDiseaseTopic.nextTopicLink?.topicId}`,
-                                  )
-                                }
-                                className="text-left text-2xl leading-snug text-[#214fd1] underline underline-offset-4 transition-colors hover:text-cyan-700 md:text-[2.25rem]"
-                                style={{ fontFamily: "Georgia, serif" }}
-                              >
-                                {selectedGeneticDiseaseTopic.nextTopicLink.label}
-                              </button>
-                            ) : null}
-                          </div>
-
-                          <div
-                            className={`grid gap-4 ${
-                              selectedGeneticDiseaseTopic.id === "arpkd"
-                                ? "md:grid-cols-3"
-                                : "md:grid-cols-2"
-                            }`}
-                          >
-                            {selectedGeneticDiseaseTopic.featureCards.map((card, index) => {
-                              const cardHeaderClass =
-                                selectedGeneticDiseaseTopic.id === "arpkd"
-                                  ? ["bg-[#b9e0f6]", "bg-[#cdeebf]", "bg-[#d9c6ef]"][index] ?? "bg-cyan-100"
-                                  : ["bg-[#2e5c96]", "bg-[#6f9946]", "bg-[#c36d35]", "bg-[#2e5c96]", "bg-[#c36d35]"][index] ??
-                                    "bg-cyan-100";
-
-                              return (
-                                <article
-                                  key={card.title}
-                                  className={`overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.06)] ${
-                                    selectedGeneticDiseaseTopic.id === "adpkd" &&
-                                    (card.title === "Clinical Features" || card.title === "Example Cases")
-                                      ? "md:col-span-2"
-                                      : ""
-                                  }`}
-                                >
-                                  <div className={`${cardHeaderClass} px-4 py-3`}>
-                                    <h4
-                                      className={`text-center text-xl md:text-2xl ${
-                                        cardHeaderClass.includes("bg-[#b9e0f6]") ||
-                                        cardHeaderClass.includes("bg-[#cdeebf]") ||
-                                        cardHeaderClass.includes("bg-[#d9c6ef]")
-                                          ? "text-black"
-                                          : "text-white"
-                                      }`}
-                                      style={{ fontFamily: "Georgia, serif" }}
-                                    >
-                                      {card.title}
-                                    </h4>
-                                  </div>
-                                  <div className="p-4">
-                                    <ul className="space-y-3 text-base leading-relaxed text-black/85 md:text-lg">
-                                      {card.bullets.map((bullet) => (
-                                        <li key={bullet} className="rounded-2xl bg-[#f7fafc] px-3 py-2">
-                                          {bullet}
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                </article>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
+                  <DiseaseSummary topic={selectedGeneticDiseaseTopic} />
                 ) : (
                   <div className="space-y-4">
                     <h3 className="text-3xl text-black md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
@@ -2427,7 +1776,11 @@ Referring clinician
                       Most genetic diseases causing CKD are extremely rare. There are hundreds of such genetic
                       diseases, and together they cause about 10% of CKD cases. Most of these diseases are diagnosed
                       only with a genetic test. We are only providing here a short highlight of some of those diseases.
+                      <sub className="ml-1"><a href={CITATIONS.groopman2019.url} target="_blank" rel="noreferrer" aria-label="Reference 1: Groopman et al. 2019">1</a>, <a href={annalsReference.url} target="_blank" rel="noreferrer" aria-label="Reference 2: Milo Rasouly et al.">2</a></sub>
                     </p>
+                    <ol className="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-[#00687b]">
+                      {[CITATIONS.groopman2019, annalsReference].map(reference => <li key={reference.url}><a href={reference.url} target="_blank" rel="noreferrer" className="underline underline-offset-4">{reference.citation}</a></li>)}
+                    </ol>
                     {detail.diseaseLinks.map((disease) => (
                       <button
                         key={disease.label}
@@ -2442,7 +1795,7 @@ Referring clinician
                         style={{ fontFamily: "Georgia, serif" }}
                       >
                         <span className="mr-3 align-top">-</span>
-                        <span className="underline underline-offset-4">{disease.label}</span>
+                        <span className="underline underline-offset-4"><GeneText text={disease.label} /></span>
                       </button>
                     ))}
                   </div>
@@ -2617,208 +1970,6 @@ Referring clinician
                 </motion.article>
               </div>
             </div>
-          ) : isRisksNotOfferingPage ? (
-            <div className="mx-auto max-w-[980px]">
-              <div className="space-y-6">
-                <motion.article
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.26 }}
-                  className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
-                >
-                  <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:items-center">
-                    <div>
-                      <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Protections against genetic discrimination</p>
-                      <h3 className="mt-3 text-2xl md:text-4xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                        GINA, HIPAA, and testing children
-                      </h3>
-                      <p className="mt-3 max-w-3xl text-base leading-relaxed text-black/75 md:text-lg">
-                        This section summarizes protections and boundaries that should be discussed when genetic testing
-                        is offered in nephrology, including anti-discrimination protections, information sharing, and
-                        pediatric testing ethics.
-                      </p>
-
-                      <div className="mt-6 rounded-[24px] border border-black/10 bg-cyan-50 p-5">
-                        <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                          Core points
-                        </h4>
-                        <ul className="mt-4 space-y-3 text-black/75">
-                          {[
-                            "GINA is a US federal law enacted in 2008 that protects against genetic discrimination in employment and health insurance.",
-                            "GINA does not cover life insurance, disability insurance, or long-term care insurance.",
-                            "HIPAA supports careful, privacy-preserving information sharing; family communication should generally be patient-mediated or authorized.",
-                            "Children should generally not be tested for adult-onset genetic risk unless the result can affect their current medical care.",
-                          ].map((objective) => (
-                            <li key={objective} className="rounded-2xl bg-white px-4 py-3">
-                              {objective}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
-                      <img
-                        src={publicAsset("resource-graphics/risks-gina-signing.png")}
-                        alt="Photo associated with the Genetic Information Nondiscrimination Act of 2008"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  </div>
-                </motion.article>
-
-                <motion.article
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.26 }}
-                  className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
-                >
-                  <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Risks of not offering genetic testing</p>
-                  <h3 className="mt-3 text-2xl md:text-4xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                    The doctor's legal responsibilities
-                  </h3>
-                  <p className="mt-3 text-base leading-relaxed text-black/75 md:text-lg">
-                    Placeholder for the forthcoming legal-responsibility content. This section is intentionally not
-                    filled with generated legal analysis until the source material is provided.
-                  </p>
-                </motion.article>
-
-                <motion.article
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
-                >
-                  <div className="grid gap-5 md:grid-cols-2">
-                    <div className="rounded-[24px] border border-black/10 bg-[#0d1b2a] p-5 text-white shadow-[0_16px_36px_rgba(13,27,42,0.18)]">
-                      <p className="text-sm uppercase tracking-[0.22em] text-cyan-200">GINA at a glance</p>
-                      <ul className="mt-4 space-y-3 text-white/80">
-                        <li className="rounded-2xl bg-white/8 px-4 py-3">Federal law enacted in 2008.</li>
-                        <li className="rounded-2xl bg-white/8 px-4 py-3">
-                          Protects against discrimination in employment and health insurance.
-                        </li>
-                        <li className="rounded-2xl bg-white/8 px-4 py-3">
-                          Does not cover life, disability, or long-term care insurance.
-                        </li>
-                        <li className="rounded-2xl bg-white/8 px-4 py-3">
-                          Best applied before disease is considered clinically manifested.
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-5">
-                      <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                        Family communication and cascade testing
-                      </h4>
-                      <p className="mt-3 text-black/75">
-                        The deck emphasizes that genetic results have family-level impact. Clinicians should warn
-                        patients, encourage disclosure, and bring in genetic counseling when relatives may benefit from
-                        cascade testing.
-                      </p>
-                      <p className="mt-4 text-black/75">
-                        US case law and HIPAA guidance both support reasonable efforts centered on patient-mediated or
-                        authorized disclosure rather than direct outreach without consent.
-                      </p>
-                    </div>
-
-                    <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-5">
-                      <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                        Practical clinician actions
-                      </h4>
-                      <ul className="mt-4 space-y-3 text-black/75">
-                        {risksClinicalActions.map((action) => (
-                          <li key={action} className="rounded-2xl bg-white px-4 py-3">
-                            {action}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Moved from the patient Sharing with family page (Hila, Oct 2026). Source: Wynn et al. 2021. */}
-                    <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-5">
-                      <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
-                        What research shows about family sharing
-                      </h4>
-                      <p className="mt-3 text-black/75">
-                        Research shows that sharing results within families is inconsistent. Many close relatives are
-                        never told.
-                      </p>
-                      <div className="mt-4 space-y-3">
-                        {familySharingRows.map((row) => (
-                          <div key={row.label}>
-                            <div className="mb-1 flex items-baseline justify-between gap-3">
-                              <span className="text-sm text-black/80">{row.label}</span>
-                              <span className="shrink-0 font-semibold text-cyan-800">{row.display}</span>
-                            </div>
-                            <div className="h-2.5 w-full overflow-hidden rounded-full bg-white">
-                              <div className="h-full rounded-full bg-cyan-700" style={{ width: `${row.percent}%` }} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <p className="mt-4 text-black/75">
-                        The most common reasons people gave for sharing were a sense of obligation and a belief that the
-                        information could help relatives make their own medical decisions — each cited by about 7 in 10
-                        people. The most common reasons for not sharing were that a relative seemed too young for the
-                        information to matter yet, or that the person simply wasn't in close contact with that relative.
-                      </p>
-                      <p className="mt-4 text-black/75">
-                        Who explains the result seems to matter: people who received their results from a genetics
-                        specialist were far more likely to share with all their relatives than people who heard from a
-                        doctor without genetics training.
-                      </p>
-                      <p className="mt-4 text-sm text-black/60">
-                        Source: Wynn, J. et al. Do research participants share genomic screening results with family
-                        members? Journal of Genetic Counseling (2021).{" "}
-                        <a
-                          href="https://doi.org/10.1002/jgc4.1511"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-cyan-800 underline underline-offset-2"
-                        >
-                          doi.org/10.1002/jgc4.1511
-                        </a>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 grid gap-5 md:grid-cols-[0.9fr_1.1fr]">
-                    <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
-                      <img
-                        src={publicAsset("resource-graphics/risks-dna-cartoon.png")}
-                        alt="Illustration of genetic discrimination concerns"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
-                      <img
-                        src={publicAsset("resource-graphics/risks-bias-chart.png")}
-                        alt="Chart illustrating sources of bias in offering genetic testing"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <a
-                      href={risksDeckPath}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex rounded-full border border-black/15 px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
-                    >
-                      Open Original PowerPoint
-                    </a>
-                    <a
-                      href={risksDeckPath}
-                      download
-                      className="inline-flex rounded-full border border-black/15 px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
-                    >
-                      Download Source File
-                    </a>
-                  </div>
-                </motion.article>
-              </div>
-            </div>
           ) : isReferralIndicationPage ? (
             <div className="mx-auto max-w-[1180px] space-y-6">
               <motion.article
@@ -2848,7 +1999,7 @@ Referring clinician
                 className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 <h3 className="text-2xl text-black md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
-                  {isCaseStudiesPage ? "Personal Stories Video Library" : "Genetic Testing and Counseling Video Library"}
+                  {isCaseStudiesPage ? "Personal Stories Video Library" : "Kidney Genetics Explained by Experts - Videos"}
                 </h3>
                 <p className="mt-3 max-w-4xl text-base leading-relaxed text-black/75 md:text-lg">
                   {isCaseStudiesPage
@@ -2865,6 +2016,8 @@ Referring clinician
                   const previewFailed = failedPreviewUrls[videoItem.url];
                   const hostLabel = getHostLabel(videoItem.url);
                   const isEmbeddedVideo = Boolean(videoItem.embedUrl);
+                  const videoId = videoItem.embedUrl?.split("/").pop() ?? "";
+                  const videoInfo = videoDescriptions[videoId];
 
                   return (
                     <motion.article
@@ -2882,7 +2035,9 @@ Referring clinician
                           >
                             {videoItem.title}
                           </h4>
-                          {videoItem.subtitle ? (
+                          {videoInfo ? (
+                            <p className="mt-2 text-base leading-relaxed text-black/70">{videoInfo.description} ({videoInfo.duration})</p>
+                          ) : videoItem.subtitle ? (
                             <p className="mt-2 text-base leading-relaxed text-black/70">{videoItem.subtitle}</p>
                           ) : null}
                         </div>
@@ -3029,11 +2184,9 @@ Referring clinician
                 className="rounded-[30px] border border-black/10 bg-white/92 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-8"
               >
                 <p className="max-w-4xl text-lg leading-relaxed text-black/85 md:text-[1.45rem]">
-                  Genetic testing plays a critical role in nephrology because a significant proportion of
-                  chronic kidney disease (CKD), 10-20% of adults with CKD and up to 70% of children with CKD, has a
-                  monogenic cause that can be identified with a genetic test. Despite this, nephrology currently lags behind other specialties
-                  in implementing genetic testing. Identifying a genetic cause of kidney disease provides
-                  major clinical benefits, including:
+                  Genetic testing plays a critical role in nephrology: 10-20% of adults with CKD and up to 70% of children with CKD have a monogenic cause that can be identified with a genetic test.
+                  <sub className="ml-1"><a href="#why-reference-1" aria-label="Reference 1">1</a>, <a href="#why-reference-2" aria-label="Reference 2">2</a></sub>{" "}
+                  Identifying a genetic cause of kidney disease provides major clinical benefits, including:
                 </p>
 
                 <div className="mt-8 space-y-4">
@@ -3050,94 +2203,15 @@ Referring clinician
                 <div className="mt-8 border-t border-black/10 pt-5">
                   <p className="text-sm uppercase tracking-wide text-cyan-800">References</p>
                   <div className="mt-2 space-y-3 text-base leading-relaxed text-cyan-900">
-                    {[
-                      {
-                        label:
-                          "Franceschini N, Feldman DL, Berg JS, et al. Advancing Genetic Testing in Kidney Diseases: Report From a National Kidney Foundation Working Group. Am J Kidney Dis. 2024.",
-                        href: "https://pubmed.ncbi.nlm.nih.gov/39033956/",
-                      },
-                      {
-                        label: "Genetic Testing in the Management of Adult CKD.",
-                        href: "https://www.ovid.com/jnls/jasn/fulltext/10.1681/asn.0000000913~genetic-testing-in-the-management-of-adult-ckd",
-                      },
-                      {
-                        label:
-                          "The Clinical Utility of Genetic Testing in the Diagnosis and Management of Adults with Chronic Kidney Disease.",
-                        href: "https://www.ovid.com/jnls/jasn/fulltext/10.1681/asn.0000000000000249~the-clinical-utility-of-genetic-testing-in-the-diagnosis-and",
-                      },
-                      {
-                        label:
-                          "Genetic evaluation of living kidney donor candidates: A review and recommendations for best practices.",
-                        href: "https://www.amjtransplant.org/article/S1600-6135(23)00305-2/fulltext",
-                      },
-                    ].map((reference) => (
-                      <a
-                        key={reference.href}
-                        href={reference.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="block underline decoration-cyan-400 underline-offset-4"
-                      >
-                        {reference.label}
+                    {clinicalReferences.map((reference, index) => (
+                      <a key={reference.url} id={`why-reference-${index + 1}`} href={reference.url} target="_blank" rel="noreferrer" className="block underline decoration-cyan-400 underline-offset-4">
+                        {index + 1}. {reference.citation}
                       </a>
                     ))}
                   </div>
                 </div>
               </motion.article>
 
-              <motion.aside
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.04, duration: 0.26 }}
-                className="mx-auto w-full max-w-[920px] overflow-hidden rounded-[30px] border border-black/10 bg-[radial-gradient(circle_at_top,#ffffff_0%,#f4fbff_48%,#eef7fb_100%)] p-6 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-8"
-              >
-                <div className="text-center">
-                  <h3
-                    className="text-3xl uppercase tracking-[0.04em] text-[#2c4e8d] md:text-[2.55rem]"
-                    style={{ fontFamily: "Georgia, serif" }}
-                  >
-                    Why Genetic Testing in Nephrology?
-                  </h3>
-                  <div className="mx-auto mt-4 h-1 w-28 rounded-full bg-[#57b9c8]" />
-                  <p className="mt-4 text-lg text-[#44587a] md:text-xl">A Precision Medicine Approach to Kidney Care</p>
-                </div>
-
-                <div className="mt-8 grid gap-4 md:grid-cols-[minmax(0,1fr)_220px_minmax(0,1fr)] md:grid-rows-3 md:items-center">
-                  {whyGeneticTestingInfographicCards.map((card) => {
-                    const CardIcon = card.icon;
-
-                    return (
-                      <div
-                        key={card.title}
-                        className={`rounded-[28px] border-2 bg-white/96 p-5 shadow-[0_8px_20px_rgba(0,0,0,0.05)] ${card.borderClassName} ${card.positionClassName}`}
-                      >
-                        <div className={`mb-4 inline-flex rounded-full bg-slate-50 p-4 ${card.iconClassName}`}>
-                          <CardIcon className="h-9 w-9" strokeWidth={1.8} />
-                        </div>
-                        <h4 className="text-xl uppercase tracking-[0.03em] text-[#34538f]">{card.title}</h4>
-                        <div className="mt-3 space-y-1 text-base leading-relaxed text-[#44587a]">
-                          {card.lines.map((line) => (
-                            <p key={`${card.title}-${line}`}>{line}</p>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  <div className="flex items-center justify-center md:col-start-2 md:row-start-2">
-                    <div className="flex h-[190px] w-[190px] items-center justify-center rounded-full border-[9px] border-[#57b9c8] bg-white shadow-[0_14px_34px_rgba(39,78,141,0.15)]">
-                      <div className="flex h-[152px] w-[152px] flex-col items-center justify-center rounded-full border-[9px] border-[#5d4d95] text-center text-[#34538f]">
-                        <Icon className="h-10 w-10 text-[#5d4d95]" strokeWidth={1.8} />
-                        <p className="mt-3 text-sm uppercase tracking-[0.12em]">Genetic Insights</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 rounded-[20px] bg-[#57b9c8] px-5 py-4 text-center text-lg uppercase tracking-[0.08em] text-white">
-                  Empowering Nephrologists. Transforming Patient Lives
-                </div>
-              </motion.aside>
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">

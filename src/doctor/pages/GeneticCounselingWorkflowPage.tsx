@@ -41,8 +41,8 @@ const workflowOptions: WorkflowOption[] = [
   },
   {
     id: "informed-consent",
-    title: "Informed Consent",
-    description: "Consent essentials, limitations, uncertain findings, family implications, and expectations.",
+    title: "Explain the Goals of the Test to Your Patient",
+    description: "The key topics to discuss before genetic testing.",
     icon: ShieldCheck,
   },
   {
@@ -179,15 +179,15 @@ export default function GeneticCounselingWorkflowPage() {
               const cardContent = (
                 <>
                   <div className="mb-6 flex w-full items-start justify-between">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#9fbfc5] bg-[#eef7f8] text-sm font-semibold text-[#00687b]">
+                      {index + 1}
+                    </span>
                     <div className="inline-flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-[#cfe7ea] text-[#00687b]">
                       <Icon
                         className="h-12 w-12"
                         strokeWidth={1.55}
                       />
                     </div>
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#9fbfc5] bg-[#eef7f8] text-sm font-semibold text-[#00687b]">
-                      {index + 1}
-                    </span>
                   </div>
                   <h2
                     className="max-w-[16ch] text-[1.45rem] font-bold leading-tight text-[#16323b] transition-colors group-hover:text-[#00687b] md:text-[1.7rem]"

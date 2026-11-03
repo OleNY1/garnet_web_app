@@ -14,7 +14,8 @@
   All colors are exposed as semantic CSS variables so light and dark mode
   share the same utility classes.
 */
-:root {
+:root,
+.doctor-site {
   color-scheme: light;
 
   --bg: #f6fafa;
