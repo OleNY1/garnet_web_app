@@ -1,6 +1,6 @@
 import { ChevronDown, Menu, Stethoscope, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { LEARN_TOPICS } from '../lib/learnTopics'
 import { SiteSearch } from './SiteSearch'
 import { ThemeToggle } from './ThemeToggle'
@@ -197,9 +197,6 @@ function LearnNavItem() {
 }
 
 function BrandMark() {
-  const { pathname } = useLocation()
-  const isWelcomePage = pathname === '/'
-
   const mark = (
     <img
       src={`${import.meta.env.BASE_URL}garnet-mark.png`}
@@ -210,17 +207,6 @@ function BrandMark() {
   const wordmark = (
     <span className="type-sub font-bold tracking-[0.18em] text-brand">GARNET</span>
   )
-
-  /* On the welcome page the logo is not split into two destinations. */
-  if (isWelcomePage) {
-    return (
-      <div className="flex items-center gap-3 p-1.5">
-        {mark}
-        {wordmark}
-      </div>
-    )
-  }
-
   const brandLinkClasses = `-m-1.5 rounded-2xl p-1.5 ${hoverLift}`
 
   return (

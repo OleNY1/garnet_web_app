@@ -50,6 +50,7 @@ function NextStepsRedirect() {
 export default function App() {
   const location = useLocation()
   const isDoctorRoute = location.pathname.startsWith('/doctor')
+  const isWelcomePage = location.pathname === '/'
 
   return (
     <div className={`flex min-h-dvh flex-col ${isDoctorRoute ? 'doctor-site' : 'patient-site'}`}>
@@ -60,7 +61,7 @@ export default function App() {
         Skip to main content
       </a>
       <ScrollToTop />
-      {!isDoctorRoute ? <Header /> : null}
+      {!isDoctorRoute && !isWelcomePage ? <Header /> : null}
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
         <Routes>
           <Route path="/" element={<Home />} />

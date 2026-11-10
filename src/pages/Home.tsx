@@ -48,6 +48,14 @@ export function Home() {
         className="absolute -bottom-24 -left-16 size-72 rounded-full bg-accent/20 blur-3xl"
       />
       <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-16 text-center sm:px-8 sm:py-24">
+        <div className="mb-8 flex items-center gap-3">
+          <img
+            src={`${import.meta.env.BASE_URL}garnet-mark.png`}
+            alt=""
+            className="size-12 shrink-0 object-contain"
+          />
+          <span className="type-sub font-bold tracking-[0.18em] text-brand">GARNET</span>
+        </div>
         <h1
           id="hero-heading"
           className="max-w-4xl font-display type-page font-semibold text-ink"
