@@ -224,11 +224,19 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   "case-studies": {
     id: "case-studies",
     mode: "educational",
-    title: "Patients' Stories",
+    title: "Patients' Stories (Short Videos)",
     context:
       "Hear the patient's voices.",
     sections: [],
     videoLinks: [
+      {
+        title: "Alonzo Mourning",
+        url: "https://www.youtube.com/shorts/hMyYfZoPXmU",
+        thumbnailUrl: "https://i.ytimg.com/vi/hMyYfZoPXmU/hqdefault.jpg",
+        embedUrl: "https://www.youtube.com/embed/hMyYfZoPXmU",
+        sourceLabel: "YouTube Shorts",
+        buttonLabel: "Watch story",
+      },
       {
         title: "Putting a Stop to Polycystic Kidney Disease (PKD). Interview with Richard Kellner",
         subtitle: "Personal experience with PKD",
@@ -325,7 +333,7 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   "renal-patient-organizations": {
     id: "renal-patient-organizations",
     mode: "educational",
-    title: "Patients' Organizations",
+    title: "Patient Organizations",
     context:
       "Patient advocacy organizations and a referral guide for rare kidney diseases.",
     sections: [],
@@ -381,7 +389,7 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
   "genetic-testing-counseling-videos": {
     id: "genetic-testing-counseling-videos",
     mode: "educational",
-    title: "Kidney Genetics Explained by Experts - Videos",
+    title: "Kidney Genetics Explained by Experts (Short Videos)",
     context:
       "Curated videos focused specifically on genetic testing and kidney disease.",
     sections: [],
@@ -400,14 +408,6 @@ export const resourceDestinationContent: Record<string, ResourceDestination> = {
         thumbnailUrl: "https://i.ytimg.com/vi/CEdzQXC51c8/hqdefault.jpg",
         embedUrl: "https://www.youtube.com/embed/CEdzQXC51c8",
         sourceLabel: "YouTube",
-        buttonLabel: "Watch video",
-      },
-      {
-        title: "Alonzo Mourning",
-        url: "https://www.youtube.com/shorts/hMyYfZoPXmU",
-        thumbnailUrl: "https://i.ytimg.com/vi/hMyYfZoPXmU/hqdefault.jpg",
-        embedUrl: "https://www.youtube.com/embed/hMyYfZoPXmU",
-        sourceLabel: "YouTube Shorts",
         buttonLabel: "Watch video",
       },
       {

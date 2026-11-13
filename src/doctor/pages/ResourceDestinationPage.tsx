@@ -7,6 +7,7 @@ import {
   ClipboardCheck,
   FileText,
   GitBranch,
+  HeartPulse,
   Microscope,
   ShieldCheck,
   Stethoscope,
@@ -102,26 +103,33 @@ const quizPrompts: QuizPrompt[] = [
 const whyGeneticTestingBenefits = [
   {
     label: "Improved diagnostic accuracy",
+    icon: Microscope,
     description:
       "Helps clarify the exact cause of CKD, especially in unclear or atypical presentations, and can end patients' diagnostic odyssey.",
   },
   {
     label: "Better risk stratification and prognosis",
+    icon: HeartPulse,
     description:
       "Offers insight into disease progression and helps identify patients at higher risk.",
   },
   {
     label: "Family counseling & cascade testing",
+    icon: GitBranch,
     description:
       "Enables recurrence risk assessment, relative screening, early detection of at-risk family members, and family planning conversations.",
   },
   {
     label: "Transplant planning",
+    icon: ClipboardCheck,
+    reference: 4,
     description:
-      "Genetic findings can guide living donor selection and avoid transmitting hereditary disease.",
+      "Genetic findings can inform evaluation of potential living donors, particularly when they are related to the recipient.",
   },
   {
     label: "Therapeutic decision-making",
+    icon: Stethoscope,
+    reference: 3,
     description:
       "Certain genetic diagnoses influence treatment choices or eligibility for targeted therapies.",
   },
@@ -1348,20 +1356,19 @@ Referring clinician
         <DoctorDecorativeArt activeMode={detail.mode} />
 
         <section className="relative z-10 mx-auto min-h-[calc(100vh-68px)] w-full max-w-6xl px-5 py-8 sm:px-8 sm:py-12">
-          <div className="mb-4 flex justify-end">
-            <button
-              onClick={() => {
-                if (selectedGeneticDiseaseTopic) {
-                  navigate("/doctor/dashboard/resource/common-genetic-kidney-diseases");
-                  return;
-                }
-
-                navigate(`/doctor/dashboard/${detail.mode}`);
-              }}
-              className="rounded-full border border-[#c3d6d9] bg-white px-4 py-2 text-sm font-semibold text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
+          <div className="mb-4 flex flex-wrap items-center gap-3">
+            <Link
+              to={`/doctor/dashboard/${detail.mode}`}
+              className="inline-flex items-center gap-2 rounded-full border border-[#c3d6d9] bg-white px-4 py-2 text-sm font-semibold text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
             >
-              <ArrowLeft className="h-5 w-5" aria-hidden="true" /><span className="sr-only">Back</span>
-            </button>
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              {detail.mode === "educational" ? "Educational Materials" : "Practical Tools"}
+            </Link>
+            {selectedGeneticDiseaseTopic && (
+              <Link to="/doctor/dashboard/resource/common-genetic-kidney-diseases" className="text-sm font-semibold text-[#00687b] underline underline-offset-4">
+                Common Genetic Kidney Diseases
+              </Link>
+            )}
           </div>
 
           {showDetailHero ? (
@@ -1999,7 +2006,7 @@ Referring clinician
                 className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 <h3 className="text-2xl text-black md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
-                  {isCaseStudiesPage ? "Personal Stories Video Library" : "Kidney Genetics Explained by Experts - Videos"}
+                  {detail.title}
                 </h3>
                 <p className="mt-3 max-w-4xl text-base leading-relaxed text-black/75 md:text-lg">
                   {isCaseStudiesPage
@@ -2184,17 +2191,20 @@ Referring clinician
                 className="rounded-[30px] border border-black/10 bg-white/92 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-8"
               >
                 <p className="max-w-4xl text-lg leading-relaxed text-black/85 md:text-[1.45rem]">
-                  Genetic testing plays a critical role in nephrology: 10-20% of adults with CKD and up to 70% of children with CKD have a monogenic cause that can be identified with a genetic test.
-                  <sub className="ml-1"><a href="#why-reference-1" aria-label="Reference 1">1</a>, <a href="#why-reference-2" aria-label="Reference 2">2</a></sub>{" "}
+                  Genetic testing can help identify an inherited cause of kidney disease and inform care for patients and their families.
+                  <sup className="ml-1 text-[#00687b]"><a href="#why-reference-1" aria-label="Reference 1" className="underline">1</a>, <a href="#why-reference-2" aria-label="Reference 2" className="underline">2</a></sup>{" "}
                   Identifying a genetic cause of kidney disease provides major clinical benefits, including:
                 </p>
 
                 <div className="mt-8 space-y-4">
                   {whyGeneticTestingBenefits.map((benefit) => (
-                    <div key={benefit.label} className="flex gap-4 rounded-[24px] bg-cyan-50 px-5 py-4">
-                      <div className="mt-1 h-3 w-3 rounded-full bg-cyan-700" />
+                    <div key={benefit.label} className="flex items-start gap-4 rounded-[24px] bg-cyan-50 px-5 py-4">
+                      <span className="rounded-xl bg-[#cfe7ea] p-2 text-[#00687b]">
+                        <benefit.icon className="size-5" aria-hidden="true" />
+                      </span>
                       <p className="text-lg leading-relaxed text-black/85 md:text-[1.12rem]">
                         <strong className="text-black">{benefit.label}:</strong> {benefit.description}
+                        {benefit.reference && <sup className="ml-1 text-[#00687b]"><a href={`#why-reference-${benefit.reference}`} aria-label={`Reference ${benefit.reference}`} className="underline">{benefit.reference}</a></sup>}
                       </p>
                     </div>
                   ))}

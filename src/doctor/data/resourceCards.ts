@@ -58,14 +58,14 @@ export const educationalCards: ResourceCard[] = [
   },
   {
     id: "case-studies",
-    title: "Patients' Stories",
+    title: "Patients' Stories (Short Videos)",
     subtitle: "Hear the patient's voices",
     icon: Film,
     route: "/doctor/dashboard/resource/case-studies",
   },
   {
     id: "genetic-testing-counseling-videos",
-    title: "Kidney Genetics Explained by Experts - Videos",
+    title: "Kidney Genetics Explained by Experts (Short Videos)",
     subtitle: "Webinars, playlists, and explainers",
     icon: Video,
     route: "/doctor/dashboard/resource/genetic-testing-counseling-videos",
@@ -86,14 +86,14 @@ export const educationalCards: ResourceCard[] = [
   },
   {
     id: "renal-patient-organizations",
-    title: "Patients' Organizations",
+    title: "Patient Organizations",
     subtitle: "Patient support and referral resources",
     icon: BookOpen,
     route: "/doctor/dashboard/resource/renal-patient-organizations",
   },
   {
     id: "genetic-counselors",
-    title: "Genetic Counselors: When and Why?",
+    title: "Genetic Counselors: Who, When, and Why?",
     subtitle: "When to refer and how counseling supports care",
     icon: UserRoundPlus,
     route: "/doctor/dashboard/resource/genetic-counselors",
@@ -132,6 +132,29 @@ export const educationalCards: ResourceCard[] = [
     subtitle: "Evidence and literature",
     icon: FileSearch,
     route: "/doctor/dashboard/resource/peer-reviewed-papers",
+  },
+];
+
+export const educationalGroups = [
+  {
+    title: "Foundations: Understanding Kidney Genetics",
+    icon: Dna,
+    cardIds: ["why-genetic-testing-in-nephrology", "common-genetic-kidney-diseases", "types-of-genetic-tests", "genetic-testing-counseling-videos"],
+  },
+  {
+    title: "Clinical Practice: Applying Genetics in Patient Care",
+    icon: ClipboardList,
+    cardIds: ["genetic-counselors", "family-history-collection", "components-of-informed-consent", "cost-and-coverage"],
+  },
+  {
+    title: "Ethics, Legal, and Professional Responsibilities",
+    icon: ShieldCheck,
+    cardIds: ["protections-against-genetic-discrimination", "doctors-legal-responsibilities", "case-studies"],
+  },
+  {
+    title: "Resources and Continuing Education",
+    icon: GraduationCap,
+    cardIds: ["peer-reviewed-papers", "external-training", "renal-patient-organizations", "quizzes"],
   },
 ];
 

@@ -1,4 +1,5 @@
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CalendarCheck, ClipboardCheck, FileText, GitBranch, ShieldCheck, Users, Wallet } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { DoctorPageShell, doctorSerifFont } from "../components/DoctorShell";
 import { informedConsentPanels, ethicsReferences } from "../data/clinicalEducation";
@@ -8,7 +9,7 @@ type Topic = "protections" | "responsibilities" | "counselors" | "coverage" | "t
 const titles: Record<Topic, string> = {
   protections: "Protections Against Genetic Discrimination",
   responsibilities: "The Doctor's Legal Responsibilities",
-  counselors: "Genetic Counselors: When and Why?",
+  counselors: "Genetic Counselors: Who, When, and Why?",
   coverage: "Cost and Coverage",
   tests: "Types of Genetic Tests",
   "family-history": "How to Collect Family History",
@@ -16,6 +17,13 @@ const titles: Record<Topic, string> = {
 };
 const resource = "/doctor/dashboard/resource/";
 const linkClass = "font-semibold text-[#00687b] underline underline-offset-4 hover:text-[#005667]";
+
+const topicVisuals: Partial<Record<Topic, { label: string; icon: LucideIcon }[]>> = {
+  protections: [{ label: "Employment", icon: ClipboardCheck }, { label: "Health insurance", icon: ShieldCheck }, { label: "Privacy", icon: FileText }],
+  responsibilities: [{ label: "Discuss family impact", icon: Users }, { label: "Support communication", icon: FileText }, { label: "Coordinate follow-up", icon: CalendarCheck }],
+  coverage: [{ label: "Check coverage", icon: ShieldCheck }, { label: "Confirm the estimate", icon: Wallet }, { label: "Review appeal options", icon: FileText }],
+  "family-history": [{ label: "Map relationships", icon: GitBranch }, { label: "Record kidney and extra-renal findings", icon: ClipboardCheck }, { label: "Review the pedigree", icon: Users }],
+};
 
 function References({ items }: { items: Array<{ citation: string; url: string }> }) {
   return <section className="mt-10 border-t border-[#c3d6d9] pt-6" aria-label="References">
@@ -40,6 +48,9 @@ export default function ClinicalEducationPage({ topic, referral = false }: { top
     <div className="relative mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
       <Link to={`/doctor/dashboard/${referral ? "practical" : "educational"}`} className={`mb-6 inline-flex items-center gap-2 ${linkClass}`}><ArrowLeft className="size-4" />{referral ? "Practical Tools" : "Educational Materials"}</Link>
       <h1 className="mb-8 text-3xl font-bold leading-tight sm:text-4xl" style={{ fontFamily: doctorSerifFont }}>{referral ? "Refer to a Genetic Counselor" : titles[topic]}</h1>
+      {topicVisuals[topic] && <ul aria-label="Key topics" className="mb-8 grid grid-cols-1 divide-y divide-[#c3d6d9] rounded-2xl border border-[#c3d6d9] bg-[#edf6f7] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        {topicVisuals[topic].map(({ label, icon: Icon }) => <li key={label} className="flex items-center gap-3 px-5 py-4 text-sm font-semibold"><Icon aria-hidden="true" className="size-5 shrink-0 text-[#00687b]" />{label}</li>)}
+      </ul>}
       <div className="space-y-7 text-base leading-relaxed text-[#3f4650] sm:text-lg">
         {topic === "protections" && <>
           <p>Discuss genetic discrimination protections and their limits before testing so patients can make informed decisions about their care.</p>
@@ -75,11 +86,35 @@ export default function ClinicalEducationPage({ topic, referral = false }: { top
           <div className="grid gap-6 sm:grid-cols-2">
             {[['genetic-counselor-in-person.png', 'In-person genetic counseling'], ['genetic-counselor-telehealth.jpg', 'Genetic counseling by telehealth']].map(([src, alt]) => <figure key={src}><img src={`${import.meta.env.BASE_URL}learn-images/${src}`} alt={alt} className="mx-auto h-40 max-w-full object-contain" /><figcaption className="mt-2 text-center text-sm">{alt}</figcaption></figure>)}
           </div>
-          <p>Genetic counselors assess personal and family history, explain the scope and limitations of testing, support informed decisions, and interpret what a result may mean for the patient and their relatives.</p>
+          <h2 className="text-2xl font-semibold text-[#16323b]">Who Are Genetic Counselors?</h2>
+          <p>Genetic counselors have advanced training in medical genetics and counseling to guide and support patients seeking more information about how inherited diseases and conditions might affect them or their families, and to interpret genetic test results based on personal and family history.</p>
           <h2 className="text-2xl font-semibold text-[#16323b]">When to Refer</h2>
-          <ul className="list-disc space-y-3 pl-6"><li>Before testing when the phenotype, inheritance pattern, testing strategy, or reproductive implications are complex.</li><li>After a positive or uncertain result, or after a negative result when clinical suspicion remains high.</li><li>For cascade testing, family communication, kidney donor assessment, or concerns about privacy, emotional impact, and costs.</li></ul>
+          <ul className="list-disc space-y-3 pl-6">
+            <li><strong>Before testing:</strong> A genetic counselor can provide pre-test counseling, especially when the clinical presentation, inheritance pattern, testing strategy, or reproductive implications are complex, or when clinic time is limited.</li>
+            <li><strong>After results:</strong> A genetic counselor can explain the result, discuss additional testing, and help coordinate cascade testing and family communication.</li>
+            <li>For kidney donor assessment.</li>
+            <li>When patients have concerns about privacy or costs.</li>
+          </ul>
           <h2 className="text-2xl font-semibold text-[#16323b]">Referral Path</h2>
-          <ol className="list-decimal space-y-3 pl-6"><li>Discuss the purpose of referral with the patient and obtain their agreement.</li><li>Identify a local renal genetics service or a counselor offering nephrology expertise, in person or by telehealth.</li><li>Confirm referral requirements, appointment availability, insurance participation, and expected patient costs.</li><li>With the patient's authorization, send the clinical summary, relevant kidney investigations, family history, and existing genetic reports.</li><li>Agree who will order testing, return results, and coordinate follow-up and family testing.</li></ol>
+          <div className="grid gap-6 md:grid-cols-2">
+            <section className="rounded-2xl border border-[#c3d6d9] bg-[#edf6f7] p-5">
+              <h3 className="flex items-center gap-3 font-semibold text-[#16323b]"><CalendarCheck aria-hidden="true" className="size-5 shrink-0 text-[#00687b]" />One-Time Setup</h3>
+              <ol className="mt-4 list-decimal space-y-3 pl-5 text-base">
+                <li>Identify a genetic counselor with nephrology expertise, in person or by telehealth.</li>
+                <li>Confirm referral requirements, appointment availability, insurance participation, and expected patient costs.</li>
+                <li>Agree who usually orders tests, returns results, and coordinates follow-up and family testing. Roles may vary by patient.</li>
+              </ol>
+            </section>
+            <section className="rounded-2xl border border-[#c3d6d9] bg-[#f7f4eb] p-5">
+              <h3 className="flex items-center gap-3 font-semibold text-[#16323b]"><Users aria-hidden="true" className="size-5 shrink-0 text-[#83521c]" />For Each Patient</h3>
+              <ol className="mt-4 list-decimal space-y-3 pl-5 text-base">
+                <li>Explain the purpose of the referral and obtain the patient's agreement.</li>
+                <li>Discuss who will order testing, return results, and coordinate follow-up and family testing as applicable.</li>
+                <li>Refer to a renal genetics service or a genetic counselor with nephrology expertise.</li>
+                <li>With the patient's authorization, send the clinical summary, relevant kidney investigations, family history, and existing genetic reports.</li>
+              </ol>
+            </section>
+          </div>
           <a href="https://findageneticcounselor.nsgc.org/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#00687b] px-5 py-3 text-base font-semibold text-white">Find a Genetic Counselor at NSGC<ArrowUpRight className="size-4" /></a>
           <p><Link className={linkClass} to="/learn/genetic-counselors">Patient information about genetic counseling</Link></p>
           <References items={[CITATIONS.bogyo2025]} />
@@ -94,14 +129,25 @@ export default function ClinicalEducationPage({ topic, referral = false }: { top
           <References items={[CITATIONS.bogyo2025, CITATIONS.franceschini2024]} />
         </>}
         {topic === "tests" && <>
-          <p>Choose a test using the phenotype, family history, prior testing, and the variant types the laboratory can detect. Confirm coverage of copy-number changes, difficult genomic regions, and other suspected mechanisms with the laboratory.</p>
+          <p>Choose a test using the patient's clinical presentation, family history, prior genetic testing, and the genes and variant types the test can detect.</p>
+          <figure className="rounded-2xl border border-[#c3d6d9] bg-white p-4 sm:p-6">
+            <a href={`${import.meta.env.BASE_URL}resource-graphics/genetic-variant-detection-figure-1.jpg`} target="_blank" rel="noreferrer" aria-label="Open Figure 1 at full size">
+              <img src={`${import.meta.env.BASE_URL}resource-graphics/genetic-variant-detection-figure-1.jpg`} alt="Diagram comparing genetic variant types with the clinical laboratory methods that can detect them" width="3045" height="4151" className="mx-auto h-auto w-full max-w-xl" />
+            </a>
+            <figcaption className="mt-4 text-sm leading-relaxed">
+              <strong>Figure 1. Genetic technologies for variant detection.</strong>{" "}
+              <a href={CITATIONS.groopman2025.url} target="_blank" rel="noreferrer" className={linkClass}>Groopman and Milo Rasouly, Kidney International Reports (2025)</a>.
+              Copyright 2024 International Society of Nephrology. Reproduced unchanged under{" "}
+              <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noreferrer" className={linkClass}>CC BY-NC-ND 4.0</a>.
+            </figcaption>
+          </figure>
           <dl className="divide-y divide-[#c3d6d9]">
             {[
-              ["Familial-variant or single-gene testing", "Targeted testing can be appropriate when a disease-causing familial variant is known or the phenotype strongly suggests one gene. A negative targeted result does not assess unrelated genes or mechanisms."],
-              ["Kidney gene panel", "Analyzes multiple genes associated with a kidney phenotype. Panels may offer focused interpretation and useful coverage, but gene content and copy-number detection differ between laboratories."],
-              ["Exome sequencing", "Examines most protein-coding regions and can help when the phenotype is heterogeneous, syndromic, or unexplained. Some noncoding changes, repeat expansions, and structural variants may be missed."],
-              ["Genome sequencing", "Surveys coding and noncoding DNA more broadly. Detection and interpretation of particular variant classes still depend on the laboratory's validated analysis."],
-              ["Additional methods", "Deletion/duplication testing, chromosomal microarray, mitochondrial analysis, or other specialized assays may be needed when sequencing alone does not address the suspected mechanism."],
+              ["Familial-variant or single-gene testing", "Targeted testing is appropriate when a disease-causing familial variant is known or the clinical presentation strongly suggests one gene, as in Fabry disease."],
+              ["Kidney gene panel", "Analyzes multiple genes associated with one kidney disease or a broad range of kidney diseases. Panels offer focused interpretation and coverage. Gene content and copy-number detection vary by laboratory."],
+              ["Exome sequencing", "Sequences most exons (protein-coding regions). Coverage can be lower than with a panel, and not all genes are analyzed. Analysis depends on the clinical information provided to the laboratory."],
+              ["Genome sequencing", "Sequences most of the genome. Coverage can be lower than with a panel, and not all genes are analyzed. Analysis depends on the clinical information provided to the laboratory."],
+              ["Additional methods", "Deletion/duplication testing, chromosomal microarray, mitochondrial analysis, or other specialized assays may be needed when sequencing cannot detect the disease-causing variant."],
             ].map(([title, text]) => <div key={title} className="py-5"><dt className="font-semibold text-[#16323b]">{title}</dt><dd className="mt-2">{text}</dd></div>)}
           </dl>
           <p>Discuss positive, negative, and uncertain results, secondary findings, patient preferences, costs, and follow-up before ordering.</p>

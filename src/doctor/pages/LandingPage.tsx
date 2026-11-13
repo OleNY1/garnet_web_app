@@ -35,7 +35,7 @@ export default function LandingPage() {
               Doctor dashboard
             </h1>
             <p className="mx-auto mt-3 max-w-xl text-lg leading-relaxed text-[#5b6472]">
-              Choose what you need.
+              Find education materials and practical tools.
             </p>
           </div>
 
