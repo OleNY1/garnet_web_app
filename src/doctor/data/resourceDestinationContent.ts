@@ -41,8 +41,10 @@ export type DiseaseLinkItem = {
   topicId?: string;
 };
 
+export type GeneticDiseaseId = "adpkd" | "arpkd" | "bor" | "alport" | "dent" | "fabry" | "tubulopathies" | "hnf1b-adtkd" | "ciliopathies" | "pax2" | "cakut" | "srns" | "mitochondrial";
+
 export type GeneticDiseaseTopic = {
-  id: string;
+  id: GeneticDiseaseId;
   title: string;
   primarySections: Array<{
     title: string;

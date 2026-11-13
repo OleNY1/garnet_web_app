@@ -298,31 +298,31 @@ export default function Education() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f3f7ff] pb-24 relative overflow-hidden" style={{ fontFamily: "Georgia, serif" }}>
-      <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-200/45 blur-3xl" />
-      <div className="pointer-events-none absolute top-36 -right-16 h-80 w-80 rounded-full bg-blue-200/35 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-20 left-1/3 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl" />
+    <div className="min-h-screen bg-bg pb-24 relative overflow-hidden" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-cyan-200/45 dark:bg-cyan-950/45 blur-3xl" />
+      <div className="pointer-events-none absolute top-36 -right-16 h-80 w-80 rounded-full bg-blue-200/35 dark:bg-blue-950/35 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-20 left-1/3 h-64 w-64 rounded-full bg-emerald-200/30 dark:bg-emerald-950/30 blur-3xl" />
 
       <div className="relative z-10 px-6 pt-5 space-y-6">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate("/doctor/dashboard")}
-            className="h-11 w-11 rounded-2xl bg-white/95 shadow-sm border border-blue-100 flex items-center justify-center hover:bg-blue-50 transition-colors"
+            className="h-11 w-11 rounded-2xl bg-surface/95 shadow-sm border border-blue-100 dark:border-line flex items-center justify-center hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 text-[#153a7a]" />
+            <ArrowLeft className="w-5 h-5 text-[#153a7a] dark:text-brand" />
           </button>
 
           <div className="flex-1">
-            <p className="text-xs uppercase tracking-[0.16em] text-blue-700/80 font-semibold">Knowledge Hub</p>
+            <p className="text-xs uppercase tracking-[0.16em] text-blue-700/80 dark:text-blue-300/80 font-semibold">Knowledge Hub</p>
             <h1
-              className="text-[2rem] leading-none text-[#102347] mt-1"
+              className="text-[2rem] leading-none text-[#102347] dark:text-brand mt-1"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Resources
             </h1>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 rounded-full border border-white/70 bg-white/80 backdrop-blur px-3 py-2 text-xs text-[#24457f]">
+          <div className="hidden sm:flex items-center gap-2 rounded-full border border-white/70 bg-surface/80 backdrop-blur px-3 py-2 text-xs text-[#24457f] dark:text-brand">
             <Sparkles className="w-3.5 h-3.5" />
             {userRole === "clinician" ? "Clinician Track" : "Patient Track"}
           </div>
@@ -369,7 +369,7 @@ export default function Education() {
 
             <div className="mt-5 h-2 rounded-full bg-white/20 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-cyan-200 to-emerald-200 transition-all duration-300"
+                className="h-full rounded-full bg-gradient-to-r from-cyan-200 dark:from-cyan-950 to-emerald-200 dark:to-emerald-950 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -386,7 +386,7 @@ export default function Education() {
                 className={`rounded-full px-4 py-2 text-sm whitespace-nowrap border transition-all ${
                   isActive
                     ? "bg-[#173f86] text-white border-[#173f86] shadow-md"
-                    : "bg-white/90 text-[#24457f] border-blue-100 hover:bg-blue-50"
+                    : "bg-surface/90 text-[#24457f] dark:text-brand border-blue-100 dark:border-line hover:bg-blue-50 dark:hover:bg-blue-950"
                 }`}
               >
                 {chip.label}
@@ -397,7 +397,7 @@ export default function Education() {
 
         <section className="space-y-4">
           {visibleModules.length === 0 ? (
-            <div className="rounded-2xl bg-white border border-blue-100 p-6 text-center text-[#45639b]">
+            <div className="rounded-2xl bg-surface border border-blue-100 dark:border-line p-6 text-center text-[#45639b] dark:text-brand">
               No resources match this filter yet.
             </div>
           ) : (
@@ -420,7 +420,7 @@ export default function Education() {
                   key={module.id}
                   onClick={() => handleModuleClick(module)}
                   disabled={module.locked}
-                  className={`w-full text-left rounded-3xl border p-5 bg-white/95 backdrop-blur transition-all ${
+                  className={`w-full text-left rounded-3xl border p-5 bg-surface/95 backdrop-blur transition-all ${
                     module.locked
                       ? "opacity-60"
                       : "hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-900/10"
@@ -431,66 +431,66 @@ export default function Education() {
                     <div
                       className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${
                         module.isCompleted
-                          ? "bg-emerald-50"
+                          ? "bg-emerald-50 dark:bg-emerald-950"
                           : module.locked
-                            ? "bg-gray-100"
-                            : "bg-blue-50"
+                            ? "bg-gray-100 dark:bg-surface-2"
+                            : "bg-blue-50 dark:bg-blue-950"
                       }`}
                     >
                       {module.isCompleted ? (
-                        <CheckCircle className="w-6 h-6 text-emerald-600" />
+                        <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-300" />
                       ) : module.locked ? (
-                        <Lock className="w-6 h-6 text-gray-400" />
+                        <Lock className="w-6 h-6 text-gray-400 dark:text-muted" />
                       ) : (
-                        <ModuleIcon className="w-6 h-6 text-blue-700" />
+                        <ModuleIcon className="w-6 h-6 text-blue-700 dark:text-blue-300" />
                       )}
                     </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3">
                         <h3
-                          className="text-lg md:text-xl text-[#102347] leading-tight"
+                          className="text-lg md:text-xl text-[#102347] dark:text-brand leading-tight"
                           style={{ fontFamily: "Georgia, serif" }}
                         >
                           {module.title}
                         </h3>
-                        <span className="inline-flex items-center gap-1 text-xs md:text-sm text-[#45639b] whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 text-xs md:text-sm text-[#45639b] dark:text-brand whitespace-nowrap">
                           <Clock className="w-4 h-4" />
                           {module.duration}
                         </span>
                       </div>
 
-                      <p className="text-sm md:text-base text-[#3f5687] mt-2 leading-relaxed">{module.description}</p>
+                      <p className="text-sm md:text-base text-[#3f5687] dark:text-brand mt-2 leading-relaxed">{module.description}</p>
 
                       <div className="mt-4 flex flex-wrap items-center gap-2">
-                        <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-xs text-[#1f4f9a]">
+                        <span className="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-950 border border-blue-100 dark:border-line px-3 py-1 text-xs text-[#1f4f9a] dark:text-brand">
                           {module.category === "clinician"
                             ? "Clinician"
                             : module.category === "patient"
                               ? "Patient"
                               : "Shared"}
                         </span>
-                        <span className="inline-flex items-center rounded-full bg-cyan-50 border border-cyan-100 px-3 py-1 text-xs text-cyan-800">
+                        <span className="inline-flex items-center rounded-full bg-cyan-50 dark:bg-cyan-950 border border-cyan-100 dark:border-line px-3 py-1 text-xs text-cyan-800 dark:text-cyan-300">
                           {statusLabel}
                         </span>
                         {module.locked && (
-                          <span className="inline-flex items-center rounded-full bg-gray-100 border border-gray-200 px-3 py-1 text-xs text-gray-700">
+                          <span className="inline-flex items-center rounded-full bg-gray-100 dark:bg-surface-2 border border-gray-200 dark:border-line px-3 py-1 text-xs text-gray-700 dark:text-body">
                             Locked
                           </span>
                         )}
                       </div>
                     </div>
 
-                    <div className="hidden sm:flex h-10 w-10 rounded-full bg-[#e9f1ff] items-center justify-center mt-0.5">
+                    <div className="hidden sm:flex h-10 w-10 rounded-full bg-[#e9f1ff] dark:bg-surface-2 items-center justify-center mt-0.5">
                       {module.isCompleted ? (
-                        <CheckCircle className="w-5 h-5 text-emerald-600" />
+                        <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-300" />
                       ) : (
-                        <ArrowRight className="w-5 h-5 text-[#1b4f9f]" />
+                        <ArrowRight className="w-5 h-5 text-[#1b4f9f] dark:text-brand" />
                       )}
                     </div>
                   </div>
 
-                  <div className="mt-4 h-1.5 rounded-full bg-blue-50 overflow-hidden">
+                  <div className="mt-4 h-1.5 rounded-full bg-blue-50 dark:bg-blue-950 overflow-hidden">
                     <div
                       className={`h-full rounded-full ${
                         module.isCompleted
@@ -506,18 +506,18 @@ export default function Education() {
           )}
         </section>
 
-        <section className="rounded-3xl border border-blue-100 bg-white/92 backdrop-blur p-5 md:p-7 shadow-sm">
+        <section className="rounded-3xl border border-blue-100 dark:border-line bg-surface/92 backdrop-blur p-5 md:p-7 shadow-sm">
           <div className="flex items-start justify-between gap-4 mb-5">
             <div>
-              <p className="text-xs uppercase tracking-[0.16em] text-blue-700/75 font-semibold">Patient Support</p>
+              <p className="text-xs uppercase tracking-[0.16em] text-blue-700/75 dark:text-blue-300/75 font-semibold">Patient Support</p>
               <h2
-                className="mt-1 text-xl md:text-2xl text-[#102347]"
+                className="mt-1 text-xl md:text-2xl text-[#102347] dark:text-brand"
                 style={{ fontFamily: "Georgia, serif" }}
               >
                 Patients' Organizations
               </h2>
             </div>
-            <span className="hidden sm:inline-flex rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs text-[#42639a]">
+            <span className="hidden sm:inline-flex rounded-full border border-blue-100 dark:border-line bg-blue-50 dark:bg-blue-950 px-3 py-1 text-xs text-[#42639a] dark:text-brand">
               {renalPatientOrganizations.length} organizations
             </span>
           </div>
@@ -527,20 +527,20 @@ export default function Education() {
               {renalPatientOrganizations.map((organization, index) => (
                 <div
                   key={organization.url}
-                  className="rounded-2xl border border-blue-100 bg-gradient-to-r from-white to-blue-50/60 p-4"
+                  className="rounded-2xl border border-blue-100 dark:border-line bg-gradient-to-r from-surface to-blue-50/60 dark:to-blue-950/60 p-4"
                 >
                   <div className="flex items-start gap-3">
                     <div className="h-7 w-7 rounded-full bg-[#173f86] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
                       {index + 1}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm md:text-[0.95rem] text-[#2f4676] leading-relaxed">
+                      <p className="text-sm md:text-[0.95rem] text-[#2f4676] dark:text-brand leading-relaxed">
                         {organization.label}{" "}
                         <a
                           href={organization.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#5d6fc4] underline underline-offset-2 hover:text-[#173f86]"
+                          className="text-[#5d6fc4] dark:text-brand underline underline-offset-2 hover:text-[#173f86] dark:hover:text-brand"
                         >
                           {organization.domainLabel}
                         </a>
@@ -555,16 +555,16 @@ export default function Education() {
               href={renalReferralGuide.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-[2rem] border border-[#c68080] bg-gradient-to-br from-[#fff5f5] via-white to-[#fff0f0] p-6 shadow-[0_10px_30px_rgba(147,35,35,0.12)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(147,35,35,0.16)]"
+              className="group rounded-[2rem] border border-[#c68080] bg-gradient-to-br from-[#fff5f5] dark:from-accent-soft via-surface to-[#fff0f0] dark:to-accent-soft p-6 shadow-[0_10px_30px_rgba(147,35,35,0.12)] transition-all hover:-translate-y-0.5 hover:shadow-[0_16px_36px_rgba(147,35,35,0.16)]"
             >
               <div className="flex h-full flex-col justify-center">
                 <p
-                  className="text-2xl leading-tight text-[#9e1d1d] underline decoration-[#9e1d1d] underline-offset-4 md:text-[2rem]"
+                  className="text-2xl leading-tight text-[#9e1d1d] dark:text-accent underline decoration-[#9e1d1d] underline-offset-4 md:text-[2rem]"
                   style={{ fontFamily: "Georgia, serif", textShadow: "0 3px 10px rgba(120, 20, 20, 0.12)" }}
                 >
                   {renalReferralGuide.label}
                 </p>
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#9e1d1d]">
+                <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#9e1d1d] dark:text-accent">
                   Open referral guide
                   <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </div>
@@ -573,29 +573,29 @@ export default function Education() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-blue-100 bg-white/90 backdrop-blur p-5 md:p-6 shadow-sm">
+        <section className="rounded-3xl border border-blue-100 dark:border-line bg-surface/90 backdrop-blur p-5 md:p-6 shadow-sm">
           <div className="flex items-center justify-between gap-3 mb-4">
             <h2
-              className="text-xl md:text-2xl text-[#102347]"
+              className="text-xl md:text-2xl text-[#102347] dark:text-brand"
               style={{ fontFamily: "Georgia, serif" }}
             >
               Evidence Base
             </h2>
-            <span className="text-xs md:text-sm text-[#42639a]">{references.length} key references</span>
+            <span className="text-xs md:text-sm text-[#42639a] dark:text-brand">{references.length} key references</span>
           </div>
 
           <div className="space-y-3">
             {references.map((reference, index) => (
               <article
                 key={index}
-                className="rounded-2xl border border-blue-100 bg-gradient-to-r from-white to-blue-50/60 p-4"
+                className="rounded-2xl border border-blue-100 dark:border-line bg-gradient-to-r from-surface to-blue-50/60 dark:to-blue-950/60 p-4"
               >
                 <div className="flex items-start gap-3">
                   <div className="h-7 w-7 rounded-full bg-[#173f86] text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
                     {index + 1}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm text-[#2f4676] leading-relaxed">{reference.citation}</p>
+                    <p className="text-sm text-[#2f4676] dark:text-brand leading-relaxed">{reference.citation}</p>
                     {reference.links && reference.links.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-2">
                         {reference.links.map((link) => (
@@ -604,7 +604,7 @@ export default function Education() {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center rounded-full border border-blue-200 bg-white px-3 py-1 text-xs text-[#1c4a94] hover:bg-blue-50"
+                            className="inline-flex items-center rounded-full border border-blue-200 dark:border-line bg-surface px-3 py-1 text-xs text-[#1c4a94] dark:text-brand hover:bg-blue-50 dark:hover:bg-blue-950"
                           >
                             {link.label}
                           </a>

@@ -20,9 +20,9 @@ export default function LiteracyResult() {
     adequate: {
       title: "Adequately Educated",
       color: "purple",
-      bgColor: "bg-purple-50",
-      textColor: "text-purple-700",
-      borderColor: "border-purple-200",
+      bgColor: "bg-purple-50 dark:bg-purple-950",
+      textColor: "text-purple-700 dark:text-purple-300",
+      borderColor: "border-purple-200 dark:border-line",
       message:
         "You show strong understanding of core genetic testing concepts and are likely ready for informed decision-making.",
       suggestions: [
@@ -34,9 +34,9 @@ export default function LiteracyResult() {
     developing: {
       title: "Partially Educated",
       color: "blue",
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-700",
-      borderColor: "border-blue-200",
+      bgColor: "bg-blue-50 dark:bg-blue-950",
+      textColor: "text-blue-700 dark:text-blue-300",
+      borderColor: "border-blue-200 dark:border-line",
       message:
         "You have a solid foundation but may need reinforcement in selected areas before major testing decisions.",
       suggestions: [
@@ -48,9 +48,9 @@ export default function LiteracyResult() {
     needsSupport: {
       title: "Needs More Education",
       color: "green",
-      bgColor: "bg-green-50",
-      textColor: "text-green-700",
-      borderColor: "border-green-200",
+      bgColor: "bg-green-50 dark:bg-green-950",
+      textColor: "text-green-700 dark:text-green-300",
+      borderColor: "border-green-200 dark:border-line",
       message:
         "You are not yet adequately prepared for independent genetic testing decisions and would benefit from more structured education first.",
       suggestions: [
@@ -64,28 +64,28 @@ export default function LiteracyResult() {
   const config = levelConfig[level];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2">
       {/* Header */}
-      <div className="bg-white px-6 py-6">
-        <h1 className="text-2xl text-gray-900 mb-2">
+      <div className="bg-surface px-6 py-6">
+        <h1 className="text-2xl text-gray-900 dark:text-ink mb-2">
           Patient Education Readiness
         </h1>
-        <p className="text-gray-600">Check of your understanding of genetic testing</p>
+        <p className="text-gray-600 dark:text-body">Check of your understanding of genetic testing</p>
       </div>
 
       <div className="px-6 py-6 space-y-6">
         {/* Score Display */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm text-center">
+        <div className="bg-surface rounded-2xl p-8 shadow-sm text-center">
           <div className={`w-32 h-32 mx-auto rounded-full ${config.bgColor} flex items-center justify-center mb-6`}>
             <div className="text-center">
               <div className={`text-4xl ${config.textColor}`}>
                 {score}%
               </div>
-              <div className="text-sm text-gray-600 mt-1">Score</div>
+              <div className="text-sm text-gray-600 dark:text-body mt-1">Score</div>
             </div>
           </div>
 
-          <p className="text-sm text-gray-600 mb-6">
+          <p className="text-sm text-gray-600 dark:text-body mb-6">
             Correct: {correctCount} / {totalQuestions || "?"}
           </p>
 
@@ -96,20 +96,20 @@ export default function LiteracyResult() {
             </h2>
           </div>
 
-          <p className="text-gray-700">{config.message}</p>
+          <p className="text-gray-700 dark:text-body">{config.message}</p>
         </div>
 
         {/* Level Breakdown */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg text-gray-900 mb-4">Readiness Levels</h3>
+        <div className="bg-surface rounded-2xl p-6 shadow-sm">
+          <h3 className="text-lg text-gray-900 dark:text-ink mb-4">Readiness Levels</h3>
           <div className="space-y-3">
             <div
               className={`p-4 rounded-xl border-2 ${
-                level === "needsSupport" ? config.borderColor + " " + config.bgColor : "border-gray-200"
+                level === "needsSupport" ? config.borderColor + " " + config.bgColor : "border-gray-200 dark:border-line"
               }`}
             >
               <div className="flex justify-between items-center">
-                <span className="text-gray-900">Needs More Education (0-59%)</span>
+                <span className="text-gray-900 dark:text-ink">Needs More Education (0-59%)</span>
                 {level === "needsSupport" && (
                   <span className={`text-sm ${config.textColor}`}>Your level</span>
                 )}
@@ -117,11 +117,11 @@ export default function LiteracyResult() {
             </div>
             <div
               className={`p-4 rounded-xl border-2 ${
-                level === "developing" ? config.borderColor + " " + config.bgColor : "border-gray-200"
+                level === "developing" ? config.borderColor + " " + config.bgColor : "border-gray-200 dark:border-line"
               }`}
             >
               <div className="flex justify-between items-center">
-                <span className="text-gray-900">Partially Educated (60-79%)</span>
+                <span className="text-gray-900 dark:text-ink">Partially Educated (60-79%)</span>
                 {level === "developing" && (
                   <span className={`text-sm ${config.textColor}`}>Your level</span>
                 )}
@@ -129,11 +129,11 @@ export default function LiteracyResult() {
             </div>
             <div
               className={`p-4 rounded-xl border-2 ${
-                level === "adequate" ? config.borderColor + " " + config.bgColor : "border-gray-200"
+                level === "adequate" ? config.borderColor + " " + config.bgColor : "border-gray-200 dark:border-line"
               }`}
             >
               <div className="flex justify-between items-center">
-                <span className="text-gray-900">Adequately Educated (80-100%)</span>
+                <span className="text-gray-900 dark:text-ink">Adequately Educated (80-100%)</span>
                 {level === "adequate" && (
                   <span className={`text-sm ${config.textColor}`}>Your level</span>
                 )}
@@ -144,11 +144,11 @@ export default function LiteracyResult() {
 
         {/* Targeted Review Areas */}
         {incorrectCompetencies.length > 0 && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <h3 className="text-lg text-gray-900 mb-3">Topics to Reinforce</h3>
+          <div className="bg-surface rounded-2xl p-6 shadow-sm">
+            <h3 className="text-lg text-gray-900 dark:text-ink mb-3">Topics to Reinforce</h3>
             <ul className="space-y-2">
               {incorrectCompetencies.map((topic) => (
-                <li key={topic} className="text-sm text-gray-700">
+                <li key={topic} className="text-sm text-gray-700 dark:text-body">
                   • {topic}
                 </li>
               ))}
@@ -170,7 +170,7 @@ export default function LiteracyResult() {
           <ul className="space-y-2">
             {config.suggestions.map((suggestion, index) => (
               <li key={index} className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 flex-shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-surface mt-2 flex-shrink-0" />
                 <span className="text-sm text-purple-50">{suggestion}</span>
               </li>
             ))}
@@ -190,16 +190,16 @@ export default function LiteracyResult() {
 
           <button
             onClick={() => navigate("/doctor/literacy")}
-            className="w-full py-4 bg-white border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors"
+            className="w-full py-4 bg-surface border border-gray-200 dark:border-line rounded-2xl hover:bg-gray-50 dark:hover:bg-surface-2 transition-colors"
           >
-            <span className="text-gray-900">Retake Patient Check</span>
+            <span className="text-gray-900 dark:text-ink">Retake Patient Check</span>
           </button>
 
           <button
             onClick={() => navigate("/doctor/dashboard")}
-            className="w-full py-4 bg-white border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors"
+            className="w-full py-4 bg-surface border border-gray-200 dark:border-line rounded-2xl hover:bg-gray-50 dark:hover:bg-surface-2 transition-colors"
           >
-            <span className="text-gray-900">Back to Dashboard</span>
+            <span className="text-gray-900 dark:text-ink">Back to Dashboard</span>
           </button>
         </div>
       </div>

@@ -85,22 +85,22 @@ const letterFallback = (value: string, placeholder: string) => value.trim() || p
 
 function renderClinicalExaminationContent() {
   return (
-    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
+    <div className="mt-8 rounded-[2rem] bg-surface px-6 py-8 text-ink shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-start">
         <div>
           <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
             Clinical examination
           </h3>
 
-          <p className="mt-5 text-base leading-relaxed"><Link to="/doctor/dashboard/resource/genetic-testing-risks" className="font-semibold text-[#00687b] underline underline-offset-4">You can use the questions from the Assess Risk for Genetic Condition form.</Link></p>
-          <p className="mt-6 text-xl leading-10 text-black/80">
+          <p className="mt-5 text-base leading-relaxed"><Link to="/doctor/dashboard/resource/genetic-testing-risks" className="font-semibold text-brand underline underline-offset-4">You can use the questions from the Assess Risk for Genetic Condition form.</Link></p>
+          <p className="mt-6 text-xl leading-10 text-body">
             Look for extra-renal manifestations such as hearing loss, ocular findings, neurological symptoms,
             electrolyte abnormalities, congenital anomalies, or other syndromic findings that may point toward an
             inherited kidney condition.
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
+        <div className="overflow-hidden rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] dark:bg-surface-2 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
           <div className="bg-gradient-to-r from-[#4c9fc2] to-[#5d62b8] px-6 py-5 text-center text-white">
             <p className="text-2xl font-semibold tracking-[0.08em] sm:text-4xl">CLINICAL NEPHROGENETICS</p>
             <p className="mt-2 text-lg sm:text-2xl">
@@ -109,8 +109,8 @@ function renderClinicalExaminationContent() {
           </div>
 
           <div className="p-4">
-            <div className="rounded-[1.25rem] bg-white/90 p-3 shadow-sm">
-              <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64]">
+            <div className="rounded-[1.25rem] bg-surface/90 p-3 shadow-sm">
+              <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64] dark:text-brand">
                 Extrarenal Manifestations: Look Beyond the Kidneys
               </p>
               <img
@@ -128,20 +128,20 @@ function renderClinicalExaminationContent() {
 
 function renderFamilyHistoryCollectionContent() {
   return (
-    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
+    <div className="mt-8 rounded-[2rem] bg-surface px-6 py-8 text-ink shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="grid gap-10 xl:grid-cols-[0.95fr_1.05fr] xl:items-start">
         <div>
           <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
             Family History Collection
           </h3>
-          <p className="mt-5 text-base leading-relaxed"><Link to="/doctor/dashboard/resource/family-history-collection" className="font-semibold text-[#00687b] underline underline-offset-4">How to collect a three-generation family history</Link></p>
+          <p className="mt-5 text-base leading-relaxed"><Link to="/doctor/dashboard/resource/family-history-collection" className="font-semibold text-brand underline underline-offset-4">How to collect a three-generation family history</Link></p>
 
-          <p className="mt-6 text-xl leading-10 text-black/80">
+          <p className="mt-6 text-xl leading-10 text-body">
             Obtain a detailed family history for kidney disease, asking about affected relatives, age of onset,
             dialysis or transplant history, and extrarenal features.
           </p>
 
-          <p className="mt-8 text-xl leading-10 text-black/80">
+          <p className="mt-8 text-xl leading-10 text-body">
             Use pedigree analysis tools to visually map inheritance patterns. Include at least three generations if
             possible. Identify patterns suggestive of dominant, recessive, or X-linked inheritance to guide testing
             strategy.
@@ -157,9 +157,9 @@ function renderFamilyHistoryCollectionContent() {
           </a>
         </div>
 
-        <div className="rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] p-4 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
-          <div className="rounded-[1.25rem] bg-white/90 p-3 shadow-sm">
-            <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64]">
+        <div className="rounded-[1.5rem] border border-[#6fa9bd]/30 bg-[#dff2f8] dark:bg-surface-2 p-4 shadow-[0_16px_36px_rgba(0,0,0,0.12)]">
+          <div className="rounded-[1.25rem] bg-surface/90 p-3 shadow-sm">
+            <p className="mb-3 text-lg font-semibold leading-snug text-[#173a64] dark:text-brand">
               Detailed Family History &amp; Pedigree Mapping
             </p>
             <img
@@ -182,13 +182,13 @@ function renderInformedConsentContent() {
 
 function renderHowToChooseTheTestContent() {
   return (
-    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
+    <div className="mt-8 rounded-[2rem] bg-surface px-6 py-8 text-ink shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
         Choosing the right test
       </h3>
 
-      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
-        <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
+      <div className="mt-8 rounded-[1.5rem] border border-[#d7e2f6] dark:border-line bg-[#f7fbff] dark:bg-surface-2 p-5 text-body shadow-sm">
+        <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff] dark:text-brand">Reference</p>
         <p className="mt-3 text-xl leading-9 underline decoration-black/50 underline-offset-4">
           <a href={howToChooseTestReference.href} target="_blank" rel="noreferrer">
             {howToChooseTestReference.citation}
@@ -200,11 +200,11 @@ function renderHowToChooseTheTestContent() {
         <img
           src={howToChooseTestFigureUrl}
           alt="Framework for genetic test selection among individuals with kidney disease"
-          className="w-full rounded-[1.25rem] border border-[#d9e3f3] bg-white object-contain shadow-sm"
+          className="w-full rounded-[1.25rem] border border-[#d9e3f3] dark:border-line bg-surface object-contain shadow-sm"
         />
       </div>
 
-      <div className="mt-8 max-w-4xl text-xl leading-10 text-black/80">
+      <div className="mt-8 max-w-4xl text-xl leading-10 text-body">
         <p>
           Framework for genetic test selection among individuals with kidney disease. The workflow illustrated here is
           described in the main text in the section: &ldquo;Genetic test selection among individuals with kidney
@@ -224,24 +224,24 @@ function renderHowToChooseTheTestContent() {
 
 function renderResultsDisclosureContent() {
   return (
-    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
+    <div className="mt-8 rounded-[2rem] bg-surface px-6 py-8 text-ink shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="max-w-4xl">
         <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
           Results disclosure and follow-up
         </h3>
 
-        <p className="mt-6 text-xl leading-10 text-black/80">
+        <p className="mt-6 text-xl leading-10 text-body">
           After testing, results are reviewed with the patient, follow-up plans are adjusted, and referral to a genetic
-          counselor may be recommended. <Link to="/doctor/counselors" className="font-semibold text-[#00687b] underline underline-offset-4">Review the genetic counseling referral path.</Link>
+          counselor may be recommended. <Link to="/doctor/counselors" className="font-semibold text-brand underline underline-offset-4">Review the genetic counseling referral path.</Link>
         </p>
 
-        <p className="mt-8 text-xl leading-10 text-black/80">
+        <p className="mt-8 text-xl leading-10 text-body">
           Inform the patient when to expect the result and what to expect to happen. You will review the results,
           explain them, maybe adjust care, refer to other specialists, or consider another genetic test.
         </p>
 
-        <div className="mt-10 rounded-[1.5rem] border border-[#d7e2f6] bg-[#f7fbff] p-5 text-black/80 shadow-sm">
-          <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff]">Reference</p>
+        <div className="mt-10 rounded-[1.5rem] border border-[#d7e2f6] dark:border-line bg-[#f7fbff] dark:bg-surface-2 p-5 text-body shadow-sm">
+          <p className="text-sm uppercase tracking-[0.22em] text-[#4f7cff] dark:text-brand">Reference</p>
           <p className="mt-3 text-lg leading-9 underline decoration-black/50 underline-offset-4">
             <a href={resultsDisclosureReference.href} target="_blank" rel="noreferrer">
               {resultsDisclosureReference.citation}
@@ -258,19 +258,19 @@ function renderLetterOfMedicalNecessityContent(
   onFieldChange: (field: keyof LetterFormState, value: string) => void,
 ) {
   return (
-    <div className="mt-8 rounded-[2rem] bg-white px-6 py-8 text-[#183a39] shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
+    <div className="mt-8 rounded-[2rem] bg-surface px-6 py-8 text-ink shadow-[0_14px_30px_rgba(16,35,71,0.08)] sm:px-8 lg:px-10">
       <div className="grid gap-10 xl:grid-cols-[0.82fr_1.18fr] xl:items-start">
         <div>
           <h3 className="text-4xl leading-tight sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
             Statement of Medical Necessity
           </h3>
 
-          <p className="mt-6 text-xl leading-10 text-black/80">
+          <p className="mt-6 text-xl leading-10 text-body">
             Enter the patient, physician, insurance, and clinical details below. The letter preview updates in place so
             the physician can complete the statement before using it for coverage review.
           </p>
 
-          <div className="mt-8 space-y-4 rounded-[1.5rem] border border-black/10 bg-[#f7fbff] p-5 shadow-sm">
+          <div className="mt-8 space-y-4 rounded-[1.5rem] border border-black/10 dark:border-line/10 bg-[#f7fbff] dark:bg-surface-2 p-5 shadow-sm">
             {[
               ["patientName", "Patient Name"],
               ["dob", "DOB"],
@@ -282,7 +282,7 @@ function renderLetterOfMedicalNecessityContent(
               ["institution", "Institution / Clinic"],
               ["contactInformation", "Contact Information"],
             ].map(([field, label]) => (
-              <label key={field} className="block text-sm text-black/75">
+              <label key={field} className="block text-sm text-body">
                 {label}
                 <input
                   type="text"
@@ -290,29 +290,29 @@ function renderLetterOfMedicalNecessityContent(
                   onChange={(event) =>
                     onFieldChange(field as keyof LetterFormState, event.target.value)
                   }
-                  className="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
+                  className="mt-1 w-full rounded-xl border border-black/15 dark:border-line/15 bg-surface px-3 py-2 text-ink outline-none focus:border-cyan-600"
                 />
               </label>
             ))}
 
-            <label className="block text-sm text-black/75">
+            <label className="block text-sm text-body">
               Brief Clinical Summary
               <textarea
                 value={form.clinicalSummary}
                 onChange={(event) => onFieldChange("clinicalSummary", event.target.value)}
                 rows={5}
-                className="mt-1 w-full rounded-2xl border border-black/15 bg-white px-4 py-3 text-black outline-none focus:border-cyan-600"
+                className="mt-1 w-full rounded-2xl border border-black/15 dark:border-line/15 bg-surface px-4 py-3 text-ink outline-none focus:border-cyan-600"
               />
             </label>
           </div>
         </div>
 
-        <div className="rounded-[1.5rem] border border-[#d9e3f3] bg-white p-6 shadow-[0_16px_36px_rgba(0,0,0,0.10)]">
-          <h4 className="text-center text-3xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+        <div className="rounded-[1.5rem] border border-[#d9e3f3] dark:border-line bg-surface p-6 shadow-[0_16px_36px_rgba(0,0,0,0.10)]">
+          <h4 className="text-center text-3xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
             Statement of Medical Necessity
           </h4>
 
-          <div className="mt-6 space-y-2 text-lg leading-8 text-black/85">
+          <div className="mt-6 space-y-2 text-lg leading-8 text-ink">
             <p>Patient Name: {letterFallback(form.patientName, "____________________________")}</p>
             <p>DOB: {letterFallback(form.dob, "____________________________")}</p>
             <p>Insurance ID: {letterFallback(form.insuranceId, "____________________________")}</p>
@@ -326,7 +326,7 @@ function renderLetterOfMedicalNecessityContent(
             </p>
           </div>
 
-          <div className="mt-8 space-y-6 text-lg leading-9 text-black/85">
+          <div className="mt-8 space-y-6 text-lg leading-9 text-ink">
             <p>To Whom It May Concern,</p>
 
             <p>
@@ -407,21 +407,21 @@ export default function GeneticCounselingWorkflowDetailPage() {
   const renderHeader = () => (
     <>
       <DoctorHeader activeMode={activeMode} />
-      <div className="border-b border-[#c3d6d9] bg-white">
+      <div className="border-b border-line bg-surface">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-5 py-4 sm:px-8">
           <button
             type="button"
             onClick={() => navigate(workflowRoute)}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c3d6d9] bg-white text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-brand transition-colors hover:bg-brand-soft"
             aria-label="Back to workflow"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
           <div>
-            <p className="text-[0.78rem] font-bold uppercase tracking-[0.18em] text-[#00687b]">
+            <p className="text-[0.78rem] font-bold uppercase tracking-[0.18em] text-brand">
               Workflow Section
             </p>
-            <h1 className="text-[1.8rem] font-bold leading-tight text-[#16323b]" style={{ fontFamily: doctorSerifFont }}>
+            <h1 className="text-[1.8rem] font-bold leading-tight text-ink" style={{ fontFamily: doctorSerifFont }}>
               {topic?.title ?? "Workflow Section"}
             </h1>
           </div>
@@ -432,7 +432,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
 
   if (normalizedTopicId === "clinical-examination" || topic?.title === "Clinical Examination") {
     return (
-      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
         <main className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -448,7 +448,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
 
   if (normalizedTopicId === "pedigree-analysis" || topic?.title === "Family History Collection") {
     return (
-      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
         <main className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -464,7 +464,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
 
   if (normalizedTopicId === "how-to-choose-the-test" || topic?.title === "Choosing the right test") {
     return (
-      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
         <main className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -480,7 +480,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
 
   if (normalizedTopicId === "informed-consent" || topic?.title === "Informed Consent") {
     return (
-      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
         <main className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -499,7 +499,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
     topic?.title === "Results disclosure and follow-up"
   ) {
     return (
-      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
         <main className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -518,7 +518,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
     topic?.title === "Letter of Medical Necessity"
   ) {
     return (
-      <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
         {renderHeader()}
         <main className="relative overflow-hidden">
           <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -536,7 +536,7 @@ export default function GeneticCounselingWorkflowDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
       {renderHeader()}
       <main className="relative min-h-[45vh] overflow-hidden">
         <div className="pointer-events-none absolute inset-0 hero-wash" />

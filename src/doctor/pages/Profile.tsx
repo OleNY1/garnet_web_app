@@ -63,7 +63,7 @@ export default function Profile() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f6fafa] pb-16 text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-bg pb-16 text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
       <DoctorHeader />
       <main className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -72,37 +72,37 @@ export default function Profile() {
           <div className="mb-6 flex justify-end">
             <button
               onClick={() => navigate("/doctor/dashboard")}
-              className="rounded-full border border-[#c3d6d9] bg-white px-4 py-2 text-sm font-semibold text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
+              className="rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-brand transition-colors hover:bg-brand-soft"
             >
               Back
             </button>
           </div>
 
-          <section className="rounded-3xl border border-[#c3d6d9] bg-white p-6 shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] sm:p-8">
+          <section className="rounded-3xl border border-line bg-surface p-6 shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] sm:p-8">
             <div className="flex items-center gap-4">
-              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-[#cfe7ea] text-[#00687b]">
+              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-brand-soft text-brand">
                 <span className="text-2xl font-bold">{userName[0]}</span>
               </div>
               <div>
-                <h1 className="mb-1 text-3xl font-bold text-[#16323b]" style={{ fontFamily: doctorSerifFont }}>
+                <h1 className="mb-1 text-3xl font-bold text-ink" style={{ fontFamily: doctorSerifFont }}>
                   {userName}
                 </h1>
-                <p className="capitalize text-[#5b6472]">{userRole}</p>
+                <p className="capitalize text-muted">{userRole}</p>
               </div>
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-3">
-              <div className="rounded-2xl bg-[#f6fafa] p-4 text-center">
-                <div className="mb-1 text-2xl font-bold text-[#16323b]">{`${completedAssessments}/${TOTAL_ASSESSMENTS}`}</div>
-                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5b6472]">Assessments</div>
+              <div className="rounded-2xl bg-bg p-4 text-center">
+                <div className="mb-1 text-2xl font-bold text-ink">{`${completedAssessments}/${TOTAL_ASSESSMENTS}`}</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Assessments</div>
               </div>
-              <div className="rounded-2xl bg-[#f6fafa] p-4 text-center">
-                <div className="mb-1 text-2xl font-bold text-[#16323b]">{`${completedModules}/${totalModules}`}</div>
-                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5b6472]">Modules</div>
+              <div className="rounded-2xl bg-bg p-4 text-center">
+                <div className="mb-1 text-2xl font-bold text-ink">{`${completedModules}/${totalModules}`}</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Modules</div>
               </div>
-              <div className="rounded-2xl bg-[#f6fafa] p-4 text-center">
-                <div className="mb-1 text-2xl font-bold text-[#16323b]">{`${overallProgress}%`}</div>
-                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-[#5b6472]">Progress</div>
+              <div className="rounded-2xl bg-bg p-4 text-center">
+                <div className="mb-1 text-2xl font-bold text-ink">{`${overallProgress}%`}</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">Progress</div>
               </div>
             </div>
           </section>
@@ -112,16 +112,16 @@ export default function Profile() {
               <button
                 key={item.label}
                 onClick={item.action}
-                className="flex w-full items-center gap-4 rounded-3xl border border-[#c3d6d9] bg-white p-5 text-left shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#9fbfc5]"
+                className="flex w-full items-center gap-4 rounded-3xl border border-line bg-surface p-5 text-left shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#9fbfc5] dark:hover:border-line"
               >
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#f6fafa] text-[#00687b]">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-bg text-brand">
                   <item.icon className="h-6 w-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="mb-1 text-base font-bold text-[#16323b]">{item.label}</h3>
-                  <p className="text-sm text-[#5b6472]">{item.description}</p>
+                  <h3 className="mb-1 text-base font-bold text-ink">{item.label}</h3>
+                  <p className="text-sm text-muted">{item.description}</p>
                 </div>
-                <ChevronRight className="h-5 w-5 flex-shrink-0 text-[#5b6472]" />
+                <ChevronRight className="h-5 w-5 flex-shrink-0 text-muted" />
               </button>
             ))}
           </div>
@@ -129,7 +129,7 @@ export default function Profile() {
           <div className="mt-6">
             <button
               onClick={handleLogout}
-              className="flex w-full items-center justify-center gap-3 rounded-3xl border border-[#f4d8d2] bg-white p-5 text-[#9f4035] transition-colors hover:bg-[#fff5f3]"
+              className="flex w-full items-center justify-center gap-3 rounded-3xl border border-line bg-surface p-5 text-accent transition-colors hover:bg-accent-soft"
             >
               <LogOut className="h-5 w-5" />
               <span className="font-semibold">Log Out</span>
@@ -137,8 +137,8 @@ export default function Profile() {
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-[#5b6472]">Version 1.0.0</p>
-            <p className="mt-2 text-xs text-[#5b6472]">
+            <p className="text-sm text-muted">Version 1.0.0</p>
+            <p className="mt-2 text-xs text-muted">
               © 2026 GARNET. All rights reserved.
             </p>
           </div>

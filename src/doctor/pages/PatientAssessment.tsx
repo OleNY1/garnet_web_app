@@ -399,38 +399,38 @@ const questions: Question[] = [
 const INFOGRAPHIC_THEMES: Record<InfographicThemeName, InfographicTheme> = {
   blue: {
     header: "from-sky-500 to-blue-600",
-    panel: "from-sky-50 to-blue-50",
-    border: "border-sky-200",
-    badge: "bg-sky-100 text-sky-800",
-    iconBg: "from-sky-200 to-blue-200",
+    panel: "from-sky-50 dark:from-sky-950 to-blue-50 dark:to-blue-950",
+    border: "border-sky-200 dark:border-line",
+    badge: "bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300",
+    iconBg: "from-sky-200 dark:from-sky-950 to-blue-200 dark:to-blue-950",
   },
   green: {
     header: "from-emerald-500 to-green-600",
-    panel: "from-emerald-50 to-green-50",
-    border: "border-emerald-200",
-    badge: "bg-emerald-100 text-emerald-800",
-    iconBg: "from-emerald-200 to-green-200",
+    panel: "from-emerald-50 dark:from-emerald-950 to-green-50 dark:to-green-950",
+    border: "border-emerald-200 dark:border-line",
+    badge: "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300",
+    iconBg: "from-emerald-200 dark:from-emerald-950 to-green-200 dark:to-green-950",
   },
   teal: {
     header: "from-teal-500 to-cyan-600",
-    panel: "from-teal-50 to-cyan-50",
-    border: "border-teal-200",
-    badge: "bg-teal-100 text-teal-800",
-    iconBg: "from-teal-200 to-cyan-200",
+    panel: "from-teal-50 dark:from-teal-950 to-cyan-50 dark:to-cyan-950",
+    border: "border-teal-200 dark:border-line",
+    badge: "bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300",
+    iconBg: "from-teal-200 dark:from-teal-950 to-cyan-200 dark:to-cyan-950",
   },
   gold: {
     header: "from-amber-500 to-orange-500",
-    panel: "from-amber-50 to-orange-50",
-    border: "border-amber-200",
-    badge: "bg-amber-100 text-amber-800",
-    iconBg: "from-amber-200 to-orange-200",
+    panel: "from-amber-50 dark:from-amber-950 to-orange-50 dark:to-orange-950",
+    border: "border-amber-200 dark:border-line",
+    badge: "bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300",
+    iconBg: "from-amber-200 dark:from-amber-950 to-orange-200 dark:to-orange-950",
   },
   violet: {
     header: "from-violet-500 to-purple-600",
-    panel: "from-violet-50 to-purple-50",
-    border: "border-violet-200",
-    badge: "bg-violet-100 text-violet-800",
-    iconBg: "from-violet-200 to-purple-200",
+    panel: "from-violet-50 dark:from-violet-950 to-purple-50 dark:to-purple-950",
+    border: "border-violet-200 dark:border-line",
+    badge: "bg-violet-100 dark:bg-violet-950 text-violet-800 dark:text-violet-300",
+    iconBg: "from-violet-200 dark:from-violet-950 to-purple-200 dark:to-purple-950",
   },
 };
 
@@ -501,26 +501,26 @@ export default function PatientAssessment() {
   const canProceed = currentAnswer !== undefined;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2 flex flex-col">
       {/* Header */}
-      <div className="bg-white px-6 py-4 flex items-center gap-4">
+      <div className="bg-surface px-6 py-4 flex items-center gap-4">
         <button
           onClick={handleBack}
-          className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+          className="w-10 h-10 rounded-full bg-gray-100 dark:bg-surface-2 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-surface-2 transition-colors"
         >
-          <ArrowLeft className="w-5 h-5 text-gray-700" />
+          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-body" />
         </button>
         <div className="flex-1">
-          <h2 className="text-lg text-gray-900">Patient Assessment</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-lg text-gray-900 dark:text-ink">Patient Assessment</h2>
+          <p className="text-sm text-gray-600 dark:text-body">
             Question {currentQuestion + 1} of {questions.length}
           </p>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="bg-white px-6 pb-4">
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div className="bg-surface px-6 pb-4">
+        <div className="h-2 bg-gray-100 dark:bg-surface-2 rounded-full overflow-hidden">
           <div
             className="h-full bg-blue-500 transition-all duration-300"
             style={{ width: `${progress}%` }}
@@ -535,7 +535,7 @@ export default function PatientAssessment() {
           infographicIndex={currentQuestion + 1}
         />
 
-        <h1 className="text-2xl text-gray-900 mb-8">{activeQuestion.question}</h1>
+        <h1 className="text-2xl text-gray-900 dark:text-ink mb-8">{activeQuestion.question}</h1>
 
         {/* Answer Options */}
         <div className="space-y-3">
@@ -545,25 +545,25 @@ export default function PatientAssessment() {
               onClick={() => handleAnswer(option.value)}
               className={`w-full p-5 rounded-2xl border-2 transition-all text-left ${
                 currentAnswer === option.value
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-200 bg-white hover:border-gray-300"
+                  ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
+                  : "border-gray-200 dark:border-line bg-surface hover:border-gray-300 dark:hover:border-line"
               }`}
             >
-              <span className="text-lg text-gray-900">{option.label}</span>
+              <span className="text-lg text-gray-900 dark:text-ink">{option.label}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Next Button */}
-      <div className="p-6 bg-white border-t border-gray-200">
+      <div className="p-6 bg-surface border-t border-gray-200 dark:border-line">
         <button
           onClick={handleNext}
           disabled={!canProceed}
           className={`w-full py-4 rounded-2xl flex items-center justify-center gap-2 transition-all ${
             canProceed
               ? "bg-blue-500 text-white hover:bg-blue-600"
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "bg-gray-200 dark:bg-surface-2 text-gray-400 dark:text-muted cursor-not-allowed"
           }`}
         >
           <span>{currentQuestion < questions.length - 1 ? "Next" : "See Results"}</span>
@@ -587,11 +587,11 @@ function QuestionInfographicCard({
   const SecondaryIcon = visual.secondaryIcon;
 
   return (
-    <div className={`mb-6 overflow-hidden rounded-3xl border ${theme.border} bg-white shadow-md`}>
+    <div className={`mb-6 overflow-hidden rounded-3xl border ${theme.border} bg-surface shadow-md`}>
       <div className={`relative bg-gradient-to-r ${theme.header} px-4 py-3`}>
         <div className="flex items-center gap-3 pr-14">
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white/90 shadow-sm">
-            <PrimaryIcon className="h-5 w-5 text-slate-700" />
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-surface/90 shadow-sm">
+            <PrimaryIcon className="h-5 w-5 text-slate-700 dark:text-body" />
           </div>
           <p className="text-sm leading-tight text-white">{question.infographic.title}</p>
         </div>
@@ -605,7 +605,7 @@ function QuestionInfographicCard({
           <span className={`inline-flex rounded-full px-2.5 py-1 text-[11px] ${theme.badge}`}>
             {question.infographic.source}
           </span>
-          <p className="text-sm leading-relaxed text-slate-700">{question.infographic.note}</p>
+          <p className="text-sm leading-relaxed text-slate-700 dark:text-body">{question.infographic.note}</p>
         </div>
 
         {question.infographic.source === "Test Selection Flow" ? (
@@ -642,27 +642,27 @@ function FlowInfographicGraphic({
   const [stepA = "Step 1", stepB = "Step 2", stepC = "Step 3"] = steps;
 
   return (
-    <div className="relative rounded-2xl border border-white/70 bg-white/70 p-3 shadow-sm">
+    <div className="relative rounded-2xl border border-white/70 bg-surface/70 p-3 shadow-sm">
       <div className="space-y-2">
-        <div className="flex items-center gap-2 rounded-xl bg-white px-3 py-2 shadow-sm">
-          <PrimaryIcon className="h-4 w-4 text-slate-700" />
-          <span className="text-xs text-slate-700">{stepA}</span>
+        <div className="flex items-center gap-2 rounded-xl bg-surface px-3 py-2 shadow-sm">
+          <PrimaryIcon className="h-4 w-4 text-slate-700 dark:text-body" />
+          <span className="text-xs text-slate-700 dark:text-body">{stepA}</span>
         </div>
         <div className="flex justify-center">
-          <ArrowRight className="h-3.5 w-3.5 rotate-90 text-slate-500" />
+          <ArrowRight className="h-3.5 w-3.5 rotate-90 text-slate-500 dark:text-muted" />
         </div>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-          <div className="rounded-xl bg-white px-2 py-2 text-center text-[11px] text-slate-700 shadow-sm">
+          <div className="rounded-xl bg-surface px-2 py-2 text-center text-[11px] text-slate-700 dark:text-body shadow-sm">
             {stepB}
           </div>
-          <ArrowRight className="h-3.5 w-3.5 text-slate-500" />
-          <div className={`rounded-xl bg-gradient-to-br ${theme.iconBg} px-2 py-2 text-center text-[11px] text-slate-700`}>
+          <ArrowRight className="h-3.5 w-3.5 text-slate-500 dark:text-muted" />
+          <div className={`rounded-xl bg-gradient-to-br ${theme.iconBg} px-2 py-2 text-center text-[11px] text-slate-700 dark:text-body`}>
             {stepC}
           </div>
         </div>
       </div>
-      <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm">
-        <SecondaryIcon className="h-4 w-4 text-slate-700" />
+      <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-surface shadow-sm">
+        <SecondaryIcon className="h-4 w-4 text-slate-700 dark:text-body" />
       </div>
     </div>
   );
@@ -682,23 +682,23 @@ function MapInfographicGraphic({
   const [left = "Signal", center = "Core", right = "Action"] = steps;
 
   return (
-    <div className="relative min-h-[150px] rounded-2xl border border-white/70 bg-white/70 p-3 shadow-sm">
-      <div className="absolute left-7 top-8 h-px w-[calc(100%-3.5rem)] bg-slate-300/80" />
-      <div className="absolute left-1/2 top-8 h-[52px] w-px -translate-x-1/2 bg-slate-300/80" />
+    <div className="relative min-h-[150px] rounded-2xl border border-white/70 bg-surface/70 p-3 shadow-sm">
+      <div className="absolute left-7 top-8 h-px w-[calc(100%-3.5rem)] bg-slate-300/80 dark:bg-surface-2/80" />
+      <div className="absolute left-1/2 top-8 h-[52px] w-px -translate-x-1/2 bg-slate-300/80 dark:bg-surface-2/80" />
 
-      <div className="absolute left-2 top-2 max-w-[34%] rounded-xl bg-white px-2 py-1.5 text-[11px] text-slate-700 shadow-sm">
+      <div className="absolute left-2 top-2 max-w-[34%] rounded-xl bg-surface px-2 py-1.5 text-[11px] text-slate-700 dark:text-body shadow-sm">
         {left}
       </div>
       <div className={`absolute left-1/2 top-2 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full bg-gradient-to-br ${theme.iconBg} shadow-sm`}>
-        <PrimaryIcon className="h-4 w-4 text-slate-700" />
+        <PrimaryIcon className="h-4 w-4 text-slate-700 dark:text-body" />
       </div>
-      <div className="absolute right-2 top-2 max-w-[34%] rounded-xl bg-white px-2 py-1.5 text-[11px] text-slate-700 shadow-sm">
+      <div className="absolute right-2 top-2 max-w-[34%] rounded-xl bg-surface px-2 py-1.5 text-[11px] text-slate-700 dark:text-body shadow-sm">
         {right}
       </div>
 
-      <div className="absolute bottom-3 left-1/2 flex w-[82%] -translate-x-1/2 items-center justify-between rounded-xl border border-slate-200/80 bg-white px-3 py-2">
-        <span className="text-xs text-slate-700">{center}</span>
-        <SecondaryIcon className="h-4 w-4 text-slate-700" />
+      <div className="absolute bottom-3 left-1/2 flex w-[82%] -translate-x-1/2 items-center justify-between rounded-xl border border-slate-200/80 dark:border-line/80 bg-surface px-3 py-2">
+        <span className="text-xs text-slate-700 dark:text-body">{center}</span>
+        <SecondaryIcon className="h-4 w-4 text-slate-700 dark:text-body" />
       </div>
     </div>
   );

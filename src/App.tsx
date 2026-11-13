@@ -53,7 +53,7 @@ export default function App() {
   const isWelcomePage = location.pathname === '/'
 
   return (
-    <div className={`flex min-h-dvh flex-col ${isDoctorRoute ? 'doctor-site' : 'patient-site'}`}>
+    <div className={`flex min-h-dvh flex-col ${isDoctorRoute ? 'doctor-site bg-bg text-body' : 'patient-site'}`}>
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-xl focus:border focus:border-line focus:bg-surface focus:px-5 focus:py-3 focus:font-semibold focus:text-ink focus:shadow-lift"
@@ -95,7 +95,7 @@ export default function App() {
           <Route path="/doctor/onboarding" element={<DoctorOnboarding />} />
           <Route path="/doctor/login" element={<DoctorLogin />} />
           <Route path="/doctor/dashboard" element={<DoctorLandingPage />} />
-          <Route path="/doctor/dashboard/:mode" element={<DoctorResourceModePage />} />
+          <Route path="/doctor/dashboard/:mode/:groupId?" element={<DoctorResourceModePage />} />
           <Route path="/doctor/dashboard/resource/protections-against-genetic-discrimination" element={<ClinicalEducationPage topic="protections" />} />
           <Route path="/doctor/dashboard/resource/doctors-legal-responsibilities" element={<ClinicalEducationPage topic="responsibilities" />} />
           <Route path="/doctor/dashboard/resource/genetic-counselors" element={<ClinicalEducationPage topic="counselors" />} />

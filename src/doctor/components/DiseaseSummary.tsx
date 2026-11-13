@@ -1,41 +1,9 @@
 import { Link } from "react-router-dom";
 import type { GeneticDiseaseTopic } from "../data/resourceDestinationContent";
+import { DiseaseFeatureGallery } from "./DiseaseFeatureGallery";
 import { doctorSerifFont } from "./DoctorShell";
 
 const genes = /\b(PKD1|PKD2|PKHD1|DZIP1L|IFT140|GANAB|ALG8|ALG9|EYA1|SIX1|SIX5|COL4A3|COL4A4|COL4A5|CLCN5|OCRL|HNF1B|PAX2|GLA|SLC12A1|SLC12A3|KCNJ1|CLCNKB|BSND|NPHP1|NPHP3|NPHP4|IQCB1|CEP290|TMEM67|NPHS1|NPHS2|ACTN4|INF2|TRPC6|APOL1|WT1|CD2AP|LMNA|PLCE1|COQ2|COQ8B|PDSS2|ADCK4|TWNK|MT-TL1|GATA3|RET|WNT4|WNT9B|BMP4|UMOD|MUC1|REN)\b/g;
-
-type ClinicalPhoto = { file: string; title: string; alt: string; source: string; credit: string; license: "BY 2.0" | "BY-SA 4.0" };
-
-const clinicalPhotos: Partial<Record<string, ClinicalPhoto[]>> = {
-  fabry: [
-    {
-      file: "fabry-angiokeratomas.jpg",
-      title: "Angiokeratomas",
-      alt: "Clinical photograph showing clusters of small red and purple skin lesions in Fabry disease",
-      source: "https://commons.wikimedia.org/wiki/File:Morbus_Fabry_Angiokeratoma_01.jpg",
-      credit: "Burlina et al., BMC Neurology (2011)",
-      license: "BY 2.0",
-    },
-    {
-      file: "fabry-cornea.jpg",
-      title: "Cornea verticillata",
-      alt: "Slit-lamp photograph showing whorl-like corneal deposits in Fabry disease",
-      source: "https://commons.wikimedia.org/wiki/File:Morbus_Fabry_Cornea_verticillata_01.jpg",
-      credit: "Burlina et al., BMC Neurology (2011)",
-      license: "BY 2.0",
-    },
-  ],
-  alport: [
-    {
-      file: "alport-lenticonus.jpg",
-      title: "Anterior lenticonus",
-      alt: "Slit-lamp photograph showing a cone-shaped protrusion of the anterior lens",
-      source: "https://commons.wikimedia.org/wiki/File:Anterior_lenticonus.jpg",
-      credit: "Ammar Al-Mahmood",
-      license: "BY-SA 4.0",
-    },
-  ],
-};
 
 export function GeneText({ text }: { text: string }) {
   return <>{text.split(genes).map((part, index) => index % 2 ? <em key={index}>{part}</em> : part)}</>;
@@ -92,7 +60,6 @@ const summaries: Record<string, Summary> = {
 
 export function DiseaseSummary({ topic }: { topic: GeneticDiseaseTopic }) {
   const summary = summaries[topic.id];
-  const photos = clinicalPhotos[topic.id];
   const title = topic.id === "adpkd" ? "Autosomal Dominant Polycystic Kidney Disease (ADPKD)" : topic.title.replace(" (EYA1)", "");
   const sections = summary ? [
     { title: "Genetics and Inheritance", bullets: summary.genetics },
@@ -100,33 +67,16 @@ export function DiseaseSummary({ topic }: { topic: GeneticDiseaseTopic }) {
     { title: "Why It Is Important to Know", bullets: summary.importance },
   ] : [...topic.featureCards, ...topic.primarySections];
   const additional = summary ? topic.primarySections : [];
+  const galleryIndex = sections.findIndex(section => section.title.startsWith("Clinical Features") || section.title === "Testing Indications");
   return <div className="space-y-7">
-    <h2 className="text-2xl font-semibold leading-tight text-[#16323b] sm:text-3xl" style={{ fontFamily: doctorSerifFont }}><GeneText text={title} /></h2>
-    {[...sections, ...additional].map((section, index) => <section key={section.title} className="border-t border-[#c3d6d9] pt-5">
-      <h3 className={`border-l-4 pl-3 text-xl font-semibold ${["border-[#00687b] text-[#00687b]", "border-[#78924c] text-[#425625]", "border-[#c88737] text-[#83521c]"][index % 3]}`}><GeneText text={section.title} /></h3>
-      <ul className="mt-4 list-disc space-y-3 pl-6 text-base leading-relaxed text-[#3f4650]">{section.bullets.filter(bullet => !bullet.includes("licensed figure")).map(bullet => <li key={bullet}><GeneText text={bullet} /></li>)}</ul>
-      {section.title === "Clinical Features" && photos && (
-        <div className="mt-6">
-          <h4 className="font-semibold text-[#16323b]">Extra-Renal Features</h4>
-          <div className="mt-3 grid max-w-4xl gap-4 sm:grid-cols-2">
-            {photos.map((photo) => (
-              <figure key={photo.file} className="overflow-hidden rounded-2xl border border-[#c3d6d9] bg-[#f6fafa]">
-                <img src={`${import.meta.env.BASE_URL}resource-graphics/${photo.file}`} alt={photo.alt} className="h-48 w-full bg-[#16323b] object-contain" loading="lazy" />
-                <figcaption className="space-y-1 p-3 text-sm text-[#3f4650]">
-                  <p className="font-semibold text-[#16323b]">{photo.title}</p>
-                  <p><a href={photo.source} target="_blank" rel="noreferrer" className="underline underline-offset-4">{photo.credit}</a>{" · "}<a href={photo.license === "BY 2.0" ? "https://creativecommons.org/licenses/by/2.0/" : "https://creativecommons.org/licenses/by-sa/4.0/"} target="_blank" rel="noreferrer" className="underline underline-offset-4">CC {photo.license}</a></p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      )}
+    <h2 className="text-2xl font-semibold leading-tight text-ink sm:text-3xl" style={{ fontFamily: doctorSerifFont }}><GeneText text={title} /></h2>
+    {[...sections, ...additional].map((section, index) => <section key={section.title} className="border-t border-line pt-5">
+      <h3 className={`border-l-4 pl-3 text-xl font-semibold ${["border-[#00687b] text-brand", "border-[#78924c] text-[#425625] dark:text-brand", "border-[#c88737] text-[#83521c] dark:text-accent"][index % 3]}`}><GeneText text={section.title} /></h3>
+      <ul className="mt-4 list-disc space-y-3 pl-6 text-base leading-relaxed text-body">{section.bullets.filter(bullet => !bullet.includes("licensed figure")).map(bullet => <li key={bullet}><GeneText text={bullet} /></li>)}</ul>
+      {index === galleryIndex && <div className="mt-6"><DiseaseFeatureGallery disease={topic.id} /></div>}
     </section>)}
-    {topic.id === "bor" && <figure>
-      <img src={`${import.meta.env.BASE_URL}resource-graphics/bor-extrarenal-features.svg`} alt="Illustrations showing a preauricular pit just in front of the ear and a branchial sinus opening on the side of the neck" className="w-full max-w-3xl" />
-      <figcaption className="mt-2 text-sm text-[#5b6472]">Illustrative extra-renal clues: a preauricular pit and a lateral neck opening associated with a branchial sinus. Appearance and location vary.</figcaption>
-    </figure>}
-    <p className="border-t border-[#c3d6d9] pt-5 text-sm"><a href={topic.referenceUrl} target="_blank" rel="noreferrer" className="text-[#00687b] underline underline-offset-4">{topic.referenceLabel}</a></p>
-    {topic.nextTopicLink && <Link className="text-[#00687b] underline underline-offset-4" to={`/doctor/dashboard/resource/common-genetic-kidney-diseases?topic=${topic.nextTopicLink.topicId}`}>{topic.nextTopicLink.label}</Link>}
+    {galleryIndex < 0 && <div className="border-t border-line pt-5"><DiseaseFeatureGallery disease={topic.id} headingLevel={3} /></div>}
+    <p className="border-t border-line pt-5 text-sm"><a href={topic.referenceUrl} target="_blank" rel="noreferrer" className="text-brand underline underline-offset-4">{topic.referenceLabel}</a></p>
+    {topic.nextTopicLink && <Link className="text-brand underline underline-offset-4" to={`/doctor/dashboard/resource/common-genetic-kidney-diseases?topic=${topic.nextTopicLink.topicId}`}>{topic.nextTopicLink.label}</Link>}
   </div>;
 }

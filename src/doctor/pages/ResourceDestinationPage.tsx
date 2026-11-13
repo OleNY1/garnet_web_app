@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
 import {
@@ -17,7 +17,7 @@ import { DiseaseSummary, GeneText } from "../components/DiseaseSummary";
 import { ReferenceLibrary } from "../components/ReferenceLibrary";
 import { annalsReference, clinicalReferences, videoDescriptions } from "../data/clinicalEducation";
 import { CITATIONS } from "../../lib/citations";
-import { educationalCards, practicalCards } from "../data/resourceCards";
+import { educationalCards, getEducationalGroupForResource, practicalCards } from "../data/resourceCards";
 import { resourceDestinationContent } from "../data/resourceDestinationContent";
 import { DoctorDecorativeArt, DoctorFooter, DoctorHeader } from "../components/DoctorShell";
 
@@ -564,6 +564,8 @@ const buildClinicalSummaryFromRiskQuiz = (
 
 export default function ResourceDestinationPage() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const group = getEducationalGroupForResource(pathname);
   const { resourceId } = useParams();
   const [searchParams] = useSearchParams();
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -997,11 +999,11 @@ Referring clinician
     showReferralAnalysis: boolean,
   ) => (
     <div className="space-y-6">
-      <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-        <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+      <section className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
+        <h3 className="text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
           Patient's kidney diagnosis
         </h3>
-        <p className="mt-2 text-black/75">Select all that apply.</p>
+        <p className="mt-2 text-body">Select all that apply.</p>
         {useDiagnosisOptions ? (
           <div className="mt-4 grid gap-2 md:grid-cols-2">
             {diagnosisOptions.map((option) => {
@@ -1013,7 +1015,7 @@ Referring clinician
                   className={`rounded-xl border px-3 py-2 text-left transition-colors ${
                     selected
                       ? "border-cyan-700 bg-cyan-700 text-white"
-                      : "border-black/15 bg-cyan-50 text-black hover:text-cyan-700"
+                      : "border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 text-ink hover:text-cyan-700 dark:hover:text-cyan-300"
                   }`}
                 >
                   {option}
@@ -1027,31 +1029,31 @@ Referring clinician
             value={personalKidneyCondition}
             onChange={(e) => setPersonalKidneyCondition(e.target.value)}
             rows={4}
-            className="mt-4 w-full rounded-2xl border border-black/15 bg-cyan-50 px-4 py-3 text-black outline-none transition-colors placeholder:text-black/45 focus:border-cyan-600"
+            className="mt-4 w-full rounded-2xl border border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 px-4 py-3 text-ink outline-none transition-colors placeholder:text-muted focus:border-cyan-600"
           />
         )}
       </section>
 
-      <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-        <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+      <section className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
+        <h3 className="text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
           Age at First Diagnosis of Kidney Disease
         </h3>
-        <p className="mt-2 text-black/75">At what age did the patient first develop symptoms of kidney disease?</p>
+        <p className="mt-2 text-body">At what age did the patient first develop symptoms of kidney disease?</p>
         <input
           type="number"
           min="0"
           placeholder="Enter age at first symptoms"
           value={answers["age-first-diagnosis"] ?? ""}
           onChange={(e) => setAnswer("age-first-diagnosis", e.target.value)}
-          className="mt-4 w-full rounded-xl border border-black/15 bg-cyan-50 px-3 py-2 text-black outline-none focus:border-cyan-600"
+          className="mt-4 w-full rounded-xl border border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 px-3 py-2 text-ink outline-none focus:border-cyan-600"
         />
       </section>
 
-      <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-        <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+      <section className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
+        <h3 className="text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
           Extra-renal Manifestations
         </h3>
-        <p className="mt-2 text-black/75">
+        <p className="mt-2 text-body">
           Does the patient have any of the following? (List of manifestations commonly associated with hereditary forms
           of kidney disease.)
         </p>
@@ -1065,7 +1067,7 @@ Referring clinician
                 className={`rounded-xl border px-3 py-2 text-left transition-colors ${
                   selected
                     ? "border-cyan-700 bg-cyan-700 text-white"
-                    : "border-black/15 bg-cyan-50 text-black hover:text-cyan-700"
+                    : "border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 text-ink hover:text-cyan-700 dark:hover:text-cyan-300"
                 }`}
               >
                 {option}
@@ -1075,14 +1077,14 @@ Referring clinician
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-        <h3 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+      <section className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
+        <h3 className="text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
           Patient's Family History
         </h3>
         <div className="mt-4 space-y-4">
           {primaryFamilyHistoryPrompt ? (
-            <div className="rounded-2xl bg-cyan-50 px-4 py-3">
-              <p className="text-black">{primaryFamilyHistoryPrompt.prompt}</p>
+            <div className="rounded-2xl bg-cyan-50 dark:bg-cyan-950 px-4 py-3">
+              <p className="text-ink">{primaryFamilyHistoryPrompt.prompt}</p>
               <div className="mt-3 flex gap-2">
                 {["Yes", "No", "I am not sure"].map((choice) => (
                   <button
@@ -1096,7 +1098,7 @@ Referring clinician
                     className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
                       answers[primaryFamilyHistoryPrompt.id] === choice
                         ? "border-cyan-700 bg-cyan-700 text-white"
-                        : "border-black/20 bg-white text-black hover:text-cyan-700"
+                        : "border-black/20 dark:border-line/20 bg-surface text-ink hover:text-cyan-700 dark:hover:text-cyan-300"
                     }`}
                   >
                     {choice}
@@ -1108,8 +1110,8 @@ Referring clinician
 
           {hasFamilyHistory
             ? followUpFamilyHistoryPrompts.map((question) => (
-                <div key={question.id} className="rounded-2xl bg-cyan-50 px-4 py-3">
-                  <p className="text-black">{question.prompt}</p>
+                <div key={question.id} className="rounded-2xl bg-cyan-50 dark:bg-cyan-950 px-4 py-3">
+                  <p className="text-ink">{question.prompt}</p>
                   {question.kind === "yesno" ? (
                     <div className="mt-3 flex gap-2">
                       {["Yes", "No", "I am not sure"].map((choice) => (
@@ -1119,7 +1121,7 @@ Referring clinician
                           className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
                             answers[question.id] === choice
                               ? "border-cyan-700 bg-cyan-700 text-white"
-                              : "border-black/20 bg-white text-black hover:text-cyan-700"
+                              : "border-black/20 dark:border-line/20 bg-surface text-ink hover:text-cyan-700 dark:hover:text-cyan-300"
                           }`}
                         >
                           {choice}
@@ -1133,7 +1135,7 @@ Referring clinician
                       placeholder="Enter age"
                       value={answers[question.id] ?? ""}
                       onChange={(e) => setAnswer(question.id, e.target.value)}
-                      className="mt-3 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
+                      className="mt-3 w-full rounded-xl border border-black/15 dark:border-line/15 bg-surface px-3 py-2 text-ink outline-none focus:border-cyan-600"
                     />
                   )}
                 </div>
@@ -1156,18 +1158,18 @@ Referring clinician
       {showReferralAnalysis ? (
         isReferralIndicationSubmitted ? (
           <div ref={referralAnalysisRef} className="space-y-5">
-            <section className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
-              <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Referral Analysis</p>
-              <h3 className="mt-2 text-2xl md:text-3xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+            <section className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6">
+              <p className="text-sm uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-300">Referral Analysis</p>
+              <h3 className="mt-2 text-2xl md:text-3xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                 Clinical review needed
               </h3>
-              <p className="mt-3 max-w-3xl text-black/75">
+              <p className="mt-3 max-w-3xl text-body">
                 The questionnaire is ready for structured intake. The scoring and age-weighting rules have been paused
                 until the referral-analysis logic is reviewed and approved.
               </p>
               <button
                 onClick={() => setIsReferralIndicationSubmitted(false)}
-                className="mt-5 rounded-full border border-black/15 bg-white px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                className="mt-5 rounded-full border border-black/15 dark:border-line/15 bg-surface px-4 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
               >
                 Edit questionnaire
               </button>
@@ -1199,26 +1201,26 @@ Referring clinician
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.26 }}
-            className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+            className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
           >
-            <p className="text-sm uppercase tracking-wide text-cyan-700">Quiz Complete</p>
-            <h3 className="mt-2 text-2xl md:text-3xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+            <p className="text-sm uppercase tracking-wide text-cyan-700 dark:text-cyan-300">Quiz Complete</p>
+            <h3 className="mt-2 text-2xl md:text-3xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
               Final Score: {knowledgeCorrectCount}/{totalKnowledgeQuestions} ({knowledgeScorePercent}%)
             </h3>
-            <p className="mt-2 text-black/75">{knowledgeBenchmark.summary}</p>
+            <p className="mt-2 text-body">{knowledgeBenchmark.summary}</p>
 
-            <div className="mt-5 rounded-2xl border border-black/10 bg-cyan-50 p-4">
-              <p className="text-sm font-semibold text-cyan-800">{knowledgeBenchmark.label}</p>
-              <p className="mt-1 text-black/80">{knowledgeBenchmark.action}</p>
+            <div className="mt-5 rounded-2xl border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 p-4">
+              <p className="text-sm font-semibold text-cyan-800 dark:text-cyan-300">{knowledgeBenchmark.label}</p>
+              <p className="mt-1 text-body">{knowledgeBenchmark.action}</p>
 
-              <div className="mt-4 h-3 overflow-hidden rounded-full bg-white">
+              <div className="mt-4 h-3 overflow-hidden rounded-full bg-surface">
                 <div
                   className="h-full rounded-full bg-cyan-700 transition-all duration-700"
                   style={{ width: `${Math.max(knowledgeScorePercent, 2)}%` }}
                 />
               </div>
 
-              <div className="mt-2 grid grid-cols-4 text-xs text-black/60">
+              <div className="mt-2 grid grid-cols-4 text-xs text-body">
                 <span>0%</span>
                 <span className="text-center">60%</span>
                 <span className="text-center">75%</span>
@@ -1227,7 +1229,7 @@ Referring clinician
             </div>
 
             <div className="mt-5">
-              <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
+              <h4 className="text-lg text-ink" style={{ fontFamily: "Georgia, serif" }}>
                 Answer Review
               </h4>
               <div className="mt-3 space-y-3">
@@ -1236,13 +1238,13 @@ Referring clinician
                   const wasCorrect = selectedIndex === question.correctIndex;
 
                   return (
-                    <div key={question.id} className="rounded-xl border border-black/10 bg-white px-4 py-3">
-                      <p className="text-sm text-black/65">Q{index + 1}</p>
-                      <p className="mt-1 text-black">{question.prompt}</p>
-                      <p className={`mt-2 text-sm ${wasCorrect ? "text-cyan-800" : "text-orange-700"}`}>
+                    <div key={question.id} className="rounded-xl border border-black/10 dark:border-line/10 bg-surface px-4 py-3">
+                      <p className="text-sm text-body">Q{index + 1}</p>
+                      <p className="mt-1 text-ink">{question.prompt}</p>
+                      <p className={`mt-2 text-sm ${wasCorrect ? "text-cyan-800 dark:text-cyan-300" : "text-orange-700 dark:text-orange-300"}`}>
                         {wasCorrect ? "Correct" : "Needs review"}
                       </p>
-                      <p className="mt-1 text-sm text-black/75">Correct answer: {question.options[question.correctIndex]}</p>
+                      <p className="mt-1 text-sm text-body">Correct answer: {question.options[question.correctIndex]}</p>
                     </div>
                   );
                 })}
@@ -1258,7 +1260,7 @@ Referring clinician
               </button>
               <button
                 onClick={() => navigate("/doctor/dashboard/resource/peer-reviewed-papers")}
-                className="rounded-full border border-black/15 bg-white px-5 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                className="rounded-full border border-black/15 dark:border-line/15 bg-surface px-5 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
               >
                 Review Learning Resources
               </button>
@@ -1276,22 +1278,22 @@ Referring clinician
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.26 }}
-        className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+        className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
       >
         <div className="flex items-center justify-between gap-4">
-          <p className="text-sm uppercase tracking-wide text-cyan-700">
+          <p className="text-sm uppercase tracking-wide text-cyan-700 dark:text-cyan-300">
             Question {questionNumber} of {totalKnowledgeQuestions}
           </p>
-          <p className="text-sm text-black/70">
+          <p className="text-sm text-body">
             Score: {knowledgeCorrectCount}/{answeredKnowledgeCount}
           </p>
         </div>
 
-        <div className="mt-2 h-2 overflow-hidden rounded-full bg-cyan-100">
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-cyan-100 dark:bg-cyan-950">
           <div className="h-full rounded-full bg-cyan-700 transition-all duration-500" style={{ width: `${progressPercent}%` }} />
         </div>
 
-        <h3 className="mt-5 text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+        <h3 className="mt-5 text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
           {currentKnowledgeQuestion.prompt}
         </h3>
 
@@ -1310,9 +1312,9 @@ Referring clinician
                     ? isCorrectOption
                       ? "border-cyan-700 bg-cyan-700 text-white"
                       : isSelected
-                        ? "border-orange-300 bg-orange-50 text-orange-800"
-                        : "border-black/15 bg-white text-black/60"
-                    : "border-black/15 bg-cyan-50 text-black hover:text-cyan-700"
+                        ? "border-orange-300 dark:border-line bg-orange-50 dark:bg-orange-950 text-orange-800 dark:text-orange-300"
+                        : "border-black/15 dark:border-line/15 bg-surface text-body"
+                    : "border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 text-ink hover:text-cyan-700 dark:hover:text-cyan-300"
                 }`}
               >
                 {option}
@@ -1322,15 +1324,15 @@ Referring clinician
         </div>
 
         {isCurrentKnowledgeAnswered ? (
-          <div className={`mt-5 rounded-2xl border px-4 py-4 ${isCurrentKnowledgeCorrect ? "border-cyan-200 bg-cyan-50" : "border-orange-200 bg-orange-50"}`}>
-            <p className={`text-sm font-semibold ${isCurrentKnowledgeCorrect ? "text-cyan-800" : "text-orange-800"}`}>
+          <div className={`mt-5 rounded-2xl border px-4 py-4 ${isCurrentKnowledgeCorrect ? "border-cyan-200 dark:border-line bg-cyan-50 dark:bg-cyan-950" : "border-orange-200 dark:border-line bg-orange-50 dark:bg-orange-950"}`}>
+            <p className={`text-sm font-semibold ${isCurrentKnowledgeCorrect ? "text-cyan-800 dark:text-cyan-300" : "text-orange-800 dark:text-orange-300"}`}>
               {isCurrentKnowledgeCorrect ? applauseMessage : encouragementMessage}
             </p>
-            <p className="mt-1 text-black/80">{currentKnowledgeQuestion.explanation}</p>
-            <p className="mt-2 text-sm text-black/60">Source: {currentKnowledgeQuestion.source}</p>
+            <p className="mt-1 text-body">{currentKnowledgeQuestion.explanation}</p>
+            <p className="mt-2 text-sm text-body">Source: {currentKnowledgeQuestion.source}</p>
           </div>
         ) : (
-          <p className="mt-5 text-sm text-black/65">Select one option to reveal feedback and the source-based explanation.</p>
+          <p className="mt-5 text-sm text-body">Select one option to reveal feedback and the source-based explanation.</p>
         )}
 
         {isCurrentKnowledgeAnswered ? (
@@ -1348,7 +1350,7 @@ Referring clinician
   };
 
   return (
-    <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
       <DoctorHeader activeMode={detail.mode} />
 
       <main className="relative overflow-hidden">
@@ -1358,34 +1360,34 @@ Referring clinician
         <section className="relative z-10 mx-auto min-h-[calc(100vh-68px)] w-full max-w-6xl px-5 py-8 sm:px-8 sm:py-12">
           <div className="mb-4 flex flex-wrap items-center gap-3">
             <Link
-              to={`/doctor/dashboard/${detail.mode}`}
-              className="inline-flex items-center gap-2 rounded-full border border-[#c3d6d9] bg-white px-4 py-2 text-sm font-semibold text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
+              to={`/doctor/dashboard/${group ? `educational/${group.id}` : detail.mode}`}
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-brand transition-colors hover:bg-brand-soft"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-              {detail.mode === "educational" ? "Educational Materials" : "Practical Tools"}
+              {group?.title ?? (detail.mode === "educational" ? "Educational Materials" : "Practical Tools")}
             </Link>
             {selectedGeneticDiseaseTopic && (
-              <Link to="/doctor/dashboard/resource/common-genetic-kidney-diseases" className="text-sm font-semibold text-[#00687b] underline underline-offset-4">
+              <Link to="/doctor/dashboard/resource/common-genetic-kidney-diseases" className="text-sm font-semibold text-brand underline underline-offset-4">
                 Common Genetic Kidney Diseases
               </Link>
             )}
           </div>
 
           {showDetailHero ? (
-            <div className="mb-6 rounded-3xl border border-[#c3d6d9] bg-white p-6 shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] md:p-8">
-              <div className="mb-4 inline-flex rounded-2xl bg-[#cfe7ea] p-3 text-[#00687b]">
+            <div className="mb-6 rounded-3xl border border-line bg-surface p-6 shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] md:p-8">
+              <div className="mb-4 inline-flex rounded-2xl bg-brand-soft p-3 text-brand">
                 <Icon className="h-7 w-7" strokeWidth={1.8} />
               </div>
-              <h2 className="text-3xl font-bold text-[#16323b] md:text-4xl" style={{ fontFamily: "'Lora Variable', serif" }}>
+              <h2 className="text-3xl font-bold text-ink md:text-4xl" style={{ fontFamily: "'Lora Variable', serif" }}>
                 {detail.title}
               </h2>
-              {!isWhyGeneticTestingPage && <p className="mt-3 max-w-4xl text-base leading-relaxed text-[#5b6472] md:text-lg">{detail.context}</p>}
+              {!isWhyGeneticTestingPage && <p className="mt-3 max-w-4xl text-base leading-relaxed text-muted md:text-lg">{detail.context}</p>}
             </div>
           ) : null}
 
           {isPeerReviewedPapersPage ? (
             <div className="space-y-5" style={{ fontFamily: "Georgia, serif" }}>
-              <h2 className="text-3xl font-semibold text-[#16323b]">Peer-Reviewed Papers</h2>
+              <h2 className="text-3xl font-semibold text-ink">Peer-Reviewed Papers</h2>
               <ReferenceLibrary />
               {detail.sections.map((section, index) => (
                 <motion.article
@@ -1393,9 +1395,9 @@ Referring clinician
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.04, duration: 0.26 }}
-                  className="group rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6"
+                  className="group rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-6"
                 >
-                  <h3 className="text-3xl md:text-4xl font-semibold leading-tight text-black transition-colors group-hover:text-cyan-700" style={{ fontFamily: "Georgia, serif" }}>
+                  <h3 className="text-3xl md:text-4xl font-semibold leading-tight text-ink transition-colors group-hover:text-cyan-700 dark:group-hover:text-cyan-300" style={{ fontFamily: "Georgia, serif" }}>
                     {section.title}
                   </h3>
                   {section.meta ? (
@@ -1403,18 +1405,18 @@ Referring clinician
                       {section.meta.map((meta) => (
                         <span
                           key={`${section.title}-${meta.label}`}
-                          className="rounded-full border border-black/10 bg-cyan-50 px-3 py-1 text-sm text-black/80"
+                          className="rounded-full border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 px-3 py-1 text-sm text-body"
                         >
-                          <strong className="font-semibold text-black">{meta.label}:</strong> {meta.value}
+                          <strong className="font-semibold text-ink">{meta.label}:</strong> {meta.value}
                         </span>
                       ))}
                     </div>
                   ) : null}
-                  <h4 className="mt-5 text-2xl font-bold text-black" style={{ fontFamily: "Georgia, serif" }}>
+                  <h4 className="mt-5 text-2xl font-bold text-ink" style={{ fontFamily: "Georgia, serif" }}>
                     Abstract
                   </h4>
                   {section.subtitle ? (
-                    <p className="mt-2 whitespace-pre-line text-black/85 leading-relaxed text-[1.08rem]">
+                    <p className="mt-2 whitespace-pre-line text-ink leading-relaxed text-[1.08rem]">
                       {section.subtitle}
                     </p>
                   ) : null}
@@ -1423,7 +1425,7 @@ Referring clinician
                       href={section.link}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-5 inline-flex rounded-full border border-black/15 px-4 py-2 text-base text-black transition-colors hover:text-cyan-700"
+                      className="mt-5 inline-flex rounded-full border border-black/15 dark:border-line/15 px-4 py-2 text-base text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                     >
                       Open Article
                     </a>
@@ -1436,7 +1438,7 @@ Referring clinician
           ) : isReferralTemplatesPage ? (
             !isReferralQuizComplete ? (
               <div>
-                <div className="mb-4 rounded-2xl border border-black/10 bg-white/92 px-4 py-3 text-black/80">
+                <div className="mb-4 rounded-2xl border border-black/10 dark:border-line/10 bg-surface/92 px-4 py-3 text-body">
                   Complete the patient risk quiz first. Your answers will be used to generate the general clinical
                   summary in the referral letter.
                 </div>
@@ -1448,55 +1450,55 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
-                <h3 className="text-2xl md:text-3xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                <h3 className="text-2xl md:text-3xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                   Diagnosis-Based Referral Letter
                 </h3>
-                <p className="mt-2 text-black/75">
+                <p className="mt-2 text-body">
                   This version uses the doctor-entered kidney diagnosis to tailor the referral letter language.
                 </p>
-                <p className="mt-2 text-sm text-black/65">
+                <p className="mt-2 text-sm text-body">
                   Use de-identified clinical information only. Age and gender are allowed here, but do not enter names, dates of birth, medical record numbers, addresses, or other direct identifiers.
                 </p>
 
-                <div className="mt-5 rounded-2xl border border-black/10 bg-white p-4">
-                  <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
+                <div className="mt-5 rounded-2xl border border-black/10 dark:border-line/10 bg-surface p-4">
+                  <h4 className="text-lg text-ink" style={{ fontFamily: "Georgia, serif" }}>
                     De-identified Inputs
                   </h4>
-                  <p className="mt-1 text-sm text-black/70">
+                  <p className="mt-1 text-sm text-body">
                     Enter age, gender, and diagnosis-level or phenotype-level details only.
                   </p>
                   <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <label className="text-sm text-black/75">
+                    <label className="text-sm text-body">
                       Age
                       <input
                         type="text"
                         value={referralTemplateForm.age}
                         onChange={(e) => setReferralField("age", e.target.value)}
-                        className="mt-1 w-full rounded-xl border border-black/15 bg-cyan-50 px-3 py-2 text-black outline-none focus:border-cyan-600"
+                        className="mt-1 w-full rounded-xl border border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 px-3 py-2 text-ink outline-none focus:border-cyan-600"
                       />
                     </label>
-                    <label className="text-sm text-black/75">
+                    <label className="text-sm text-body">
                       Gender
                       <input
                         type="text"
                         value={referralTemplateForm.gender}
                         onChange={(e) => setReferralField("gender", e.target.value)}
-                        className="mt-1 w-full rounded-xl border border-black/15 bg-cyan-50 px-3 py-2 text-black outline-none focus:border-cyan-600"
+                        className="mt-1 w-full rounded-xl border border-black/15 dark:border-line/15 bg-cyan-50 dark:bg-cyan-950 px-3 py-2 text-ink outline-none focus:border-cyan-600"
                       />
                     </label>
                   </div>
                 </div>
 
-                <div className="mt-5 rounded-2xl border border-black/10 bg-white p-4">
-                  <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
+                <div className="mt-5 rounded-2xl border border-black/10 dark:border-line/10 bg-surface p-4">
+                  <h4 className="text-lg text-ink" style={{ fontFamily: "Georgia, serif" }}>
                     Letter Preview
                   </h4>
-                  <p className="mt-1 text-sm text-black/70">
+                  <p className="mt-1 text-sm text-body">
                     The download uses a diagnosis-based template. Update the kidney condition or quiz answers if you want to change the letter.
                   </p>
-                  <pre className="mt-4 overflow-x-auto rounded-2xl bg-cyan-50 p-4 text-sm leading-6 text-black whitespace-pre-wrap">
+                  <pre className="mt-4 overflow-x-auto rounded-2xl bg-cyan-50 dark:bg-cyan-950 p-4 text-sm leading-6 text-ink whitespace-pre-wrap">
                     {buildReferralTemplateLetter()}
                   </pre>
                 </div>
@@ -1504,7 +1506,7 @@ Referring clinician
                 <div className="mt-6 flex flex-wrap gap-3">
                   <button
                     onClick={() => setIsReferralQuizComplete(false)}
-                    className="rounded-full border border-black/15 bg-white px-5 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                    className="rounded-full border border-black/15 dark:border-line/15 bg-surface px-5 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                   >
                     Edit Quiz Answers
                   </button>
@@ -1522,7 +1524,7 @@ Referring clinician
                   </button>
                   <button
                     onClick={resetReferralFormKeepingQuizData}
-                    className="rounded-full border border-black/15 bg-white px-5 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                    className="rounded-full border border-black/15 dark:border-line/15 bg-surface px-5 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                   >
                     Reset Form
                   </button>
@@ -1532,21 +1534,21 @@ Referring clinician
             )
           ) : isOrderTestingDirectlyPage ? (
             <div className="mx-auto max-w-[1400px]">
-              <div className="mb-6 text-black">
+              <div className="mb-6 text-ink">
                 <h2 className="text-3xl md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
                   How to Order Genetic Testing for Your Patient?
                 </h2>
                 <p className="text-base md:text-lg opacity-85">
                   Clinical workflow and counseling steps
                 </p>
-                <Link to="/doctor/dashboard/resource/types-of-genetic-tests" className="mt-3 inline-block text-base text-[#00687b] underline underline-offset-4">Review types of genetic tests</Link>
+                <Link to="/doctor/dashboard/resource/types-of-genetic-tests" className="mt-3 inline-block text-base text-brand underline underline-offset-4">Review types of genetic tests</Link>
               </div>
 
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:auto-rows-fr xl:grid-cols-3">
                 {orderTestingWorkflowSteps.map((step, index) => {
                   const Icon = step.icon;
                   const cardClasses =
-                    "group mx-auto grid h-[430px] w-full max-w-[560px] grid-rows-[112px_120px_1fr] rounded-[44px] border border-black/10 bg-white/94 px-8 py-8 text-left shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(0,0,0,0.12)]";
+                    "group mx-auto grid h-[430px] w-full max-w-[560px] grid-rows-[112px_120px_1fr] rounded-[44px] border border-black/10 dark:border-line/10 bg-surface/94 px-8 py-8 text-left shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(0,0,0,0.12)]";
 
                   return (
                     <motion.div
@@ -1571,23 +1573,23 @@ Referring clinician
                         className={`${cardClasses} cursor-pointer`}
                       >
                         <div className="flex flex-row-reverse items-start justify-between self-start">
-                          <div className="inline-flex h-[96px] w-[96px] items-center justify-center rounded-[28px] bg-[#eef4ff] text-[#193568]">
+                          <div className="inline-flex h-[96px] w-[96px] items-center justify-center rounded-[28px] bg-[#eef4ff] dark:bg-surface-2 text-[#193568] dark:text-brand">
                             <Icon
-                              className="h-10 w-10 transition-colors group-hover:text-cyan-700 md:h-12 md:w-12"
+                              className="h-10 w-10 transition-colors group-hover:text-cyan-700 dark:group-hover:text-cyan-300 md:h-12 md:w-12"
                               strokeWidth={1.6}
                             />
                           </div>
-                          <span className="ml-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-700/20 bg-cyan-50 text-sm font-semibold text-cyan-800">
+                          <span className="ml-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-700/20 bg-cyan-50 dark:bg-cyan-950 text-sm font-semibold text-cyan-800 dark:text-cyan-300">
                             {index + 1}
                           </span>
                         </div>
                         <h3
-                          className="max-w-[16ch] self-start text-2xl leading-tight text-black transition-colors group-hover:text-cyan-700 md:text-3xl"
+                          className="max-w-[16ch] self-start text-2xl leading-tight text-ink transition-colors group-hover:text-cyan-700 dark:group-hover:text-cyan-300 md:text-3xl"
                           style={{ fontFamily: "Georgia, serif" }}
                         >
                           {step.title}
                         </h3>
-                        <p className="self-start text-sm leading-8 text-black/70 transition-colors group-hover:text-cyan-700 md:text-base">
+                        <p className="self-start text-sm leading-8 text-body transition-colors group-hover:text-cyan-700 dark:group-hover:text-cyan-300 md:text-base">
                           {step.description}
                         </p>
                       </button>
@@ -1603,70 +1605,70 @@ Referring clinician
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 id="letter-of-medical-necessity-template"
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 <div className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
                   <div className="space-y-5">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Workflow Support</p>
-                      <h3 className="mt-3 text-2xl md:text-4xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                      <p className="text-sm uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-300">Workflow Support</p>
+                      <h3 className="mt-3 text-2xl md:text-4xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                         Letter of Medical Necessity
                       </h3>
-                      <p className="mt-3 text-base leading-relaxed text-black/75">
+                      <p className="mt-3 text-base leading-relaxed text-body">
                         You can fill in this form, and it will generate a draft of a letter of medical necessity for
                         your patient's insurance. Please do not enter HIPAA information before downloading the file to
                         your computer.
                       </p>
                     </div>
 
-                    <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-4">
-                      <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
+                    <div className="rounded-[24px] border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 p-4">
+                      <h4 className="text-lg text-ink" style={{ fontFamily: "Georgia, serif" }}>
                         Ordering inputs
                       </h4>
                       <div className="mt-4 space-y-4">
-                        <label className="block text-sm text-black/75">
+                        <label className="block text-sm text-body">
                           Kidney condition
                           <input
                             type="text"
                             value={personalKidneyCondition}
                             onChange={(e) => setPersonalKidneyCondition(e.target.value)}
                             placeholder="Enter suspected kidney condition only"
-                            className="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
+                            className="mt-1 w-full rounded-xl border border-black/15 dark:border-line/15 bg-surface px-3 py-2 text-ink outline-none focus:border-cyan-600"
                           />
                         </label>
 
                         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          <label className="text-sm text-black/75">
+                          <label className="text-sm text-body">
                             Age
                             <input
                               type="text"
                               value={referralTemplateForm.age}
                               onChange={(e) => setReferralField("age", e.target.value)}
-                              className="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
+                              className="mt-1 w-full rounded-xl border border-black/15 dark:border-line/15 bg-surface px-3 py-2 text-ink outline-none focus:border-cyan-600"
                             />
                           </label>
-                          <label className="text-sm text-black/75">
+                          <label className="text-sm text-body">
                             Gender
                             <input
                               type="text"
                               value={referralTemplateForm.gender}
                               onChange={(e) => setReferralField("gender", e.target.value)}
-                              className="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 text-black outline-none focus:border-cyan-600"
+                              className="mt-1 w-full rounded-xl border border-black/15 dark:border-line/15 bg-surface px-3 py-2 text-ink outline-none focus:border-cyan-600"
                             />
                           </label>
                         </div>
 
-                        <label className="block text-sm text-black/75">
+                        <label className="block text-sm text-body">
                           Clinical summary
                           <textarea
                             value={referralTemplateForm.clinicalSummary}
                             onChange={(e) => setReferralField("clinicalSummary", e.target.value)}
                             rows={7}
                             placeholder="Enter de-identified phenotype, indication, family history, and extra-renal features. Do not include names, DOBs, MRNs, addresses, or exact dates."
-                            className="mt-1 w-full rounded-2xl border border-black/15 bg-white px-3 py-3 text-black outline-none focus:border-cyan-600"
+                            className="mt-1 w-full rounded-2xl border border-black/15 dark:border-line/15 bg-surface px-3 py-3 text-ink outline-none focus:border-cyan-600"
                           />
                         </label>
-                        <p className="text-sm text-black/65">
+                        <p className="text-sm text-body">
                           Keep this summary de-identified and limited to clinically necessary details.
                         </p>
                       </div>
@@ -1675,14 +1677,14 @@ Referring clinician
                   </div>
 
                   <div className="space-y-5">
-                    <div className="rounded-[24px] border border-black/10 bg-white p-4 shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
-                      <h4 className="text-lg text-black" style={{ fontFamily: "Georgia, serif" }}>
+                    <div className="rounded-[24px] border border-black/10 dark:border-line/10 bg-surface p-4 shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
+                      <h4 className="text-lg text-ink" style={{ fontFamily: "Georgia, serif" }}>
                         Draft letter preview
                       </h4>
-                      <p className="mt-2 text-sm text-black/65">
+                      <p className="mt-2 text-sm text-body">
                         Review the generated text, then download the Word document to finish it locally.
                       </p>
-                      <pre className="mt-4 overflow-x-auto rounded-2xl bg-cyan-50 p-4 text-sm leading-6 text-black whitespace-pre-wrap">
+                      <pre className="mt-4 overflow-x-auto rounded-2xl bg-cyan-50 dark:bg-cyan-950 p-4 text-sm leading-6 text-ink whitespace-pre-wrap">
                         {buildReferralTemplateLetter()}
                       </pre>
                     </div>
@@ -1696,7 +1698,7 @@ Referring clinician
                       </button>
                       <button
                         onClick={resetDirectOrderingForm}
-                        className="rounded-full border border-black/15 bg-white px-5 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                        className="rounded-full border border-black/15 dark:border-line/15 bg-surface px-5 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                       >
                         Reset Toolkit
                       </button>
@@ -1711,10 +1713,10 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 <h3
-                  className="text-center text-2xl md:text-4xl text-black"
+                  className="text-center text-2xl md:text-4xl text-ink"
                   style={{ fontFamily: "Georgia, serif" }}
                 >
                   {detail.title}
@@ -1723,7 +1725,7 @@ Referring clinician
                 <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,0.95fr)] lg:items-center">
                   <div className="space-y-4">
                     {detail.organizationLinks.map((organization) => (
-                      <div key={organization.url} className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-base leading-relaxed text-black/85 md:text-lg">
+                      <div key={organization.url} className="rounded-2xl border border-black/10 dark:border-line/10 bg-surface px-4 py-3 text-base leading-relaxed text-ink md:text-lg">
                         <div>
                           <span className="font-semibold">{organization.label}</span>
                           <span> - </span>
@@ -1731,13 +1733,13 @@ Referring clinician
                             href={organization.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#6a74c9] underline underline-offset-2 hover:text-cyan-700"
+                            className="text-[#6a74c9] dark:text-brand underline underline-offset-2 hover:text-cyan-700 dark:hover:text-cyan-300"
                           >
                             {organization.domainLabel}
                           </a>
                         </div>
                         {organization.description ? (
-                          <p className="mt-1 text-sm leading-relaxed text-black/65 md:text-base">
+                          <p className="mt-1 text-sm leading-relaxed text-body md:text-base">
                             {organization.description}
                           </p>
                         ) : null}
@@ -1749,10 +1751,10 @@ Referring clinician
                     href={detail.featuredLink.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group rounded-[28px] border border-[#d59b9b] bg-gradient-to-br from-[#fff5f5] via-white to-[#fff0f0] p-6 shadow-[0_12px_28px_rgba(140,20,20,0.12)] transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(140,20,20,0.16)]"
+                    className="group rounded-[28px] border border-[#d59b9b] bg-gradient-to-br from-[#fff5f5] dark:from-accent-soft via-surface to-[#fff0f0] dark:to-accent-soft p-6 shadow-[0_12px_28px_rgba(140,20,20,0.12)] transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(140,20,20,0.16)]"
                   >
                     <p
-                      className="text-2xl leading-tight text-[#9e1d1d] underline decoration-[#9e1d1d] underline-offset-4 md:text-[2rem]"
+                      className="text-2xl leading-tight text-[#9e1d1d] dark:text-accent underline decoration-[#9e1d1d] underline-offset-4 md:text-[2rem]"
                       style={{
                         fontFamily: "Georgia, serif",
                         textShadow: "0 3px 8px rgba(120, 20, 20, 0.14)",
@@ -1770,22 +1772,22 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 {selectedGeneticDiseaseTopic ? (
                   <DiseaseSummary topic={selectedGeneticDiseaseTopic} />
                 ) : (
                   <div className="space-y-4">
-                    <h3 className="text-3xl text-black md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
+                    <h3 className="text-3xl text-ink md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
                       {detail.title}
                     </h3>
-                    <p className="max-w-4xl text-base leading-relaxed text-black/75 md:text-lg">
+                    <p className="max-w-4xl text-base leading-relaxed text-body md:text-lg">
                       Most genetic diseases causing CKD are extremely rare. There are hundreds of such genetic
                       diseases, and together they cause about 10% of CKD cases. Most of these diseases are diagnosed
                       only with a genetic test. We are only providing here a short highlight of some of those diseases.
                       <sub className="ml-1"><a href={CITATIONS.groopman2019.url} target="_blank" rel="noreferrer" aria-label="Reference 1: Groopman et al. 2019">1</a>, <a href={annalsReference.url} target="_blank" rel="noreferrer" aria-label="Reference 2: Milo Rasouly et al.">2</a></sub>
                     </p>
-                    <ol className="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-[#00687b]">
+                    <ol className="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-brand">
                       {[CITATIONS.groopman2019, annalsReference].map(reference => <li key={reference.url}><a href={reference.url} target="_blank" rel="noreferrer" className="underline underline-offset-4">{reference.citation}</a></li>)}
                     </ol>
                     {detail.diseaseLinks.map((disease) => (
@@ -1796,7 +1798,7 @@ Referring clinician
                           if (!disease.topicId) return;
                           navigate(`/doctor/dashboard/resource/common-genetic-kidney-diseases?topic=${disease.topicId}`);
                         }}
-                        className={`block text-left text-lg leading-[1.45] text-black transition-colors hover:text-cyan-700 md:text-2xl ${
+                        className={`block text-left text-lg leading-[1.45] text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300 md:text-2xl ${
                           disease.topicId ? "cursor-pointer" : "cursor-default"
                         }`}
                         style={{ fontFamily: "Georgia, serif" }}
@@ -1815,20 +1817,20 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
                 <div className="grid gap-6 lg:grid-cols-[0.34fr_0.66fr] lg:items-start">
                   <div>
-                    <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Clinic Poster</p>
-                    <h3 className="mt-3 text-2xl md:text-4xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                    <p className="text-sm uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-300">Clinic Poster</p>
+                    <h3 className="mt-3 text-2xl md:text-4xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                       Family Genetic Testing Flyer
                     </h3>
-                    <p className="mt-3 text-base leading-relaxed text-black/75">
+                    <p className="mt-3 text-base leading-relaxed text-body">
                       Use this flyer in clinic spaces to prompt family-history discussions, support earlier recognition
                       of inherited kidney disease, and direct patients toward genetic counseling resources.
                     </p>
 
-                    <div className="mt-5 rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-black/75">
+                    <div className="mt-5 rounded-[24px] border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 p-4 text-body">
                       The poster preview is displayed at a larger portrait scale for easier review. Open or download
                       the full-resolution image for printing.
                     </div>
@@ -1845,14 +1847,14 @@ Referring clinician
                       <a
                         href={publicAsset("posters/Flyer_v3.2.png")}
                         download
-                        className="inline-flex rounded-full border border-black/15 px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                        className="inline-flex rounded-full border border-black/15 dark:border-line/15 px-4 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                       >
                         Download Poster
                       </a>
                     </div>
                   </div>
 
-                  <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
+                  <div className="overflow-hidden rounded-[28px] border border-black/10 dark:border-line/10 bg-surface shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
                     <div className="flex min-h-[720px] items-center justify-center bg-[linear-gradient(180deg,#f9fdff_0%,#edf9fc_100%)] p-4 md:p-6">
                       <img
                         src={publicAsset("posters/Flyer_v3.2.png")}
@@ -1871,27 +1873,27 @@ Referring clinician
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.26 }}
-                  className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                  className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
                 >
                   <div className="grid gap-6 md:grid-cols-[1.05fr_0.95fr] md:items-center">
                     <div>
-                      <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Billing Overview</p>
-                      <h3 className="mt-3 text-2xl md:text-4xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                      <p className="text-sm uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-300">Billing Overview</p>
+                      <h3 className="mt-3 text-2xl md:text-4xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                         Affordable pricing and billing options
                       </h3>
-                      <p className="mt-3 max-w-3xl text-base leading-relaxed text-black/75 md:text-lg">
+                      <p className="mt-3 max-w-3xl text-base leading-relaxed text-body md:text-lg">
                         Most Renasight and Prospera patients are expected to have no out-of-pocket costs. If co-pay or
                         co-insurance results in a bill, the patient can be informed about available financial
                         assistance programs before costs become a barrier.
                       </p>
 
-                      <div className="mt-6 rounded-[24px] border border-black/10 bg-cyan-50 p-5">
-                        <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                      <div className="mt-6 rounded-[24px] border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 p-5">
+                        <h4 className="text-xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                           Insurance coverage
                         </h4>
-                        <ul className="mt-4 space-y-3 text-black/75">
+                        <ul className="mt-4 space-y-3 text-body">
                           {costsCoveragePoints.map((point) => (
-                            <li key={point} className="rounded-2xl bg-white px-4 py-3">
+                            <li key={point} className="rounded-2xl bg-surface px-4 py-3">
                               {point}
                             </li>
                           ))}
@@ -1899,7 +1901,7 @@ Referring clinician
                       </div>
                     </div>
 
-                    <div className="overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
+                    <div className="overflow-hidden rounded-[28px] border border-black/10 dark:border-line/10 bg-surface shadow-[0_18px_36px_rgba(0,0,0,0.10)]">
                       <img
                         src={publicAsset("resource-graphics/costs-billing-hero.png")}
                         alt="Affordable pricing and billing options handout graphic"
@@ -1913,31 +1915,31 @@ Referring clinician
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.32 }}
-                  className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                  className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
                 >
                   <div className="grid gap-5 md:grid-cols-[1.15fr_0.85fr]">
                     <div>
-                      <h4 className="text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                      <h4 className="text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                         What to tell patients
                       </h4>
-                      <p className="mt-3 text-black/75">
+                      <p className="mt-3 text-body">
                         The source handout emphasizes that coverage is common, that in-network status may lower cost, and
                         that financial counseling is available when billing questions arise.
                       </p>
-                      <div className="mt-5 rounded-[24px] border border-black/10 bg-cyan-50 p-4 text-sm leading-relaxed text-black/75">
+                      <div className="mt-5 rounded-[24px] border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 p-4 text-sm leading-relaxed text-body">
                         Please refer patients with billing concerns to the financial counseling team and verify plan
                         details when Medicare Advantage or unusual coverage circumstances may apply.
                       </div>
                     </div>
 
                     <div className="space-y-4">
-                      <div className="rounded-[24px] border border-black/10 bg-cyan-50 p-5">
-                        <h4 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                      <div className="rounded-[24px] border border-black/10 dark:border-line/10 bg-cyan-50 dark:bg-cyan-950 p-5">
+                        <h4 className="text-xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                           Financial access programs
                         </h4>
-                        <ul className="mt-4 space-y-3 text-black/75">
+                        <ul className="mt-4 space-y-3 text-body">
                           {costsSupportPrograms.map((program) => (
-                            <li key={program} className="rounded-2xl bg-white px-4 py-3">
+                            <li key={program} className="rounded-2xl bg-surface px-4 py-3">
                               {program}
                             </li>
                           ))}
@@ -1963,13 +1965,13 @@ Referring clinician
                       href={costsHandoutPath}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex rounded-full border border-black/15 px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700"
+                      className="inline-flex rounded-full border border-black/15 dark:border-line/15 px-4 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                     >
                       Open Original Handout
                     </a>
                   </div>
 
-                  <p className="mt-5 text-xs leading-relaxed text-black/55">
+                  <p className="mt-5 text-xs leading-relaxed text-muted">
                     Handout notes: tests are performed in a CLIA-certified laboratory, with CAP accreditation and ISO
                     13485 certification. FDA clearance language and other regulatory statements remain part of the
                     original source document.
@@ -1983,13 +1985,13 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
-                <p className="text-sm uppercase tracking-[0.22em] text-cyan-700">Practical Tools</p>
-                <h2 className="mt-2 text-3xl text-black md:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
+                <p className="text-sm uppercase tracking-[0.22em] text-cyan-700 dark:text-cyan-300">Practical Tools</p>
+                <h2 className="mt-2 text-3xl text-ink md:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
                   Assess Risk for Genetic Condition
                 </h2>
-                <p className="mt-3 max-w-3xl text-base leading-relaxed text-black/75 md:text-lg">
+                <p className="mt-3 max-w-3xl text-base leading-relaxed text-body md:text-lg">
                   Use this structured intake form to capture kidney diagnosis, age at symptoms, extra-renal
                   manifestations, and family history before deciding whether genetic testing or referral should be
                   discussed.
@@ -2003,12 +2005,12 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-7"
               >
-                <h3 className="text-2xl text-black md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
+                <h3 className="text-2xl text-ink md:text-4xl" style={{ fontFamily: "Georgia, serif" }}>
                   {detail.title}
                 </h3>
-                <p className="mt-3 max-w-4xl text-base leading-relaxed text-black/75 md:text-lg">
+                <p className="mt-3 max-w-4xl text-base leading-relaxed text-body md:text-lg">
                   {isCaseStudiesPage
                     ? "Play personal-story videos directly on this page."
                     : "Play the embedded YouTube videos directly on this page."}
@@ -2032,34 +2034,34 @@ Referring clinician
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.04, duration: 0.26 }}
-                      className="overflow-hidden rounded-[30px] border border-black/10 bg-white/92 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-5"
+                      className="overflow-hidden rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-5"
                     >
                       <div className="mb-4 flex items-start justify-between gap-4">
                         <div>
                           <h4
-                            className="text-xl leading-tight text-black md:text-2xl"
+                            className="text-xl leading-tight text-ink md:text-2xl"
                             style={{ fontFamily: "Georgia, serif" }}
                           >
                             {videoItem.title}
                           </h4>
                           {videoInfo ? (
-                            <p className="mt-2 text-base leading-relaxed text-black/70">{videoInfo.description} ({videoInfo.duration})</p>
+                            <p className="mt-2 text-base leading-relaxed text-body">{videoInfo.description} ({videoInfo.duration})</p>
                           ) : videoItem.subtitle ? (
-                            <p className="mt-2 text-base leading-relaxed text-black/70">{videoItem.subtitle}</p>
+                            <p className="mt-2 text-base leading-relaxed text-body">{videoItem.subtitle}</p>
                           ) : null}
                         </div>
                         <a
                           href={videoItem.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="shrink-0 rounded-full border border-black/15 px-3 py-1 text-sm text-black transition-colors hover:text-cyan-700"
+                          className="shrink-0 rounded-full border border-black/15 dark:border-line/15 px-3 py-1 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300"
                         >
                           {videoItem.buttonLabel ?? "Open video"}
                         </a>
                       </div>
 
                       {isEmbeddedVideo ? (
-                        <div className="overflow-hidden rounded-[24px] border border-black/10 bg-black shadow-[0_8px_20px_rgba(0,0,0,0.14)]">
+                        <div className="overflow-hidden rounded-[24px] border border-black/10 dark:border-line/10 bg-black shadow-[0_8px_20px_rgba(0,0,0,0.14)]">
                           <div className="aspect-video w-full">
                             <iframe
                               src={videoItem.embedUrl}
@@ -2076,7 +2078,7 @@ Referring clinician
                           href={videoItem.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="block overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-transform hover:-translate-y-1"
+                          className="block overflow-hidden rounded-[24px] border border-black/10 dark:border-line/10 bg-surface shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-transform hover:-translate-y-1"
                         >
                           <div className="relative">
                             <img
@@ -2093,7 +2095,7 @@ Referring clinician
                               }
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
-                            <div className="absolute left-4 top-4 rounded-full bg-white/92 px-3 py-1 text-xs uppercase tracking-[0.22em] text-[#102347]">
+                            <div className="absolute left-4 top-4 rounded-full bg-surface/92 px-3 py-1 text-xs uppercase tracking-[0.22em] text-[#102347] dark:text-brand">
                               {videoItem.sourceLabel ?? "Video"}
                             </div>
                           </div>
@@ -2103,9 +2105,9 @@ Referring clinician
                           href={videoItem.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex h-64 w-full items-center justify-center rounded-[24px] border border-black/10 bg-gradient-to-br from-cyan-200 via-white to-cyan-300 px-6 text-center shadow-[0_8px_20px_rgba(0,0,0,0.14)]"
+                          className="flex h-64 w-full items-center justify-center rounded-[24px] border border-black/10 dark:border-line/10 bg-gradient-to-br from-cyan-200 dark:from-cyan-950 via-surface to-cyan-300 dark:to-cyan-950 px-6 text-center shadow-[0_8px_20px_rgba(0,0,0,0.14)]"
                         >
-                          <p className="text-base text-black/80">{hostLabel}</p>
+                          <p className="text-base text-body">{hostLabel}</p>
                         </a>
                       )}
                     </motion.article>
@@ -2132,7 +2134,7 @@ Referring clinician
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.04, duration: 0.26 }}
-                    className="overflow-hidden rounded-[30px] border border-black/10 bg-white/92 shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition-transform hover:-translate-y-1"
+                    className="overflow-hidden rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 shadow-[0_10px_24px_rgba(0,0,0,0.08)] transition-transform hover:-translate-y-1"
                   >
                     {!previewFailed ? (
                       <div
@@ -2166,17 +2168,17 @@ Referring clinician
                         />
                       </div>
                     ) : (
-                      <div className="flex h-48 w-full items-center justify-center bg-gradient-to-br from-cyan-200 via-white to-cyan-300 px-4 text-center">
-                        <p className="text-base text-black/80">{hostLabel}</p>
+                      <div className="flex h-48 w-full items-center justify-center bg-gradient-to-br from-cyan-200 dark:from-cyan-950 via-surface to-cyan-300 dark:to-cyan-950 px-4 text-center">
+                        <p className="text-base text-body">{hostLabel}</p>
                       </div>
                     )}
 
                     <div className="p-5">
-                      <h3 className="text-xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                      <h3 className="text-xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                         {linkItem.title}
                       </h3>
-                      {linkItem.subtitle ? <p className="mt-2 text-black/70">{linkItem.subtitle}</p> : null}
-                      <p className="mt-3 break-all text-sm text-cyan-800">{linkItem.url}</p>
+                      {linkItem.subtitle ? <p className="mt-2 text-body">{linkItem.subtitle}</p> : null}
+                      <p className="mt-3 break-all text-sm text-cyan-800 dark:text-cyan-300">{linkItem.url}</p>
                     </div>
                   </motion.a>
                 );
@@ -2188,31 +2190,31 @@ Referring clinician
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.26 }}
-                className="rounded-[30px] border border-black/10 bg-white/92 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-8"
+                className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.08)] md:p-8"
               >
-                <p className="max-w-4xl text-lg leading-relaxed text-black/85 md:text-[1.45rem]">
+                <p className="max-w-4xl text-lg leading-relaxed text-ink md:text-[1.45rem]">
                   Genetic testing can help identify an inherited cause of kidney disease and inform care for patients and their families.
-                  <sup className="ml-1 text-[#00687b]"><a href="#why-reference-1" aria-label="Reference 1" className="underline">1</a>, <a href="#why-reference-2" aria-label="Reference 2" className="underline">2</a></sup>{" "}
+                  <sup className="ml-1 text-brand"><a href="#why-reference-1" aria-label="Reference 1" className="underline">1</a>, <a href="#why-reference-2" aria-label="Reference 2" className="underline">2</a></sup>{" "}
                   Identifying a genetic cause of kidney disease provides major clinical benefits, including:
                 </p>
 
                 <div className="mt-8 space-y-4">
                   {whyGeneticTestingBenefits.map((benefit) => (
-                    <div key={benefit.label} className="flex items-start gap-4 rounded-[24px] bg-cyan-50 px-5 py-4">
-                      <span className="rounded-xl bg-[#cfe7ea] p-2 text-[#00687b]">
+                    <div key={benefit.label} className="flex items-start gap-4 rounded-[24px] bg-cyan-50 dark:bg-cyan-950 px-5 py-4">
+                      <span className="rounded-xl bg-brand-soft p-2 text-brand">
                         <benefit.icon className="size-5" aria-hidden="true" />
                       </span>
-                      <p className="text-lg leading-relaxed text-black/85 md:text-[1.12rem]">
-                        <strong className="text-black">{benefit.label}:</strong> {benefit.description}
-                        {benefit.reference && <sup className="ml-1 text-[#00687b]"><a href={`#why-reference-${benefit.reference}`} aria-label={`Reference ${benefit.reference}`} className="underline">{benefit.reference}</a></sup>}
+                      <p className="text-lg leading-relaxed text-ink md:text-[1.12rem]">
+                        <strong className="text-ink">{benefit.label}:</strong> {benefit.description}
+                        {benefit.reference && <sup className="ml-1 text-brand"><a href={`#why-reference-${benefit.reference}`} aria-label={`Reference ${benefit.reference}`} className="underline">{benefit.reference}</a></sup>}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-8 border-t border-black/10 pt-5">
-                  <p className="text-sm uppercase tracking-wide text-cyan-800">References</p>
-                  <div className="mt-2 space-y-3 text-base leading-relaxed text-cyan-900">
+                <div className="mt-8 border-t border-black/10 dark:border-line/10 pt-5">
+                  <p className="text-sm uppercase tracking-wide text-cyan-800 dark:text-cyan-300">References</p>
+                  <div className="mt-2 space-y-3 text-base leading-relaxed text-cyan-900 dark:text-cyan-300">
                     {clinicalReferences.map((reference, index) => (
                       <a key={reference.url} id={`why-reference-${index + 1}`} href={reference.url} target="_blank" rel="noreferrer" className="block underline decoration-cyan-400 underline-offset-4">
                         {index + 1}. {reference.citation}
@@ -2231,28 +2233,28 @@ Referring clinician
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.04, duration: 0.26 }}
-                  className="rounded-[30px] border border-black/10 bg-white/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
+                  className="rounded-[30px] border border-black/10 dark:border-line/10 bg-surface/92 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.08)]"
                 >
-                  <h3 className="text-xl md:text-2xl text-black" style={{ fontFamily: "Georgia, serif" }}>
+                  <h3 className="text-xl md:text-2xl text-ink" style={{ fontFamily: "Georgia, serif" }}>
                     {section.title}
                   </h3>
 
-                  {section.subtitle ? <p className="mt-2 text-black/70">{section.subtitle}</p> : null}
+                  {section.subtitle ? <p className="mt-2 text-body">{section.subtitle}</p> : null}
 
                   {section.meta ? (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {section.meta.map((meta) => (
-                        <span key={`${section.title}-${meta.label}`} className="rounded-full bg-cyan-50 px-3 py-1 text-sm text-black/80">
-                          <strong className="font-medium text-black">{meta.label}:</strong> {meta.value}
+                        <span key={`${section.title}-${meta.label}`} className="rounded-full bg-cyan-50 dark:bg-cyan-950 px-3 py-1 text-sm text-body">
+                          <strong className="font-medium text-ink">{meta.label}:</strong> {meta.value}
                         </span>
                       ))}
                     </div>
                   ) : null}
 
                   {section.bullets ? (
-                    <ul className="mt-3 space-y-2 text-black/75">
+                    <ul className="mt-3 space-y-2 text-body">
                       {section.bullets.map((bullet) => (
-                        <li key={`${section.title}-${bullet}`} className="rounded-xl bg-cyan-50 px-3 py-2">
+                        <li key={`${section.title}-${bullet}`} className="rounded-xl bg-cyan-50 dark:bg-cyan-950 px-3 py-2">
                           {bullet}
                         </li>
                       ))}
@@ -2260,7 +2262,7 @@ Referring clinician
                   ) : null}
 
                   {section.action ? (
-                    <button className="mt-4 rounded-full border border-black/15 px-4 py-2 text-sm text-black transition-colors hover:text-cyan-700">
+                    <button className="mt-4 rounded-full border border-black/15 dark:border-line/15 px-4 py-2 text-sm text-ink transition-colors hover:text-cyan-700 dark:hover:text-cyan-300">
                       {section.action}
                     </button>
                   ) : null}

@@ -151,20 +151,20 @@ export default function GeneticCounselingWorkflowPage() {
           <div className="mb-8 flex justify-end">
             <button
               onClick={() => navigate(dashboardRoute)}
-              className="rounded-full border border-[#c3d6d9] bg-white px-4 py-2 text-sm font-semibold text-[#00687b] transition-colors hover:bg-[#cfe7ea]"
+              className="rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-brand transition-colors hover:bg-brand-soft"
             >
               Back
             </button>
           </div>
 
           <div className="mb-8 max-w-3xl">
-            <p className="mb-3 text-[0.9rem] font-bold uppercase tracking-[0.14em] text-[#00687b]">
+            <p className="mb-3 text-[0.9rem] font-bold uppercase tracking-[0.14em] text-brand">
               Workflow
             </p>
-            <h1 className="font-bold text-[2.1rem] leading-tight text-[#16323b] md:text-5xl" style={{ fontFamily: doctorSerifFont }}>
+            <h1 className="font-bold text-[2.1rem] leading-tight text-ink md:text-5xl" style={{ fontFamily: doctorSerifFont }}>
               Genetic Counseling Workflow
             </h1>
-            <p className="mt-3 max-w-2xl text-lg leading-relaxed text-[#5b6472]">
+            <p className="mt-3 max-w-2xl text-lg leading-relaxed text-muted">
               Clinical workflow and counseling steps
             </p>
           </div>
@@ -174,15 +174,15 @@ export default function GeneticCounselingWorkflowPage() {
               const Icon = option.icon;
 
               const cardClasses =
-                "group flex min-h-[360px] w-full flex-col items-center justify-center rounded-3xl border border-[#c3d6d9] bg-white p-6 text-center shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] transition-all hover:-translate-y-1 hover:border-[#9fbfc5] hover:shadow-[0_18px_44px_-18px_rgba(12,48,58,0.24),0_4px_12px_-4px_rgba(12,48,58,0.1)] sm:p-7";
+                "group flex min-h-[360px] w-full flex-col items-center justify-center rounded-3xl border border-line bg-surface p-6 text-center shadow-[0_10px_30px_-14px_rgba(12,48,58,0.16),0_2px_6px_-3px_rgba(12,48,58,0.08)] transition-all hover:-translate-y-1 hover:border-[#9fbfc5] dark:hover:border-line hover:shadow-[0_18px_44px_-18px_rgba(12,48,58,0.24),0_4px_12px_-4px_rgba(12,48,58,0.1)] sm:p-7";
 
               const cardContent = (
                 <>
                   <div className="mb-6 flex w-full items-start justify-between">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#9fbfc5] bg-[#eef7f8] text-sm font-semibold text-[#00687b]">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#9fbfc5] dark:border-line bg-[#eef7f8] dark:bg-surface-2 text-sm font-semibold text-brand">
                       {index + 1}
                     </span>
-                    <div className="inline-flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-[#cfe7ea] text-[#00687b]">
+                    <div className="inline-flex h-24 w-24 items-center justify-center rounded-[1.75rem] bg-brand-soft text-brand">
                       <Icon
                         className="h-12 w-12"
                         strokeWidth={1.55}
@@ -190,12 +190,12 @@ export default function GeneticCounselingWorkflowPage() {
                     </div>
                   </div>
                   <h2
-                    className="max-w-[16ch] text-[1.45rem] font-bold leading-tight text-[#16323b] transition-colors group-hover:text-[#00687b] md:text-[1.7rem]"
+                    className="max-w-[16ch] text-[1.45rem] font-bold leading-tight text-ink transition-colors group-hover:text-brand md:text-[1.7rem]"
                     style={{ fontFamily: doctorSerifFont }}
                   >
                     {option.title}
                   </h2>
-                  <p className="mt-3 text-[1rem] leading-relaxed text-[#3f4650]">
+                  <p className="mt-3 text-[1rem] leading-relaxed text-body">
                     {option.description}
                   </p>
                 </>

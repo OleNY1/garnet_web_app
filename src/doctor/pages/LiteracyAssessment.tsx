@@ -182,26 +182,26 @@ export default function LiteracyAssessment() {
   const canProceed = currentAnswer !== undefined;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2 flex flex-col">
       {/* Header */}
-      <div className="bg-white px-6 py-4 flex items-center gap-4">
+      <div className="bg-surface px-6 py-4 flex items-center gap-4">
         <button
           onClick={handleBack}
-          className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+          className="w-10 h-10 rounded-full bg-gray-100 dark:bg-surface-2 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-surface-2 transition-colors"
         >
-          <ArrowLeft className="w-5 h-5 text-gray-700" />
+          <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-body" />
         </button>
         <div className="flex-1">
-          <h2 className="text-lg text-gray-900">Patient Genetic Education Check</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="text-lg text-gray-900 dark:text-ink">Patient Genetic Education Check</h2>
+          <p className="text-sm text-gray-600 dark:text-body">
             Question {currentQuestion + 1} of {questions.length}
           </p>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="bg-white px-6 pb-4">
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div className="bg-surface px-6 pb-4">
+        <div className="h-2 bg-gray-100 dark:bg-surface-2 rounded-full overflow-hidden">
           <div
             className="h-full bg-purple-500 transition-all duration-300"
             style={{ width: `${progress}%` }}
@@ -211,10 +211,10 @@ export default function LiteracyAssessment() {
 
       {/* Question */}
       <div className="flex-1 px-6 py-8">
-        <p className="text-xs uppercase tracking-wide text-purple-700 mb-3">
+        <p className="text-xs uppercase tracking-wide text-purple-700 dark:text-purple-300 mb-3">
           Competency: {questions[currentQuestion].competency}
         </p>
-        <h1 className="text-2xl text-gray-900 mb-8">
+        <h1 className="text-2xl text-gray-900 dark:text-ink mb-8">
           {questions[currentQuestion].question}
         </h1>
 
@@ -226,25 +226,25 @@ export default function LiteracyAssessment() {
               onClick={() => handleAnswer(option)}
               className={`w-full p-5 rounded-2xl border-2 transition-all text-left ${
                 currentAnswer === option
-                  ? "border-purple-500 bg-purple-50"
-                  : "border-gray-200 bg-white hover:border-gray-300"
+                  ? "border-purple-500 bg-purple-50 dark:bg-purple-950"
+                  : "border-gray-200 dark:border-line bg-surface hover:border-gray-300 dark:hover:border-line"
               }`}
             >
-              <span className="text-base text-gray-900">{option}</span>
+              <span className="text-base text-gray-900 dark:text-ink">{option}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Next Button */}
-      <div className="p-6 bg-white border-t border-gray-200">
+      <div className="p-6 bg-surface border-t border-gray-200 dark:border-line">
         <button
           onClick={handleNext}
           disabled={!canProceed}
           className={`w-full py-4 rounded-2xl flex items-center justify-center gap-2 transition-all ${
             canProceed
               ? "bg-purple-500 text-white hover:bg-purple-600"
-              : "bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "bg-gray-200 dark:bg-surface-2 text-gray-400 dark:text-muted cursor-not-allowed"
           }`}
         >
           <span>

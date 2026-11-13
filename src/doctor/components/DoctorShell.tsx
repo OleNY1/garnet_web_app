@@ -1,6 +1,7 @@
 import { BadgeCheck, LogOut, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ThemeToggle } from "../../components/ThemeToggle";
 
 export const doctorSerifFont = "'Lora Variable', serif";
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
@@ -22,7 +23,7 @@ export function DoctorHeader({ activeMode, backLabel, backTo, title = "Clinician
   };
 
   return (
-    <header className="sticky top-0 z-20 border-b border-[#c3d6d9] bg-[#f6fafa]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3 sm:px-8">
         <button
           type="button"
@@ -34,36 +35,36 @@ export function DoctorHeader({ activeMode, backLabel, backTo, title = "Clinician
 
             navigate("/");
           }}
-          className="-m-1.5 flex items-center gap-4 rounded-2xl p-1.5 text-left"
+          className="-m-1.5 flex items-center gap-2 rounded-2xl p-1.5 text-left sm:gap-4"
           aria-label={backLabel ?? "Return to GARNET landing page"}
         >
           <img
             src={publicAsset("garnet-mark.png")}
             alt=""
-            className="h-12 w-12 object-contain"
+            className="size-9 shrink-0 object-contain sm:size-12"
           />
           <div className="leading-tight">
-            <p className="text-[1.6rem] font-bold tracking-[0.24em] text-[#00687b]">GARNET</p>
-            <p className="hidden text-sm text-[#5b6472] sm:block">{title}</p>
+            <p className="text-lg font-bold tracking-[0.18em] text-brand sm:text-[1.6rem] sm:tracking-[0.24em]">GARNET</p>
+            <p className="hidden text-sm text-muted sm:block">{title}</p>
           </div>
         </button>
 
-        <div className="flex items-center gap-2 text-sm font-semibold text-[#16323b] sm:gap-3">
+        <div className="flex items-center gap-2 text-sm font-semibold text-ink sm:gap-3">
           <Link
             to="/"
-            className="hidden items-center gap-1.5 rounded-full border border-[#c3d6d9] bg-white px-3.5 py-2 text-[0.9rem] font-semibold text-[#16323b] transition-colors hover:bg-[#cfe7ea] sm:inline-flex"
+            className="hidden items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[0.9rem] font-semibold text-ink transition-colors hover:bg-brand-soft lg:inline-flex"
           >
             <BadgeCheck className="h-4 w-4" />
             For patients
           </Link>
-          <div className="hidden items-center gap-1 sm:flex">
+          <div className="hidden items-center gap-1 md:flex">
             <button
               type="button"
               onClick={() => navigate("/doctor/dashboard/educational")}
               className={`rounded-full px-3.5 py-2.5 transition-colors ${
                 activeMode === "educational"
-                  ? "bg-[#cfe7ea] text-[#16323b]"
-                  : "text-[#00687b] hover:bg-[#cfe7ea] hover:text-[#16323b]"
+                  ? "bg-brand-soft text-ink"
+                  : "text-brand hover:bg-brand-soft hover:text-ink"
               }`}
             >
               Educational Materials
@@ -73,20 +74,21 @@ export function DoctorHeader({ activeMode, backLabel, backTo, title = "Clinician
               onClick={() => navigate("/doctor/dashboard/practical")}
               className={`rounded-full px-3.5 py-2.5 transition-colors ${
                 activeMode === "practical"
-                  ? "bg-[#f4d8d2] text-[#16323b]"
-                  : "text-[#3f4650] hover:bg-[#f4d8d2] hover:text-[#16323b]"
+                  ? "bg-accent-soft text-ink"
+                  : "text-body hover:bg-accent-soft hover:text-ink"
               }`}
             >
               Practical Tools
             </button>
           </div>
 
+          <ThemeToggle />
           <button
             type="button"
             onClick={() => navigate("/doctor/profile")}
             title="Profile"
             aria-label="Open profile"
-            className="flex size-11 items-center justify-center rounded-full border border-[#c3d6d9] bg-white text-[#16323b] transition-colors hover:bg-[#cfe7ea]"
+            className="flex size-11 items-center justify-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-brand-soft"
           >
             <UserRound className="h-5 w-5" />
           </button>
@@ -95,7 +97,7 @@ export function DoctorHeader({ activeMode, backLabel, backTo, title = "Clinician
             onClick={handleLogout}
             title="Logout"
             aria-label="Log out"
-            className="flex size-11 items-center justify-center rounded-full border border-[#c3d6d9] bg-white text-[#16323b] transition-colors hover:bg-[#f4d8d2] hover:text-[#9f4035]"
+            className="flex size-11 items-center justify-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-accent-soft hover:text-accent"
           >
             <LogOut className="h-5 w-5" />
           </button>
@@ -115,7 +117,7 @@ export function DoctorPageShell({
   title?: string;
 }) {
   return (
-    <div className="min-h-screen bg-[#f6fafa] text-[#16323b]" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-bg text-ink" style={{ fontFamily: "'Inter', sans-serif" }}>
       <DoctorHeader activeMode={activeMode} title={title} />
       <main className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 hero-wash" />
@@ -168,14 +170,14 @@ export function DoctorDecorativeArt({ activeMode }: { activeMode?: "educational"
 
 export function DoctorFooter() {
   return (
-    <footer className="bg-[#0f2b33] text-[#a7bfc6]">
+    <footer className="bg-footer text-footer-muted">
       <div className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8 sm:py-16">
         <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr] lg:gap-14">
           <div>
             <div className="flex items-center gap-3">
               <img src={publicAsset("garnet-mark.png")} alt="" className="h-10 w-10 shrink-0 object-contain" />
               <div className="leading-tight">
-                <p className="text-xl font-bold tracking-[0.18em] text-[#e6f0f2]">GARNET</p>
+                <p className="text-xl font-bold tracking-[0.18em] text-footer-ink">GARNET</p>
                 <p className="text-[0.95rem]">Genetic indicators Assessment Referral Note and Education Tool</p>
               </div>
             </div>
@@ -183,29 +185,29 @@ export function DoctorFooter() {
               A clinician-facing workspace for nephrology education, genetic counseling workflows,
               and practical genetic testing resources.
             </p>
-            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-[0.95rem] font-medium text-[#e6f0f2]">
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-[0.95rem] font-medium text-footer-ink">
               <BadgeCheck aria-hidden="true" className="h-4.5 w-4.5 shrink-0 text-[#8fd0df]" />
               For educational purposes only
             </p>
           </div>
 
           <nav aria-label="Doctor resources">
-            <h3 className="text-[0.95rem] font-bold uppercase tracking-[0.14em] text-[#e6f0f2]">
+            <h3 className="text-[0.95rem] font-bold uppercase tracking-[0.14em] text-footer-ink">
               Doctor Side
             </h3>
             <ul className="mt-4 space-y-1.5">
               <li>
-                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-[#e6f0f2] hover:underline" to="/doctor/dashboard/educational">
+                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-footer-ink hover:underline" to="/doctor/dashboard/educational">
                   Educational Materials
                 </Link>
               </li>
               <li>
-                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-[#e6f0f2] hover:underline" to="/doctor/dashboard/practical">
+                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-footer-ink hover:underline" to="/doctor/dashboard/practical">
                   Practical Tools
                 </Link>
               </li>
               <li>
-                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-[#e6f0f2] hover:underline" to="/doctor/dashboard/resource/genetic-counseling-workflow">
+                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-footer-ink hover:underline" to="/doctor/dashboard/resource/genetic-counseling-workflow">
                   Workflow
                 </Link>
               </li>
@@ -213,17 +215,17 @@ export function DoctorFooter() {
           </nav>
 
           <nav aria-label="GARNET platform">
-            <h3 className="text-[0.95rem] font-bold uppercase tracking-[0.14em] text-[#e6f0f2]">
+            <h3 className="text-[0.95rem] font-bold uppercase tracking-[0.14em] text-footer-ink">
               Platform
             </h3>
             <ul className="mt-4 space-y-1.5">
               <li>
-                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-[#e6f0f2] hover:underline" to="/">
+                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-footer-ink hover:underline" to="/">
                   Main Landing
                 </Link>
               </li>
               <li>
-                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-[#e6f0f2] hover:underline" to="/learn">
+                <Link className="inline-block rounded-md py-1.5 text-[1.02rem] underline-offset-4 transition-colors hover:text-footer-ink hover:underline" to="/learn">
                   Patient Learn
                 </Link>
               </li>
@@ -233,7 +235,7 @@ export function DoctorFooter() {
 
         <div className="mt-12 border-t border-white/15 pt-8">
           <p className="max-w-3xl text-[0.98rem] leading-relaxed">
-            <strong className="font-semibold text-[#e6f0f2]">Medical disclaimer: </strong>
+            <strong className="font-semibold text-footer-ink">Medical disclaimer: </strong>
             GARNET does not provide medical advice, diagnosis, risk estimates, genetic counseling,
             or treatment recommendations. Please speak with a qualified healthcare professional.
           </p>

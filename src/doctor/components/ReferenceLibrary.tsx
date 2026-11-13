@@ -14,12 +14,12 @@ export function ReferenceLibrary() {
   const references = [...new Map([
     ...Object.values(CITATIONS), ...ethicsReferences, annalsReference, ...otherReferences,
   ].map(reference => [reference.url.toLowerCase(), reference])).values()];
-  return <section className="mb-8 border-b border-[#c3d6d9] pb-8">
-    <h3 className="text-2xl font-semibold text-[#16323b]">References Across GARNET</h3>
-    <ol className="mt-5 list-decimal space-y-4 pl-6 text-base leading-relaxed text-[#3f4650]">
-      {references.map(reference => <li key={reference.url}><a className="text-[#00687b] underline underline-offset-4" href={reference.url} target="_blank" rel="noreferrer">{reference.citation}</a></li>)}
+  return <section className="mb-8 border-b border-line pb-8">
+    <h3 className="text-2xl font-semibold text-ink">References Across GARNET</h3>
+    <ol className="mt-5 list-decimal space-y-4 pl-6 text-base leading-relaxed text-body">
+      {references.map(reference => <li key={reference.url}><a className="text-brand underline underline-offset-4" href={reference.url} target="_blank" rel="noreferrer">{reference.citation}</a></li>)}
     </ol>
-    <h4 className="mt-8 text-xl font-semibold text-[#16323b]">Disease Reviews and Clinical Resources</h4>
-    <ul className="mt-4 list-disc space-y-3 pl-6 text-base leading-relaxed">{diseaseReferences.map(reference => <li key={reference.url}><a className="text-[#00687b] underline underline-offset-4" href={reference.url} target="_blank" rel="noreferrer">{reference.citation}</a></li>)}</ul>
+    <h4 className="mt-8 text-xl font-semibold text-ink">Disease Reviews and Clinical Resources</h4>
+    <ul className="mt-4 list-disc space-y-3 pl-6 text-base leading-relaxed">{diseaseReferences.map(reference => <li key={reference.url}><a className="text-brand underline underline-offset-4" href={reference.url} target="_blank" rel="noreferrer">{reference.citation}</a></li>)}</ul>
   </section>;
 }

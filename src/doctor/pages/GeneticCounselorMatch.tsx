@@ -67,7 +67,7 @@ export default function GeneticCounselorMatch() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-12 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2 px-6 py-12 flex items-center justify-center">
       <form ref={formRef} method="post" action={NSGC_FIND_A_GC_URL} className="hidden">
         <input type="hidden" name="__BROWSERID" value={NSGC_BROWSER_ID} />
         <input type="hidden" name="__ADMINSITE" value={NSGC_ADMINSITE} />
@@ -84,11 +84,11 @@ export default function GeneticCounselorMatch() {
         <input type="hidden" name={NSGC_SEARCH_BUTTON_FIELD_NAME} value="Search" />
       </form>
 
-      <div className="max-w-xl rounded-2xl bg-white p-8 text-center shadow-sm">
-        <h1 className="text-2xl text-gray-900 mb-3">
+      <div className="max-w-xl rounded-2xl bg-surface p-8 text-center shadow-sm">
+        <h1 className="text-2xl text-gray-900 dark:text-ink mb-3">
           Opening Nephrology Genetic Counselors
         </h1>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 dark:text-body mb-6">
           Taking you to NSGC results pre-filtered for nephrology.
         </p>
         <button
@@ -101,7 +101,7 @@ export default function GeneticCounselorMatch() {
         <button
           type="button"
           onClick={() => navigate("/doctor/dashboard")}
-          className="ml-3 inline-flex items-center rounded-lg bg-gray-200 px-5 py-3 text-gray-800 hover:bg-gray-300 transition-colors"
+          className="ml-3 inline-flex items-center rounded-lg bg-gray-200 dark:bg-surface-2 px-5 py-3 text-gray-800 dark:text-ink hover:bg-gray-300 dark:hover:bg-surface-2 transition-colors"
         >
           Back to Dashboard
         </button>

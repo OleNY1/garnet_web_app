@@ -949,12 +949,12 @@ export default function ModuleDetail() {
 
   if (!series) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-surface-2 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl text-gray-900 mb-2">Module not found</h2>
+          <h2 className="text-xl text-gray-900 dark:text-ink mb-2">Module not found</h2>
           <button
             onClick={() => navigate("/doctor/education")}
-            className="text-blue-600 hover:text-blue-700"
+            className="text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-300"
           >
             Return to Resources
           </button>
@@ -981,35 +981,35 @@ export default function ModuleDetail() {
 
   if (moduleId === "7") {
     return (
-      <div className="min-h-screen bg-gray-50 pb-20 relative">
-        <div className="bg-white px-6 py-4 sticky top-0 z-10 shadow-sm">
+      <div className="min-h-screen bg-gray-50 dark:bg-surface-2 pb-20 relative">
+        <div className="bg-surface px-6 py-4 sticky top-0 z-10 shadow-sm">
           <div className="flex items-center gap-4">
             <button
               onClick={() => (selectedCondition ? clearCondition() : navigate("/doctor/education"))}
-              className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+              className="w-10 h-10 rounded-full bg-gray-100 dark:bg-surface-2 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-surface-2 transition-colors"
             >
-              <ArrowLeft className="w-5 h-5 text-gray-700" />
+              <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-body" />
             </button>
             <div className="flex-1">
-              <h1 className="text-xl text-gray-900">{series.title}</h1>
-              <p className="text-sm text-gray-600">{series.subtitle}</p>
+              <h1 className="text-xl text-gray-900 dark:text-ink">{series.title}</h1>
+              <p className="text-sm text-gray-600 dark:text-body">{series.subtitle}</p>
             </div>
           </div>
         </div>
 
         <div className="px-6 py-6 overflow-y-auto">
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm p-5 md:p-7 space-y-6">
+          <div className="max-w-4xl mx-auto bg-surface rounded-2xl shadow-sm p-5 md:p-7 space-y-6">
             {!selectedCondition && (
               <>
-                <p className="text-sm text-gray-700 leading-7">{series.intro}</p>
-                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                  <h2 className="text-lg text-gray-900 mb-3">Condition Links</h2>
+                <p className="text-sm text-gray-700 dark:text-body leading-7">{series.intro}</p>
+                <div className="rounded-xl border border-gray-200 dark:border-line bg-gray-50 dark:bg-surface-2 p-4">
+                  <h2 className="text-lg text-gray-900 dark:text-ink mb-3">Condition Links</h2>
                   <ul className="space-y-3 text-sm">
                     {conditionMenu.map((item) => (
                       <li key={item.to}>
                         <button
                           onClick={() => openCondition(item.to)}
-                          className="text-blue-700 underline text-left hover:text-blue-800"
+                          className="text-blue-700 dark:text-blue-300 underline text-left hover:text-blue-800 dark:hover:text-blue-300"
                         >
                           {item.label}
                         </button>
@@ -1022,17 +1022,17 @@ export default function ModuleDetail() {
 
             {selectedCondition && (
               <div className="space-y-5">
-                <h2 className="text-2xl text-gray-900">{selectedCondition.title}</h2>
-                <p className="text-sm text-gray-700 leading-7">{selectedCondition.lead}</p>
+                <h2 className="text-2xl text-gray-900 dark:text-ink">{selectedCondition.title}</h2>
+                <p className="text-sm text-gray-700 dark:text-body leading-7">{selectedCondition.lead}</p>
 
                 <div className="grid gap-4 md:grid-cols-3">
                   {selectedCondition.sections.map((section) => (
                     <div
                       key={section.heading}
-                      className="rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-4"
+                      className="rounded-xl border border-gray-200 dark:border-line bg-gradient-to-br from-gray-50 dark:from-surface-2 to-surface p-4"
                     >
-                      <h3 className="text-base text-gray-900 mb-2">{section.heading}</h3>
-                      <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                      <h3 className="text-base text-gray-900 dark:text-ink mb-2">{section.heading}</h3>
+                      <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-body">
                         {section.bullets.map((bullet) => (
                           <li key={bullet}>{bullet}</li>
                         ))}
@@ -1042,12 +1042,12 @@ export default function ModuleDetail() {
                 </div>
 
                 {selectedCondition.nextLinks && selectedCondition.nextLinks.length > 0 && (
-                  <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 space-y-2">
+                  <div className="rounded-xl border border-blue-200 dark:border-line bg-blue-50 dark:bg-blue-950 p-4 space-y-2">
                     {selectedCondition.nextLinks.map((nextLink) => (
                       <button
                         key={nextLink.to}
                         onClick={() => openCondition(nextLink.to)}
-                        className="text-blue-700 underline text-left hover:text-blue-800"
+                        className="text-blue-700 dark:text-blue-300 underline text-left hover:text-blue-800 dark:hover:text-blue-300"
                       >
                         {nextLink.label}
                       </button>
@@ -1055,11 +1055,11 @@ export default function ModuleDetail() {
                   </div>
                 )}
 
-                <p className="text-xs text-gray-500">{selectedCondition.reference}</p>
+                <p className="text-xs text-gray-500 dark:text-muted">{selectedCondition.reference}</p>
               </div>
             )}
 
-            {series.footerNote && <p className="text-sm text-gray-600">{series.footerNote}</p>}
+            {series.footerNote && <p className="text-sm text-gray-600 dark:text-body">{series.footerNote}</p>}
           </div>
         </div>
 
@@ -1069,53 +1069,53 @@ export default function ModuleDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 relative">
-      <div className="bg-white px-6 py-4 sticky top-0 z-10 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2 pb-20 relative">
+      <div className="bg-surface px-6 py-4 sticky top-0 z-10 shadow-sm">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate("/doctor/education")}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+            className="w-10 h-10 rounded-full bg-gray-100 dark:bg-surface-2 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-surface-2 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-700" />
+            <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-body" />
           </button>
           <div className="flex-1">
-            <h1 className="text-xl text-gray-900">{series.title}</h1>
-            <p className="text-sm text-gray-600">{series.subtitle}</p>
+            <h1 className="text-xl text-gray-900 dark:text-ink">{series.title}</h1>
+            <p className="text-sm text-gray-600 dark:text-body">{series.subtitle}</p>
           </div>
         </div>
       </div>
 
       <div className="px-6 py-6 overflow-y-auto">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm p-5 md:p-7 space-y-10">
-          <p className="text-sm text-gray-700 leading-7">{series.intro}</p>
+        <div className="max-w-4xl mx-auto bg-surface rounded-2xl shadow-sm p-5 md:p-7 space-y-10">
+          <p className="text-sm text-gray-700 dark:text-body leading-7">{series.intro}</p>
           {allSeriesVideoIds.length > 0 ? (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-body">
               Watched videos: {completedVideoCount} of {allSeriesVideoIds.length}
             </p>
           ) : (
-            <p className="text-sm text-gray-600">This module is reading-based (no video).</p>
+            <p className="text-sm text-gray-600 dark:text-body">This module is reading-based (no video).</p>
           )}
 
           {series.modules.map((module) => (
             <div key={module.id} className="space-y-4">
-              <h2 className="text-lg text-gray-900">{module.heading}</h2>
+              <h2 className="text-lg text-gray-900 dark:text-ink">{module.heading}</h2>
               {module.titleUrl ? (
                 <a
                   href={module.titleUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[#1594b8] hover:text-[#0f7f9f] text-lg leading-snug"
+                  className="inline-flex items-center gap-2 text-[#1594b8] dark:text-brand hover:text-[#0f7f9f] dark:hover:text-brand text-lg leading-snug"
                 >
                   {module.title}
                   <ExternalLink className="w-4 h-4" />
                 </a>
               ) : (
-                <h3 className="text-[#1594b8] text-lg leading-snug">{module.title}</h3>
+                <h3 className="text-[#1594b8] dark:text-brand text-lg leading-snug">{module.title}</h3>
               )}
 
               <div className="space-y-3">
                 {module.description.map((paragraph, idx) => (
-                  <p key={idx} className="text-sm text-gray-700 leading-7">
+                  <p key={idx} className="text-sm text-gray-700 dark:text-body leading-7">
                     {paragraph}
                   </p>
                 ))}
@@ -1124,9 +1124,9 @@ export default function ModuleDetail() {
               {module.image && (
                 <div className="space-y-3">
                   {module.image.heading && (
-                    <h4 className="text-base text-gray-900">{module.image.heading}</h4>
+                    <h4 className="text-base text-gray-900 dark:text-ink">{module.image.heading}</h4>
                   )}
-                  <div className="rounded-xl border border-gray-200 bg-white p-2">
+                  <div className="rounded-xl border border-gray-200 dark:border-line bg-surface p-2">
                     <img
                       src={module.image.src}
                       alt={module.image.alt}
@@ -1138,7 +1138,7 @@ export default function ModuleDetail() {
                       href={module.image.citationUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block text-sm text-blue-700 hover:text-blue-800 underline break-words"
+                      className="inline-block text-sm text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-300 underline break-words"
                     >
                       {module.image.citationLabel}
                     </a>
@@ -1148,14 +1148,14 @@ export default function ModuleDetail() {
 
               {module.cme && (
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-800">CME Info:</p>
-                  <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                  <p className="text-sm text-gray-800 dark:text-ink">CME Info:</p>
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700 dark:text-body">
                     <li>
                       <a
                         href={module.cme.detailsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#1594b8] hover:text-[#0f7f9f]"
+                        className="text-[#1594b8] dark:text-brand hover:text-[#0f7f9f] dark:hover:text-brand"
                       >
                         {module.cme.detailsLabel}
                       </a>
@@ -1166,7 +1166,7 @@ export default function ModuleDetail() {
                         href={module.cme.posttestUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#1594b8] hover:text-[#0f7f9f]"
+                        className="text-[#1594b8] dark:text-brand hover:text-[#0f7f9f] dark:hover:text-brand"
                       >
                         CME posttest & evaluation
                       </a>
@@ -1183,13 +1183,13 @@ export default function ModuleDetail() {
                       href={video.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#1594b8] hover:text-[#0f7f9f] text-base leading-snug"
+                      className="inline-flex items-center gap-2 text-[#1594b8] dark:text-brand hover:text-[#0f7f9f] dark:hover:text-brand text-base leading-snug"
                     >
                       {video.title}
                       <ExternalLink className="w-4 h-4" />
                     </a>
                     {video.duration && (
-                      <p className="text-xs text-gray-500">Duration: {video.duration}</p>
+                      <p className="text-xs text-gray-500 dark:text-muted">Duration: {video.duration}</p>
                     )}
                     <div className="relative bg-black aspect-video rounded-xl overflow-hidden">
                       <iframe
@@ -1208,7 +1208,7 @@ export default function ModuleDetail() {
           ))}
 
           {series.footerNote && (
-            <p className="text-sm text-gray-600">{series.footerNote}</p>
+            <p className="text-sm text-gray-600 dark:text-body">{series.footerNote}</p>
           )}
         </div>
       </div>

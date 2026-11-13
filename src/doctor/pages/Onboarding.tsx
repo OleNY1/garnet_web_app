@@ -42,7 +42,7 @@ export default function Onboarding() {
   const CurrentIcon = slides[currentSlide].icon;
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-surface flex flex-col">
       {/* Logo at top */}
       <div className="p-6 flex items-center justify-between">
         <div className="relative w-16 h-16 flex items-center justify-center overflow-hidden rounded-full">
@@ -50,7 +50,7 @@ export default function Onboarding() {
         </div>
         <button
           onClick={handleSkip}
-          className="text-sm text-gray-500 hover:text-gray-700"
+          className="text-sm text-gray-500 dark:text-muted hover:text-gray-700 dark:hover:text-body"
         >
           Skip
         </button>
@@ -67,19 +67,19 @@ export default function Onboarding() {
           className="flex flex-col items-center text-center max-w-md"
         >
           {/* Icon */}
-          <div className="w-24 h-24 rounded-full bg-blue-50 flex items-center justify-center mb-8">
+          <div className="w-24 h-24 rounded-full bg-blue-50 dark:bg-blue-950 flex items-center justify-center mb-8">
             {CurrentIcon && (
-              <CurrentIcon className="w-12 h-12 text-blue-500" />
+              <CurrentIcon className="w-12 h-12 text-blue-500 dark:text-blue-300" />
             )}
           </div>
 
           {/* Title */}
-          <h1 className="text-3xl mb-4 text-gray-900">
+          <h1 className="text-3xl mb-4 text-gray-900 dark:text-ink">
             {slides[currentSlide].title}
           </h1>
 
           {/* Description */}
-          <p className="text-lg text-gray-600 leading-relaxed">
+          <p className="text-lg text-gray-600 dark:text-body leading-relaxed">
             {slides[currentSlide].description}
           </p>
         </motion.div>
@@ -92,7 +92,7 @@ export default function Onboarding() {
               className={`h-2 rounded-full transition-all ${
                 index === currentSlide
                   ? "w-8 bg-blue-500"
-                  : "w-2 bg-gray-300"
+                  : "w-2 bg-gray-300 dark:bg-surface-2"
               }`}
             />
           ))}

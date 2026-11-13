@@ -44,7 +44,7 @@ export default function Dashboard() {
       title: "Patient Assessment",
       description: "Check if you qualify for genetic testing",
       gradient: "from-blue-400 via-blue-500 to-blue-600",
-      bgGradient: "from-blue-50 to-blue-100/50",
+      bgGradient: "from-blue-50 dark:from-blue-950 to-blue-100/50 dark:to-blue-950/50",
       videoSrc: assessmentCardVideo,
       frameTime: 1.15,
       videoPosition: "center center",
@@ -55,7 +55,7 @@ export default function Dashboard() {
       title: "GC Matchup",
       description: "Find the right genetic counselor",
       gradient: "from-teal-400 via-teal-500 to-cyan-600",
-      bgGradient: "from-teal-50 to-cyan-100/50",
+      bgGradient: "from-teal-50 dark:from-teal-950 to-cyan-100/50 dark:to-cyan-950/50",
       videoSrc: counselorCardVideo,
       frameTime: 0.95,
       videoPosition: "center center",
@@ -69,7 +69,7 @@ export default function Dashboard() {
         ? "Learn about genetic testing protocols"
         : "Learn about genetic testing",
       gradient: "from-green-400 via-emerald-500 to-teal-600",
-      bgGradient: "from-green-50 to-emerald-100/50",
+      bgGradient: "from-green-50 dark:from-green-950 to-emerald-100/50 dark:to-emerald-950/50",
       videoSrc: educationCardVideo,
       frameTime: 0.9,
       videoPosition: "center 58%",
@@ -80,7 +80,7 @@ export default function Dashboard() {
       title: "Literacy Assessment",
       description: "Test your understanding",
       gradient: "from-purple-400 via-purple-500 to-indigo-600",
-      bgGradient: "from-purple-50 to-indigo-100/50",
+      bgGradient: "from-purple-50 dark:from-purple-950 to-indigo-100/50 dark:to-indigo-950/50",
       videoSrc: literacyCardVideo,
       frameTime: 0.7,
       videoPosition: "center center",
@@ -89,22 +89,22 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col overflow-x-hidden bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
+    <div className="relative flex min-h-[100dvh] flex-col overflow-x-hidden bg-gradient-to-br from-gray-50 dark:from-surface-2 via-blue-50/30 dark:via-blue-950/30 to-gray-50 dark:to-surface-2">
       {/* Floating background elements */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-40 right-20 w-80 h-80 bg-purple-200/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-teal-200/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-20 left-10 w-64 h-64 bg-blue-200/20 dark:bg-blue-950/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-40 right-20 w-80 h-80 bg-purple-200/20 dark:bg-purple-950/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-40 left-1/3 w-72 h-72 bg-teal-200/20 dark:bg-teal-950/20 rounded-full blur-3xl pointer-events-none" />
 
       <main className="relative z-10 flex-1 pb-24 md:pb-0">
         {/* Header */}
-        <div className="bg-white/80 backdrop-blur-xl border-b border-gray-100">
+        <div className="bg-surface/80 backdrop-blur-xl border-b border-gray-100 dark:border-line">
           <div className="mx-auto w-full max-w-[1500px] px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
             <div className="flex items-center gap-3">
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center overflow-hidden rounded-full">
                 <ImageWithFallback src={logoImage} alt="Nephrogenetics" className="w-full h-full object-cover scale-110" />
               </div>
               <div className="flex-1">
-                <h1 className="text-2xl text-gray-900 sm:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
+                <h1 className="text-2xl text-gray-900 dark:text-ink sm:text-3xl" style={{ fontFamily: "Georgia, serif" }}>
                   Hi {userName}
                 </h1>
               </div>
@@ -153,7 +153,7 @@ export default function Dashboard() {
                 >
                   {/* Card container with 3D effect */}
                   <div 
-                    className="relative rounded-3xl bg-white p-5 shadow-lg transition-all duration-300 hover:shadow-2xl sm:p-6 lg:min-h-[220px] lg:p-8"
+                    className="relative rounded-3xl bg-surface p-5 shadow-lg transition-all duration-300 hover:shadow-2xl sm:p-6 lg:min-h-[220px] lg:p-8"
                     style={{
                       transform: "translateZ(0)",
                     }}
@@ -184,14 +184,14 @@ export default function Dashboard() {
                     ) : null}
                 
                     {/* Top shine effect */}
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-50" />
+                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-surface to-transparent opacity-50" />
                 
                     {/* Content */}
                     <div className="relative z-10 max-w-full sm:max-w-[56%]">
-                      <h3 className="mb-2 text-2xl text-gray-900 transition-colors group-hover:text-gray-800 sm:text-[2rem]">
+                      <h3 className="mb-2 text-2xl text-gray-900 dark:text-ink transition-colors group-hover:text-gray-800 dark:group-hover:text-ink sm:text-[2rem]">
                         {card.title}
                       </h3>
-                      <p className="mb-4 text-base leading-relaxed text-gray-600 sm:text-lg">
+                      <p className="mb-4 text-base leading-relaxed text-gray-600 dark:text-body sm:text-lg">
                         {card.description}
                       </p>
                       
@@ -215,7 +215,7 @@ export default function Dashboard() {
 
                   {/* 3D card shadow */}
                   <div 
-                    className="absolute inset-0 bg-gradient-to-br from-gray-300/50 to-gray-400/50 rounded-3xl -z-10 blur-sm opacity-30"
+                    className="absolute inset-0 bg-gradient-to-br from-gray-300/50 dark:from-surface-2/50 to-gray-400/50 rounded-3xl -z-10 blur-sm opacity-30"
                     style={{
                       transform: "translateZ(-20px) translateY(8px)",
                     }}

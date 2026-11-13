@@ -8,9 +8,9 @@ export default function AssessmentResult() {
   const riskConfig = {
     high: {
       color: "red",
-      bgColor: "bg-red-50",
-      textColor: "text-red-700",
-      borderColor: "border-red-200",
+      bgColor: "bg-red-50 dark:bg-red-950",
+      textColor: "text-red-700 dark:text-red-300",
+      borderColor: "border-red-200 dark:border-line",
       icon: AlertCircle,
       title: "High Priority",
       message: "Based on your responses, genetic testing may be highly beneficial for you.",
@@ -19,9 +19,9 @@ export default function AssessmentResult() {
     },
     moderate: {
       color: "orange",
-      bgColor: "bg-orange-50",
-      textColor: "text-orange-700",
-      borderColor: "border-orange-200",
+      bgColor: "bg-orange-50 dark:bg-orange-950",
+      textColor: "text-orange-700 dark:text-orange-300",
+      borderColor: "border-orange-200 dark:border-line",
       icon: Info,
       title: "Moderate Priority",
       message: "Your responses suggest genetic testing could provide valuable insights.",
@@ -30,9 +30,9 @@ export default function AssessmentResult() {
     },
     low: {
       color: "green",
-      bgColor: "bg-green-50",
-      textColor: "text-green-700",
-      borderColor: "border-green-200",
+      bgColor: "bg-green-50 dark:bg-green-950",
+      textColor: "text-green-700 dark:text-green-300",
+      borderColor: "border-green-200 dark:border-line",
       icon: CheckCircle,
       title: "Low Priority",
       message: "Based on your responses, genetic testing may not be urgent at this time.",
@@ -49,13 +49,13 @@ export default function AssessmentResult() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2">
       {/* Header */}
-      <div className="bg-white px-6 py-6">
-        <h1 className="text-2xl text-gray-900 mb-2">
+      <div className="bg-surface px-6 py-6">
+        <h1 className="text-2xl text-gray-900 dark:text-ink mb-2">
           Your Assessment Results
         </h1>
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-body">
           Based on your responses
         </p>
       </div>
@@ -71,7 +71,7 @@ export default function AssessmentResult() {
               <h2 className={`text-xl ${config.textColor} mb-2`}>
                 {config.title}
               </h2>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-body">
                 {config.message}
               </p>
             </div>
@@ -79,11 +79,11 @@ export default function AssessmentResult() {
         </div>
 
         {/* Recommendation */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg text-gray-900 mb-3">
+        <div className="bg-surface rounded-2xl p-6 shadow-sm">
+          <h3 className="text-lg text-gray-900 dark:text-ink mb-3">
             Recommendation
           </h3>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 dark:text-body leading-relaxed">
             {config.recommendation}
           </p>
         </div>
@@ -103,32 +103,32 @@ export default function AssessmentResult() {
         </div>
 
         {/* What This Means */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg text-gray-900 mb-4">
+        <div className="bg-surface rounded-2xl p-6 shadow-sm">
+          <h3 className="text-lg text-gray-900 dark:text-ink mb-4">
             What This Means
           </h3>
           <ul className="space-y-3">
             <li className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-sm text-blue-600">1</span>
+              <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-sm text-blue-600 dark:text-blue-300">1</span>
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-body">
                 Genetic testing can identify inherited kidney disease mutations
               </p>
             </li>
             <li className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-sm text-blue-600">2</span>
+              <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-sm text-blue-600 dark:text-blue-300">2</span>
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-body">
                 Results help your doctor create a personalized treatment plan
               </p>
             </li>
             <li className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-sm text-blue-600">3</span>
+              <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-sm text-blue-600 dark:text-blue-300">3</span>
               </div>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-body">
                 Family members can benefit from your genetic information
               </p>
             </li>
@@ -139,10 +139,10 @@ export default function AssessmentResult() {
         <div className="space-y-3 pb-6">
           <button
             onClick={handleDownloadPDF}
-            className="w-full py-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-gray-300 transition-colors flex items-center justify-center gap-2"
+            className="w-full py-4 bg-surface border-2 border-gray-200 dark:border-line rounded-2xl hover:border-gray-300 dark:hover:border-line transition-colors flex items-center justify-center gap-2"
           >
-            <Download className="w-5 h-5 text-gray-700" />
-            <span className="text-gray-900">Download PDF Report</span>
+            <Download className="w-5 h-5 text-gray-700 dark:text-body" />
+            <span className="text-gray-900 dark:text-ink">Download PDF Report</span>
           </button>
 
           <button
@@ -155,9 +155,9 @@ export default function AssessmentResult() {
 
           <button
             onClick={() => navigate("/doctor/dashboard")}
-            className="w-full py-4 bg-white border border-gray-200 rounded-2xl hover:bg-gray-50 transition-colors"
+            className="w-full py-4 bg-surface border border-gray-200 dark:border-line rounded-2xl hover:bg-gray-50 dark:hover:bg-surface-2 transition-colors"
           >
-            <span className="text-gray-900">Back to Dashboard</span>
+            <span className="text-gray-900 dark:text-ink">Back to Dashboard</span>
           </button>
         </div>
       </div>

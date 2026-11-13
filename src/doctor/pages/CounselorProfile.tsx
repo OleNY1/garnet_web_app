@@ -12,15 +12,15 @@ export default function CounselorProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-surface-2">
       {/* Header */}
-      <div className="bg-white">
+      <div className="bg-surface">
         <div className="px-6 py-4">
           <button
             onClick={() => navigate("/doctor/counselors")}
-            className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+            className="w-10 h-10 rounded-full bg-gray-100 dark:bg-surface-2 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-surface-2 transition-colors"
           >
-            <ArrowLeft className="w-5 h-5 text-gray-700" />
+            <ArrowLeft className="w-5 h-5 text-gray-700 dark:text-body" />
           </button>
         </div>
 
@@ -33,29 +33,29 @@ export default function CounselorProfile() {
               className="w-24 h-24 rounded-2xl object-cover"
             />
             <div className="flex-1">
-              <h1 className="text-2xl text-gray-900 mb-1">
+              <h1 className="text-2xl text-gray-900 dark:text-ink mb-1">
                 {counselor.name}
               </h1>
-              <p className="text-gray-600 mb-3">
+              <p className="text-gray-600 dark:text-body mb-3">
                 {counselor.specialty}
               </p>
-              <p className="text-sm text-gray-500">{counselor.organization}</p>
+              <p className="text-sm text-gray-500 dark:text-muted">{counselor.organization}</p>
             </div>
           </div>
 
           {/* Quick Info */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-body">
               <MapPin className="w-4 h-4" />
               <span>{counselor.location}</span>
             </div>
             {counselor.telehealth && (
-              <div className="flex items-center gap-2 text-sm text-blue-600">
+              <div className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-300">
                 <Video className="w-4 h-4" />
                 <span>Telehealth</span>
               </div>
             )}
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-body">
               <Building2 className="w-4 h-4" />
               <span>U.S. provider/clinic page</span>
             </div>
@@ -66,34 +66,34 @@ export default function CounselorProfile() {
       {/* Content */}
       <div className="px-6 py-6 space-y-6">
         {/* About */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg text-gray-900 mb-3">About</h2>
-          <p className="text-gray-700 leading-relaxed">{counselor.bio}</p>
+        <div className="bg-surface rounded-2xl p-6 shadow-sm">
+          <h2 className="text-lg text-gray-900 dark:text-ink mb-3">About</h2>
+          <p className="text-gray-700 dark:text-body leading-relaxed">{counselor.bio}</p>
         </div>
 
         {/* Scheduling */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg text-gray-900 mb-3">Scheduling</h2>
+        <div className="bg-surface rounded-2xl p-6 shadow-sm">
+          <h2 className="text-lg text-gray-900 dark:text-ink mb-3">Scheduling</h2>
           <a
             href={counselor.profileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm mb-3"
+            className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-300 text-sm mb-3"
           >
             View provider profile
             <ExternalLink className="w-4 h-4" />
           </a>
-          <p className="text-gray-700 mb-3">{counselor.bookingInstructions}</p>
+          <p className="text-gray-700 dark:text-body mb-3">{counselor.bookingInstructions}</p>
           <a
             href={counselor.appointmentUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm"
+            className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-300 text-sm"
           >
             Open official scheduling/referral page
             <ExternalLink className="w-4 h-4" />
           </a>
-          <div className="mt-3 text-xs text-gray-500 break-all">
+          <div className="mt-3 text-xs text-gray-500 dark:text-muted break-all">
             {counselor.appointmentUrl}
           </div>
         </div>

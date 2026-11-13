@@ -137,26 +137,39 @@ export const educationalCards: ResourceCard[] = [
 
 export const educationalGroups = [
   {
+    id: "foundations",
     title: "Foundations: Understanding Kidney Genetics",
+    subtitle: "Kidney diseases, genetic tests, and expert videos",
     icon: Dna,
     cardIds: ["why-genetic-testing-in-nephrology", "common-genetic-kidney-diseases", "types-of-genetic-tests", "genetic-testing-counseling-videos"],
   },
   {
+    id: "clinical-practice",
     title: "Clinical Practice: Applying Genetics in Patient Care",
+    subtitle: "Counseling, family history, informed consent, and coverage",
     icon: ClipboardList,
     cardIds: ["genetic-counselors", "family-history-collection", "components-of-informed-consent", "cost-and-coverage"],
   },
   {
+    id: "ethics",
     title: "Ethics, Legal, and Professional Responsibilities",
+    subtitle: "Genetic discrimination, professional duties, and patient stories",
     icon: ShieldCheck,
     cardIds: ["protections-against-genetic-discrimination", "doctors-legal-responsibilities", "case-studies"],
   },
   {
+    id: "continuing-education",
     title: "Resources and Continuing Education",
+    subtitle: "Papers, training, patient organizations, and quizzes",
     icon: GraduationCap,
     cardIds: ["peer-reviewed-papers", "external-training", "renal-patient-organizations", "quizzes"],
   },
 ];
+
+export function getEducationalGroupForResource(pathname: string) {
+  const card = educationalCards.find((item) => item.route === pathname);
+  return card && educationalGroups.find((group) => group.cardIds.includes(card.id));
+}
 
 export const practicalCards: ResourceCard[] = [
   {

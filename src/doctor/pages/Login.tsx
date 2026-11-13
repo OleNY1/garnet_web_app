@@ -23,39 +23,39 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e9edf7] px-4 py-4 sm:flex sm:items-center sm:justify-center" style={{ fontFamily: "Georgia, serif" }}>
-      <div className="mx-auto w-full max-w-[430px] rounded-[24px] border border-black/5 bg-white/90 p-6 shadow-[0_12px_28px_rgba(0,0,0,0.09)] backdrop-blur-sm sm:p-7">
+    <div className="min-h-screen bg-bg px-4 py-4 sm:flex sm:items-center sm:justify-center" style={{ fontFamily: "Georgia, serif" }}>
+      <div className="mx-auto w-full max-w-[430px] rounded-[24px] border border-black/5 dark:border-line/5 bg-surface/90 p-6 shadow-[0_12px_28px_rgba(0,0,0,0.09)] backdrop-blur-sm sm:p-7">
         <div className="mb-6 text-center">
-          <div className="relative mx-auto mb-3 h-16 w-16 overflow-hidden rounded-full border border-gray-100 bg-white">
+          <div className="relative mx-auto mb-3 h-16 w-16 overflow-hidden rounded-full border border-gray-100 dark:border-line bg-surface">
             <ImageWithFallback src={logoImage} alt="Nephrogenetics Logo" className="h-full w-full object-cover scale-110" />
           </div>
-          <h1 className="text-[36px] leading-[1.06] text-gray-900">Welcome back</h1>
-          <p className="mt-1.5 text-base text-gray-500">Sign in to continue your journey</p>
+          <h1 className="text-[36px] leading-[1.06] text-gray-900 dark:text-ink">Welcome back</h1>
+          <p className="mt-1.5 text-base text-gray-500 dark:text-muted">Sign in to continue your journey</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-3.5">
           <div>
-            <label className="mb-1.5 block text-sm text-gray-700">Name</label>
+            <label className="mb-1.5 block text-sm text-gray-700 dark:text-body">Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ben"
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-xl border border-gray-200 dark:border-line bg-surface px-4 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <fieldset>
-            <legend className="mb-1.5 block text-sm text-gray-700">I am a</legend>
+            <legend className="mb-1.5 block text-sm text-gray-700 dark:text-body">I am a</legend>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setRole("patient")}
                 className={`rounded-xl border px-4 py-2.5 text-base transition-colors ${
                   role === "patient"
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
-                    : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
+                    : "border-gray-200 dark:border-line bg-surface text-gray-700 dark:text-body hover:bg-gray-50 dark:hover:bg-surface-2"
                 }`}
                 aria-pressed={role === "patient"}
               >
@@ -66,8 +66,8 @@ export default function Login() {
                 onClick={() => setRole("clinician")}
                 className={`rounded-xl border px-4 py-2.5 text-base transition-colors ${
                   role === "clinician"
-                    ? "border-blue-500 bg-blue-50 text-blue-700"
-                    : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
+                    : "border-gray-200 dark:border-line bg-surface text-gray-700 dark:text-body hover:bg-gray-50 dark:hover:bg-surface-2"
                 }`}
                 aria-pressed={role === "clinician"}
               >
@@ -77,30 +77,30 @@ export default function Login() {
           </fieldset>
 
           <div>
-            <label className="mb-1.5 block text-sm text-gray-700">Email</label>
+            <label className="mb-1.5 block text-sm text-gray-700 dark:text-body">Email</label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-gray-400" />
+              <Mail className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-gray-400 dark:text-muted" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-11 pr-4 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl border border-gray-200 dark:border-line bg-surface py-2.5 pl-11 pr-4 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm text-gray-700">Password</label>
+            <label className="mb-1.5 block text-sm text-gray-700 dark:text-body">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-gray-400" />
+              <Lock className="absolute left-3.5 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-gray-400 dark:text-muted" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-11 pr-4 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl border border-gray-200 dark:border-line bg-surface py-2.5 pl-11 pr-4 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -114,10 +114,10 @@ export default function Login() {
         <div className="mt-5">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-t border-gray-200 dark:border-line" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-4 text-gray-500">Or continue with</span>
+              <span className="bg-surface px-4 text-gray-500 dark:text-muted">Or continue with</span>
             </div>
           </div>
 
@@ -125,24 +125,24 @@ export default function Login() {
             <button
               type="button"
               onClick={completeLogin}
-              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 transition-colors hover:bg-gray-50"
+              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-line bg-surface px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-surface-2"
             >
               <GoogleIcon />
-              <span className="text-base text-gray-700">Google</span>
+              <span className="text-base text-gray-700 dark:text-body">Google</span>
             </button>
             <button
               type="button"
               onClick={completeLogin}
-              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 transition-colors hover:bg-gray-50"
+              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-line bg-surface px-4 py-2.5 transition-colors hover:bg-gray-50 dark:hover:bg-surface-2"
             >
               <AppleIcon />
-              <span className="text-base text-gray-700">Apple</span>
+              <span className="text-base text-gray-700 dark:text-body">Apple</span>
             </button>
           </div>
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Don't have an account? <button className="text-blue-600 hover:text-blue-700">Sign up</button>
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-body">
+          Don't have an account? <button className="text-blue-600 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-300">Sign up</button>
         </p>
       </div>
     </div>

@@ -38,18 +38,18 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8ff] text-[#181b24]" style={{ fontFamily: "'Inter', sans-serif" }}>
-      <header className="sticky top-0 z-30 border-b border-[#d7d9e6] bg-[#faf8ff]/95 backdrop-blur-sm">
+    <div className="min-h-screen bg-[#faf8ff] dark:bg-surface-2 text-[#181b24] dark:text-brand" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <header className="sticky top-0 z-30 border-b border-[#d7d9e6] dark:border-line bg-[#faf8ff]/95 dark:bg-surface-2/95 backdrop-blur-sm">
         <div className="mx-auto flex h-16 w-full max-w-[1140px] items-center justify-between px-4 sm:px-6">
           <button onClick={() => goTo("/")} className="flex items-center gap-3">
-            <div className="h-9 w-9 overflow-hidden rounded-full border border-[#d7d9e6] bg-white">
+            <div className="h-9 w-9 overflow-hidden rounded-full border border-[#d7d9e6] dark:border-line bg-surface">
               <ImageWithFallback
                 src={logoImage}
                 alt="Nephrogenetics"
                 className="h-full w-full object-cover scale-110"
               />
             </div>
-            <span className="text-xl text-[#181b24] sm:text-2xl" style={{ fontFamily: "'Lora Variable', serif" }}>
+            <span className="text-xl text-[#181b24] dark:text-brand sm:text-2xl" style={{ fontFamily: "'Lora Variable', serif" }}>
               Nephrogenetics
             </span>
           </button>
@@ -83,17 +83,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="platform" className="relative overflow-hidden bg-[#faf8ff] px-4 py-16 sm:px-6 sm:py-20">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[#fff5f3]" />
+      <section id="platform" className="relative overflow-hidden bg-[#faf8ff] dark:bg-surface-2 px-4 py-16 sm:px-6 sm:py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-accent-soft" />
         <div className="relative mx-auto max-w-[1140px]">
           <div className="mb-12 text-center sm:mb-14">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#00687b]">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-brand">
               Choose your path
             </p>
-            <h2 className="text-4xl font-bold leading-tight text-[#16323b] md:text-6xl" style={{ fontFamily: "'Lora Variable', serif" }}>
+            <h2 className="text-4xl font-bold leading-tight text-ink md:text-6xl" style={{ fontFamily: "'Lora Variable', serif" }}>
               Choose where to begin
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[#5b6472] md:text-xl">
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
               Select the experience that fits you. Each side uses different language, tools, and resources.
             </p>
           </div>
@@ -103,27 +103,27 @@ export default function HomePage() {
               <button
                 key={card.title}
                 onClick={() => goTo(card.route)}
-                className="group flex min-h-[360px] flex-col rounded-[30px] border border-[#c3d6d9] bg-white p-8 text-left shadow-[0_16px_38px_rgba(12,48,58,0.08)] transition-all hover:-translate-y-1 hover:border-[#9fbfc5] hover:shadow-[0_22px_46px_rgba(12,48,58,0.12)] sm:p-10"
+                className="group flex min-h-[360px] flex-col rounded-[30px] border border-line bg-surface p-8 text-left shadow-[0_16px_38px_rgba(12,48,58,0.08)] transition-all hover:-translate-y-1 hover:border-[#9fbfc5] dark:hover:border-line hover:shadow-[0_22px_46px_rgba(12,48,58,0.12)] sm:p-10"
               >
                 <div
                   className={`mb-8 flex h-16 w-16 items-center justify-center rounded-2xl ${
-                    card.accent === "teal" ? "bg-[#cfe7ea] text-[#00687b]" : "bg-[#f4d8d2] text-[#9f4035]"
+                    card.accent === "teal" ? "bg-brand-soft text-brand" : "bg-accent-soft text-accent"
                   }`}
                 >
                   <card.icon className="h-8 w-8" strokeWidth={1.8} />
                 </div>
                 <p
                   className={`mb-3 text-sm font-bold uppercase tracking-[0.14em] ${
-                    card.accent === "teal" ? "text-[#00687b]" : "text-[#9f4035]"
+                    card.accent === "teal" ? "text-brand" : "text-accent"
                   }`}
                 >
                   {card.eyebrow}
                 </p>
-                <h3 className="text-4xl font-bold leading-tight text-[#16323b]" style={{ fontFamily: "'Lora Variable', serif" }}>
+                <h3 className="text-4xl font-bold leading-tight text-ink" style={{ fontFamily: "'Lora Variable', serif" }}>
                   {card.title}
                 </h3>
-                <p className="mt-4 max-w-lg text-lg leading-relaxed text-[#3f4650]">{card.description}</p>
-                <span className="mt-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-[1.5px] border-[#9fbfc5] px-6 text-base font-bold text-[#00687b] transition-colors group-hover:border-[#00687b] group-hover:bg-[#cfe7ea]">
+                <p className="mt-4 max-w-lg text-lg leading-relaxed text-body">{card.description}</p>
+                <span className="mt-auto inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-[1.5px] border-[#9fbfc5] dark:border-line px-6 text-base font-bold text-brand transition-colors group-hover:border-[#00687b] group-hover:bg-brand-soft">
                   {card.cta}
                   <ArrowRight className="h-5 w-5" />
                 </span>
@@ -133,21 +133,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="bg-[#e8f6f8] px-4 py-5 text-[#3f484b] sm:px-6 sm:py-6">
+      <footer className="bg-[#e8f6f8] dark:bg-surface-2 px-4 py-5 text-body sm:px-6 sm:py-6">
         <div className="mx-auto flex max-w-[1140px] flex-col items-center justify-between gap-3 sm:flex-row">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 overflow-hidden rounded-full border border-[#00687b]/20 bg-white">
+            <div className="h-10 w-10 overflow-hidden rounded-full border border-[#00687b]/20 bg-surface">
               <ImageWithFallback
                 src={logoImage}
                 alt="Nephrogenetics"
                 className="h-full w-full object-cover scale-110"
               />
             </div>
-            <span className="text-xl text-[#181b24]" style={{ fontFamily: "'Lora Variable', serif" }}>
+            <span className="text-xl text-[#181b24] dark:text-brand" style={{ fontFamily: "'Lora Variable', serif" }}>
               Nephrogenetics
             </span>
           </div>
-          <p className="text-sm text-[#3f484b]">© 2026 Nephrogenetics. Empowering kidney care through genetics.</p>
+          <p className="text-sm text-body">© 2026 Nephrogenetics. Empowering kidney care through genetics.</p>
         </div>
       </footer>
     </div>
